@@ -10,9 +10,15 @@
 	<typeAliases>
 		<typeAlias type="com.kh.ready.user.domain.User" 			alias="User"/>
 		<typeAlias type="com.kh.ready.book.domain.Book" 			alias="Book"/>
+		<typeAlias type="com.kh.ready.community.domain.Comm" 		alias="Comm"/>
+		<typeAlias type="com.kh.ready.community.domain.CommReply" 	alias="CommReply"/>
+		<typeAlias type="com.kh.ready.question.domain.Question" 	alias="Question"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mappers.xml"/>
 		<mapper resource="mappers/book-mappers.xml"/>
+		<mapper resource="mappers/comm-mappers.xml"/>
+		<mapper resource="mappers/comm-reply-mappers.xml"/>
+		<mapper resource="mappers/question-mappers.xml"/>
 	</mappers>
 </configuration>
