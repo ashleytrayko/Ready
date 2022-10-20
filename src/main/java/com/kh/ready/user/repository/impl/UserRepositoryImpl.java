@@ -22,8 +22,8 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public CustomUserDetails getUserById(String id) {
-		CustomUserDetails user = session.selectOne("UserMapper.selectOneUser", id);
+	public User getUserById(String id, SqlSession sqlSession) {
+		User user = session.selectOne("UserMapper.selectOneUser", id);
 		return user;
 	}
 
