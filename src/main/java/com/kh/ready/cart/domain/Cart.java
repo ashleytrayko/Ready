@@ -3,17 +3,17 @@ package com.kh.ready.cart.domain;
 public class Cart {
 	
 	private int cartNo;
-	private int bookNumber;
+	private int bookNo;
 	private long userIndex;
 	private int productCount;
 	private int productPrice;
 	
 	public Cart(){};
 	
-	public Cart(int cartNo, int bookNumber, long userIndex, int productCount, int productPrice) {
+	public Cart(int cartNo, int bookNo, long userIndex, int productCount, int productPrice) {
 		super();
 		this.cartNo = cartNo;
-		this.bookNumber = bookNumber;
+		this.bookNo = bookNo;
 		this.userIndex = userIndex;
 		this.productCount = productCount;
 		this.productPrice = productPrice;
@@ -27,12 +27,12 @@ public class Cart {
 		this.cartNo = cartNo;
 	}
 
-	public int getBookNumber() {
-		return bookNumber;
+	public int getbookNo() {
+		return bookNo;
 	}
 
-	public void setBookNumber(int bookNumber) {
-		this.bookNumber = bookNumber;
+	public void setbookNo(int bookNo) {
+		this.bookNo = bookNo;
 	}
 
 	public long getUserIndex() {
@@ -61,7 +61,7 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [cartNo=" + cartNo + ", bookNumber=" + bookNumber + ", userIndex=" + userIndex + ", productCount="
+		return "Cart [cartNo=" + cartNo + ", bookNo=" + bookNo + ", userIndex=" + userIndex + ", productCount="
 				+ productCount + ", productPrice=" + productPrice + "]";
 	}
 	

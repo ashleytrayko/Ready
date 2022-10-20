@@ -1,118 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
     <title>책메이트 : 장바구니</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <link href="/cart.css" rel="stylesheet">
+    <link href="../resources/css/cart_order/cart.css" rel="stylesheet">
+    <script src="../resources/js/jquery-3.6.1.min.js"></script>
 </head>
-<style>
-    #cart-title{
-        text-align : center;
-    }
-
-    #cart-text{
-        font-weight: bold;
-        padding: 100px;
-    }
-
-    h5 {
-        font-weight : bold;
-    }
-    td{
-        text-align : center;
-        vertical-align :middle;
-    }
-
-    .cart-data-list{
-        width : 1400px;
-        padding-top: 100px;
-	    padding-left : 250px;
-        padding-right : 250px;
-	    margin : 0 auto;
-    }
-    #cartbody{
-        text-align : center;
-        vertical-align :middle;
-    }
-    .form-control{
-        width: 50px;
-        height: 30px;
-    }
-    #order-Info{
-        width : 900px;
-        height: 100px;
-        border-top: solid 3px #e2c9a6;
-        border-bottom: solid 3px #e2c9a6;
-        text-align : center;
-    }
-    #cart-btn{
-        padding: 150px;
-        text-align : center;
-    }
-    .cartinfo-table-header{
-        height : 60px;
-        background-color: lightgray;
-        border: 1px solid #e2c9a6;
-    }
-    .cartinfo-table-body{
-        height : 100px;
-        border: 1px solid #e2c9a6;
-    }
-    #cartinfo-table-left{
-        background-color: lightgray;
-        border-bottom: 1px solid #e2c9a6;
-    }
-    #cartinfo-table-right{
-        background-color: lightgray;
-        border-bottom: 1px solid #e2c9a6;
-    }
-    .product-delbtn{
-        text-align : right;
-    }
-    .quantity-btn{
-        width: 40px;
-        height: 25px;
-        font-size :10px;
-    }
-    .del-btn{
-        width: 100px;
-        height: 35px;
-        font-size :15px;
-    }
-    button {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      white-space : nowrap;
-    }
-    .product-img{
-        margin-top: 5%;
-        margin-bottom: 10%;
-        width : 80px;
-        height : 80px;
-    }
-    .total-price{
-        margin: auto 0;
-        color: red;
-    }
-    .product-title{
-        margin : auto 0;
-        text-align : left;
-    }
-
-</style>
 <body>
     <body>
         <div id="cart-title">
             <h1 id="cart-text">SHOPPING CART</h1>
-            <img src="/c-step01.png" >
+            <img src="../resources/images/cart_order/c-step01.png" >
         </div>
     <br><br>
         <div class="cart-data-list">
