@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.4.xsd">
+	
+	<!-- bean 등록 -->
+	<bean id="userService" class="com.kh.ready.user.service.UserService"/>
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<security:http auto-config="true">
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/" access="permitAll" />
+		<security:form-login/>
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userService">
+			<security:password-encoder
+				ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
