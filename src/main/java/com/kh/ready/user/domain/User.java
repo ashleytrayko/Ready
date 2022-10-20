@@ -6,58 +6,77 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class User implements UserDetails{
-	
-	private String userId;
-	private String userPassword;
-	private String userRole;
-	
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	@Override
+
+public class User {
+	
+	private String id;
+	private String password;
+	private String name;
+	private String auth;
+	private int enabled;
+	
+	public User() {}
+	
+	public User(String id, String password, String name, String auth, int enabled) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.auth = auth;
+		this.enabled = enabled;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getPassword() {
-		return this.userPassword;
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
-	public String getUsername() {
-		return this.userId;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+	public String toString() {
+		return "User [id=" + id + ", password=" + password + ", name=" + name + ", auth=" + auth + ", enabled="
+				+ enabled + "]";
 	}
 	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		Collection<GrantedAuthority> collection = new ArrayList<>();
-		collection.add(new GrantedAuthority() {
-			
-			@Override
-			public String getAuthority() {
-				return userRole;
-			}
-		});
-		return collection;
-	}
+	
+	
+	
 }
