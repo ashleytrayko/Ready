@@ -21,7 +21,7 @@ public class User {
 	
 	public User() {}
 	
-	public User(String id, String password, String name, String auth, int enabled) {
+	public User(String id, String password, String name, String auth, String enabled) {
 		super();
 		this.id = id;
 		this.password = password;

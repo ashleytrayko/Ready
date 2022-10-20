@@ -22,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public User getUserById(String id, SqlSession sqlSession) {
+	public User getUserById(String id) {
 		User user = session.selectOne("UserMapper.selectOneUser", id);
 		return user;
 	}

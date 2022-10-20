@@ -26,12 +26,11 @@ public class CustomUserDetailService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		System.out.println("시작");
-		com.kh.ready.user.domain.User user = userRepository.getUserById(id, null);
+		com.kh.ready.user.domain.User user = userRepository.getUserById(id);
 		//CustomUserDetails userDetails = new User(username, password, authorities);
 		System.out.println("found user!" + user.toString());
-		System.out.println("id : " + id);
 		
-		return null;
+		return new CustomUserDetails(user);
 	}
 
 }

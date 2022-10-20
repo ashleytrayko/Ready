@@ -14,20 +14,24 @@
 	
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<bean id="customUserService" class="com.kh.ready.user.security.CustomUserDetailService" />
-	<security:http pattern="/resources/**" security="none"/>
+	
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:intercept-url pattern="/resources/**" access="isAnonymous()" />
 		<security:intercept-url pattern="/common/**" access="permitAll"/>
 		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<security:form-login login-page="/user/login"
-							authentication-failure-url="/login"
+		<security:form-login login-page="/common/loginForm"
 							username-parameter="id"
 							login-processing-url="/login-processing"
 							default-target-url="/"
 							always-use-default-target="true"
-							authentication-success-forward-url="/"/>
+							authentication-success-forward-url="/"
+							authentication-failure-handler-ref="userLoginFailHandler"/>
+		<security:logout logout-success-url="/"
+						invalidate-session="true"
+						delete-cookies="true"/>
 	</security:http>
 
 	<security:authentication-manager>
