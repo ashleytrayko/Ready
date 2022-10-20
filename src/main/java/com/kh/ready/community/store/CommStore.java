@@ -1,5 +1,5 @@
 package com.kh.ready.community.store;
 
-public interface CommunityStore {
+public interface CommStore {
 
 }

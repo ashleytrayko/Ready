@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QuestionMapper">
+	<resultMap type="Question" id="questionResultMap">
+		<id property="QueNo" 			column="QUE_NO"/>
+		<result property="queWriter" 		column="QUE_WRITER"/>
+		<result property="queTitle" 		column="QUE_TITLE"/>
+		<result property="queContents" 		column="QUE_CONTENTS"/>
+		<result property="queFilename" 		column="QUE_FILENAME"/>
+		<result property="queFileRename" 	column="QUE_FILERENAME"/>
+		<result property="queFilePath" 		column="QUE_FILEPATH"/>
+		<result property="qEnrollDate" 		column="Q_ENROLL_DATE"/>
+		<result property="qAnswer" 			column="Q_ANSWER"/>
+		<result property="qStatus" 			column="Q_STATUS"/>
+		<result property="qCategory" 		column="Q_CATEGORY"/>
+	</resultMap>
+	
+</mapper>

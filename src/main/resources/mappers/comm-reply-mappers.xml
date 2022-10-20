@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommReplyMapper">
+	<resultMap type="CommReply" id="commReplyResultMap">
+		<id property="cReplyNo" 			column="C_REPLY_NO"/>
+		<result property="boardNo" 			column="BOARD_NO"/>
+		<result property="rWriter"  		column="R_WRITER"/>
+		<result property="rContents" 		column="R_CONTENTS"/>
+		<result property="rCreateDate" 		column="R_CREATE_DATE"/>
+		<result property="rUpdateDate" 		column="R_UPDATE_DATE"/>
+		<result property="rStatus" 			column="R_STATUS"/>
+		<result property="rGroup" 			column="R_GROUP"/>
+		<result property="rParentReplyNo"	column="R_PARENT_REPLY_NO"/>
+		<result property="rChildReplyNo" 	column="R_CHILD_REPLY_NO"/>
+	</resultMap>
+	
+</mapper>

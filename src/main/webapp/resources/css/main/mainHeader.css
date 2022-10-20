@@ -1,0 +1,22 @@
+@charset "UTF-8";
+.main-contents {
+	display:flex;
+}
+.main-sidebar {
+	width:20%;
+}
+.main-section {
+	width:60%;
+}
+.main-p {
+	font-size:12px;
+	margin:0px 0px;
+	text-weight:bolder;
+}
+.fa-solid {
+	margin-bottom:20px;
+	padding-top:20px;
+}
+.center {
+	text-align:center;	
+}
