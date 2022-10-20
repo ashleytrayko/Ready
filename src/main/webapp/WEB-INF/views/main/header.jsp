@@ -66,6 +66,7 @@
       .search {
         width: 700px;
       }
+
       
     </style>
   </head>

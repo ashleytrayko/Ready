@@ -2528,6 +2528,9 @@ external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.fn.ex
         var context = new Context_Context($note, options);
         $note.data('summernote', context);
         $note.data('summernote').triggerEvent('init', context.layoutInfo);
+        $('.note-view').remove();
+        $('.note-fontname').remove();
+		$('.note-color').remove();
       }
     });
     var $note = this.first();
