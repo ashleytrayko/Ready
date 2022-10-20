@@ -5,8 +5,18 @@
 
 <mapper namespace="UserMapper">
 	<resultMap type="User" id="userResultMap">
-		<id property="userId" 				column="USER_ID"/>
-		<result property="userPassword" 		column="USER_PASSWORD"/>
+		<id property="id" 					column="ID"/>
+		<result property="password" 		column="PASSWORD"/>
+		<result property="name" 			column="NAME"/>
+		<result property="auth" 			column="AUTH"/>
+		<result property="enabled" 			column="ENABLED"/>
 	</resultMap>
 	
+	<insert id="insertUser">
+		INSERT INTO USER_TBL VALUES (#{id}, #{password}, #{name}, DEFAULT, DEFAULT)
+	</insert>
+	
+	<select id="selectOneUser" parameterType="String" resultType="com.kh.ready.user.security.CustomUserDetails">
+		SELECT * FROM USER_TBL WHERE ID = #{id}
+	</select>
 </mapper>
