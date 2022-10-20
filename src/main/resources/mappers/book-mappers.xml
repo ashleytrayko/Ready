@@ -3,10 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
-	<resultMap type="User" id="userResultMap">
-		<id property="userId" 				column="USER_ID"/>
-		<result property="userPassword" 		column="USER_PASSWORD"/>
+<mapper namespace="BookMapper">
+	<resultMap type="Book" id="bookResultMap">
+		<id 	property="bookNo" 		column="BOOK_NO"/>
+		<result property="bookTitle" 	column="BOOK_TITLE"/>
+		<result property="bookWriter" 	column="BOOK_WRITER"/>
+		<result property="enrollDate" 	column="ENROLL_DATE"/>
+		<result property="pubDate" 		column="PUB_DATE"/>
+		<result property="category" 	column="BOOK_CATEGORY"/>
+		<result property="bookContents" column="BOOK_CONTENTS"/>
+		<result property="ISBN" 		column="BOOK_ISBN"/>
+		<result property="priceSales" 	column="BOOK_PRICE"/>
+		<result property="mileage" 		column="BOOK_MILEAGE"/>
+		<result property="imgPath" 	column="IMG_PATH"/>
+		<result property="publisher" 	column="BOOK_PUBLISHER"/>
 	</resultMap>
 	
+	<insert id="insertBook">
+		INSERT INTO BOOK_TBL VALUES(SEQ_BOOK_NO.NEXTVAL, #{bookTitle }, #{bookWriter }, DEFAULT, #{pubDate }, #{category }, #{bookContents}, #{ISBN }, #{priceSales }, #{mileage }, #{imgPath }, #{publisher })
+	</insert>
+	
+	<select id="selectAllBook" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL
+	</select>
 </mapper>
