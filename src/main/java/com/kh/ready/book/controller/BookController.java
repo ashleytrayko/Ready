@@ -6,13 +6,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.book.domain.Book;
+import com.kh.ready.book.domain.Review;
 import com.kh.ready.book.service.BookService;
+import com.kh.ready.user.domain.User;
 
 @Controller
 public class BookController {
@@ -42,6 +45,34 @@ public class BookController {
 			mv.setViewName("main/errorPage");
 		}
 		return mv;
+	}
+	
+	//평점 등록
+	@RequestMapping(value="/book/addReview.kh", method=RequestMethod.POST)
+	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, HttpSession session) {
+		User user = (User)session.getAttribute("loginUser");
+		String userId = user.getId();
+		review.setUserId(userId);
+		int bookNo = review.getBookNo();
+		int result = bService.registerReview(review);
+		if(result > 0) {
+			mv.setViewName("redirect:/book/detailView.kh?bookNo="+bookNo);
+		} 
+		return mv;
+	}
+	
+	//평점 수정
+	@RequestMapping(value="/book/modifyReview.kh", method=RequestMethod.POST)
+	public String modifyBookReview(@ModelAttribute Review review) {
+		int result = bService.modifyReview(review);
+		return "redirect:/book/bookList.kh";
+	}
+	
+	//평점 삭제
+	@RequestMapping(value="/book/removeReview.kh", method=RequestMethod.POST)
+	public String removeReview(@RequestParam("reviewNo") Integer reviewNo) {
+		int result = bService.removeReview(reviewNo);
+		return "";
 	}
 	
 }
