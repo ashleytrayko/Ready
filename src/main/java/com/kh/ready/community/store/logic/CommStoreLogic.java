@@ -39,20 +39,20 @@ public class CommStoreLogic implements CommStore{
 
 	@Override
 	public Comm selectOneByNo(SqlSession session, Integer boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Comm comm = session.selectOne("CommMapper.selectOneByNo", boardNo);
+		return comm;
 	}
 
 	@Override
 	public int updateBoardCount(SqlSession session, Integer boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("CommMapper.updateCount", boardNo);
+		return result;
 	}
 
 	@Override
 	public List<CommReply> selectAllReply(SqlSession session, Integer boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CommReply> cRList = session.selectList("CommReplyMapper.selectAllReply", boardNo);
+		return cRList;
 	}
 
 }

@@ -16,4 +16,7 @@
 		<result property="rChildReplyNo" 	column="R_CHILD_REPLY_NO"/>
 	</resultMap>
 	
+	<select id="selectAllReply" resultMap="commReplyResultMap">
+		SELECT * FROM C_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND R_STATUS = 'Y'
+	</select>
 </mapper>

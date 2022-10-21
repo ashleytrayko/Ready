@@ -14,6 +14,7 @@ public interface CommStore {
 	int selectTotalCount(SqlSession session, String searchCondition, String searchValue);
 	// 게시글 전체 갯수
 	List<Comm> selectAllBoard(SqlSession session, int currentPage, int boardLimit);
+	
 	Comm selectOneByNo(SqlSession session, Integer boardNo);
 	
 	int updateBoardCount(SqlSession session, Integer boardNo);
