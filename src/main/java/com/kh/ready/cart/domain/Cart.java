@@ -4,17 +4,17 @@ public class Cart {
 	
 	private int cartNo;
 	private int bookNo;
-	private long userIndex;
+	private String userId;
 	private int productCount;
-	private int productPrice;
+	private long productPrice;
 	
 	public Cart(){};
 	
-	public Cart(int cartNo, int bookNo, long userIndex, int productCount, int productPrice) {
+	public Cart(int cartNo, int bookNo, String userId, int productCount, long productPrice) {
 		super();
 		this.cartNo = cartNo;
 		this.bookNo = bookNo;
-		this.userIndex = userIndex;
+		this.userId = userId;
 		this.productCount = productCount;
 		this.productPrice = productPrice;
 	}
@@ -35,12 +35,12 @@ public class Cart {
 		this.bookNo = bookNo;
 	}
 
-	public long getUserIndex() {
-		return userIndex;
+	public String getuserId() {
+		return userId;
 	}
 
-	public void setUserIndex(long userIndex) {
-		this.userIndex = userIndex;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getProductCount() {
@@ -51,17 +51,17 @@ public class Cart {
 		this.productCount = productCount;
 	}
 
-	public int getProductPrice() {
+	public long getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(int productPrice) {
+	public void setProductPrice(long productPrice) {
 		this.productPrice = productPrice;
 	}
 
 	@Override
 	public String toString() {
-		return "Cart [cartNo=" + cartNo + ", bookNo=" + bookNo + ", userIndex=" + userIndex + ", productCount="
+		return "Cart [cartNo=" + cartNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
 				+ productCount + ", productPrice=" + productPrice + "]";
 	}
 	

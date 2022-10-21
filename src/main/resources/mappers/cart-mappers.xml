@@ -5,13 +5,16 @@
 
 <mapper namespace="CartMapper">
 	<resultMap type="Cart" id="CartResultMap">
-		<id 	property="cartNo" 		column="CART_NO"/>
-		<result property="bookNo" 		column="BOOK_NO"/>
-		<result property="userIndex" 	column="USER_INDEX"/>
+		<id 	property="cartNo" 				column="CART_NO"/>
+		<result property="bookNo" 				column="BOOK_NO"/>
+		<result property="userIndex" 			column="USER_INDEX"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
 		<result property="productPrice" 		column="PRODUCT_PRICE"/>
 	</resultMap>
 
 
+	<insert id="insertCart">
+		INSERT INTO CART_TBL VALUES(SEQ_CART_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{productPrice})
+	</insert>
 
 </mapper>
