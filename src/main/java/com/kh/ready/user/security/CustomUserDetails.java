@@ -20,7 +20,13 @@ public class CustomUserDetails implements UserDetails{
 	private String auth;
 	private int enabled;
 	
+	private User user;
+	
 	public CustomUserDetails() {}
+	
+	public CustomUserDetails(User user) {
+		this.user = user;
+	}
 	
 	public CustomUserDetails(String id, String password, String name, String auth, int enabled) {
 		super();

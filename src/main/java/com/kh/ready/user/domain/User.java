@@ -17,11 +17,11 @@ public class User {
 	private String password;
 	private String name;
 	private String auth;
-	private int enabled;
+	private String enabled;
 	
 	public User() {}
 	
-	public User(String id, String password, String name, String auth, int enabled) {
+	public User(String id, String password, String name, String auth, String enabled) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -62,11 +62,11 @@ public class User {
 		this.auth = auth;
 	}
 
-	public int getEnabled() {
+	public String getEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(int enabled) {
+	public void setEnabled(String enabled) {
 		this.enabled = enabled;
 	}
 
