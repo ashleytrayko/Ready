@@ -8,24 +8,26 @@
 <title>게시글 목록</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
-<link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/que/faqList.css">
 </head>
 <body>
-	<jsp:include page="../main/commHeader.jsp"></jsp:include>
+	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
 		<!-- 이 안에서 작업! 여기가 본문-->
-			<div class="list-div">
-				<h1>여기는 게시글 목록입니다.</h1>
+			<div class="faq-div">
+				<h1>고객센터 FAQ</h1>
 				<table align="center" border="1">
 					<tr>
-						<th>번호</th>
-						<th colspan="2">제목</th>
-						<th>작성자</th>
-						<th>날짜</th>
-						<th>조회수</th>
-						<th>추천수</th>
+						<th class="faq-category">회원정보</th>
+						<th class="faq-category">배송관련</th>
+						<th class="faq-category">상품관련</th>
+						<th class="faq-category">교환/환불</th>
+					</tr>
+					<tr class="faq-header">
+						<td>유형</td>
+						<td cospan="3">제목</td>
 					</tr>
 					<c:if test="${!empty cList }">
 						<c:forEach items="${cList }" var="comm" varStatus="i">
@@ -75,7 +77,7 @@
 								<input type="text" name="searchValue" value="${searchValue }">
 								<input type="submit" value="검색">
 							</form>
-								<button onclick="location.href='/comm/viewWrite.kh'">글쓰기</button>
+								<button onclick="/comm/viewWrite.kh">글쓰기</button>
 						</td>
 					</tr>
 				</table>

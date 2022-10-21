@@ -96,13 +96,35 @@ public class CommController {
 		return mv;
 	}
 	
-	/*
-	 * @RequestMapping(value="/comm/detail.kh", method=RequestMethod.POST) public
-	 * ModelAndView detailView( ModelAndView mv , @RequestParam("boardNo") Integer
-	 * boardNo , @RequestParam("page") Integer page , HttpSession session) { Comm
-	 * comm = cService.printOneByNo(boardNo); List<CommReply> cRList =
-	 * cService.printAllReply(boardNo); }
+	/**
+	 * 게시글 상세보기
+	 * @param mv
+	 * @param boardNo
+	 * @param page
+	 * @param session
+	 * @return
 	 */
+	@RequestMapping(value="/comm/detail.kh", method=RequestMethod.GET) 
+	public ModelAndView detailView( 
+			ModelAndView mv 
+			, @RequestParam("boardNo") Integer boardNo 
+			, @RequestParam("page") Integer page 
+			, HttpSession session) { 
+		try {
+		Comm comm = cService.printOneByNo(boardNo); 
+		List<CommReply> cRList = cService.printAllReply(boardNo);
+		session.setAttribute("boardNo", comm.getBoardNo());
+		mv.addObject("cRList", cRList);
+		mv.addObject("comm", comm);
+		mv.addObject("page", page);
+		mv.setViewName("comm/commDetailView");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("main/errorPage");
+		}
+		return mv;
+	}
+	 
 		
 	
 

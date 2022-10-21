@@ -4,6 +4,7 @@
 }
 .main-sidebar {
 	width:20%;
+	border:solid 1px black;
 }
 .main-section {
 	width:60%;

@@ -40,10 +40,10 @@
 					</tr>
 					<tr>
 						<td>
-							<button>취소</button>
+							<button onclick="location.href='/common/list.kh'">취소</button>
 						</td>
 						<td>
-							<button>등록</button>
+							<button onclick="goList();">등록</button>
 						</td>
 					</tr>
 				</table>
@@ -61,6 +61,9 @@
 		  lang: "ko-KR",
 /* 		  focus : true, */
 		});
+		function goList(){
+			location.href="/common/list.kh";
+		}
 	</script>
 </body>
 </html>

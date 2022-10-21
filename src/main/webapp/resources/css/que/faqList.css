@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.faq-header{
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+}
+.faq-div {
+	text-align:center;
+}
+.faq-category {
+	background-color:#E4DDD3;
+}
+.faq-category:hover {
+	background-color:#D8BB9C;
+}
