@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+#order-title{
+    text-align : center;
+}
+#order-text{
+    font-weight: bold;
+    padding: 100px;
+}
+h5 {
+    font-weight : bold;
+}
+td{
+    text-align : center;
+    vertical-align :middle;
+}
+.acd-tr{
+    border-style: hidden;
+}
+.order-data-list{
+    width : 1400px;
+    padding-top: 100px;
+    padding-left : 250px;
+    padding-right : 250px;
+    margin : 0 auto;
+}
+.buyer-data-list{
+    width : 1400px;
+    padding-top: 100px;
+    padding-left : 250px;
+    padding-right : 250px;
+    margin : 0 auto;
+}
+.name-phone {
+    margin-left: 15px;
+    margin-right: 0;
+    width: 130px;
+    height: 30px;
+}
+.order-info-p{
+    text-align: left;
+    margin-left: 15px;
+    margin-right: 0;
+    width: 130px;
+    height: 30px;
+}
+.order-info-addr-p{
+    text-align: left;
+    margin-left: 15px;
+    margin-right: 0;
+    width: 500px;
+    height: 30px;
+}
+.Email-Addr{
+    margin-right: 0;
+    margin-left: 15px;
+    width: 200px;
+    height: 30px;
+}
+.detail-Addr{
+    margin-left: 15px;
+    width: 400px;
+    height: 30px;
+}
+#order-Info{
+    width : 900px;
+    height: 100px;
+    border-top: solid 3px #e2c9a6;
+    border-bottom: solid 3px #e2c9a6;
+    text-align : center;
+}
+#order-btn{
+    padding: 150px;
+    text-align : center;
+}
+.orderinfo-table-header{
+    background-color: lightgray;
+    height : 60px;
+    border: 1px solid #e2c9a6;
+}
+.orderinfo-table-body{
+    height : 100px;
+    border: 1px solid #e2c9a6;
+}
+#orderinfo-table-left{
+    background-color: lightgray;
+    border-bottom: 1px solid #e2c9a6;
+}
+#orderinfo-table-right{
+    background-color: lightgray;
+    border-bottom: 1px solid #e2c9a6;
+}
+.infocopy-btn{
+    width: 100px;
+    height: 30px;
+    font-size :10px;
+}
+.searchAddr-btn{
+    margin-left: 39%;
+    width: 90px;
+    height: 30px;
+    font-size :10px;
+}
+.btm-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  white-space : nowrap;
+}
+.product-img{
+    margin-top: 5%;
+    margin-bottom: 10%;
+    width : 80px;
+    height : 80px;
+}
+.total-price{
+    margin: auto 0;
+    color: red;
+}
+.product-title{
+    margin : auto 0;
+    text-align : left;
+}
+input {
+    text-align: center;
+    margin: 0 auto;
+}
+.buyer-info-table{
+    width : 600px;
+    text-align: left;
+}
+.buyer-info-td{
+    text-align: left;
+    width : 100px;
+    height : 60px;
+}
+.addr-info-td{
+    text-align: left;
+    width : 100px;
+    height : 43px;
+}
+.buyer-info-title{
+    margin-bottom: 20px;
+}
+#infocopy-btn-td{
+    text-align: left;
+}
+#searchAddr-btn-td{
+    text-align: left;
+}
+hr{
+    margin: auto 0;
+}
+p {
+    margin: auto 0;
+}
+.accordion-title{
+    font-weight: bold;
+    text-align: left;
+}
+.accordion-button{
+    padding: 0%;
+    padding-bottom: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+}

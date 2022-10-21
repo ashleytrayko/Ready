@@ -13,6 +13,8 @@
 		<typeAlias type="com.kh.ready.community.domain.Comm" 		alias="Comm"/>
 		<typeAlias type="com.kh.ready.community.domain.CommReply" 	alias="CommReply"/>
 		<typeAlias type="com.kh.ready.question.domain.Question" 	alias="Question"/>
+		<typeAlias type="com.kh.ready.cart.domain.Cart" 			alias="Cart"/>
+		<typeAlias type="com.kh.ready.order.domain.Order" 			alias="Order"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mappers.xml"/>
@@ -20,5 +22,7 @@
 		<mapper resource="mappers/comm-mappers.xml"/>
 		<mapper resource="mappers/comm-reply-mappers.xml"/>
 		<mapper resource="mappers/question-mappers.xml"/>
+		<mapper resource="mappers/cart-mappers.xml"/>
+		<mapper resource="mappers/order-mappers.xml"/>
 	</mappers>
 </configuration>

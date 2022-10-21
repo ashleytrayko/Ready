@@ -3,10 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="UserMapper">
-	<resultMap type="User" id="userResultMap">
-		<id property="userId" 				column="USER_ID"/>
-		<result property="userPassword" 		column="USER_PASSWORD"/>
+<mapper namespace="OrderMapper">
+	<resultMap type="Order" id="OrderResultMap">
+		<id property="orderNo" 				column="ORDER_NO"/>
+		<result property="bookNo" 		column="BOOK_NO"/>
+		<result property="userIndex" 		column="USER_INDEX"/>
+		<result property="productCount" 		column="PRODUCT_COUNT"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<result property="totalPrice" 		column="TOTAL_PRICE"/>
+		<result property="orderId" 		column="ORDER_R_NAME"/>
+		<result property="orderRName" 		column="ORDER_R_PHONE"/>
+		<result property="orderRPhone" 		column="ORDER_ADDRESS1"/>
+		<result property="orderAddress1" 		column="ORDER_ADDRESS2"/>
+		<result property="orderAddress2" 		column="ORDER_ADDRESS3"/>
+		<result property="orderAddress3" 		column="PAYMENT_METHOD"/>
+		<result property="paymentMethod" 		column="ORDER_STATE"/>
+		<result property="orderState" 		column="ORDER_DATE"/>
+		<result property="orderDate" 		column="ORDER_ID"/>
 	</resultMap>
+	
+	
 	
 </mapper>
