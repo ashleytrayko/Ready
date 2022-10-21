@@ -9,4 +9,6 @@ public interface BookService {
 	public int registerBook(Book book);
 
 	public List<Book> printAllBook();
+
+	public Book printOneByNo(Integer bookNo);
 }

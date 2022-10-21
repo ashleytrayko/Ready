@@ -12,4 +12,6 @@ public interface BookStore {
 
 	List<Book> selectAllBook(SqlSessionTemplate session);
 
+	Book selectOneByNo(SqlSessionTemplate session, Integer bookNo);
+
 }

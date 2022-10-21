@@ -28,4 +28,10 @@ public class BookServiceImpl implements BookService{
 		return bList;
 	}
 
+	@Override
+	public Book printOneByNo(Integer bookNo) {
+		Book book = bStore.selectOneByNo(session, bookNo);
+		return book;
+	}
+
 }

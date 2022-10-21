@@ -23,4 +23,10 @@ public class BookStoreLogic implements BookStore{
 		return bList;
 	}
 
+	@Override
+	public Book selectOneByNo(SqlSessionTemplate session, Integer bookNo) {
+		Book book = session.selectOne("BookMapper.selectOneBook", bookNo);
+		return book;
+	}
+
 }

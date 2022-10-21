@@ -26,4 +26,8 @@
 	<select id="selectAllBook" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL
 	</select>
+	
+	<select id="selectOneBook" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_NO = #{bookNo }
+	</select>
 </mapper>

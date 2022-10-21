@@ -36,9 +36,9 @@ public class AladinApiController {
 		
 		//2. 오픈 api의 요청 규격에 맞는 파라미터 생성
 		urlBuilder.append("?" + URLEncoder.encode("ttbkey", "UTF-8") + "=ttbspeen121915001");
-		urlBuilder.append("&" + URLEncoder.encode("Query", "UTF-8") + "=" + URLEncoder.encode("aladdin","UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("Query", "UTF-8") + "=" + URLEncoder.encode("여행","UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("QueryType","UTF-8") + "=" + URLEncoder.encode("Title", "UTF-8"));
-		urlBuilder.append("&" + URLEncoder.encode("MaxResults","UTF-8") + "=" + URLEncoder.encode("5", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("MaxResults","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("start","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("SearchTarget","UTF-8") + "=" + URLEncoder.encode("Book", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("output","UTF-8") + "=" + URLEncoder.encode("js", "UTF-8"));
