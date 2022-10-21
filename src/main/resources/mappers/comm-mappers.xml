@@ -21,4 +21,27 @@
 	<insert id="insertBoard">
 		INSERT INTO COMMUNITY_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{commTitle}, #{commWriter}, #{commContents}, #{commFilename}, #{commFileRename}, #{commFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM COMMUNITY_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				COMM_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				COMM_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				COMM_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				COMM_TITLE LIKE '%'||#{searchValue}||'%'
+				OR COMM_CONTENTS LIKE '%'||#{searchValue}||'%'
+				OR COMM_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			AND C_STATUS = 'Y'
+		</where>
+	</select>
+	<select id="selectAllBoard" resultMap="commResultMap">
+		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' ORDER BY BOARD_NO DESC
+	</select>
 </mapper>
