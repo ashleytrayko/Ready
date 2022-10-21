@@ -1,5 +1,6 @@
 package com.kh.ready.user.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-public class User {
+public class User implements Serializable{
 	
 	private String id;
 	private String password;

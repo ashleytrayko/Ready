@@ -18,25 +18,26 @@
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/" access="permitAll"/>
-		<security:intercept-url pattern="/resources/**" access="isAnonymous()" />
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
 		<security:intercept-url pattern="/common/**" access="permitAll"/>
 		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<security:form-login login-page="/common/loginForm"
+		<security:form-login 
+							login-page="/login"
 							username-parameter="id"
-							login-processing-url="/login-processing"
+							password-parameter="password"
+							login-processing-url="/login"
 							default-target-url="/"
 							always-use-default-target="true"
-							authentication-success-forward-url="/"
-							authentication-failure-handler-ref="userLoginFailHandler"/>
+							authentication-success-forward-url="/"/>
 		<security:logout logout-success-url="/"
 						invalidate-session="true"
 						delete-cookies="true"/>
 	</security:http>
 
 	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="customUserService" >
-			<security:password-encoder ref="encoder" hash="bcrypt"/>
+		<security:authentication-provider user-service-ref="customUserService">
+			<security:password-encoder ref="encoder"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

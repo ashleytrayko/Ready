@@ -34,13 +34,13 @@ public class UserLoginFailHandler implements AuthenticationFailureHandler{
 			request.setAttribute("loginFailMessage", "잠긴 계정입니다.");
 		
 		}else if(exception instanceof DisabledException) {
-			request.setAttribute("loginFailMsg", "비활성화된 계정입니다..");
+			request.setAttribute("loginFailMessage", "비활성화된 계정입니다..");
 		
 		}else if(exception instanceof AccountExpiredException) {
-			request.setAttribute("loginFailMsg", "만료된 계정입니다..");
+			request.setAttribute("loginFailMessage", "만료된 계정입니다..");
 		
 		}else if(exception instanceof CredentialsExpiredException) {
-			request.setAttribute("loginFailMsg", "비밀번호가 만료되었습니다.");
+			request.setAttribute("loginFailMessage", "비밀번호가 만료되었습니다.");
 		}
 		// 로그인 페이지로 다시 포워딩
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
