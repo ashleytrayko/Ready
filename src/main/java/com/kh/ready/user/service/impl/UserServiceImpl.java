@@ -23,16 +23,18 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public String userRegister(User user) { 
+		// password encoding
 		System.out.println("Before encoder : " + user.getUserPassword());
 		String encodedPassword = encoder.encode(user.getUserPassword());
 		System.out.println("After encoder : " + encodedPassword);
 		user.setUserPassword(encodedPassword);
-		int birthYear = user.getUserBirthday().
+		
+		// Setting UserAge
+		LocalDate birthDay = user.getUserBirthday().toLocalDate();
+		int birthYear = birthDay.getYear();
 		LocalDate now = LocalDate.now();
 		int thisYear = now.getYear();
-		System.out.println(birthYear);
-		System.out.println(thisYear);
-		System.out.println(thisYear - birthYear);
+		user.setUserAge(thisYear- birthYear);
 		System.out.println("register userinfo : " + user.toString());
 		
 		int result = userRepository.insertUser(user);

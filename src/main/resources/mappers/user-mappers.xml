@@ -31,6 +31,6 @@
 	</insert>
 	
 	<select id="selectOneUser" parameterType="String" resultMap="userResultMap">
-		SELECT * FROM USER_TBL WHERE ID = #{userId}
+		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
 	</select>
 </mapper>

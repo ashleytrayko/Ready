@@ -32,6 +32,25 @@ public class UserController {
 		return "home";
 	}
 	
+	@GetMapping("/forget-id")
+	public String findIdPage() {
+		return "/common/forgetId";
+	}
+	
+	@PostMapping("/forget-id")
+	public String findId() {
+		return "";
+	}
+	
+	@GetMapping("/forget-password")
+	public String findPwdPage() {
+		return "/common/forgetPassword";
+	}
+	
+	@PostMapping("/forget-password")
+	public String findPassword() {
+		return "";
+	}
 
 	@GetMapping("/user")
 	public String userTest() {
@@ -48,6 +67,6 @@ public class UserController {
 		System.out.println(user.toString());
 		String result = userService.userRegister(user);
 		System.out.println(result);
-		return "/";
+		return "home";
 	}
 }
