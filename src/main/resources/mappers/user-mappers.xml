@@ -4,18 +4,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="UserMapper">
 	<resultMap type="User" id="userResultMap">
-		<id property="id" 					column="ID"/>
-		<result property="password" 		column="PASSWORD"/>
-		<result property="name" 			column="NAME"/>
-		<result property="auth" 			column="AUTH"/>
-		<result property="enabled" 			column="ENABLED"/>
+		<id 	property="userIndex" 			column="USER_INDEX"/>
+		<result property="userId"				column="USER_ID"/>
+		<result property="userPassword" 		column="USER_PASSWORD"/>
+		<result property="userName" 			column="USER_NAME"/>
+		<result property="userEmail"			column="USER_EMAIL"/>
+		<result property="userPostcode"			column="USER_POSTCODE"/>
+		<result property="userAddress" 			column="USER_ADDRESS"/>
+		<result property="userDetailAddress" 	column="USER_DETAIL_ADRESS"/>
+		<result property="userPhone"			column="USER_PHONE"/>
+		<result property="userNickname"			column="USER_NICKNAME"/>
+		<result property="userPurchase"			column="USER_PURCHASE"/>
+		<result property="userTier"				column="USER_TIER"/>
+		<result property="userEnrollDate"		column="USER_ENROLL_DATE"/>
+		<result property="userReserves"			column="USER_RESERVES"/>
+		<result property="userBirthday"			column="USER_BIRTHDAY"/>
+		<result property="userAge"				column="USER_AGE"/>
+		<result property="userRole" 			column="USER_ROLE"/>
+		<result property="enabled" 				column="ENABLED"/>
 	</resultMap>
 	
 	<insert id="insertUser">
-		INSERT INTO USER_TBL VALUES (#{id}, #{password}, #{name}, DEFAULT, DEFAULT)
+		INSERT INTO USER_TBL VALUES 
+		(SEQ_USER_INDEX.NEXTVAL, #{userId}, #{userPassword}, #{userName}, #{userEmail}, #{userPostcode}, #{userAddress},
+		#{userDetailAddress}, #{userPhone}, #{userNickname}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{userBirthday}, #{userAge}, DEFAULT, DEFAULT)
 	</insert>
 	
 	<select id="selectOneUser" parameterType="String" resultMap="userResultMap">
-		SELECT * FROM USER_TBL WHERE ID = #{id}
+		SELECT * FROM USER_TBL WHERE ID = #{userId}
 	</select>
 </mapper>

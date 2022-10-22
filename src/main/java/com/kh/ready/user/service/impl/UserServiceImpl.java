@@ -1,5 +1,9 @@
 package com.kh.ready.user.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,11 +22,17 @@ public class UserServiceImpl implements UserService{
 	private BCryptPasswordEncoder encoder;
 	
 	@Override
-	public String userRegister(User user) {
-		System.out.println("Before encoder : " + user.getPassword());
-		String encodedPassword = encoder.encode(user.getPassword());
+	public String userRegister(User user) { 
+		System.out.println("Before encoder : " + user.getUserPassword());
+		String encodedPassword = encoder.encode(user.getUserPassword());
 		System.out.println("After encoder : " + encodedPassword);
-		user.setPassword(encodedPassword);
+		user.setUserPassword(encodedPassword);
+		int birthYear = user.getUserBirthday().
+		LocalDate now = LocalDate.now();
+		int thisYear = now.getYear();
+		System.out.println(birthYear);
+		System.out.println(thisYear);
+		System.out.println(thisYear - birthYear);
 		System.out.println("register userinfo : " + user.toString());
 		
 		int result = userRepository.insertUser(user);

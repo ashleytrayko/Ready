@@ -12,5 +12,5 @@ public interface UserRepository {
 	
 	public int insertUser(User user);
 	
-	public User getUserById(String id);
+	public User getUserById(String userId);
 }
