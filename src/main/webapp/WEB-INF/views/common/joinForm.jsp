@@ -4,11 +4,30 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <%@ include file="../main/header.jsp" %>
 
+<style>
+span.guide {
+	display: none;
+	font-size: 12px;
+	top: 12px;
+	right: 10px;
+}
+
+span.ok {
+	color: green;
+}
+
+span.error {
+	color: red;
+}
+</style>
+
 <div class="card container col-md-4">
 	<form method="post" action="/join">
 		<div class="form-group">
 			<label for="userId">아이디</label> 
 			<input type="text" class="form-control" placeholder="?자 이내, 특수문자 ㄴ" id="userId" name="userId">
+			<span class="guide ok">이 아이디는 사용 가능합니다.</span> 
+			<span class="guide error">이 아이디는 사용 할 수 없습니다.</span>
 		</div>
 		<div class="form-group">
 			<label for="userPassword">패스워드 </label> 
@@ -17,6 +36,8 @@
 		<div class="form-group">
 			<label for="userPassword">패스워드 확인 </label> 
 			<input type="password" class="form-control" placeholder="Enter password" id="userPasswordCheck">
+			<span class="guide ok pwd">패스워드가 일치합니다.</span> 
+			<span class="guide error pwd">패스워드가 일치하지 않습니다.</span>
 		</div>
 		<div class="form-group">
 			<label for="userName">성명 </label> 
@@ -56,7 +77,58 @@
 	</form>
 	</div>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
+	
+	// 패스워드 확인 -> 정규식 추가
+	$("#userPasswordCheck").keyup(function(e){
+		let checkPwd = e.target.value;
+		const pwd = $("#userPassword").val();
+		if(checkPwd !== ""){
+			$(".ok.pwd").css("display","none");
+			$(".error.pwd").css("display","none");
+			if(checkPwd !== pwd){
+				$(".error.pwd").css("display","block");
+			}else if(checkPwd === pwd){
+				$(".ok.pwd").css("display","block");
+				console.log(checkPwd);
+				console.log(pwd);
+			}
+		}else{
+			$(".ok.pwd").css("display","none");
+			$(".error.pwd").css("display","none");
+		}
+	
+	});
+	
+	// 아이디 중복확인 -> 완료 , 정규식 추가
+	$("#userId").keyup(function(e){
+		let checkId = e.target.value;
+		if(checkId !== ""){
+			$(".ok").css("display","none");
+			$(".error").css("display","none");
+			$.ajax({
+				url : "/checkId",
+				data : {
+					"userId" : checkId
+				},
+				type : "get",
+				success : function(result){
+					if(result == "itsOk"){
+						$(".ok").css("display","block");
+					}else{
+						$(".error").css("display","block");
+					}
+				},
+				error : function(){
+					alert("서버 통신 에러!");
+				}
+			})
+		}else{
+			$(".ok").css("display","none");
+			$(".error").css("display",'none');
+		}
+	})
     function addrSearch(){
         new daum.Postcode({
             oncomplete: function(data) {

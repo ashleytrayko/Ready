@@ -45,5 +45,15 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public String findUserById(String userId) {
+		User user = userRepository.getUserById(userId);
+		if(user != null) {
+			return "exist";
+		}else {
+			return "itsOk";
+		}
+	}
+
 
 }
