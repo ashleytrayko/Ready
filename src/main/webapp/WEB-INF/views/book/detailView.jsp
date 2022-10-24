@@ -17,7 +17,7 @@
 <body>
 	<input type="hidden" id="bookNo" value="${book.bookNo }">
 	<input type="hidden" id="productPrice"  value="${book.priceSales }">
-
+	${principal }
     <div class="main-contents">
 		<div class="col-md-3">여기는 사이드바</div>
 		

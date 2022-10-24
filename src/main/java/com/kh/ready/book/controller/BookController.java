@@ -1,5 +1,6 @@
 package com.kh.ready.book.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -49,10 +50,10 @@ public class BookController {
 	
 	//평점 등록
 	@RequestMapping(value="/book/addReview.kh", method=RequestMethod.POST)
-	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, HttpSession session) {
-		User user = (User)session.getAttribute("loginUser");
-		String userId = user.getId();
+	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal) {
+		String userId = principal.getName();
 		review.setUserId(userId);
+		System.out.println(review);
 		int bookNo = review.getBookNo();
 		int result = bService.registerReview(review);
 		if(result > 0) {
