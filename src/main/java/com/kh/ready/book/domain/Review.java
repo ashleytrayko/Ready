@@ -1,6 +1,6 @@
 package com.kh.ready.book.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Review {
 	//도서 평점

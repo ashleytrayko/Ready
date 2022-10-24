@@ -53,4 +53,10 @@ public class BookServiceImpl implements BookService{
 		return result;
 	}
 
+	@Override
+	public List<Review> printAllReview(Integer bookNo) {
+		List<Review> rList = bStore.selectAllReview(session, bookNo);
+		return rList;
+	}
+
 }

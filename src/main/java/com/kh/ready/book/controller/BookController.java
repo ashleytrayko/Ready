@@ -36,10 +36,14 @@ public class BookController {
 	
 	//도서 세부조회
 	@RequestMapping(value="/book/detailView.kh", method=RequestMethod.GET)
-	public ModelAndView bookDetailView(ModelAndView mv, @RequestParam("bookNo") Integer bookNo) {
+	public ModelAndView bookDetailView(ModelAndView mv, @RequestParam("bookNo") Integer bookNo, HttpSession session, Principal principal) {
 		try {
 			Book book = bService.printOneByNo(bookNo);
+			List<Review> rList = bService.printAllReview(bookNo);
+			session.setAttribute("bookNo", book.getBookNo());
+			mv.addObject("rList", rList);
 			mv.addObject("book", book);
+			mv.addObject("principal", principal);
 			mv.setViewName("book/detailView");
 		} catch(Exception e) {
 			mv.addObject("msg", e.toString());
@@ -53,9 +57,9 @@ public class BookController {
 	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal) {
 		String userId = principal.getName();
 		review.setUserId(userId);
-		System.out.println(review);
 		int bookNo = review.getBookNo();
 		int result = bService.registerReview(review);
+		System.out.println(principal);
 		if(result > 0) {
 			mv.setViewName("redirect:/book/detailView.kh?bookNo="+bookNo);
 		} 
@@ -73,7 +77,7 @@ public class BookController {
 	@RequestMapping(value="/book/removeReview.kh", method=RequestMethod.POST)
 	public String removeReview(@RequestParam("reviewNo") Integer reviewNo) {
 		int result = bService.removeReview(reviewNo);
-		return "";
+		return "redirect:/book/bookList.kh";
 	}
 	
 }

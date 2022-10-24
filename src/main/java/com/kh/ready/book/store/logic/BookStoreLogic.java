@@ -48,4 +48,10 @@ public class BookStoreLogic implements BookStore{
 		return result;
 	}
 
+	@Override
+	public List<Review> selectAllReview(SqlSessionTemplate session, Integer bookNo) {
+		List<Review> rList = session.selectList("BookMapper.selectAllReview", bookNo);
+		return rList;
+	}
+
 }
