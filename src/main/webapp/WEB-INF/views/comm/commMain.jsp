@@ -11,7 +11,9 @@
 <body>
 	<jsp:include page="../main/commHeader.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar">여기는 사이드바
+		
+		</div>
 		<div class="main-section">
 		<!-- 이 안에서 작업! 여기가 본문-->
 		

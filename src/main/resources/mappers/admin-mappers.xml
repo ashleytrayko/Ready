@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdminMapper">
+	<resultMap type="Banner" id="bannerResultMap">
+		<id 	property="bannerNumber" 		column="BANNER_NUMBER"/>
+		<result property="bannerName"			column="BANNER_NAME"/>
+		<result property="bannerRename" 		column="BANNER_RENAME"/>
+		<result property="bannerPath" 			column="BANNER_PATH"/>
+	</resultMap>
+	
+	<insert id="insertBanner">
+		INSERT INTO BANNER_TBL VALUES(SEQ_BANNER_NUMBER.NEXTVAL, #{bannerName}, #{bannerRename}, #{bannerPath})
+	</insert>
+	
+</mapper>

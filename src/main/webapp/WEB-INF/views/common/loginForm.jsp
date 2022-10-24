@@ -31,15 +31,15 @@ span.error {
 		<h2>Read'y 로그인</h2>
 		<h4>로그인해서 나에게 맞는 책을 추천받으세요.</h4>
 	</div>
-	<div class="card container col-lg-5 mt-5">
+	<div class="card container col-lg-5 mt-5 p-5">
 		<form method="post" action="/login">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="form-group">
-				<label for="userId">id:</label> <input type="text" class="form-control" placeholder="Enter id" id="userId" name="userId">
+				<input type="text" class="form-control" placeholder="아이디" id="userId" name="userId">
 			</div>
 			<div class="form-group">
-				<label for="userPassword">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="userPassword" name="userPassword">
-				<span class="error pwd">CapsLock이 켜져 있습니다.</span>
+				<input type="password" class="form-control" placeholder="패스워드" id="userPassword" name="userPassword">
+				<span class="guide error" id="capslock">CapsLock이 켜져 있습니다.</span>
 			</div>
 			<div class="form-group form-check">
 				<label class="form-check-label"> <input class="form-check-input" type="checkbox"> Remember me
@@ -57,11 +57,22 @@ span.error {
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
-		$("#userPassword").on("focus",function(e){
-			if(e.getModifierState("CapsLock")){
-				$(".error pwd").css("display","block");
-			}
-		})
+		
+	
+		// 패스워드 입력필드
+		const input = document.getElementById("userPassword");
+		
+		// 텍스트 필드
+		const text = document.getElementById("capslock");
+
+		input.addEventListener("keyup", function(event) {
+
+		  if (event.getModifierState("CapsLock")) {
+	  	  	text.style.display = "block";
+		  } else {
+			text.style.display = "none"
+		  }
+		});
 	</script>
 </body>
 </html>

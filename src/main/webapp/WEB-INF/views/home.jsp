@@ -4,8 +4,6 @@
 
 <%@ include file="main/header.jsp" %>
 
-<h2>로그인 유저</h2>
-
-
+<p>${principal.username}</p>
 </body>
 </html>
