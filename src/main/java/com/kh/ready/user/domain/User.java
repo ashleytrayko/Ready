@@ -1,6 +1,7 @@
 package com.kh.ready.user.domain;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,53 +15,188 @@ import lombok.NoArgsConstructor;
 
 public class User implements Serializable{
 	
-	private String id;
-	private String password;
-	private String name;
-	private String auth;
-	private String enabled;
+	private long userIndex; //pk // 자동부여
+	private String userId;
+	private String userPassword;
+	private String userName;
+	private String userEmail;
+	private String userPostcode;
+	private String userAddress;
+	private String userDetailAddress;
+	private String userPhone;
+	private String userNickname;
+	private int userPurchase; // 자동부여
+	private String userTier; // 자동부여
+	private Date userEnrollDate; // 자동부여
+	private int userReserves; // 자동부여
+	private Date userBirthday;
+	private int userAge;
+	private String userRole; // 자동부여
+	private String enabled; // 자동부여
+	
+	// 자동부여항목들은 추후에 테이블 따로 둘수도 있음
 	
 	public User() {}
-	
-	public User(String id, String password, String name, String auth, String enabled) {
+
+	public User(long userIndex, String userId, String userPassword, String userName, String userEmail,
+			String userPostcode, String userAddress, String userDetailAddress, String userPhone, String userNickname,
+			int userPurchase, String userTier, Date userEnrollDate, int userReserves, Date userBirthday, int userAge,
+			String userRole, String enabled) {
 		super();
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.auth = auth;
+		this.userIndex = userIndex;
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPostcode = userPostcode;
+		this.userAddress = userAddress;
+		this.userDetailAddress = userDetailAddress;
+		this.userPhone = userPhone;
+		this.userNickname = userNickname;
+		this.userPurchase = userPurchase;
+		this.userTier = userTier;
+		this.userEnrollDate = userEnrollDate;
+		this.userReserves = userReserves;
+		this.userBirthday = userBirthday;
+		this.userAge = userAge;
+		this.userRole = userRole;
 		this.enabled = enabled;
 	}
 
-	public String getId() {
-		return id;
+	public long getUserIndex() {
+		return userIndex;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserIndex(long userIndex) {
+		this.userIndex = userIndex;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getName() {
-		return name;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public String getAuth() {
-		return auth;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setAuth(String auth) {
-		this.auth = auth;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public String getUserPostcode() {
+		return userPostcode;
+	}
+
+	public void setUserPostcode(String userPostcode) {
+		this.userPostcode = userPostcode;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
+	}
+
+	public String getUserDetailAddress() {
+		return userDetailAddress;
+	}
+
+	public void setUserDetailAddress(String userDetailAddress) {
+		this.userDetailAddress = userDetailAddress;
+	}
+
+	public String getUserPhone() {
+		return userPhone;
+	}
+
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
+	public int getUserPurchase() {
+		return userPurchase;
+	}
+
+	public void setUserPurchase(int userPurchase) {
+		this.userPurchase = userPurchase;
+	}
+
+	public String getUserTier() {
+		return userTier;
+	}
+
+	public void setUserTier(String userTier) {
+		this.userTier = userTier;
+	}
+
+	public Date getUserEnrollDate() {
+		return userEnrollDate;
+	}
+
+	public void setUserEnrollDate(Date userEnrollDate) {
+		this.userEnrollDate = userEnrollDate;
+	}
+
+	public int getUserReserves() {
+		return userReserves;
+	}
+
+	public void setUserReserves(int userReserves) {
+		this.userReserves = userReserves;
+	}
+
+	public Date getUserBirthday() {
+		return userBirthday;
+	}
+
+	public void setUserBirthday(Date userBirthday) {
+		this.userBirthday = userBirthday;
+	}
+
+	public int getUserAge() {
+		return userAge;
+	}
+
+	public void setUserAge(int userAge) {
+		this.userAge = userAge;
+	}
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 
 	public String getEnabled() {
@@ -73,8 +209,12 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", password=" + password + ", name=" + name + ", auth=" + auth + ", enabled="
-				+ enabled + "]";
+		return "User [userIndex=" + userIndex + ", userId=" + userId + ", userPassword=" + userPassword + ", userName="
+				+ userName + ", userEmail=" + userEmail + ", userPostcode=" + userPostcode + ", userAddress="
+				+ userAddress + ", userDetailAddress=" + userDetailAddress + ", userPhone=" + userPhone
+				+ ", userNickname=" + userNickname + ", userPurchase=" + userPurchase + ", userTier=" + userTier
+				+ ", userEnrollDate=" + userEnrollDate + ", userReserves=" + userReserves + ", userBirthday="
+				+ userBirthday + ", userAge=" + userAge + ", userRole=" + userRole + ", enabled=" + enabled + "]";
 	}
 	
 	

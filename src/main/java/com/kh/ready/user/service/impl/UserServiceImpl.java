@@ -1,5 +1,9 @@
 package com.kh.ready.user.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,11 +22,19 @@ public class UserServiceImpl implements UserService{
 	private BCryptPasswordEncoder encoder;
 	
 	@Override
-	public String userRegister(User user) {
-		System.out.println("Before encoder : " + user.getPassword());
-		String encodedPassword = encoder.encode(user.getPassword());
+	public String userRegister(User user) { 
+		// password encoding
+		System.out.println("Before encoder : " + user.getUserPassword());
+		String encodedPassword = encoder.encode(user.getUserPassword());
 		System.out.println("After encoder : " + encodedPassword);
-		user.setPassword(encodedPassword);
+		user.setUserPassword(encodedPassword);
+		
+		// Setting UserAge
+		LocalDate birthDay = user.getUserBirthday().toLocalDate();
+		int birthYear = birthDay.getYear();
+		LocalDate now = LocalDate.now();
+		int thisYear = now.getYear();
+		user.setUserAge(thisYear- birthYear);
 		System.out.println("register userinfo : " + user.toString());
 		
 		int result = userRepository.insertUser(user);
@@ -30,6 +42,16 @@ public class UserServiceImpl implements UserService{
 			return "Insert Successfully Done!";
 		}else {
 			return "Insert Failed!";
+		}
+	}
+
+	@Override
+	public String findUserById(String userId) {
+		User user = userRepository.getUserById(userId);
+		if(user != null) {
+			return "exist";
+		}else {
+			return "itsOk";
 		}
 	}
 
