@@ -1,5 +1,7 @@
 package com.kh.ready.cart.store.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,8 +18,16 @@ public class CartStoreLogic implements CartStore{
 	
 	@Override
 	public int insertCart(Cart cart) {
-		int result = session.insert("CartMapper.insertCart", cart);
-		return result;
+		
+		return session.insert("CartMapper.insertCart", cart);
 	}
+
+
+	@Override
+	public List<Cart> getCartdataByUserId(String userId) {
+
+		return session.selectList("CartMapper.selectCartListByUserId", userId);
+	}
+
 	
 }
