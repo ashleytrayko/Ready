@@ -20,16 +20,14 @@
 	<h2>Read'y 비밀번호 찾기 </h2>
 	<h4>가입할때 입력하셨던 정보를 확인할게요</h4>
 </div>
-	<div class="card container col-lg-5">
+	<div class="card container col-lg-5 mt-5 p-5">
 		<form method="post" action="/forget-password">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="form-group">
-				<label for="userId">id:</label> 
-				<input type="text" class="form-control" placeholder="Enter id" id="userId" name="userId">
+				<input type="text" class="form-control" placeholder="회원님의 아이디를 입력해주세요." id="userId" name="userId">
 			</div>
 			<div class="form-group">
-				<label for="userEmail">이메일:</label> 
-				<input type="email" class="form-control" placeholder="Enter Email" id="userEmail"name="userEmail">
+				<input type="email" class="form-control" placeholder="가입시 등록하신 이메일을 입력해주세요." id="userEmail"name="userEmail">
 			</div>
 			<button type="submit" class="btn btn-primary col-lg">비밀번호 찾기</button>
 		</form>
