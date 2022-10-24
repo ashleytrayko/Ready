@@ -8,6 +8,10 @@
 }
 .main-section {
 	width:60%;
+	/* display:flex;
+	flex-direction:column;
+	justify-contents:center;
+	align-items:center; */
 }
 .main-p {
 	font-size:12px;

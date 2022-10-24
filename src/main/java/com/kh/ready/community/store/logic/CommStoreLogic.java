@@ -55,4 +55,22 @@ public class CommStoreLogic implements CommStore{
 		return cRList;
 	}
 
+	@Override
+	public int updateComm(SqlSession session, Comm comm) {
+		int result = session.update("CommMapper.updateComm", comm);
+		return result;
+	}
+
+	@Override
+	public int updateBoardRemove(SqlSession session, int boardNo) {
+		int result = session.update("CommMapper.updateBoardRemove", boardNo);
+		return result;
+	}
+
+	@Override
+	public int insertReply(SqlSession session, CommReply cReply) {
+		int result = session.insert("CommReplyMapper.insertReply", cReply);
+		return result;
+	}
+
 }

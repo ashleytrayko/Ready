@@ -107,6 +107,8 @@ public class CommReply {
 				+ ", rGroup=" + rGroup + ", rParentReplyNo=" + rParentReplyNo + ", rChildReplyNo=" + rChildReplyNo
 				+ "]";
 	}
+
+
 	
 	
 }

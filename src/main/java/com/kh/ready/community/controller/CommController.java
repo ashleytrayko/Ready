@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,7 +64,7 @@ public class CommController {
 	 * @param page
 	 * @return
 	 */
-	@RequestMapping(value="comm/list.kh", method=RequestMethod.GET)
+	@RequestMapping(value="/comm/list.kh", method=RequestMethod.GET)
 	public ModelAndView viewList(
 			ModelAndView mv
 			, @RequestParam(value="page", required=false) Integer page) {
@@ -125,8 +127,103 @@ public class CommController {
 		return mv;
 	}
 	 
-		
+	@RequestMapping(value = "/comm/modifyView.kh", method = RequestMethod.GET)
+	public ModelAndView commModifyView(ModelAndView mv, @RequestParam("boardNo") Integer boardNo,
+			@RequestParam("page") int page) {
+		try {
+			Comm comm = cService.printOneByNo(boardNo);
+			mv.addObject("comm", comm);
+			mv.addObject("page", page);
+			mv.setViewName("comm/boardModifyForm");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("main/errorPage");
+		}
+		return mv;
+	}
 	
+	
+	
+	/**
+	 * 게시글 수정
+	 * 
+	 * @param board
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value = "/comm/modify.kh", method = RequestMethod.POST)
+	public ModelAndView commModify(@ModelAttribute Comm comm, ModelAndView mv,
+			@RequestParam(value = "reloadFile", required = false) MultipartFile reloadFile,
+			@RequestParam("page") Integer page, HttpServletRequest request) {
+		try {
+			if (reloadFile != null) {
+				String commFilename = reloadFile.getOriginalFilename();
+				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
+				// 파일삭제
+				String root = request.getSession().getServletContext().getRealPath("resources");
+				String savedPath = root + "\\buploadFiles";
+				File file = new File(savedPath + "\\" + comm.getCommFileRename());
+				if (file.exists()) {
+					file.delete();
+				}
+				// 파일 다시 저장
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String commFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
+						+ commFilename.substring(commFilename.lastIndexOf(".") + 1);
+				String commFilepath = savedPath + "\\" + commFileRename;
+				reloadFile.transferTo(new File(commFilepath));
+				comm.setCommFilename(commFilename);
+				comm.setCommFileRename(commFileRename);
+			}
+			int result = cService.modifyBoard(comm);
+			mv.addObject("comm", comm);
+//			mv.setViewName("redirect:/free/detail.kh?boardNo=" + free.getBoardNo() + "&page=" + page);
+			mv.setViewName("redirect:/comm/list.kh?page=" + page);
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 게시글 삭제
+	 * 
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/comm/remove.kh", method = RequestMethod.GET)
+	public String commRemove(HttpSession session, Model model, @RequestParam("page") Integer page) {
+		try {
+			int boardNo = (int) session.getAttribute("boardNo");
+			int result = cService.removeOneByNo(boardNo);
+			if (result > 0) {
+				session.removeAttribute("boardNo");
+			}
+			return "redirect:/comm/list.kh?page=" + page;
+		} catch (Exception e) {
+			model.addAttribute("msg", e.toString());
+			return "main/errorPage";
+		}
+	}
+	
+	/**
+	 * 댓글 등록
+	 * @param reply
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/comm/replyAdd.kh", method=RequestMethod.POST)
+	public String boardReplyAdd(
+			@ModelAttribute CommReply cReply) {		// RequstParam 대신 ModelAttribute를 사용할 수 있는 이유는
+		cReply.setrWriter("khuser01");		// 로그인한 아이디
+		int result = cService.registerReply(cReply);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 
 	
 }

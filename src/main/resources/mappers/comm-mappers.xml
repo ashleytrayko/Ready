@@ -19,10 +19,16 @@
 	</resultMap>
 	
 	<insert id="insertBoard">
-		INSERT INTO COMMUNITY_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{commTitle}, #{commWriter}, #{commContents}, #{commFilename}, #{commFileRename}, #{commFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO COMMUNITY_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{commWriter}, #{commTitle}, #{commContents}, #{commFilename}, #{commFileRename}, #{commFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	<update id="updateCount">
 		UPDATE COMMUNITY_TBL SET C_COUNT = C_COUNT + 1 WHERE BOARD_NO = #{boardNo}
+	</update>
+	<update id="updateComm">
+		UPDATE COMMUNITY_TBL SET COMM_TITLE = #{commTitle}, COMM_CONTENTS = #{commContents}, C_UPDATE_DATE = DEFAULT WHERE BOARD_NO = #{boardNo}
+	</update>
+	<update id="updateBoardRemove">
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'N' WHERE BOARD_NO = #{boardNo}
 	</update>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM COMMUNITY_TBL

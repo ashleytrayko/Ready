@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+	
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +33,7 @@
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td>${user.userId }</td>
+						<td>${comm.commWriter }</td>
 						<td>작성일</td>
 						<td>${comm.cCreateDate }</td>
 					</tr>
@@ -38,17 +45,17 @@
 						<td>추천수</td>
 						<td>${comm.cLike }</td>
 					</tr>
-					<%-- <c:if test="${loginUser.userNickname eq comm.commWriter }">
+					<c:if test="${principal.username eq comm.commWriter }">
 						<tr>
 							<td colspan="2" align="center">
 								<a href="/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}">글 수정</a>
 								<a href="#" onclick="commRemove(${page});">삭제하기</a>
 							</td>
 						</tr>
-					</c:if> --%>
+					</c:if>
 					</table>
 					<!-- 	댓글 등록 -->
-					<form action="/comm/addReply.kh" method="post">
+					<form action="/comm/replyAdd.kh" method="post">
 						<input type="hidden" name="page" value="${page }">
 						<input type="hidden" name="boardNo" value="${comm.boardNo }">
 						<table align="center" width="500" border="1">

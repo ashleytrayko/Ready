@@ -17,4 +17,10 @@ public interface CommService {
 
 	List<CommReply> printAllReply(Integer boardNo);
 
+	int modifyBoard(Comm comm);
+
+	int removeOneByNo(int boardNo);
+
+	int registerReply(CommReply cReply);
+
 }

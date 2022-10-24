@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
@@ -22,6 +23,11 @@
       crossorigin="anonymous"
     />
     <script src="https://kit.fontawesome.com/41472d2b7a.js" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -82,20 +88,30 @@
     <nav class="py-2 bg-light border-bottom">
       <div class="container d-flex flex-wrap">
         <ul class="nav me-auto"></ul>
-        <ul class="nav">
-          <li class="nav-item">
-            <a href="#" class="nav-link link-dark px-2">로그인</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link link-dark px-2">회원가입</a>
-          </li>
-        </ul>
+        <c:choose>
+			<c:when test="${empty principal }">
+        		<ul class="nav">
+		        	<li class="nav-item">
+		            <a href="/login" class="nav-link link-dark px-2">로그인</a>
+		         	</li>
+		          	<li class="nav-item">
+		            <a href="/join" class="nav-link link-dark px-2">회원가입</a>
+	          		</li>
+        		</ul>
+        	</c:when>
+			<c:otherwise>
+				<ul class="nav">
+					<li class="nav-item"><a href="/logout"
+						class="nav-link link-dark px-2">로그아웃</a></li>
+				</ul>
+			</c:otherwise>
+		</c:choose>
       </div>
     </nav>
     <header class="py-3 mb-4 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
         <a
-          href="/"
+          href="/comm/list.kh"
           class="d-flex mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
         >
           <span class="fs-4 center">
@@ -143,10 +159,4 @@
       </div>
     </header>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+

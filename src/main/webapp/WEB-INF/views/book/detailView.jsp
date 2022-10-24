@@ -12,6 +12,7 @@
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
+	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 
 </head>
 <body>

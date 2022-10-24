@@ -52,5 +52,20 @@ public class CommServiceImpl implements CommService{
 		List<CommReply> cRList = cStore.selectAllReply(session, boardNo);
 		return cRList;
 	}
+	@Override
+	public int modifyBoard(Comm comm) {
+		int result = cStore.updateComm(session, comm);
+		return result;
+	}
+	@Override
+	public int removeOneByNo(int boardNo) {
+		int result = cStore.updateBoardRemove(session, boardNo);
+		return result;
+	}
+	@Override
+	public int registerReply(CommReply cReply) {
+		int result = cStore.insertReply(session, cReply);
+		return result;
+	}
 
 }

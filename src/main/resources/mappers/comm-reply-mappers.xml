@@ -16,6 +16,10 @@
 		<result property="rChildReplyNo" 	column="R_CHILD_REPLY_NO"/>
 	</resultMap>
 	
+	<insert id="insertReply">
+		INSERT INTO C_REPLY_TBL VALUES(SEQ_REPLY_NO.NEXTVAL, #{boardNo}, #{rWriter}, #{rContents}
+		, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SEQ_REPLY_NO.CURRVAL, SEQ_CHILD_REPLY_NO.NEXTVAL)
+	</insert>
 	<select id="selectAllReply" resultMap="commReplyResultMap">
 		SELECT * FROM C_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND R_STATUS = 'Y'
 	</select>

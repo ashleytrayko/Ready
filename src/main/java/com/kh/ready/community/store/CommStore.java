@@ -20,5 +20,11 @@ public interface CommStore {
 	int updateBoardCount(SqlSession session, Integer boardNo);
 	
 	List<CommReply> selectAllReply(SqlSession session, Integer boardNo);
+	
+	int updateComm(SqlSession session, Comm comm);
+	
+	int updateBoardRemove(SqlSession session, int boardNo);
+	
+	int insertReply(SqlSession session, CommReply cReply);
 
 }
