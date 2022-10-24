@@ -1,5 +1,7 @@
 package com.kh.ready.cart.domain;
 
+import com.kh.ready.book.domain.Book;
+
 public class Cart {
 	
 	private int cartNo;
@@ -8,15 +10,18 @@ public class Cart {
 	private int productCount;
 	private long productPrice;
 	
-	public Cart(){};
+	private Book book;
 	
-	public Cart(int cartNo, int bookNo, String userId, int productCount, long productPrice) {
+	public Cart(){}
+
+	public Cart(int cartNo, int bookNo, String userId, int productCount, long productPrice, Book book) {
 		super();
 		this.cartNo = cartNo;
 		this.bookNo = bookNo;
 		this.userId = userId;
 		this.productCount = productCount;
 		this.productPrice = productPrice;
+		this.book = book;
 	}
 
 	public int getCartNo() {
@@ -27,19 +32,19 @@ public class Cart {
 		this.cartNo = cartNo;
 	}
 
-	public int getbookNo() {
+	public int getBookNo() {
 		return bookNo;
 	}
 
-	public void setbookNo(int bookNo) {
+	public void setBookNo(int bookNo) {
 		this.bookNo = bookNo;
 	}
 
-	public String getuserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setuserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -59,11 +64,21 @@ public class Cart {
 		this.productPrice = productPrice;
 	}
 
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
 	@Override
 	public String toString() {
-		return "Cart [cartNo=" + cartNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
-				+ productCount + ", productPrice=" + productPrice + "]";
-	}
+		return "Cart [cartNo=" + cartNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount=" + productCount
+				+ ", productPrice=" + productPrice + ", book=" + book + "]";
+	};
+	
+	
 	
 	
 }

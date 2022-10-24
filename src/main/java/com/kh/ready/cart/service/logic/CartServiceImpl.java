@@ -1,5 +1,7 @@
 package com.kh.ready.cart.service.logic;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,16 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public int insertCart(Cart cart) {
-		int result = cartStore.insertCart(cart);
-		return result;
+
+		return cartStore.insertCart(cart);
 	}
-	
+
+
+	@Override
+	public List<Cart> getCartdataByUserId(String userId) {
+		
+		return cartStore.getCartdataByUserId(userId);
+	}
+
 	
 }

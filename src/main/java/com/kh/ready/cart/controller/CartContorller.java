@@ -1,5 +1,9 @@
 package com.kh.ready.cart.controller;
 
+
+import java.security.Principal;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +27,11 @@ public class CartContorller {
 	
 	@ResponseBody
 	@RequestMapping(value="/cart/insert.ready", method=RequestMethod.POST)
-	public void insertCart(Cart cart, HttpSession session) {
-		//Member member = (Member)session.getAttribute("loginMember");
-		String userId = "khuser01";
+	public void insertCart(Cart cart, Principal principal) {
 		
-		cart.setuserId(userId);
-		System.out.println(cart);
+		String userId = principal.getName();
+		
+		cart.setUserId(userId);
 		
 		cartService.insertCart(cart);
 		
@@ -46,10 +49,17 @@ public class CartContorller {
 	
 
 	@RequestMapping(value="/cart/cartView.ready", method=RequestMethod.GET)
-	public ModelAndView showCartView(ModelAndView mv, HttpSession session) {
+	public ModelAndView showCartView(ModelAndView mv, Principal principal) {
 		
+		String userId = principal.getName();
 		
+		List<Cart> cartList = cartService.getCartdataByUserId(userId);
+
+		System.out.println(cartList);
+		
+		mv.addObject("cartList", cartList);
 		mv.setViewName("cart/cartPage");
+		
 		return mv;
 	}
 }

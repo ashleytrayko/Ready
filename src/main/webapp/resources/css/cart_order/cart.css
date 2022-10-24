@@ -10,14 +10,13 @@
         padding: 100px;
     }
 
-    h5 {
+    #cart-h5 {
         font-weight : bold;
     }
     td{
         text-align : center;
         vertical-align :middle;
     }
-
     .cart-data-list{
         width : 1400px;
         padding-top: 100px;
@@ -29,9 +28,11 @@
         text-align : center;
         vertical-align :middle;
     }
-    .form-control{
+    #countControl{
         width: 50px;
-        height: 30px;
+        height: 23px;
+        text-align:center;
+        margin: 0 auto;
     }
     #order-Info{
         width : 900px;
@@ -40,7 +41,7 @@
         border-bottom: solid 3px #e2c9a6;
         text-align : center;
     }
-    #cart-btn{
+    #cart-btn1{
         padding: 150px;
         text-align : center;
     }
@@ -64,28 +65,30 @@
     .product-delbtn{
         text-align : right;
     }
-    .quantity-btn{
-        width: 40px;
-        height: 25px;
-        font-size :10px;
+    #quantity-btn{
+        width: 30px;
+        height: 22px;
+        font-size : 11px;
+      	flex-direction: column;
+      	align-items: center;
+      	justify-content: center;
+      	white-space : nowrap;
     }
-    .del-btn{
-        width: 100px;
-        height: 35px;
-        font-size :15px;
-    }
-    button {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      white-space : nowrap;
+    #del-btn{
+        width: 85px;
+        height: 30px;
+        font-size :12px;
+        display: inline-flex;
+      	flex-direction: column;
+      	align-items: center;
+     	justify-content: center;
+      	white-space : nowrap;
     }
     .product-img{
         margin-top: 5%;
         margin-bottom: 10%;
         width : 80px;
-        height : 80px;
+        height : 100px;
     }
     .total-price{
         margin: auto 0;
