@@ -21,4 +21,6 @@ public interface BookStore {
 
 	int deleteReview(SqlSessionTemplate session, Integer reviewNo);
 
+	List<Review> selectAllReview(SqlSessionTemplate session, Integer bookNo);
+
 }

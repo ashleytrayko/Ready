@@ -15,8 +15,19 @@
 		<result property="ISBN" 		column="BOOK_ISBN"/>
 		<result property="priceSales" 	column="BOOK_PRICE"/>
 		<result property="mileage" 		column="BOOK_MILEAGE"/>
-		<result property="imgPath" 	column="IMG_PATH"/>
+		<result property="imgPath" 		column="IMG_PATH"/>
 		<result property="publisher" 	column="BOOK_PUBLISHER"/>
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultMap">
+		<id 	property="reviewNo" 		column="REVIEW_NO"/>
+		<result property="bookNo" 			column="BOOK_NO"/>
+		<result property="userId" 			column="USER_ID"/>
+		<result property="nickName" 		column="USER_NICKNAME"/>
+		<result property="score" 			column="SCORE"/>
+		<result property="reviewContents" 	column="REVIEW_CONTENTS"/>
+		<result property="enrollDate" 		column="ENROLL_DATE"/>
+		<result property="updateDate" 		column="UPDATE_DATE"/>
 	</resultMap>
 	
 	<insert id="insertBook">
@@ -34,7 +45,7 @@
 	
 	<!-- 리뷰관련 -->
 	<insert id="insertReview">
-		INSERT INTO BOOK_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{reviewNo }, #{bookNo }, #{userId }, #{nickName }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
+		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{bookNo }, #{userId }, #{nickName }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
 	</insert>
 	
 	<update id="updateReview">
@@ -42,6 +53,10 @@
 	</update>
 	
 	<delete id="deleteReview">
-		DELETE * FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo }
+		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo }
 	</delete>
+	
+	<select id="selectAllReview" resultMap="reviewResultMap">
+		SELECT * FROM REVIEW_TBL WHERE BOOK_NO = #{bookNo }
+	</select>
 </mapper>

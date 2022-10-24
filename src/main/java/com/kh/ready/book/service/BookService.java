@@ -18,4 +18,6 @@ public interface BookService {
 	public int modifyReview(Review review);
 
 	public int removeReview(Integer reviewNo);
+
+	public List<Review> printAllReview(Integer bookNo);
 }
