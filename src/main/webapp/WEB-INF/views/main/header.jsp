@@ -119,7 +119,7 @@
 				<input type="search" class="form-control"
 					placeholder="도서 제목이나 작가명을 검색해주세요." aria-label="Search" />
 			</form>
-			<a href="/"
+			<a href="/comm/list.kh"
 				class="d-flex mb-3 mb-lg-0 me-lg-3 text-dark text-decoration-none">
 				<span class="center"> <i class="fa-solid fa-book fa-xl"></i>
 					<p class="main-p">커뮤니티</p>
