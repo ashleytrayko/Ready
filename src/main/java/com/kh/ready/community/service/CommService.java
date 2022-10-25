@@ -23,4 +23,8 @@ public interface CommService {
 
 	int registerReply(CommReply cReply);
 
+	int deleteReply(Integer cReplyNo);
+
+	int modifyReply(CommReply cReply);
+
 }

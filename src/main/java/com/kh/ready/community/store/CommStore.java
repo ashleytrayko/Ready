@@ -26,5 +26,9 @@ public interface CommStore {
 	int updateBoardRemove(SqlSession session, int boardNo);
 	
 	int insertReply(SqlSession session, CommReply cReply);
+	
+	int deleteReply(SqlSession session, Integer cReplyNo);
+	
+	int updateReply(SqlSession session, CommReply cReply);
 
 }
