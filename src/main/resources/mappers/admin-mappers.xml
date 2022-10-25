@@ -10,6 +10,14 @@
 		<result property="bannerPath" 			column="BANNER_PATH"/>
 	</resultMap>
 	
+	<resultMap type="Notice" id="noticeResultMap">
+		<id 	property="noticeNumber"			column="NOTICE_NUMBER"/>
+		<result property="noticeTitle"			column="NOTICE_TITLE"/>
+		<result property="noticeContents" 		column="NOTICE_CONTENTS"/>
+		<result property="noticeWriter" 		column="NOTICE_WRITER"/>
+		<result property="postDate" 			column="POST_DATE"/>
+	</resultMap>
+	
 	<insert id="insertBanner">
 		INSERT INTO BANNER_TBL VALUES(SEQ_BANNER_NUMBER.NEXTVAL, #{bannerName}, #{bannerRename}, #{bannerPath})
 	</insert>
@@ -20,5 +28,25 @@
 	
 	<select id="selectAllBanner" resultMap="bannerResultMap">
 		SELECT * FROM BANNER_TBL
+	</select>
+	
+	<insert id="insertNotice">
+		INSERT INTO NOTICE_TBL VALUES(SEQ_NOTICE_NUMBER.NEXTVAL, #{noticeTitle}, #{noticeContents}, #{noticeWriter}, DEFAULT)
+	</insert>
+	
+	<delete id="deleteNotice">
+		DELETE FROM NOTICE_TBL WHERE NOTICE_NUMBER = #{noticeNumber}
+	</delete>
+	
+	<update id="updateNotice">
+		UPDATE NOTICE_TBL SET NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENTS = #{noticeContents} WHERE NOTICE_NUMBER = #{noticeNumber}
+	</update>
+	
+	<select id="selectAllNotice" resultMap="noticeResultMap">
+		SELECT * FROM NOTICE_TBL
+	</select>
+	
+	<select id="selectNoticeByNumber" resultMap="noticeResultMap">
+		SELECT * FROM NOTICE_TBL WHERE NOTICE_NUMBER = #{noticeNumber}
 	</select>
 </mapper>

@@ -21,10 +21,11 @@
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
 		<security:intercept-url pattern="/common/**" access="permitAll"/>
 		<security:intercept-url pattern="/book/**" access="permitAll"/>
+		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
 		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<security:form-login 
+		<security:form-login
 							login-page="/login"
 							username-parameter="userId"
 							password-parameter="userPassword"
@@ -37,7 +38,9 @@
 						delete-cookies="true"
 						logout-url="/logout"/>
 		<security:remember-me user-service-ref="customUserService"
-							token-validity-seconds="60000"/>
+							token-validity-seconds="60000"
+							key="cookie"
+							/>
 	</security:http>
 
 	<security:authentication-manager>
