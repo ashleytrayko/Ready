@@ -66,7 +66,7 @@
 					</div>
 					<input type="file" name="bannerImage"  onchange="readFile(this);">
 					<button type="submit">배너 등록</button>
-					<button type="button">배너 삭제</button>
+					<button type="button" onclick=""">배너 삭제</button>
 				</form>
 				<br>
 				<br>
@@ -117,6 +117,8 @@
   			document.getElementById('preview').src = "";
   		}
   	}
+	
+	
 	</script>
 </body>
 </html>

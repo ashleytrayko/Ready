@@ -14,4 +14,11 @@
 		INSERT INTO BANNER_TBL VALUES(SEQ_BANNER_NUMBER.NEXTVAL, #{bannerName}, #{bannerRename}, #{bannerPath})
 	</insert>
 	
+	<delete id="deleteBanner">
+		DELETE FROM BANNER_TBL WHERE BANNER_NUMBER = #{bannerNumber}
+	</delete>
+	
+	<select id="selectAllBanner">
+		SELECT * FROM BANNER_TBL
+	</select>
 </mapper>

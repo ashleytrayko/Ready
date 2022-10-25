@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +43,11 @@ public class AdminController {
 	
 	// admin - 배너관리
 	@GetMapping("/admin-banner")
-	public String bannerList() {
+	public String bannerList(Model model) {
+		
+		// 배너 전체조회
+		List<Banner> bannerList = adminService.showAllBanner();
+		model.addAttribute("bannerList", bannerList);
 		return "/admin/adminBanner";
 	}
 	
@@ -68,6 +74,10 @@ public class AdminController {
 	public String reportList() {
 		return "/admin/adminReport";
 	}
+	
+	/**
+	 * 배너 관
+	 */
 	
 	// 배너 등록
 	@PostMapping("/registerBanner")
@@ -100,6 +110,12 @@ public class AdminController {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		return "/admin/adminBanner";
+	}
+	
+	@GetMapping("/removeBanner")
+	public String removeBanner(@RequestParam("bannerNumber") Integer bannerNumber) {
+		adminService.removeBanner(bannerNumber);
 		return "/admin/adminBanner";
 	}
 }

@@ -42,7 +42,8 @@ span.error {
 				<span class="guide error" id="capslock">CapsLock이 켜져 있습니다.</span>
 			</div>
 			<div class="form-group form-check">
-				<label class="form-check-label"> <input class="form-check-input" type="checkbox"> Remember me
+				<label class="form-check-label"> 
+				<input class="form-check-input" type="checkbox" name="_spring_security_remember_me" value="True"> Remember me
 				</label>
 			</div>
 			<button type="submit" class="btn btn-primary col-lg">로그인</button>

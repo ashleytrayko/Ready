@@ -1,5 +1,7 @@
 package com.kh.ready.user.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,21 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int registerBanner(Banner banner) {
 		int result = adminRepository.insertBanner(banner);
-		System.out.println(result);
 		return result;
+	}
+
+
+	@Override
+	public int removeBanner(Integer bannerNumber) {
+		int result = adminRepository.deleteBanner(bannerNumber);
+		return result;
+	}
+
+
+	@Override
+	public List<Banner> showAllBanner() {
+		List<Banner> bannerList = adminRepository.selectAllBanner();
+		return bannerList;
 	}
 
 
