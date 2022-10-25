@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,48 +57,28 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>상품 관리</h1>
-			<table border="1" align="center">
-				<thead>
-					<tr>
-						<th></th>
-						<th>상품번호</th>
-						<th>책 제목</th>
-						<th>저자</th>
-						<th>출판사</th>
-						<th>수정</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${bookList }" var="bookList" varStatus="i">
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>${bookList.bookNo }</td>
-						<td>
-						<a href="/book/detailView.kh?bookNo=${bookList.bookNo }">
-						${bookList.bookTitle }
-						</a>
-						</td>
-						<td>${bookList.bookWriter }</td>
-						<td>${bookList.publisher }</td>
-						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			<button>상품 등록</button>
-			<button>상품 삭제</button>
-
-
-
+			<h2>관리자님 안녕하세요.</h2>
+			<h5>관리자 메뉴입니다.</h5>
+			<h5>원하는 메뉴를 왼쪽에서 선택해주세요.</h5>
+			</div>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
 	<script>
-	function modifyNotice(noticeNumber){
-		location.href="/modifyNoticeForm?noticeNumber="+noticeNumber;
-	}
+	function readFile(input){
+  		if(input.files && input.files[0]){
+  			var reader = new FileReader();
+  			reader.onload = function(e){
+  				document.getElementById('preview').src = e.target.result;
+  			};
+  			reader.readAsDataURL(input.files[0]);
+  		}else{
+  			document.getElementById('preview').src = "";
+  		}
+  	}
+	
+	
 	</script>
 </body>
 </html>

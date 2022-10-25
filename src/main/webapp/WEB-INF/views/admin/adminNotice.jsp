@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
 <body>
-	<jsp:include page="../main/header.jsp"></jsp:include>
+	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -61,21 +62,29 @@
 			<table border="1" align="center">
 				<thead>
 					<tr>
+						<th></th>
 						<th>글번호</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>등록시간</th>
+						<th>수정</th>
 					</tr>
 				</thead>
 				<tbody>
+					<c:forEach items="${noticeList }" var="noticeList" varStatus="i">
 					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
+						<td><input type="checkbox"></td>
+						<td>${noticeList.noticeNumber }</td>
+						<td><a href="/noticeDetail?noticeNumber=${noticeList.noticeNumber }">${noticeList.noticeTitle }</a></td>
+						<td>${noticeList.noticeWriter }</td>
+						<td>${noticeList.postDate }</td>
+						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
 					</tr>
+					</c:forEach>
 				</tbody>
 			</table>
+			<button>공지사항 등록</button>
+			<button>공지사항 삭제</button>
 
 
 
@@ -83,5 +92,10 @@
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
+	<script>
+	function modifyNotice(noticeNumber){
+		location.href="/modifyNoticeForm?noticeNumber="+noticeNumber;
+	}
+	</script>
 </body>
 </html>

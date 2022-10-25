@@ -10,6 +10,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.ready.user.domain.User" 			alias="User"/>
 		<typeAlias type="com.kh.ready.user.domain.Banner" 			alias="Banner"/>
+		<typeAlias type="com.kh.ready.user.domain.Notice" 			alias="Notice"/>
 		<typeAlias type="com.kh.ready.book.domain.Book" 			alias="Book"/>
 		<typeAlias type="com.kh.ready.community.domain.Comm" 		alias="Comm"/>
 		<typeAlias type="com.kh.ready.community.domain.CommReply" 	alias="CommReply"/>
