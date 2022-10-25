@@ -18,7 +18,7 @@
 		DELETE FROM BANNER_TBL WHERE BANNER_NUMBER = #{bannerNumber}
 	</delete>
 	
-	<select id="selectAllBanner">
+	<select id="selectAllBanner" resultMap="bannerResultMap">
 		SELECT * FROM BANNER_TBL
 	</select>
 </mapper>
