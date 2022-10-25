@@ -2,14 +2,16 @@ package com.kh.ready.order.domain;
 
 import java.sql.Date;
 
+import com.kh.ready.book.domain.Book;
+import com.kh.ready.cart.domain.Cart;
+
 public class Order {
 
 	private int orderNo;
 	private int bookNo;
-	private long userIndex;
+	private String userId;
 	private int productCount;
 	private int productPrice;
-	private int totalPrice;
 	private String orderId;
 	private String orderRName;
 	private String orderRPhone;
@@ -20,18 +22,20 @@ public class Order {
 	private String orderState;
 	private Date orderDate;
 	
+	private Book book;
+	private Cart cart;
+	
 	public Order() {}
 
-	public Order(int orderNo, int bookNo, long userIndex, int productCount, int productPrice, int totalPrice,
-			String orderId, String orderRName, String orderRPhone, String orderAddress1, String orderAddress2,
-			String orderAddress3, String paymentMethod, String orderState, Date orderDate) {
+	public Order(int orderNo, int bookNo, String userId, int productCount, int productPrice, String orderId,
+			String orderRName, String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3,
+			String paymentMethod, String orderState, Date orderDate, Book book, Cart cart) {
 		super();
 		this.orderNo = orderNo;
 		this.bookNo = bookNo;
-		this.userIndex = userIndex;
+		this.userId = userId;
 		this.productCount = productCount;
 		this.productPrice = productPrice;
-		this.totalPrice = totalPrice;
 		this.orderId = orderId;
 		this.orderRName = orderRName;
 		this.orderRPhone = orderRPhone;
@@ -41,6 +45,8 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.orderState = orderState;
 		this.orderDate = orderDate;
+		this.book = book;
+		this.cart = cart;
 	}
 
 	public int getOrderNo() {
@@ -59,12 +65,12 @@ public class Order {
 		this.bookNo = bookNo;
 	}
 
-	public long getUserIndex() {
-		return userIndex;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserIndex(long userIndex) {
-		this.userIndex = userIndex;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getProductCount() {
@@ -81,14 +87,6 @@ public class Order {
 
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
-	}
-
-	public int getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
 	}
 
 	public String getOrderId() {
@@ -163,15 +161,29 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [orderNo=" + orderNo + ", bookNo=" + bookNo + ", userIndex=" + userIndex + ", productCount="
-				+ productCount + ", productPrice=" + productPrice + ", totalPrice=" + totalPrice + ", orderId="
-				+ orderId + ", orderRName=" + orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1="
-				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderAddress3=" + orderAddress3
-				+ ", paymentMethod=" + paymentMethod + ", orderState=" + orderState + ", orderDate=" + orderDate + "]";
+	public Book getBook() {
+		return book;
 	}
 
-	
-	
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [orderNo=" + orderNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
+				+ productCount + ", productPrice=" + productPrice + ", orderId=" + orderId + ", orderRName="
+				+ orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1=" + orderAddress1 + ", orderAddress2="
+				+ orderAddress2 + ", orderAddress3=" + orderAddress3 + ", paymentMethod=" + paymentMethod
+				+ ", orderState=" + orderState + ", orderDate=" + orderDate + ", book=" + book + ", cart=" + cart + "]";
+	}
+
 }

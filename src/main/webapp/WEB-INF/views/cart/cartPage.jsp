@@ -14,6 +14,7 @@
     <link href="../resources/css/cart_order/cart.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
+    <script src="../resources/js/checkbox.js"></script>
 </head>
 <body>
       <jsp:include page="../main/header.jsp"></jsp:include>
@@ -31,25 +32,26 @@
                         <th class="product-delbtn"><button id="del-btn" class="btn btn-secondary">선택상품 삭제</button></th>
                     </tr>
                 </thead>
-                        <tbody id="cartbody">
+                        <tbody class="cartbody">
                             <tr>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <input class="form-check-input cbx_chkAll" type="checkbox" id="flexCheckDefault">
                                 </td>
                                 <td>상품정보</td>
                                 <td>정가</td>
-                                <td>판매가</td>
+                                <td>할인가</td>
                                 <td>수량</td>
                                 <td>합계</td>
                                 <td>예상 적립금</td>
                             </tr>
                         </tbody>
-                <tbody id="cartbody">
+                <tbody class="cartbody">
+                	<c:set var="priceSum" value="0"/>
+                	<c:set var="productSum" value="0"/>
                     <c:forEach items="${cartList }" var="cartList" varStatus="i">
-                        <c:set var="priceTotal" value="${priceTotal + cartList.book.priceSales }"/>
                     <tr>
                         <td>
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="${cartList.cartNo }" id="flexCheckDefault" name="chBox" data-cartNo="${cartList.cartNo}">
                         </td>
                         <td>
                             <img class="product-img" src="${cartList.book.imgPath }">
@@ -64,16 +66,19 @@
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales * 0.99}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice * 0.99}"/>원</td>
                         <td>
-                            <input class="form-control form-control-sm" id="countControl" type="text" placeholder="${cartList.productCount }" aria-label=".form-control-sm example">
-                            <button id="quantity-btn" class="btn btn-secondary">변경</button>
+                            <input class="form-control form-control-sm countControl" id="countControl" type="text" placeholder="수량"
+                            aria-label=".form-control-sm example" value="${cartList.productCount }">
+                            <button id="quantity-btn" class="btn btn-secondary quantity-btn" data-cartNo="${cartList.cartNo }">변경</button>
                         </td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales  * cartList.productCount * 0.99}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(cartList.productPrice * cartList.productCount) * 0.99}"/>원</td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
                     </tr>
-           		   </c:forEach>
+                    <c:set var="priceSum" value="${priceSum + (cartList.productPrice * cartList.productCount) }"/>
+                    <c:set var="productSum" value="${productSum + cartList.productCount }"/>
+                   </c:forEach>
                 </tbody>
             </c:if>
             <c:if test="${empty cartList }">
@@ -95,11 +100,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>3권</td>
-                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceTotal * productCountTotal}"/>원</td>
-                    <td class="cartinfo-table-body"><h5>0</h5>원</td>
-                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceTotal * productCountTotal * 0.99}"/>원</p></td>
-                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${priceTotal * productCountTotal * 0.05}"/>원</td>
+                    <td>총 <c:out value="${productSum }"/>권</td>
+                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td class="cartinfo-table-body">0원</td>
+                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.99}"/>원</p></td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.05}"/>원</td>
                 </tbody>
             </table>
         </div>
@@ -112,6 +117,58 @@
 	</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
+
+	$("#del-btn").click(function(){
+		var confirm_val = confirm("정말 삭제하시겠습니까?");
+		  
+		if(confirm_val) {
+
+	    	var checkArr = [];
+	   
+	    	$("input[name='chBox']:checked").each(function(i){
+	    	    checkArr.push($(this).attr("data-cartNo"));
+	 		});
+
+		  	$.ajax({
+			  	url : "/cart/delete.ready",
+			    type : "post",
+			    data : { 
+			    	checkArr : checkArr
+			    },
+			    success : function(){
+			    	location.href = "/cart/cartView.ready";
+			    },
+			    error : function(){
+			    	console.log('error');
+			    }
+		  	});
+	   } 
+	});
+	
+	$(".quantity-btn").click(function(){
+		
+		var cartNo = $(this).attr("data-cartNo");
+		var productCount = $(this).prev().val();
+		
+		console.log(cartNo);
+		console.log(productCount);
+		
+		$.ajax({
+			url : "/cart/modifyCount.ready",
+			type : "post",
+			data : {
+	            cartNo : cartNo,
+	            productCount : productCount
+			},
+			success : function(){
+				location.href = "/cart/cartView.ready";
+			},
+			error : function(){
+		    	console.log('error');
+		    }
+		});
+	});
+	
 </script>
 </body>
 </html>

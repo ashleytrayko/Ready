@@ -31,9 +31,25 @@
 	<insert id="insertCart">
 		INSERT INTO CART_TBL VALUES(SEQ_CART_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{productPrice})
 	</insert>
+	
+	<delete id="deleteCart">
+		DELETE CART_TBL WHERE CART_NO = #{cartNo} AND USER_ID = #{userId}
+	</delete>
+	
+	<update id="updateCart">
+		UPDATE CART_TBL SET PRODUCT_COUNT = #{productCount} WHERE CART_NO = #{cartNo} AND USER_ID = #{userId}
+	</update>
 
 	<select id="selectCartListByUserId" resultMap="CartResultMap">
 		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="selectOneTotalPrice" resultMap="CartResultMap">
+		SELECT (PRODUCT_COUNT * PRODUCT_PRICE) FROM CART_TBL WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="selectTotalPrice" resultMap="CartResultMap">
+		SELECT SUM(PRODUCT_COUNT * PRODUCT_PRICE) FROM CART_TBL WHERE USER_ID = #{userId}
 	</select>
 	
 </mapper>
