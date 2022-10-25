@@ -73,4 +73,16 @@ public class CommStoreLogic implements CommStore{
 		return result;
 	}
 
+	@Override
+	public int deleteReply(SqlSession session, Integer cReplyNo) {
+		int result = session.update("CommReplyMapper.deleteReply", cReplyNo);
+		return result;
+	}
+
+	@Override
+	public int updateReply(SqlSession session, CommReply cReply) {
+		int result = session.update("CommReplyMapper.updateReply", cReply);
+		return result;
+	}
+
 }

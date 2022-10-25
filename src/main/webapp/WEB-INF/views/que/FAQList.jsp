@@ -18,7 +18,7 @@
 		<!-- 이 안에서 작업! 여기가 본문-->
 			<div class="faq-div">
 				<h1>고객센터 FAQ</h1>
-				<table align="center" border="1">
+				<table align="center" border="1" width="500">
 					<tr>
 						<th class="faq-category">회원정보</th>
 						<th class="faq-category">배송관련</th>

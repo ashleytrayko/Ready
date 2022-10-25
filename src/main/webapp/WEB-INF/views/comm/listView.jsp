@@ -17,7 +17,7 @@
 		<div class="main-section">
 		<!-- 이 안에서 작업! 여기가 본문-->
 			<div class="list-div">
-				<h1>여기는 게시글 목록입니다.</h1>
+				<h1 class="list-title">리디 커뮤니티</h1>
 				<table align="center" border="1">
 					<tr>
 						<th>번호</th>

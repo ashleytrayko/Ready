@@ -67,5 +67,15 @@ public class CommServiceImpl implements CommService{
 		int result = cStore.insertReply(session, cReply);
 		return result;
 	}
+	@Override
+	public int deleteReply(Integer cReplyNo) {
+		int result = cStore.deleteReply(session, cReplyNo);
+		return result;
+	}
+	@Override
+	public int modifyReply(CommReply cReply) {
+		int result = cStore.updateReply(session, cReply);
+		return result;
+	}
 
 }

@@ -2,6 +2,7 @@ package com.kh.ready.community.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
 import com.kh.ready.community.service.CommService;
@@ -215,12 +218,59 @@ public class CommController {
 	@ResponseBody
 	@RequestMapping(value="/comm/replyAdd.kh", method=RequestMethod.POST)
 	public String boardReplyAdd(
-			@ModelAttribute CommReply cReply) {		// RequstParam 대신 ModelAttribute를 사용할 수 있는 이유는
-		cReply.setrWriter("khuser01");		// 로그인한 아이디
+			@ModelAttribute CommReply cReply
+			, Principal principal) {		// RequstParam 대신 ModelAttribute를 사용할 수 있는 이유는
+		/* cReply.setrWriter(); */	// 로그인한 아이디
+		String userName = principal.getName();
+		cReply.setrWriter(userName);
 		int result = cService.registerReply(cReply);
 		if(result > 0) {
 			return "success";
 		}else {
+			return "fail";
+		}
+	}
+	
+	/**
+	 * 댓글 목록 출력
+	 * @param boardNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/comm/replyList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String boardReplyList(
+			@RequestParam("boardNo") int boardNo) {
+		int bNo = (boardNo == 0) ? 1 : boardNo;
+		List<CommReply> cRList = cService.printAllReply(bNo);
+		if(!cRList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();		// 날짜형식 지정해줌.
+			return gson.toJson(cRList);
+		}
+		return null;
+	}
+	
+	@ResponseBody		// @ResponseBody 안써주면 404에러가 뜸 /WEB-INF/views/success.jsp 찾을 수 없다 에러나옴
+	@RequestMapping(value="/comm/replyDelete.kh", method=RequestMethod.GET)
+	public String boardReplyDelete(
+			@RequestParam("cReplyNo") Integer cReplyNo) {
+		int result = cService.deleteReply(cReplyNo);
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/comm/replyModify.kh", method=RequestMethod.POST)
+	public String boardReplyModify(
+			// @RequestParam("replyNo") Integer replyNo
+			// , @RequestParam("replyContents") String replyContents
+			@ModelAttribute CommReply cReply) {
+		int result = cService.modifyReply(cReply);
+		if(result > 0) {
+			return "success";
+		} else {
 			return "fail";
 		}
 	}

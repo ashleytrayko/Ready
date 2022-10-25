@@ -20,6 +20,12 @@
 		INSERT INTO C_REPLY_TBL VALUES(SEQ_REPLY_NO.NEXTVAL, #{boardNo}, #{rWriter}, #{rContents}
 		, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SEQ_REPLY_NO.CURRVAL, SEQ_CHILD_REPLY_NO.NEXTVAL)
 	</insert>
+	<update id="deleteReply">
+		UPDATE C_REPLY_TBL SET R_STATUS = 'N' WHERE C_REPLY_NO = #{cReplyNo}
+	</update>
+	<update id="updateReply">
+		UPDATE C_REPLY_TBL SET R_CONTENTS = #{rContents}, R_UPDATE_DATE = DEFAULT WHERE C_REPLY_NO = #{cReplyNo}
+	</update>
 	<select id="selectAllReply" resultMap="commReplyResultMap">
 		SELECT * FROM C_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND R_STATUS = 'Y'
 	</select>

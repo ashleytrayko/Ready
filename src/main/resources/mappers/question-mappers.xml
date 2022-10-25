@@ -17,4 +17,9 @@
 		<result property="qCategory" 		column="Q_CATEGORY"/>
 	</resultMap>
 	
+	<insert id="insertFAQ">
+		INSERT INTO QUESTION_TBL VALUES(SEQ_BOARD_NO, #{queWriter}, #{queTitle}, #{queContents}
+		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, DEFAULT, #{qCategory})
+	</insert>
+	
 </mapper>
