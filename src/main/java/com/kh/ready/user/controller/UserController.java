@@ -103,4 +103,9 @@ public class UserController {
 		}
 	}
 	
+	//설문조사 페이지 이동
+	@RequestMapping(value="/mypage/survey.kh", method=RequestMethod.GET)
+	public String showSurvey() {
+		return "user/survey";
+	}
 }

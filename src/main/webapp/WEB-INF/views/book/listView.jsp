@@ -23,5 +23,25 @@
 			<br>
 		</c:forEach>		
 	</c:if>
+	<table>
+	        <tr align="center" height="20">
+	            <td colspan="6">
+	                <c:if test="${currentPage != 1}">
+	                    <a href="/book/${urlVal }.kh?page=${currentPage - 1 }">[이전]</a>
+	                </c:if>
+	                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
+	                    <c:if test="${currentPage eq p }">
+	                        <b>${p}</b> 
+	                    </c:if>
+	                    <c:if test="${currentPage ne p }">
+	                        <a href = "/book/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+	                    </c:if>
+	                </c:forEach>
+	            	<c:if test = "${currentPage < maxPage }">
+	                	<a href = "/book/${urlVal}.kh?page=${currentPage + 1}">[다음]</a>
+	            	</c:if>
+	            </td>
+        	</tr>
+	</table>
 </body>
 </html>

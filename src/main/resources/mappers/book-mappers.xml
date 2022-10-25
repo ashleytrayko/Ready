@@ -38,6 +38,46 @@
 		SELECT * FROM BOOK_TBL
 	</select>
 	
+	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				BOOK_TITLE LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
+				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectAllByValue" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				BOOK_TITLE LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
+				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+			</if>
+		</where>
+	</select>
+	
 	<select id="selectOneBook" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL WHERE BOOK_NO = #{bookNo }
 	</select>
