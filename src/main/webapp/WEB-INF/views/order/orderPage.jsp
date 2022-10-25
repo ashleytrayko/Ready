@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,45 +27,45 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th colspan="6"><h5>주문할 상품</h5></th>
+                        <th colspan="7"><h5>주문할 상품</h5></th>
                     </tr>
                 </thead>
-                        <tbody>
+                        <tbody class="cartbody">
                             <tr>
                                 <td colspan="2">상품정보</td>
-                                <td>수량</td>
                                 <td>정가</td>
                                 <td>할인가</td>
+                                <td>수량</td>
+                                <td>합계</td>
                                 <td>예상 적립금</td>
                             </tr>
                         </tbody>
-                <tbody>
+                <tbody class="cartbody">
+                	<c:set var="priceSum" value="0"/>
+                	<c:set var="productSum" value="0"/>
+                	<c:forEach items="${cartList }" var="cartList" varStatus="i">
                     <tr>
-                        <td>
-                            <img class="product-img" src="#">
+                        <td colspan="2">
+                            <img class="product-img" src="${cartList.book.imgPath }">
+                            <c:choose>
+                            	<c:when test="${fn:length(cartList.book.bookTitle) gt 20 }">
+                            	<c:out value="${fn:substring(cartList.book.bookTitle, 0, 19) }...">
+                            	</c:out></c:when>
+                            	<c:otherwise>
+                            	<c:out value="${cartList.book.bookTitle }">
+                            	</c:out></c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            </c:choose>
                         </td>
-                        <td>
-                            <p class="product-title">PRODUCT TITLE</p>
-                        </td>
-                        <td>1</td>
-                        <td>12,000원</td>
-                        <td>10,800원</td>
-                        <td>600원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice * 0.99}"/>원</td>
+                        <td>${cartList.productCount }</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(cartList.productPrice * cartList.productCount) * 0.99}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
                     </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>
-                            <img class="product-img" src="#">
-                        </td>
-                        <td>
-                            <p class="product-title">PRODUCT TITLE2</p>
-                        </td>
-                        <td>2</td>
-                        <td>22,000원</td>
-                        <td>19,800원</td>
-                        <td>1100원</td>
-                    </tr>
+                    <c:set var="priceSum" value="${priceSum + (cartList.productPrice * cartList.productCount) }"/>
+                    <c:set var="productSum" value="${productSum + cartList.productCount }"/>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -188,11 +190,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>3권</td>
-                    <td class="orderinfo-table-body">30,600원</td>
+                    <td>총 <c:out value="${productSum }"/>권</td>
+                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
                     <td class="orderinfo-table-body">0원</td>
-                    <td class="orderinfo-table-body"><p class="total-price">30,600원</p></td>
-                    <td>1700원</td>
+					<td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.99}"/>원</p></td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.05}"/>원</td>
                 </tbody>
             </table>
         </div>
@@ -211,7 +213,6 @@
                document.querySelector("#detailAddr").focus();
            }
         }).open();
-
     }
 </script>
 </body>

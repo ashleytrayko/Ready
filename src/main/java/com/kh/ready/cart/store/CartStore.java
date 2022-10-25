@@ -8,6 +8,10 @@ public interface CartStore {
 
 	int insertCart(Cart cart);
 
+	int deleteCart(Cart cart);
+
+	int modifyCart(Cart cart);
+
 	List<Cart> getCartdataByUserId(String userId);
 
 

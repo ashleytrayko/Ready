@@ -22,12 +22,24 @@ public class CartServiceImpl implements CartService{
 		return cartStore.insertCart(cart);
 	}
 
+	@Override
+	public int deleteCart(Cart cart) {
+		
+		return cartStore.deleteCart(cart);
+	}
+
+	@Override
+	public int modifyCart(Cart cart) {
+		
+		return cartStore.modifyCart(cart);
+	}
 
 	@Override
 	public List<Cart> getCartdataByUserId(String userId) {
 		
 		return cartStore.getCartdataByUserId(userId);
 	}
+
 
 	
 }

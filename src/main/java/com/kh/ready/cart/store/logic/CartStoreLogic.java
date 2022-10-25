@@ -22,12 +22,27 @@ public class CartStoreLogic implements CartStore{
 		return session.insert("CartMapper.insertCart", cart);
 	}
 
+	@Override
+	public int deleteCart(Cart cart) {
+
+		return session.delete("CartMapper.deleteCart", cart);
+	}
+
+	@Override
+	public int modifyCart(Cart cart) {
+
+		return session.update("CartMapper.updateCart", cart);
+	}
 
 	@Override
 	public List<Cart> getCartdataByUserId(String userId) {
 
 		return session.selectList("CartMapper.selectCartListByUserId", userId);
 	}
+
+
+
+
 
 	
 }

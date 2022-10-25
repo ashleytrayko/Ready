@@ -7,7 +7,7 @@
 	<resultMap type="Order" id="OrderResultMap">
 		<id property="orderNo" 				column="ORDER_NO"/>
 		<result property="bookNo" 		column="BOOK_NO"/>
-		<result property="userIndex" 		column="USER_INDEX"/>
+		<result property="userIndex" 		column="USER_ID"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
 		<result property="productPrice" 		column="PRODUCT_PRICE"/>
 		<result property="totalPrice" 		column="TOTAL_PRICE"/>
@@ -20,8 +20,35 @@
 		<result property="paymentMethod" 		column="ORDER_STATE"/>
 		<result property="orderState" 		column="ORDER_DATE"/>
 		<result property="orderDate" 		column="ORDER_ID"/>
+ 		<collection property="book" resultMap="bookResultMap"></collection>
+ 		<collection property="Cart" resultMap="CartResultMap"></collection>
 	</resultMap>
 	
+	<resultMap type="Cart" id="CartResultMap">
+		<id 	property="cartNo" 				column="CART_NO"/>
+		<result property="bookNo" 				column="BOOK_NO"/>
+		<result property="userId" 				column="USER_ID"/>
+		<result property="productCount" 		column="PRODUCT_COUNT"/>
+		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+	</resultMap>
+
+ 	<resultMap type="Book" id="bookResultMap">
+		<id 	property="bookNo" 		column="BOOK_NO"/>
+		<result property="bookTitle" 	column="BOOK_TITLE"/>
+		<result property="bookWriter" 	column="BOOK_WRITER"/>
+		<result property="enrollDate" 	column="ENROLL_DATE"/>
+		<result property="pubDate" 		column="PUB_DATE"/>
+		<result property="category" 	column="BOOK_CATEGORY"/>
+		<result property="bookContents" column="BOOK_CONTENTS"/>
+		<result property="ISBN" 		column="BOOK_ISBN"/>
+		<result property="priceSales" 	column="BOOK_PRICE"/>
+		<result property="mileage" 		column="BOOK_MILEAGE"/>
+		<result property="imgPath" 		column="IMG_PATH"/>
+		<result property="publisher" 	column="BOOK_PUBLISHER"/>
+	</resultMap>
 	
+	<select id="selectCartListByUserId" resultMap="CartResultMap">
+		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
+	</select>
 	
 </mapper>
