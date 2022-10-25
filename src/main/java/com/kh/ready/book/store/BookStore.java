@@ -11,7 +11,9 @@ public interface BookStore {
 
 	int insertBook(SqlSessionTemplate session, Book book);
 
-	List<Book> selectAllBook(SqlSessionTemplate session);
+	int deleteBook(SqlSessionTemplate session, Integer bookNo);
+
+	List<Book> selectAllBook(SqlSessionTemplate session, int currentPage, int bookLimit);
 
 	Book selectOneByNo(SqlSessionTemplate session, Integer bookNo);
 
@@ -22,5 +24,10 @@ public interface BookStore {
 	int deleteReview(SqlSessionTemplate session, Integer reviewNo);
 
 	List<Review> selectAllReview(SqlSessionTemplate session, Integer bookNo);
+
+	int selectTotalCount(SqlSessionTemplate session, String searchCondition, String searchValue);
+
+	List<Book> selectAllByValue(SqlSessionTemplate session, String searchCondition, String searchValue, int currentPage,
+			int bookLimit);
 
 }

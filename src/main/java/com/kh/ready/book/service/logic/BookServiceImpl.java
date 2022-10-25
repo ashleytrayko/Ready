@@ -24,8 +24,14 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<Book> printAllBook() {
-		List<Book> bList = bStore.selectAllBook(session);
+	public int removeBook(Integer bookNo) {
+		int result = bStore.deleteBook(session, bookNo);
+		return result;
+	}
+
+	@Override
+	public List<Book> printAllBook(int currentPage, int bookLimit) {
+		List<Book> bList = bStore.selectAllBook(session, currentPage, bookLimit);
 		return bList;
 	}
 
@@ -57,6 +63,18 @@ public class BookServiceImpl implements BookService{
 	public List<Review> printAllReview(Integer bookNo) {
 		List<Review> rList = bStore.selectAllReview(session, bookNo);
 		return rList;
+	}
+
+	@Override
+	public int getTotalCount(String searchCondition, String searchValue) {
+		int totalCount = bStore.selectTotalCount(session, searchCondition, searchValue);
+		return totalCount;
+	}
+
+	@Override
+	public List<Book> printAllByValue(String searchCondition, String searchValue, int currentPage, int bookLimit) {
+		List<Book> bList = bStore.selectAllByValue(session, searchCondition, searchValue, currentPage, bookLimit);
+		return bList;
 	}
 
 }
