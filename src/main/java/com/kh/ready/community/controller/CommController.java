@@ -180,7 +180,6 @@ public class CommController {
 			}
 			int result = cService.modifyBoard(comm);
 			mv.addObject("comm", comm);
-//			mv.setViewName("redirect:/free/detail.kh?boardNo=" + free.getBoardNo() + "&page=" + page);
 			mv.setViewName("redirect:/comm/list.kh?page=" + page);
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
@@ -266,10 +265,12 @@ public class CommController {
 	public String boardReplyModify(
 			// @RequestParam("replyNo") Integer replyNo
 			// , @RequestParam("replyContents") String replyContents
-			@ModelAttribute CommReply cReply) {
+			@ModelAttribute CommReply cReply
+			, @RequestParam("boardNo") Integer boardNo
+			, @RequestParam("page") Integer page) {
 		int result = cService.modifyReply(cReply);
 		if(result > 0) {
-			return "success";
+			return "redirect:/comm/detail.kh?boardNo=" + boardNo + "&page=" + page;
 		} else {
 			return "fail";
 		}
