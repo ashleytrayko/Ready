@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.kh.ready.user.domain.User;
 
-import lombok.Getter;
 
 
 public class CustomUserDetails implements UserDetails{

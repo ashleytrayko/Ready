@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
 	
 	
 	<context:component-scan base-package="com.kh.ready" />
@@ -14,7 +16,6 @@
 	
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<bean id="customUserService" class="com.kh.ready.user.security.CustomUserDetailService" />
-	
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/" access="permitAll"/>
@@ -42,7 +43,7 @@
 							key="cookie"
 							/>
 	</security:http>
-
+		
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserService">
 			<security:password-encoder ref="encoder"/>
