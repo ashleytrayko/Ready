@@ -132,7 +132,7 @@
 				<span class="center"> <i class="fa-solid fa-book fa-xl"></i>
 					<p class="main-p">커뮤니티</p>
 			</span>
-			</a> <a href="/"
+			</a> <a href="/cart/cartView.ready"
 				class="d-flex mb-3 mb-lg-0 me-lg-3 text-dark text-decoration-none">
 				<span class="center"> <i
 					class="fa-solid fa-cart-shopping fa-xl"></i>
