@@ -7,9 +7,6 @@
     font-weight: bold;
     padding: 100px;
 }
-h5 {
-    font-weight : bold;
-}
 td{
     text-align : center;
     vertical-align :middle;
@@ -34,6 +31,7 @@ td{
 .name-phone {
     margin-left: 15px;
     margin-right: 0;
+    margin-bottom: 1rem;
     width: 130px;
     height: 30px;
 }
@@ -51,15 +49,19 @@ td{
     width: 500px;
     height: 30px;
 }
-.Email-Addr{
-    margin-right: 0;
+.Email{
     margin-left: 15px;
-    width: 200px;
+    margin-right: 0px;
+    margin-bottom: 1rem;
+    height: 30px;
+}
+.Addr1{
+    margin-left: 15px;
+    margin-right: 0;
     height: 30px;
 }
 .detail-Addr{
     margin-left: 15px;
-    width: 400px;
     height: 30px;
 }
 #order-Info{
@@ -90,16 +92,16 @@ td{
     background-color: lightgray;
     border-bottom: 1px solid #e2c9a6;
 }
-.infocopy-btn{
+#infocopy-btn{
+	margin-left : 10px;
     width: 100px;
     height: 30px;
     font-size :10px;
 }
 .searchAddr-btn{
-    margin-left: 39%;
-    width: 90px;
+    margin-left: 5px;
+    width: 105px;
     height: 30px;
-    font-size :10px;
 }
 .btm-btn {
   display: inline-flex;
@@ -108,11 +110,15 @@ td{
   justify-content: flex-start;
   white-space : nowrap;
 }
+.div-floatLeft{
+	float : left;
+}
 .product-img{
     margin-top: 5%;
     margin-bottom: 10%;
+    margin-left : 0px;
     width : 80px;
-    height : 80px;
+    height : 100px;
 }
 .total-price{
     margin: auto 0;
@@ -143,14 +149,9 @@ input {
 .buyer-info-title{
     margin-bottom: 20px;
 }
-#infocopy-btn-td{
-    text-align: left;
-}
-#searchAddr-btn-td{
-    text-align: left;
-}
 hr{
     margin: auto 0;
+    margin-bottom : 1rem;
 }
 p {
     margin: auto 0;

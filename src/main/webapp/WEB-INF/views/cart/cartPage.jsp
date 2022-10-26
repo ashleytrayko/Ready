@@ -110,7 +110,7 @@
         </div>
         <div id="cart-btn1">
             <button class="btn btn-secondary">쇼핑 계속하기</button>
-            <button class="btn btn-primary">상품 주문하기</button>
+            <button class="btn btn-primary" onclick="location.href='/order/orderView.ready';">상품 주문하기</button>
         </div>
     <footer>
 		

@@ -21,7 +21,7 @@
 		<result property="orderState" 		column="ORDER_DATE"/>
 		<result property="orderDate" 		column="ORDER_ID"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
- 		<collection property="Cart" resultMap="CartResultMap"></collection>
+ 		<collection property="cart" resultMap="CartResultMap"></collection>
 	</resultMap>
 	
 	<resultMap type="Cart" id="CartResultMap">
@@ -30,6 +30,7 @@
 		<result property="userId" 				column="USER_ID"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
 		<result property="productPrice" 		column="PRODUCT_PRICE"/>
+		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
 
  	<resultMap type="Book" id="bookResultMap">
