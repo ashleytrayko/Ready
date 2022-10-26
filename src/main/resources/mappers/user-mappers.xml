@@ -11,7 +11,7 @@
 		<result property="userEmail"			column="USER_EMAIL"/>
 		<result property="userPostcode"			column="USER_POSTCODE"/>
 		<result property="userAddress" 			column="USER_ADDRESS"/>
-		<result property="userDetailAddress" 	column="USER_DETAIL_ADRESS"/>
+		<result property="userDetailAddress" 	column="USER_DETAIL_ADDRESS"/>
 		<result property="userPhone"			column="USER_PHONE"/>
 		<result property="userNickname"			column="USER_NICKNAME"/>
 		<result property="userPurchase"			column="USER_PURCHASE"/>
