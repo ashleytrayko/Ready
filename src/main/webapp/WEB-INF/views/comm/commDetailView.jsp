@@ -98,6 +98,7 @@
 		function getReplyList() {
 			// detailView가 동작하면 바로 동작하게끔 ajax 바로 써줌
 			var boardNo = "${comm.boardNo }";
+			var userId = "${principal.username}"
 			$.ajax({
 				url : "/comm/replyList.kh",
 				data : {"boardNo" : boardNo},	// 어느 게시판 댓글인지 알아야 하기 때문에 boardNo를 받아옴
@@ -113,9 +114,12 @@
 							var $rWriter = $("<td width='100'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
 							var $rContents = $("<td>").text(cRList[i].rContents);
 							var $rCreateDate = $("<td width='100'>").text(cRList[i].rCreateDate);
-							var $btnArea = $("<td width='80'>")
-											.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
-											.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
+							if(userId == cRList[i].rWriter) {
+								var $btnArea = $("<td width='80'>")
+											 	.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
+												/* .append("<a href='javascript:void(0);' onclick='modifyReplyAjax(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ") */
+												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
+							}
 							$tr.append($rWriter); // <tr><td width='100'>khuser01</td></tr>
 							$tr.append($rContents); // <tr><td width='100'>khuser01</td><td>댓글내용</td></tr>
 							$tr.append($rCreateDate);
@@ -132,7 +136,7 @@
 			});
 		}
 		
-		function removeReplyAjax(replyNo) {
+		function removeReplyAjax(cReplyNo) {
 			if(confirm("정말 삭제하시겠습니까?")) {
 				$.ajax({
 					url : "/comm/replyDelete.kh",
@@ -151,6 +155,25 @@
 				});
 			}
 		}
+		
+		/* function modifyReplyAjax(cReplyNo) {
+			var boardNo = "${comm.boardNo}";
+			var replyContents = ${"#commReplyContents"}.val();
+			$.ajax({
+				url : "/comm/replyModify.kh",
+				data : {
+					"boardNo"	: boardNo,
+					"rContents" : replyContents
+				},
+				type : "post",
+				success : function(result) {
+					if(result == "success") {
+						alert("댓글 수정 성공!");
+						$("#commReply")
+					}
+				}
+			})
+		} */
 		
 		
 	
@@ -187,7 +210,7 @@
 				location.href="/comm/remove.kh?page="+value;
 			}
 		}
-		function removeReply(commReplyNo) {
+		/* function removeReply(commReplyNo) {
 			event.preventDefault();
 			if(confirm("정말 삭제하시겠습니까?")) {
 				var $delForm = $("<form>");
@@ -197,22 +220,22 @@
 				$delForm.appendTo("body");
 				$delForm.submit();
 			}
-		}
-		function modifyView(obj, cReplyContents, commReplyNo) {
+		} */
+		function modifyView(obj, rContents, cReplyNo) {
 			event.preventDefault();
 			var $tr = $("<tr>");
-			$tr.append("<td colspan='3'><input type='text' size='50' value='"+cReplyContents+"'></td>");
-			$tr.append("<td><button onclick='modifyReply(this, "+commReplyNo+");'>수정</button></td>");
+			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
+			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
 			$(obj).parent().parent().after($tr);
 		}
-		function modifyReply(obj, commReplyNo) {
+		function modifyReply(obj, cReplyNo) {
 			var inputTag = $(obj).parent().prev().children();
 			var commReplyContents = inputTag.val(); //= $("#modifyInput").val();
 			var $form =$("<form>");
-			$form.attr("action", "/comm/modifyReply.kh");
+			$form.attr("action", "/comm/replyModify.kh");
 			$form.attr("method", "post");
-			$form.append("<input type='hidden' value='"+rContents+"' name='commReplyContents'>");
-			$form.append("<input type='hidden' value='"+commReplyNo+"' name='commReplyNo'>");
+			$form.append("<input type='hidden' value='"+commReplyContents+"' name='rContents'>");
+			$form.append("<input type='hidden' value='"+cReplyNo+"' name='cReplyNo'>");
 			$form.appendTo("body");
 			$form.submit();
 		}
