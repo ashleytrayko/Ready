@@ -115,9 +115,17 @@
 			</span>
 			</a>
 			<form class="col-12 search mb-3 mb-lg-auto me-lg-auto center"
-				role="search">
-				<input type="search" class="form-control"
-					placeholder="도서 제목이나 작가명을 검색해주세요." aria-label="Search" />
+				role="search" action="/book/searchBook.kh" method="get">
+				<div class="input-group">
+					<select name="searchCondition" class="input-group-text" id="inputGroup-sizing-sm">
+						<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
+						<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작가</option>
+						<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
+						<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
+					</select>
+					<input type="search" class="form-control" name="searchValue" value="${searchValue }"
+						placeholder="도서 검색" aria-label="Search" />
+				</div>
 			</form>
 			<a href="/comm/list.kh"
 				class="d-flex mb-3 mb-lg-0 me-lg-3 text-dark text-decoration-none">
@@ -130,7 +138,7 @@
 					class="fa-solid fa-cart-shopping fa-xl"></i>
 					<p class="main-p">장바구니</p>
 			</span>
-			</a> <a href="/user"
+			</a> <a href="/user/mypage.kh"
 				class="d-flex mb-3 mb-lg-0 me-lg-3 text-dark text-decoration-none">
 				<span class="center"> <i class="fa-solid fa-user fa-xl"></i>
 					<p class="main-p">마이페이지</p>

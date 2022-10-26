@@ -83,7 +83,6 @@
 		    <br>
 		    
 			<div id="product3">
-			<br>
 				<h3>이 책의 분류</h3>
 				<p>${book.category }</p>
 			</div>

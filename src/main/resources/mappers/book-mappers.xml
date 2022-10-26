@@ -50,7 +50,7 @@
 			<if test="searchCondition.toString() == 'writer'">
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
-			<if test="searchCondition.toString() == 'writer'">
+			<if test="searchCondition.toString() == 'all'">
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
@@ -70,7 +70,7 @@
 			<if test="searchCondition.toString() == 'writer'">
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
-			<if test="searchCondition.toString() == 'writer'">
+			<if test="searchCondition.toString() == 'all'">
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'

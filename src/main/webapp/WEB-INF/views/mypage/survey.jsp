@@ -33,7 +33,9 @@
 </head>
 <body>
 	 <div class="main-contents">
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="col-md-3">
+			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
+		</div>
 		
 		<div class="main-section">
 			<h1>Read'y 설문조사</h1>
