@@ -10,24 +10,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>책메이트 : 주문하기</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <link href="../resources/css/cart_order/order.css" rel="stylesheet">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
 </style>
 <body>
-    <body>
-        <div id="order-title">
-            <h1 id="order-text">ORDER</h1>
-            <img src="../resources/images/cart_order/c-step02.png" >
-        </div>
+<jsp:include page="../main/header.jsp"></jsp:include>
+     <div id="order-title">
+         <h1 id="order-text">ORDER</h1>
+         <img src="../resources/images/cart_order/c-step02.png" >
+     </div>
     <br><br>
         <div class="order-data-list">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th colspan="7"><h5>주문할 상품</h5></th>
+                        <th colspan="7"><h5 style="font-weight : bold;">주문할 상품</h5></th>
                     </tr>
                 </thead>
                         <tbody class="cartbody">
@@ -45,8 +46,10 @@
                 	<c:set var="productSum" value="0"/>
                 	<c:forEach items="${cartList }" var="cartList" varStatus="i">
                     <tr>
-                        <td colspan="2">
+                        <td>
                             <img class="product-img" src="${cartList.book.imgPath }">
+                        </td>
+                        <td>
                             <c:choose>
                             	<c:when test="${fn:length(cartList.book.bookTitle) gt 20 }">
                             	<c:out value="${fn:substring(cartList.book.bookTitle, 0, 19) }...">
@@ -73,7 +76,7 @@
             <table class="buyer-info buyer-info-title">
                 <tr>
                     <th colspan="6">
-                        <h5>구매자 정보</h5>
+                        <h5 style="font-weight : bold;">구매자 정보</h5>
                     </th>
                 </tr>
             </table>
@@ -84,9 +87,7 @@
                         <p>이름</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" type="text" placeholder="일용자">
-                    </td>
-                    <td id="infocopy-btn-td">
+                        <input class="form-control form-control-sm name-phone" type="text" placeholder="일용자" value="${userInfoList.userName }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -94,7 +95,7 @@
                         <p>연락처</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" type="text" placeholder="01000000000">
+                        <input class="form-control form-control-sm name-phone" type="text" placeholder="01000000000" value="${userInfoList.userPhone }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -102,59 +103,20 @@
                         <p>E-mail</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm Email-Addr" type="text" placeholder="khuser01@iei.or.kr">
+                        <input class="form-control form-control-sm Email" type="text" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfoList.userEmail }">
                     </td>
                 </tr>
-            </table>
-        </div>
-
-        <div class="buyer-data-list">
-            <table class="buyer-info buyer-info-title">
-                <tr>
-                    <th colspan="6">
-                        <h5>배송지 정보</h5>
-                    </th>
-                </tr>
-            </table>
-            <hr>
-            <table class="buyer-info-table">
-                <tr class="buyer-info-tr">
-                    <td class="buyer-info-td">
-                        <p>이름</p>
-                    </td>
-                    <td id="name-td">
-                        <input class="form-control form-control-sm name-phone" type="text" placeholder="일용자">
-                    </td>
-                    <td id="infocopy-btn-td">
-                        <button class="btn btn-secondary infocopy-btn">구매자정보 복사</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="buyer-info-td">
-                        <p>연락처</p>
-                    </td>
-                    <td>
-                        <input class="form-control form-control-sm name-phone" type="text" placeholder="01000000000">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="buyer-info-td">
-                        <p>E-mail</p>
-                    </td>
-                    <td>
-                        <input class="form-control form-control-sm Email-Addr" type="text" placeholder="khuser01@iei.or.kr">
-                    </td>
-                </tr>
-                <tr><td style="height: 10px;"></td></tr>
                 <tr>
                     <td class="addr-info-td">
-                        <p>주소</p>
+                        <p style="vertical-align :middle; margin-top : 0px; margin-bottom : 0px;">주소</p>
                     </td>
-                    <td class="addr-info-td">
-                        <input class="form-control form-control-sm Email-Addr" id="zoneCode" type="text" placeholder="00000 (우편번호)">
-                    </td>
-                    <td id="searchAddr-btn-td">
-                        <button class="btn btn-secondary searchAddr-btn" onclick="addrSearch();">우편번호 검색</button>
+                    <td class="addr-info-td" style="width : 400px;">
+                    	<div class="div-floatLeft">
+                        	<input class="form-control form-control-sm Addr1" id="zoneCode" type="text" value="${userInfoList.userPostcode }" placeholder="00000 (우편번호)" style="width:90px;">
+                        </div>
+                        <div class="div-floatLeft">
+                        	<button class="btn btn-secondary searchAddr-btn" onclick="addrSearch();" style="font-size :12px;">우편번호 검색</button>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -162,7 +124,7 @@
                         <p></p>
                     </td>
                     <td colspan="2">
-                        <input class="form-control form-control-sm detail-Addr" id="roadAddr" type="text" placeholder="서울시 중구 남대문로 120 대일빌딩 (도로명 or 지번 주소)">
+                        <input class="form-control form-control-sm detail-Addr" id="roadAddr" type="text" value="${userInfoList.userAddress }" placeholder="서울시 중구 남대문로 120 대일빌딩 (도로명 or 지번 주소)" style="width: 400px;">
                     </td>
                 </tr>
                 <tr>
@@ -170,18 +132,87 @@
                         <p></p>
                     </td>
                     <td colspan="2" class="addr-td">
-                        <input class="form-control form-control-sm detail-Addr" id="detailAddr" type="text" placeholder="3F F강의실 (상세 주소)">
+                        <input class="form-control form-control-sm detail-Addr" id="detailAddr" type="text" value="${userInfoList.userDetailAddress }" placeholder="3F F강의실 (상세 주소)" style="width: 400px;">
                     </td>
                 </tr>
-            
             </table>
-            
+        </div>
+
+        <div class="buyer-data-list">
+           <table class="buyer-info buyer-info-title">
+              <tr>
+                 <th colspan="6">
+                     <h5 style="font-weight : bold;">배송지 정보</h5>
+                 </th>
+              </tr>
+           </table>
+           <hr>
+           <table class="buyer-info-table">
+                <tr class="buyer-info-tr">
+                    <td class="buyer-info-td">
+                        <p>이름</p>
+                    </td>
+                    <td>
+                    	<div class="div-floatLeft">
+                        	<input class="form-control form-control-sm name-phone" type="text" placeholder="일용자" value="${userInfoList.userName }" style="width:130px">
+                    	</div>
+                    	<div class="div-floatLeft">
+                        	<button class="btn btn-secondary" id="infocopy-btn">구매자정보 복사</button>
+                    	</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="buyer-info-td">
+                        <p>연락처</p>
+                    </td>
+                    <td>
+                        <input class="form-control form-control-sm name-phone" type="text" placeholder="01000000000" value="${userInfoList.userPhone }" style="width:130px">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="buyer-info-td">
+                        <p>E-mail</p>
+                    </td>
+                    <td>
+                        <input class="form-control form-control-sm Email" type="text" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfoList.userEmail }">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="addr-info-td">
+                        <p style="vertical-align :middle; margin-top : 0px; margin-bottom : 0px;">주소</p>
+                    </td>
+                    <td class="addr-info-td" style="width : 400px;">
+                    	<div class="div-PostCode">
+                        	<input class="form-control form-control-sm Addr1" id="zoneCode" type="text" value="${userInfoList.userPostcode }" placeholder="00000 (우편번호)" style="width:90px;">
+                        </div>
+                        <div class="div-PostCode">
+                        	<button class="btn btn-secondary searchAddr-btn" onclick="addrSearch();" style="font-size :12px;">우편번호 검색</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="addr-info-td">
+                        <p></p>
+                    </td>
+                    <td colspan="2">
+                        <input class="form-control form-control-sm detail-Addr" id="roadAddr" type="text" value="${userInfoList.userAddress }" placeholder="서울시 중구 남대문로 120 대일빌딩 (도로명 or 지번 주소)" style="width: 400px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="addr-info-td">
+                        <p></p>
+                    </td>
+                    <td colspan="2" class="addr-td">
+                        <input class="form-control form-control-sm detail-Addr" id="detailAddr" type="text" value="${userInfoList.userDetailAddress }" placeholder="3F F강의실 (상세 주소)" style="width: 400px;">
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="order-data-list">
             <table id="order-Info"> 
                 <thead>
-                    <tr id="">
+                    <tr>
                         <th id="orderinfo-table-left">주문 수량</th>
                         <th class="orderinfo-table-header">주문 금액 합계</th>
                         <th class="orderinfo-table-header">배송비</th>
@@ -213,6 +244,10 @@
                document.querySelector("#detailAddr").focus();
            }
         }).open();
+    }
+    
+    function copyInfo(){
+    	
     }
 </script>
 </body>

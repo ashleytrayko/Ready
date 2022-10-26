@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.service.OrderService;
+import com.kh.ready.user.domain.User;
 
 @Controller
 public class OrderController {
@@ -20,15 +21,17 @@ public class OrderController {
 	
 	
 	@RequestMapping(value="/order/orderView.ready", method=RequestMethod.GET)
-	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart) {
+	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart, User user) {
 		try {
 			String userId = principal.getName();
 			
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
+			User userInfoList = orderService.getUserInfoByUserId(userId);
 			
-			System.out.println(cartList);
+			System.out.println(userInfoList);
 			
 			mv.addObject("cartList", cartList);
+			mv.addObject("userInfoList", userInfoList);
 			mv.setViewName("/order/orderPage");
 			
 		} catch (Exception e) {

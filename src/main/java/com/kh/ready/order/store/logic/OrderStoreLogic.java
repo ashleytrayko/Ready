@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.store.OrderStore;
+import com.kh.ready.user.domain.User;
 
 @Repository
 public class OrderStoreLogic implements OrderStore{
@@ -19,6 +20,12 @@ public class OrderStoreLogic implements OrderStore{
 	public List<Cart> getCartdataByUserId(String userId) {
 
 		return session.selectList("OrderMapper.selectCartListByUserId", userId);
+	}
+
+	@Override
+	public User getUserInfoByUserId(String userId) {
+
+		return session.selectOne("UserMapper.selectOneUser",userId);
 	}
 	
 }
