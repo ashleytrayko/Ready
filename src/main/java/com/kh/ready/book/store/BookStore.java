@@ -30,4 +30,6 @@ public interface BookStore {
 	List<Book> selectAllByValue(SqlSessionTemplate session, String searchCondition, String searchValue, int currentPage,
 			int bookLimit);
 
+	List<Book> selectAllByCategory(SqlSessionTemplate session, String searchCondition);
+
 }

@@ -114,6 +114,31 @@ public class BookController {
 		return mv;
 	}
 	
+	//카테고리 조회
+	@RequestMapping(value="/book/category.kh", method=RequestMethod.GET)
+	public ModelAndView showCategory(ModelAndView mv, 
+							  @RequestParam("searchCondition") String searchCondition) {
+		try {
+			List<Book> bList1 = bService.printAllByCategory(searchCondition);
+			List<Book> bList2 = bService.printAllByCategory("연애");
+			List<Book> bList3 = bService.printAllByCategory("문학");
+			if(!bList1.isEmpty()) {
+				mv.addObject("bList", bList1);
+				mv.addObject("bList", bList2);
+				mv.addObject("bList", bList3);
+			} else {
+				mv.addObject("bList", null);
+			}
+			mv.addObject("urlVal", "category");
+			mv.addObject("searchCondition", searchCondition);
+			//mv.addObject("searchValue", searchValue);
+			mv.setViewName("book/listMain");
+		} catch(Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
+			}
+		return mv;
+	}
+	
 	//평점 등록
 	@RequestMapping(value="/book/addReview.kh", method=RequestMethod.POST)
 	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal) {

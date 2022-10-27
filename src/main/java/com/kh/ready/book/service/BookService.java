@@ -26,4 +26,6 @@ public interface BookService {
 	public int removeReview(Integer reviewNo);
 
 	public List<Review> printAllReview(Integer bookNo);
+
+	public List<Book> printAllByCategory(String searchCondition);
 }

@@ -15,6 +15,7 @@ public class Book {
 	private long mileage;
 	private String imgPath;
 	private String publisher;
+	private int saleCount;
 	
 	//getter, setter
 	public int getBookNo() {
@@ -89,15 +90,22 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	
+	public int getSaleCount() {
+		return saleCount;
+	}
+	public void setSaleCount(int saleCount) {
+		this.saleCount = saleCount;
+	}
 	//toString
 	@Override
 	public String toString() {
 		return "Book [bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", bookWriter=" + bookWriter + ", enrollDate="
 				+ enrollDate + ", pubDate=" + pubDate + ", category=" + category + ", bookContents=" + bookContents
 				+ ", ISBN=" + ISBN + ", priceSales=" + priceSales + ", mileage=" + mileage + ", imgPath=" + imgPath
-				+ ", publisher=" + publisher + "]";
+				+ ", publisher=" + publisher + ", saleCount=" + saleCount + "]";
 	}
+	
+	
 	
 	
 }
