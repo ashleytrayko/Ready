@@ -77,4 +77,10 @@ public class BookServiceImpl implements BookService{
 		return bList;
 	}
 
+	@Override
+	public List<Book> printAllByCategory(String searchCondition) {
+		List<Book> bList = bStore.selectAllByCategory(session, searchCondition);
+		return bList;
+	}
+
 }

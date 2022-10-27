@@ -28,10 +28,11 @@
 		<result property="reviewContents" 	column="REVIEW_CONTENTS"/>
 		<result property="enrollDate" 		column="ENROLL_DATE"/>
 		<result property="updateDate" 		column="UPDATE_DATE"/>
+		<result property="salecount"		column="SALE_COUNT"/>
 	</resultMap>
 	
 	<insert id="insertBook">
-		INSERT INTO BOOK_TBL VALUES(SEQ_BOOK_NO.NEXTVAL, #{bookTitle }, #{bookWriter }, DEFAULT, #{pubDate }, #{category }, #{bookContents}, #{ISBN }, #{priceSales }, #{mileage }, #{imgPath }, #{publisher })
+		INSERT INTO BOOK_TBL VALUES(SEQ_BOOK_NO.NEXTVAL, #{bookTitle }, #{bookWriter }, DEFAULT, #{pubDate }, #{category }, #{bookContents}, #{ISBN }, #{priceSales }, #{mileage }, #{imgPath }, #{publisher }, DEFAULT)
 	</insert>
 	
 	<select id="selectAllBook" resultMap="bookResultMap">
@@ -80,6 +81,10 @@
 	
 	<select id="selectOneBook" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL WHERE BOOK_NO = #{bookNo }
+	</select>
+	
+	<select id="selectAllByCategory" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' ||#{searchCondition }|| '%'
 	</select>
 	
 	

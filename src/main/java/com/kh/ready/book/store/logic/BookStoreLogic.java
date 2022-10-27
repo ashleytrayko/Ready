@@ -85,4 +85,10 @@ public class BookStoreLogic implements BookStore{
 		return bList;
 	}
 
+	@Override
+	public List<Book> selectAllByCategory(SqlSessionTemplate session, String searchCondition) {
+		List<Book> bList = session.selectList("BookMapper.selectAllByCategory", searchCondition);
+		return bList;
+	}
+
 }
