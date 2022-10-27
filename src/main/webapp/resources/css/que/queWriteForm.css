@@ -1,0 +1,10 @@
+@charset "UTF-8";
+select option[value=""][disabled] {
+	display: none;
+}
+.qTitle {
+	width:100%;
+}
+#select-td {
+	width:100px;
+}

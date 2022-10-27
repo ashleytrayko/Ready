@@ -11,6 +11,7 @@
 <meta charset="UTF-8">
 <title>게시글 작성</title>
   <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+  <link rel="stylesheet" href="/resources/css/que/queWriteForm.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -31,11 +32,11 @@
 				<table align="center" border="none">
 					<tr>
 						<td>제목</td>
-						<td><input type="text" name="commTitle"></td>
+						<td><input type="text" name="commTitle" class="qTitle"></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td><input type="text" name="commWriter" value="${principal.username }" readonly></td>
+						<td><input type="text" name="commWriter" value="${principal.username }" readonly class="qTitle"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
@@ -44,10 +45,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td colspan="2" align="right">
 							<button type="button" onclick="listMember();">취소</button>
-						</td>
-						<td>
 							<button onclick="goList();">등록</button>
 						</td>
 					</tr>
@@ -63,7 +62,7 @@
 		$('.summernote').summernote({
 		  height: 150,
 		  width: 600,
-		  lang: "ko-KR",
+		  lang: "ko-KR"
 /* 		  focus : true, */
 		});
 		function listMember() {

@@ -18,8 +18,28 @@
 	</resultMap>
 	
 	<insert id="insertFAQ">
-		INSERT INTO QUESTION_TBL VALUES(SEQ_BOARD_NO, #{queWriter}, #{queTitle}, #{queContents}
+		INSERT INTO QUESTION_TBL VALUES(SEQ_QUE_NO.NEXTVAL, #{queWriter}, #{queTitle}, #{queContents}
 		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, DEFAULT, #{qCategory})
 	</insert>
+	<!-- 고객센터에 문의한 문의글 보여줄 쿼리 -->
+	<select id="selectTotalCount" resultMap="questionResultMap">
+		SELECT COUNT(*) FROM QUESTION_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				QUE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				QUE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+		</where>
+	</select>
+	<select id="selectAllBoard" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY Q_NO DESC
+	</select>
 	
 </mapper>
