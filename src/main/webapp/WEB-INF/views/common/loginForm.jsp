@@ -54,6 +54,12 @@ span.error {
 			<li class="nav-item"><a class="nav-link" href="/forget-password">비밀번호 찾기 </a></li>
 			<li class="nav-item"><a class="nav-link" href="/join">회원가입</a></li>
 		</ul>
+		<hr>
+		<ul class="nav d-flex justify-content-center">
+			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/google">구글</a></li>
+			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/naver">네이버</a></li>
+			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/kakao">카카오</a></li>
+		</ul>
 	</div>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

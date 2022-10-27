@@ -55,5 +55,15 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public String findUserByEmail(String userEmail) {
+		User user = userRepository.getUserByEmail(userEmail);
+		if(user != null) {
+			return "exist";
+		}else {
+			return "itsOk";
+		}
+	}
+
 
 }

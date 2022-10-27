@@ -8,45 +8,61 @@
 		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd">
-	
-	
+
+
 	<context:component-scan base-package="com.kh.ready" />
 	<context:component-scan base-package="com.kh.ready.user" />
 	<context:component-scan base-package="com.kh.ready.user.security" />
 	
-	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="customUserService" class="com.kh.ready.user.security.CustomUserDetailService" />
+
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/" access="permitAll"/>
+		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
-		<security:intercept-url pattern="/common/**" access="permitAll"/>
-		<security:intercept-url pattern="/book/**" access="permitAll"/>
-		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
-		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-		<security:form-login
-							login-page="/login"
-							username-parameter="userId"
-							password-parameter="userPassword"
-							login-processing-url="/login"
-							default-target-url="/"
-							always-use-default-target="true"
-							authentication-success-forward-url="/"/>
-		<security:logout logout-success-url="/"
-						invalidate-session="true"
-						delete-cookies="true"
-						logout-url="/logout"/>
-		<security:remember-me user-service-ref="customUserService"
-							token-validity-seconds="60000"
-							key="cookie"
-							/>
-	</security:http>
+		<security:intercept-url pattern="/common/**" access="permitAll" />
+		<security:intercept-url pattern="/book/**" access="permitAll" />
+		<security:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/order/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		
+		<security:form-login login-page="/login"
+								username-parameter="userId" 
+								password-parameter="userPassword"
+								login-processing-url="/login" 
+								default-target-url="/"
+								always-use-default-target="true"
+								authentication-success-forward-url="/" />
+		
+		<security:logout logout-success-url="/"
+						invalidate-session="true" 
+						delete-cookies="true" 
+						logout-url="/logout" />
+		
+		<security:remember-me user-service-ref="customUserService" 
+								token-validity-seconds="60000"
+								key="cookie" />
+		<security:oauth2-login login-page="/login"
+								login-processing-url="/login/oauth2"
+								authorized-client-repository-ref=""
+								authorization-request-repository-ref=""
+								user-authorities-mapper-ref=""
+								user-service-ref="principalOAuth2UserService"/>
+	</security:http>
+	
+	<security:client-registrations>
+		<security:client-registration registration-id="google" 
+										provider-id="google" 
+										client-id="333977211719-mq0ljd44tmjn8i2jpfffn4313sompnh8.apps.googleusercontent.com"
+										client-secret="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" />
+										
+	
+	</security:client-registrations>
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserService">
-			<security:password-encoder ref="encoder"/>
+			<security:password-encoder ref="encoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

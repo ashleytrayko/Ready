@@ -27,4 +27,10 @@ public class UserRepositoryImpl implements UserRepository {
 		return user;
 	}
 
+	@Override
+	public User getUserByEmail(String userEmail) {
+		User user = session.selectOne("UserMapper.selectUserByEmail", userEmail);
+		return user;
+	}
+
 }
