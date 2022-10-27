@@ -114,8 +114,9 @@
 							var $rWriter = $("<td width='100'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
 							var $rContents = $("<td>").text(cRList[i].rContents);
 							var $rCreateDate = $("<td width='100'>").text(cRList[i].rCreateDate);
+							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
-								var $btnArea = $("<td width='80'>")
+								$btnArea = $("<td width='80'>")
 											 	.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
 												/* .append("<a href='javascript:void(0);' onclick='modifyReplyAjax(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ") */
 												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
@@ -125,6 +126,7 @@
 							$tr.append($rCreateDate);
 							$tr.append($btnArea);
 							$tableBody.append($tr); 	// 후손으로 넣기 위해 append태그 사용
+							$btnArea = "";				// btnArea를 비워줘야 이전의 내용을 끌고오지않음
 							// <tbody><tr><td></td><td></td>...</tr></tbody>
 						}
 					}
@@ -234,8 +236,9 @@
 			var $form =$("<form>");
 			$form.attr("action", "/comm/replyModify.kh");
 			$form.attr("method", "post");
-			$form.append("<input type='hidden' value='"+commReplyContents+"' name='rContents'>");
+			$form.append("<input type='hidden' value='"+rContents+"' name='rContents'>");
 			$form.append("<input type='hidden' value='"+cReplyNo+"' name='cReplyNo'>");
+			console.log($form[0]);
 			$form.appendTo("body");
 			$form.submit();
 		}

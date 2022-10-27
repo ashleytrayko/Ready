@@ -75,7 +75,11 @@
 								<input type="text" name="searchValue" value="${searchValue }">
 								<input type="submit" value="검색">
 							</form>
-								<button onclick="location.href='/comm/viewWrite.kh'">글쓰기</button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="7" align="right">
+							<button onclick="location.href='/comm/viewWrite.kh'">글쓰기</button>
 						</td>
 					</tr>
 				</table>
