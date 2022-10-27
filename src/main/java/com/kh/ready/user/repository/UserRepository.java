@@ -13,4 +13,6 @@ public interface UserRepository {
 	public int insertUser(User user);
 	
 	public User getUserById(String userId);
+
+	public User getUserByEmail(String userEmail);
 }

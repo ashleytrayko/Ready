@@ -9,4 +9,7 @@ public interface UserService {
 	
 	// 아이디찾기
 	public String findUserById(String userId);
+	
+	// 메일 중복확인
+	public String findUserByEmail(String userEmail);
 }
