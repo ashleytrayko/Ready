@@ -66,9 +66,6 @@ public class CartContorller {
 			@RequestParam("cartNo") int cartNo, @RequestParam("productCount") int productCount) {
 		
 		try {
-			System.out.println(cartNo);
-			System.out.println(productCount);
-			
 			String userId = principal.getName();
 			
 			cart.setCartNo(cartNo);

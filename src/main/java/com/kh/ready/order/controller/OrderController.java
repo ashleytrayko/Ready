@@ -1,15 +1,20 @@
 package com.kh.ready.order.controller;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.cart.domain.Cart;
+import com.kh.ready.order.domain.Order;
 import com.kh.ready.order.service.OrderService;
 import com.kh.ready.user.domain.User;
 
@@ -28,8 +33,6 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfoList = orderService.getUserInfoByUserId(userId);
 			
-			System.out.println(userInfoList);
-			
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfoList", userInfoList);
 			mv.setViewName("/order/orderPage");
@@ -41,9 +44,28 @@ public class OrderController {
 		return mv;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/order/insert.ready", method=RequestMethod.GET)
-	public void insertOrder() {
+	public void insertOrder(Order order, Principal principal, @RequestParam("cartData[]") List<Cart> cart) {
 		
-		
+		 Calendar cal = Calendar.getInstance();
+		 int year = cal.get(Calendar.YEAR);
+		 String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
+		 String ymd = ym +  new DecimalFormat("00").format(cal.get(Calendar.DATE));
+		 String subNum = "";
+		 
+		 for(int i = 1; i <= 6; i ++) {
+		  subNum += (int)(Math.random() * 10);
+		 }
+
+		 String orderId = ymd + "_" + subNum;
+		 String userId = principal.getName();
+		 
+		 order.setOrderId(orderId);
+		 order.setUserId(userId);
+		 
+//		 orderService.insertOrder(order);
+		 
+		 
 	}
 }
