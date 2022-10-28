@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.ready.user.domain.User;
 import com.kh.ready.user.security.CustomUserDetailService;
 import com.kh.ready.user.security.CustomUserDetails;
+import com.kh.ready.user.security.oauth.PrincipalOAuth2UserService;
 import com.kh.ready.user.service.UserService;
 
 @Controller
@@ -35,7 +37,11 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
+	private PrincipalOAuth2UserService principalOAuth2UserService;
+	
+	@Autowired
 	private JavaMailSenderImpl mailSender;
+	
 	
 	/**
 	 * 
@@ -84,15 +90,6 @@ public class UserController {
 		return "home";
 	}
 	
-	@GetMapping("/login/oauth2/code/google")
-	public @ResponseBody String testOAuthLogin(Authentication authentication,
-			@AuthenticationPrincipal OAuth2User oauth) {
-		System.out.println("/test/oauth/login ====================");
-		OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-		System.out.println("authentication : " + oauth2User.getAttributes());
-		System.out.println("oauth2User : " + oauth.getAttributes());
-		return "home";
-	}
 	
 	// 아이디 찾기 요청
 	@PostMapping("/forget-id")
