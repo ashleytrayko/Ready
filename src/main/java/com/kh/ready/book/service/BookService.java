@@ -27,5 +27,9 @@ public interface BookService {
 
 	public List<Review> printAllReview(Integer bookNo);
 
-	public List<Book> printAllByCategory(String searchCondition);
+	public List<Book> printAllByCategory(String category);
+
+	public List<Book> printBestSeller();
+
+	public List<Book> printNewBook();
 }

@@ -54,6 +54,7 @@ public class BookController {
 		return mv;
 	}
 	
+	
 	//도서 세부조회
 	@RequestMapping(value="/book/detailView.kh", method=RequestMethod.GET)
 	public ModelAndView bookDetailView(ModelAndView mv, @RequestParam("bookNo") Integer bookNo, HttpSession session, Principal principal) {
@@ -116,21 +117,22 @@ public class BookController {
 	
 	//카테고리 조회
 	@RequestMapping(value="/book/category.kh", method=RequestMethod.GET)
-	public ModelAndView showCategory(ModelAndView mv, 
-							  @RequestParam("searchCondition") String searchCondition) {
+	public ModelAndView showCategory(ModelAndView mv, @RequestParam("category")String category) {
 		try {
-			List<Book> bList1 = bService.printAllByCategory(searchCondition);
+			List<Book> bList = bService.printAllByCategory(category);
+			List<Book> bList1 = bService.printAllByCategory(category);
 			List<Book> bList2 = bService.printAllByCategory("연애");
 			List<Book> bList3 = bService.printAllByCategory("문학");
 			if(!bList1.isEmpty()) {
-				mv.addObject("bList", bList1);
-				mv.addObject("bList", bList2);
-				mv.addObject("bList", bList3);
+				mv.addObject("bList", bList);
+				mv.addObject("bList1", bList1);
+				mv.addObject("bList2", bList2);
+				mv.addObject("bList3", bList3);
 			} else {
 				mv.addObject("bList", null);
 			}
 			mv.addObject("urlVal", "category");
-			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("category", category);
 			//mv.addObject("searchValue", searchValue);
 			mv.setViewName("book/listMain");
 		} catch(Exception e) {
