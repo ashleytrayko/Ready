@@ -33,6 +33,9 @@ public class User implements Serializable{
 	
 	// 자동부여항목들은 추후에 테이블 따로 둘수도 있음
 	
+	private String provider;
+	private String providerId;
+	
 	public User() {}
 
 	public User(long userIndex, String userId, String userPassword, String userName, String userEmail,

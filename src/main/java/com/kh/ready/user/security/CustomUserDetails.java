@@ -69,7 +69,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 		collection.add(new GrantedAuthority(){
 			@Override
 			public String getAuthority() {
-				return user.getUserRole();
+				return user.getUserRole().toString();
 			}
 		});
 		
