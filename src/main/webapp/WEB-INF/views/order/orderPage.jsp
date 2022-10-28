@@ -260,19 +260,17 @@
             </table>
         </div>
         <div id="order-btn">
-            <button class="btn btn-secondary btm-btn" onclick="test();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(${priceSum * 0.99} , '${cartList[0].book.bookTitle}' , ${productSum}, '${userInfoList.userAddress} ${userInfoList.userDetailAddress }'
-            												, '${userInfoList.userName }, ${cartList }');">결제하기</button>
+            <button class="btn btn-secondary btm-btn" onclick="test(`${cartList}`);">이전 페이지</button>
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${cartList[0].book.bookTitle}` , `${productSum}`, `${userInfoList.userAddress} ${userInfoList.userDetailAddress}`
+            												, `${userInfoList.userName}`, `${cartList}`);">결제하기</button>
             												
         </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-window.onload = function(){
 	
 	var IMP = window.IMP;
 	IMP.init('imp45674133');
 
-}
     function byuerAddrSearch(){
         new daum.Postcode({
             oncomplete: function(data) {
@@ -313,27 +311,24 @@ window.onload = function(){
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     	
     }
-    function test(){
-/*     	var subNum = "";
-    	for(var i=1; i<=6; i++) {
-  		  subNum += (Math.random() * 10);
-		}; */
- 		var date = new Date();
-		String year = date.getFullYear();
-		String month = date.getMonth() + 1;
-		String day = date.getDate();
-		var orderDay = year+month+day;
-		
-		console.log(orderDay);
+    
+    function test(cartList){
+    	for(var i in cartList){
+  			cartList[i].bookNo;
+  		}
     }
     
     function requestPay(price, firstTitle, productCount,buyer_Addr,buyer_Name, cartList) {
     	
-    	var buyerPhone = $("#buyerPhone").val();
-    	var buyerEmail = $("#buyerEmail").val();
-    	var buyerZoneCode = $("#buyerZoneCode").val();
-    	var paymentmethod = $('input:radio[name=paymentmethod]:checked').val();
-  		
+    	const buyerPhone = $("#buyerPhone").val();
+    	const buyerEmail = $("#buyerEmail").val();
+    	const buyerZoneCode = $("#buyerZoneCode").val();
+    	const paymentmethod = $('input:radio[name=paymentmethod]:checked').val();
+    	
+/* 		for(var i in cartList){
+  			cartList[i].bookNo;
+  		} */
+		
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymentmethod,
@@ -345,26 +340,36 @@ window.onload = function(){
             buyer_tel: buyerPhone,
             buyer_addr: buyer_Addr,
             buyer_postcode: buyerZoneCode,
-            custom_data: {
-            	cartList : cartList
-            }
+            custom_data: cartList
         }, function (rsp) { // callback
             if (rsp.success) {
+        	console.log("response Data : ", rsp.custom_data);
 				$.ajax({
 					url :"/order/insert.ready",
 					type : "POST",
 					headers : { "Content-Type": "application/json" },
+					traditional : true,
 					data : {
+						cartList : rsp.custom_data,
+						productCount : rsp.custom_data,
+						productPrice : rsp.custom_data,
+						paymethod: rsp.pay_method,
 						totalPrice : rsp.paid_amount,
-						payDate : rsp.paid_at,
 						buyerName : rsp.buyer_name,
-						payMethod : rsp.pay_method,
 						buyerPhone : rsp.buyer_tel,
-						cartData : rsp.custom_data
+						cartList : rsp.custom_data,
+						buyerPostCode: rsp.buyer_postcode,
+						buyerAddr: rsp.buyer_addr,
+					},
+					success : function(data){
+						console.log(data);
+					},
+					error : function(){
+						alert("fail");
 					}
 				})
             } else {
-				alert("결제에 실패하였습니다.")
+				alert(rsp.error_msg);
             }
         });
     }
