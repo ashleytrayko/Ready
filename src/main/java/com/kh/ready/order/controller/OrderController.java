@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfoList = orderService.getUserInfoByUserId(userId);
 			
+			
+			
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfoList", userInfoList);
 			mv.setViewName("/order/orderPage");
@@ -44,10 +47,18 @@ public class OrderController {
 		return mv;
 	}
 	
+	
+	
 	@ResponseBody
-	@RequestMapping(value="/order/insert.ready", method=RequestMethod.GET)
-	public void insertOrder(Order order, Principal principal, @RequestParam("cartData[]") List<Cart> cart) {
-		
+	@RequestMapping(value="/order/insert.ready", method=RequestMethod.POST)
+	public void insertOrder(Order order, Principal principal, @RequestParam("cartList") String cartList,
+															   @RequestParam("totalPrice") String totalPrice,
+															   @RequestParam("buyerName") String buyerName,
+															   @RequestParam("buyerPhone") String buyerPhone,
+															   @RequestParam("buyerPostCode") String buyerPostCode,
+															   @RequestParam("buyerAddr") String buyerAddr) {
+
+		 System.out.println(cartList);
 		 Calendar cal = Calendar.getInstance();
 		 int year = cal.get(Calendar.YEAR);
 		 String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
@@ -64,7 +75,11 @@ public class OrderController {
 		 order.setOrderId(orderId);
 		 order.setUserId(userId);
 		 
-//		 orderService.insertOrder(order);
+		
+		 System.out.println(totalPrice);
+		 System.out.println(order.getOrderId());
+		 
+//		 orderService.insertOrder(order, cart);
 		 
 		 
 	}
