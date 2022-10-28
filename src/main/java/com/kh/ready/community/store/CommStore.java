@@ -30,5 +30,8 @@ public interface CommStore {
 	int deleteReply(SqlSession session, Integer cReplyNo);
 	
 	int updateReply(SqlSession session, CommReply cReply);
+	
+	List<Comm> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage,
+			int boardLimit);
 
 }

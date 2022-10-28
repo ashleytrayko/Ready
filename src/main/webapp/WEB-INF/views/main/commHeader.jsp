@@ -148,7 +148,7 @@
           </span>
         </a>
         <a
-          href="/"
+          href="/que/list.kh"
           class="d-flex mb-3 mb-lg-0 me-lg-right text-dark text-decoration-none"
         >
           <span class="center">

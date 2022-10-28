@@ -85,4 +85,11 @@ public class CommStoreLogic implements CommStore{
 		return result;
 	}
 
+	@Override
+	public List<Comm> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage,
+			int boardLimit) {
+
+		return null;
+	}
+
 }

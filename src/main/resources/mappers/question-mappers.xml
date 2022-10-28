@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="QuestionMapper">
 	<resultMap type="Question" id="questionResultMap">
-		<id property="QueNo" 			column="QUE_NO"/>
+		<id property="queNo" 			column="QUE_NO"/>
 		<result property="queWriter" 		column="QUE_WRITER"/>
 		<result property="queTitle" 		column="QUE_TITLE"/>
 		<result property="queContents" 		column="QUE_CONTENTS"/>
@@ -22,7 +22,7 @@
 		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, DEFAULT, #{qCategory})
 	</insert>
 	<!-- 고객센터에 문의한 문의글 보여줄 쿼리 -->
-	<select id="selectTotalCount" resultMap="questionResultMap">
+	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM QUESTION_TBL
 		<where>
 			<if test="searchCondition.toString() == 'title'">
@@ -39,7 +39,7 @@
 		</where>
 	</select>
 	<select id="selectAllBoard" resultMap="questionResultMap">
-		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY Q_NO DESC
+		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
 	</select>
 	
 </mapper>

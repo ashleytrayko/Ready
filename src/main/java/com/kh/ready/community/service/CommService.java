@@ -27,4 +27,6 @@ public interface CommService {
 
 	int modifyReply(CommReply cReply);
 
+	List<Comm> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit);
+
 }

@@ -188,6 +188,52 @@ public class CommController {
 	}
 	
 	/**
+	 * 게시글 검색
+	 * @param mv
+	 * @param searchCondition
+	 * @param searchValue
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "/comm/search.kh", method = RequestMethod.GET)
+	public ModelAndView boardSearchList(ModelAndView mv, @RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchValue") String searchValue,
+			@RequestParam(value = "page", required = false) Integer page) {
+		try {
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = cService.getTotalCount(searchCondition, searchValue);
+			int boardLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+			startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+			endNavi = startNavi + naviLimit - 1;
+			if (maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			List<Comm> cList = cService.printAllByValue(searchCondition, searchValue, currentPage, boardLimit);
+			if (!cList.isEmpty()) {
+				mv.addObject("cList", cList);
+			} else {
+				mv.addObject("cList", null);
+			}
+			mv.addObject("urlVal", "search");
+			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("searchValue", searchValue);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.setViewName("comm/listView");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
 	 * 게시글 삭제
 	 * 
 	 * @param session

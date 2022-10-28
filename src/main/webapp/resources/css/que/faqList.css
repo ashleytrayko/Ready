@@ -11,4 +11,5 @@
 }
 .faq-category:hover {
 	background-color:#D8BB9C;
+	cursor:pointer;
 }

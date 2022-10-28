@@ -32,18 +32,19 @@
 		
 		</div>
 		<div class="main-section">
-		<form action="/comm/register.kh" method="post" enctype="multipart/form-data">
+		<h1 align="center">1:1 문의</h1>
+		<form action="/que/register.kh" method="post" enctype="multipart/form-data">
 			<table align="center" border="1">
 				<tr>
 					<td class="td">제목</td>
-					<td colspan="2"><input type="text" class="qTitle"></td>
+					<td colspan="2"><input type="text" class="qTitle" name="queTitle"></td>
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td><input type="text" value="${principal.username }" readonly class="qTitle"></td>
+					<td><input type="text" name="queWriter" value="${principal.username }" readonly class="qTitle"></td>
 					<td align="right" id="select-td">
 						<div class="input-group">
-							<select name="searchCondition" class="input-group-text" id="inputGroup-sizing-sm" required>
+							<select name="qCategory" class="input-group-text" id="inputGroup-sizing-sm" required>
 								<option disabled value="" selected>문의유형</option>
 								<option value="user" <c:if test="${searchCondition eq 'user' }">selected</c:if>>회원정보</option>
 								<option value="order" <c:if test="${searchCondition eq 'order' }">selected</c:if>>주문관련</option>
@@ -61,8 +62,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td><button type="button">등록</button></td>
-					<td><button type="button">취소</button></td>
+					<td colspan="3" align="right">
+						<button type="button" onclick="goList();">취소</button>
+						<button>등록</button>
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -81,6 +84,9 @@
 			  width: 600,
 			  lang: "ko-KR"
 		});
+		function goList() {
+			location.href="/que/list.kh";
+		}
 	</script>
 </body>
 </html>

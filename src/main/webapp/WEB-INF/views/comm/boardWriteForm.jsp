@@ -47,7 +47,7 @@
 					<tr>
 						<td colspan="2" align="right">
 							<button type="button" onclick="listMember();">취소</button>
-							<button onclick="goList();">등록</button>
+							<button>등록</button>
 						</td>
 					</tr>
 				</table>

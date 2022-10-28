@@ -77,5 +77,10 @@ public class CommServiceImpl implements CommService{
 		int result = cStore.updateReply(session, cReply);
 		return result;
 	}
+	@Override
+	public List<Comm> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
+		List<Comm> cList = cStore.selectAllByValue(session, searchCondition, searchValue, currentPage, boardLimit);
+		return cList;
+	}
 
 }

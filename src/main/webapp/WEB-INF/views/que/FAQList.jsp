@@ -27,57 +27,51 @@
 					</tr>
 					<tr class="faq-header">
 						<td>유형</td>
-						<td cospan="3">제목</td>
+						<td colspan="3" align="left">제목</td>
 					</tr>
-					<c:if test="${!empty cList }">
-						<c:forEach items="${cList }" var="comm" varStatus="i">
+					<c:if test="${!empty qList }">
+						<c:forEach items="${qList }" var="question" varStatus="i">
 							<tr>
-								<td>${comm.boardNo }<%-- ${fn:length(fList) - i.index} 얘는 DESC로 출력 --%><!--${i.count } 얘는 게시글 ASC로 출력--></td>
-								<td colspan="2"><a href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
-								<!--  -->
-								<td>${comm.commWriter }</td>
-								<td>${comm.cCreateDate }</td>
-								<td>${comm.cCount }</td>
-								<td>${comm.cLike }</td>
+								<td>${question.qCategory }<%-- ${fn:length(fList) - i.index} 얘는 DESC로 출력 --%><!--${i.count } 얘는 게시글 ASC로 출력--></td>
+								<td colspan="3" align="left">${question.queTitle }</td>
 							</tr>
 						</c:forEach>
 						<tr align="center" height="20">
-						<td colspan="7">
+						<td colspan="4">
 							<c:if test="${currentPage != 1 }">
-								<a href="/comm/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a href="/question/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
 									<b>${p }</b>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/comm/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a href="/question/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/comm/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a href="/question/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 							</c:if>
 						</td>
 					</tr>
 					</c:if>
-					<c:if test="${empty cList }">
+					<c:if test="${empty qList }">
 						<tr>
-							<td colspan="7" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+							<td colspan="4" align="center"><b>데이터가 존재하지 않습니다.</b></td>
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="7" align="center">
-							<form action="/comm/search.kh" method="get">
+						<td colspan="4" align="center">
+							<form action="/question/search.kh" method="get">
 								<select name="searchCondition">
 									<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
-									<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
 									<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
 									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
 								</select>
 								<input type="text" name="searchValue" value="${searchValue }">
 								<input type="submit" value="검색">
 							</form>
-								<button onclick="/comm/viewWrite.kh">글쓰기</button>
+								<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
 						</td>
 					</tr>
 				</table>

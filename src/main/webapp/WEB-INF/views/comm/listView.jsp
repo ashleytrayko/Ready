@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +31,7 @@
 					<c:if test="${!empty cList }">
 						<c:forEach items="${cList }" var="comm" varStatus="i">
 							<tr>
-								<td>${comm.boardNo }<%-- ${fn:length(fList) - i.index} 얘는 DESC로 출력 --%><!--${i.count } 얘는 게시글 ASC로 출력--></td>
+								<td><%-- ${comm.boardNo } --%>${fn:length(cList) - i.index}<!--${i.count } 얘는 게시글 ASC로 출력--></td>
 								<td colspan="2"><a href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
 								<!--  -->
 								<td>${comm.commWriter }</td>

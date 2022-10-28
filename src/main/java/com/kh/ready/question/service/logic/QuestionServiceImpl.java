@@ -25,8 +25,8 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public int getTotalCount(String searchCondition, String searchValue) {
-		int result = qStore.selectTotalCount(session, searchCondition, searchValue);
-		return result;
+		int totalCount = qStore.selectTotalCount(session, searchCondition, searchValue);
+		return totalCount;
 	}
 
 	@Override
