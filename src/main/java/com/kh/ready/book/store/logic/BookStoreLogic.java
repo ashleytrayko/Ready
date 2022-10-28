@@ -86,9 +86,22 @@ public class BookStoreLogic implements BookStore{
 	}
 
 	@Override
-	public List<Book> selectAllByCategory(SqlSessionTemplate session, String searchCondition) {
-		List<Book> bList = session.selectList("BookMapper.selectAllByCategory", searchCondition);
+	public List<Book> selectAllByCategory(SqlSessionTemplate session, String category) {
+		List<Book> bList = session.selectList("BookMapper.selectAllByCategory", category);
 		return bList;
 	}
+
+	@Override
+	public List<Book> selectBestSeller(SqlSessionTemplate session) {
+		List<Book> bList1 = session.selectList("BookMapper.selectBestSeller");
+		return bList1;
+	}
+
+	@Override
+	public List<Book> selectNewBook(SqlSessionTemplate session) {
+		List<Book> bList2 = session.selectList("BookMapper.selectNewBook");
+		return bList2;
+	}
+
 
 }

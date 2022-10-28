@@ -36,10 +36,10 @@ public class AladinApiController {
 		
 		//2. 오픈 api의 요청 규격에 맞는 파라미터 생성
 		urlBuilder.append("?" + URLEncoder.encode("ttbkey", "UTF-8") + "=ttbspeen121915001");
-		urlBuilder.append("&" + URLEncoder.encode("Query", "UTF-8") + "=" + URLEncoder.encode("종이","UTF-8"));
-		urlBuilder.append("&" + URLEncoder.encode("QueryType","UTF-8") + "=" + URLEncoder.encode("Title", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("Query", "UTF-8") + "=" + URLEncoder.encode("히가시노 게이고","UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("QueryType","UTF-8") + "=" + URLEncoder.encode("Author", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("Cover","UTF-8") + "=" + URLEncoder.encode("MidBig", "UTF-8"));
-		urlBuilder.append("&" + URLEncoder.encode("MaxResults","UTF-8") + "=" + URLEncoder.encode("30", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("MaxResults","UTF-8") + "=" + URLEncoder.encode("20", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("start","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("SearchTarget","UTF-8") + "=" + URLEncoder.encode("Book", "UTF-8"));
 		urlBuilder.append("&" + URLEncoder.encode("output","UTF-8") + "=" + URLEncoder.encode("js", "UTF-8"));
