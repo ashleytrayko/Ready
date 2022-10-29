@@ -37,6 +37,13 @@ public class User implements Serializable{
 	private String providerId;
 	
 	public User() {}
+	
+	public User(String userId, String userPassword, String userName, String userEmail) {
+		this.userId = userId;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userEmail = userEmail;
+	};
 
 	public User(long userIndex, String userId, String userPassword, String userName, String userEmail,
 			String userPostcode, String userAddress, String userDetailAddress, String userPhone, String userNickname,

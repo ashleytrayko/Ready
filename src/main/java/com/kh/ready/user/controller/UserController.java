@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,13 +69,21 @@ public class UserController {
 	
 	// 회원가입 화면
 	@GetMapping("/join")
-	public String joinForm() {
+	public String joinForm(Model model, Principal principal) {
+		model.addAttribute(principal);
 		return "/common/joinForm";
+	}
+	
+	// oauth2 추가 화면
+	@GetMapping("/moreInfo")
+	public String moreInfo() {
+		return "common/moreInfo";
 	}
 
 	// user 화면
 	@GetMapping("/user")
-	public String userTest() {
+	public String userTest(Model model, Principal principal) {
+		model.addAttribute("principal",principal);
 		return "/user/userTest";
 	}
 	
