@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LikeMapper">
+	<resultMap type="Like" id="likeResultMap">
+		<id property="likeNo"				column="LIKE_NO"/>
+		<result property="boardNo"			column="BOARD_NO"/>
+		<result property="userIndex"		column="USER_INDEX"/>
+		<result property="likeCheck"		column="LIKECHECK"/>
+		<result property="likeDate"			column="LIKEDATE"/>
+	</resultMap>
+	<!-- 게시글 추천 -->
+	<update id="updateLike">
+		UPDATE COMMUNITY_TBL SET C_LIKE = C_LIKE+1 WHERE BOARD_NO = #{boardNo}
+	</update>
+	<!-- 게시글 추천 취소 -->
+	<update id="updateLikeCancel">
+		UPDATE COMMUNITY_TBL SET C_LIKE = C_LIKE-1 WHERE BOARD_NO = #{boardNo}
+	</update>
+	<!-- 게시글 추천 취소시 delete -->
+	<delete id="deleteLike">
+		DELETE FROM LIKE_TBL WEHRE BOARD_NO = #{boardNo} AND USER_INDEX = #{userIndex}
+	</delete>
+	<update id="updateLikeCheck">
+		UPDATE LIKE_TBL SET LIKECHECK = 1 WHERE BOARD_NO = #{boardNo} AND USER_INDEX = #{userIndex}
+	</update>
+	<update id="updateLikeCheckCancel">
+		UPDATE LIKE_TBL SET LIKECHECK = 0 WHERE BOARD_NO = #{boardNo} AND USER_INDEX = #{userIndex}
+	</update>
+	<select id="likeCheck" resultType="_int">
+		SELECT COUNT(*) FROM LIKE_TBL WHERE BOARD_NO = #{boardNo} AND USER_INDEX = #{userIndex}
+	</select>
+</mapper>

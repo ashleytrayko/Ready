@@ -41,7 +41,7 @@
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td><input type="text" name="queWriter" value="${principal.username }" readonly class="qTitle"></td>
+					<td><input type="text" name="queWriter" value="${principal.user.userNickname }" readonly class="qTitle"></td>
 					<td align="right" id="select-td">
 						<div class="input-group">
 							<select name="qCategory" class="input-group-text" id="inputGroup-sizing-sm" required>
