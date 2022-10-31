@@ -1,7 +1,6 @@
 package com.kh.ready.order.service.logic;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,6 @@ public class OrderServiceImpl implements OrderService{
 	public User getUserInfoByUserId(String userId) {
 
 		return orderStore.getUserInfoByUserId(userId);
-	}
-
-	@Override
-	public List<Cart> getNeedDataByUserId(String userId) {
-
-		return orderStore.getNeedDataByUserId(userId);
 	}
 
 	@Override

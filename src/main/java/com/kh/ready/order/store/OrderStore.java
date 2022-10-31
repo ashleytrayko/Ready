@@ -1,7 +1,6 @@
 package com.kh.ready.order.store;
 
 import java.util.List;
-import java.util.Map;
 
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.domain.Order;
@@ -12,8 +11,6 @@ public interface OrderStore {
 	List<Cart> getCartdataByUserId(String userId);
 
 	User getUserInfoByUserId(String userId);
-
-	List<Cart> getNeedDataByUserId(String userId);
 
 	int insertOrder(Order order);
 

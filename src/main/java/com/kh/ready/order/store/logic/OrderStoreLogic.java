@@ -31,12 +31,6 @@ public class OrderStoreLogic implements OrderStore{
 	}
 
 	@Override
-	public List<Cart> getNeedDataByUserId(String userId) {
-		
-		return session.selectList("OrderMapper.selectNeedData",userId);
-	}
-
-	@Override
 	public int insertOrder(Order order) {
 		
 		return session.insert("OrderMapper.insertOrder",order);

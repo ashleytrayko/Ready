@@ -13,8 +13,6 @@ public interface OrderService {
 
 	User getUserInfoByUserId(String userId);
 
-	List<Cart> getNeedDataByUserId(String userId);
-
 	int insertOrder(Order order);
 
 }

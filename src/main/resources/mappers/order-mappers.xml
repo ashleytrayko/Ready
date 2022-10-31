@@ -58,12 +58,8 @@
 		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
 	</select>
 	
-	<select id="selectNeedData" resultMap="testResultMap">
-		SELECT USER_ID , BOOK_NO , PRODUCT_COUNT FROM CART_TBL WHERE USER_ID = #{userId}
-	</select>
-	
 	<insert id="insertOrder">
-		INSERT INTO ORDER_TBL VALUES(1, #{bookNo}, #{userId}, #{productCount}, 1,1,1,1,1,1,1,DEFAULT, #{orderId})
+		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, '1','1','1','1','1','1','1',DEFAULT, #{orderId})
 	</insert>
 	
 </mapper>

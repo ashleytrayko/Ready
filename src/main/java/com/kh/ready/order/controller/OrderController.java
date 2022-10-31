@@ -50,18 +50,9 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfoList = orderService.getUserInfoByUserId(userId);
 			
-//			orderService.getNeedDataByUserId(userId);
-
-			List<Cart> needList = orderService.getNeedDataByUserId(userId);
-			
-			System.out.println(needList);
-			
-			mv.addObject("needList", needList);
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfoList", userInfoList);
-			
 			mv.setViewName("/order/orderPage");
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,7 +87,7 @@ public class OrderController {
 		 String userId = principal.getName();
 
 		 
-		 for(int i=0; i<=bookNoArr.size(); i++) {
+		 for(int i=0; i<bookNoArr.size(); i++) {
 			 	
 				order.setBookNo(bookNoArr.get(i));
 				order.setProductCount(productCountArr.get(i));
@@ -105,13 +96,6 @@ public class OrderController {
 				
 				int result = orderService.insertOrder(order);
 		 }
-		 
-		 
-		
-		 System.out.println(order.getOrderId());
-		 
-//		 orderService.insertOrder(order, cart);
-		 
 		 
 	}
 }
