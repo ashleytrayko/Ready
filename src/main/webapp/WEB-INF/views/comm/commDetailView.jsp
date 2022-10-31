@@ -44,9 +44,9 @@
 					<tr>
 						<td colspan="2">추천수 : ${comm.cLike }</td>
 						<%-- <td>${comm.cLike }</td> --%>
-						<td onclick="#"><i class="fa-regular fa-thumbs-up fa-lg"></i></td>
+						<td><i class="fa-regular fa-thumbs-up fa-lg"></i></td>
 					</tr>
-					<c:if test="${principal.username eq comm.commWriter }">
+					<c:if test="${principal.user.userNickname eq comm.commWriter }">
 						<tr>
 							<td colspan="4" align="center">
 								<a href="/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}">글 수정</a>
@@ -64,7 +64,7 @@
 					<!-- 	댓글 등록 -->
 					<table align="center" width="500" border="1">
 						<tr>
-							<td align="left">${principal.username }</td>
+							<td align="left">${principal.user.userNickname }</td>
 						</tr>
 						<tr>
 							<td>
@@ -98,7 +98,7 @@
 		function getReplyList() {
 			// detailView가 동작하면 바로 동작하게끔 ajax 바로 써줌
 			var boardNo = "${comm.boardNo }";
-			var userId = "${principal.username}"
+			var userId = "${principal.user.userNickname}"
 			$.ajax({
 				url : "/comm/replyList.kh",
 				data : {"boardNo" : boardNo},	// 어느 게시판 댓글인지 알아야 하기 때문에 boardNo를 받아옴

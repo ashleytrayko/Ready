@@ -36,7 +36,7 @@
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td><input type="text" name="commWriter" value="${principal.username }" readonly class="qTitle"></td>
+						<td><input type="text" name="commWriter" value="${principal.user.userNickname }" readonly class="qTitle"></td>
 					</tr>
 					<tr>
 						<td>내용</td>
