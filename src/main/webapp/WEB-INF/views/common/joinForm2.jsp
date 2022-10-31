@@ -22,7 +22,7 @@ span.error {
 </style>
 
 <div class="card container col-md-4">
-	<form method="post" action="/join">
+	<form method="post" action="/joinTest">
 		<div class="form-group">
 			<label for="userId">아이디</label> 
 			<input type="text" class="form-control" placeholder="?자 이내, 특수문자 ㄴ" id="userId" name="userId">
@@ -89,7 +89,54 @@ span.error {
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
-
+	
+	$("#submit").on("click",function(){
+		const userId = $("#userId").val();
+		const userPassword = $("#userPassword").val();
+		const userPasswordCheck = $("#userPasswordCheck").val();
+		const userName = $('#userName').val();
+		const userEmail = $("#userEmail").val();
+		const userEmailCheck = $("#userEmailCheck").val();
+		const userPostcode = $("#userPostcode").val();
+		const userAddress = $("#userAddress").val();
+		const userDetailAddress = $("#userDetailAddress").val();
+		const userPhone = $("#userPhone").val();
+		const userNickname = $("#userNickname").val();
+		const userBirthday = $("#userBirthday").val();
+		
+		if(userId === ''){
+			console.log("아이디 입력해주세요");
+			return false;
+		}else if(userPassword === ''){
+			console.log("비밀번호 입력해주세요");
+			return false;
+		}else if(userPasswordCheck === ''){
+			console.log("비밀번호 확인 해주세요");
+			return false;
+		}else if(userName === ''){
+			console.log("이름 입력 해주세요");
+			return false;
+		}else if(userEmail === ''){
+			console.log("이메일 입력 해주세요");
+			return false;
+		}else if(userEmailCheck === ''){
+			console.log("메일 확인 문자 입력 해주세요");
+			return false;
+		}else if(userPostcode === '' || userAddress === '' || userDetailAddress === ''){
+			console.log("주소 입력 해주세요");
+			return false;
+		}else if(userPhone === ''){
+			console.log("전화번호 입력 해주세요");
+			return false;
+		}else if(userNickname === ''){
+			console.log("userNickname 입력 해주세요");
+			return false;
+		}else if(userBirthday === ''){
+			console.log("userBirthday 입력 해주세요");
+			return false;
+		}
+		return true;
+	});
 	
 	let userEmailAuth = "";
 	

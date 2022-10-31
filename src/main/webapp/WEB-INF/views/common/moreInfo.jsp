@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <%@ include file="../main/header.jsp" %>
-
+<sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <style>
 span.guide {
 	display: none;
@@ -23,39 +25,10 @@ span.error {
 
 <div class="card container col-md-4">
 	<form method="post" action="/join">
-		<div class="form-group">
-			<label for="userId">아이디</label> 
-			<input type="text" class="form-control" placeholder="?자 이내, 특수문자 ㄴ" id="userId" name="userId">
-			<span class="guide ok id">이 아이디는 사용 가능합니다.</span> 
-			<span class="guide error id" id="idCheck">이 아이디는 사용 할 수 없습니다.</span>
-		</div>
-		<div class="form-group">
-			<label for="userPassword">패스워드 </label> 
-			<input type="password" class="form-control" placeholder="Enter Password" id="userPassword" name="userPassword">
-		</div>
-		<div class="form-group">
-			<label for="userPassword">패스워드 확인 </label> 
-			<input type="password" class="form-control" placeholder="Enter password" id="userPasswordCheck">
-			<span class="guide ok pwd">패스워드가 일치합니다.</span> 
-			<span class="guide error pwd" id="pwdCheck">패스워드가 일치하지 않습니다.</span>
-		</div>
-		<div class="form-group">
-			<label for="userName">성명 </label> 
-			<input type="text" class="form-control" placeholder="Enter Name" id="userName" name="userName">
-		</div>
-					<label for="userEmail">이메일 </label> 
-		<div class="input-group col-md-5">
-			<input type="email" class="form-control" placeholder="Enter Email" id="userEmail" name="userEmail">
-			<button type="button" class="btn btn-outline-secondary" id="email_auth">이메일 인증</button>
-		</div>
-			<span class="guide ok mail">인증번호가 발송되었습니다. 이메일을 확인해주세요.</span> 
-			<span class="guide error mail" id="mailFail">이미 등록된 이메일입니다.</span>
-		<div class="form-group">
-			<label for="userEmail">인증번호 확인</label> 
-			<input type="text" class="form-control" placeholder="Enter Email" name="userEmailCheck" id="userEmailCheck">
-			<span class="guide ok mailCheck">인증번호가 일치합니다.</span> 
-			<span class="guide error mailCheck" id="mailCheck">인증번호가 일치하지 않습니다.</span>
-		</div>
+		<input type="hidden" value="${principal.user.userId }" id="userId" name="userId">
+		<input type="hidden" value="${principal.user.userPassword }" id="userPassword" name="userPassword">
+		<input type="hidden" value="${principal.user.userName }" id="userName" name="userName">
+		<input type="hidden" value="${principal.user.userEmail }" id="userEmail" name="userEmail">
 			<label for="userPostcode">우편번호 </label> 
 		<div class="input-group col-md-5">
 			<input type="text" class="form-control" placeholder="Enter Postcode" id="userPostcode" name="userPostcode">
@@ -76,8 +49,6 @@ span.error {
 		<div class="form-group">
 			<label for="userNickname">닉네임 </label> 
 			<input type="text" class="form-control" placeholder="Enter Nickname" id="userNickname" name="userNickname">
-			<span class="guide ok nicknameCheck">사용가능한 닉네임입니다.</span> 
-			<span class="guide error nicknameCheck" id="nicknameCheck">이미 닉네임이 사용중입니다.</span>
 		</div>
 		<div class="form-group">
 			<label for="userBirthday">생일 </label> 
@@ -89,7 +60,12 @@ span.error {
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>
-
+	$(document).ready(function(){
+		const registerCheck = '${principal.user.userNickname}';
+		if(registerCheck != ''){
+			location.href = '/';
+		}
+	});
 	
 	let userEmailAuth = "";
 	
@@ -162,7 +138,7 @@ span.error {
 		let checkId = e.target.value;
 		if(checkId !== ""){
 			$(".ok.id").css("display","none");
-			$(".error.id").css("display","none");
+			$(".erro.idr").css("display","none");
 			$.ajax({
 				url : "/checkId",
 				data : {
@@ -183,35 +159,6 @@ span.error {
 		}else{
 			$(".ok.id").css("display","none");
 			$(".error.id").css("display",'none');
-		}
-	})
-	
-	// 닉네임 중복확인 -> 완료 , 정규식 추가
-	$("#userNickname").keyup(function(e){
-		let checkNickname = e.target.value;
-		if(checkNickname !== ""){
-			$(".ok.nicknameCheck").css("display","none");
-			$(".error.nicknameCheck").css("display","none");
-			$.ajax({
-				url : "/checkNickname",
-				data : {
-					"userNickname" : checkNickname
-				},
-				type : "get",
-				success : function(result){
-					if(result == "itsOk"){
-						$(".ok.nicknameCheck").css("display","block");
-					}else{
-						$(".error.nicknameCheck").css("display","block");
-					}
-				},
-				error : function(){
-					alert("서버 통신 에러!");
-				}
-			})
-		}else{
-			$(".ok.nicknameCheck").css("display","none");
-			$(".error.nicknameCheck").css("display",'none');
 		}
 	})
 	

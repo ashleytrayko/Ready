@@ -33,4 +33,10 @@ public class UserRepositoryImpl implements UserRepository {
 		return user;
 	}
 
+	@Override
+	public User getUserByNickname(String userNickname) {
+		User user = session.selectOne("UserMapper.selectUserByNickname",userNickname);
+		return user;
+	}
+
 }

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class UserController {
 	
 	/**
 	 * 
-	 * 화면 이동 url
+	 * 로그인 화면
 	 */
 	
 	// 로그인 화면
@@ -71,10 +72,17 @@ public class UserController {
 	public String joinForm() {
 		return "/common/joinForm";
 	}
+	
+	// oauth2 추가 화면
+	@GetMapping("/moreInfo")
+	public String moreInfo() {
+		return "common/moreInfo";
+	}
 
 	// user 화면
 	@GetMapping("/user")
-	public String userTest() {
+	public String userTest(Model model, Principal principal) {
+		model.addAttribute("principal",principal);
 		return "/user/userTest";
 	}
 	
@@ -110,11 +118,35 @@ public class UserController {
 		return "home";
 	}
 	
+	//
+	@GetMapping("/joinTest")
+	public String join2() {
+		return "/common/joinForm2";
+	}
+	
+	// 테스트
+	@PostMapping("/joinTest")
+	public void joinTest(@ModelAttribute User user) {
+		System.out.println(user);
+	}
+	
 	// 아이디 중복확인
 	@ResponseBody
 	@GetMapping("/checkId")
 	public String checkId(@RequestParam("userId") String userId) {
 		String result = userService.findUserById(userId);
+		if(result.equals("itsOk")) {
+			return "itsOk";
+		}else {
+			return "exist";
+		}
+	}
+	
+	// 닉네임 중복확인
+	@ResponseBody
+	@GetMapping("/checkNickname")
+	public String checkNickname(@RequestParam("userNickname") String userNickname) {
+		String result = userService.findUserByNickname(userNickname);
 		if(result.equals("itsOk")) {
 			return "itsOk";
 		}else {
