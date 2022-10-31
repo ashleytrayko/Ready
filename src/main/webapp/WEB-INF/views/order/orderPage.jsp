@@ -64,7 +64,7 @@
                         </td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice}"/>원</td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice * 0.99}"/>원</td>
-                        <td>${cartList.productCount }</td>
+                        <td><input type="text" name='productCount' value="${cartList.productCount }"  style="border:0 solid black; width:30px;"></td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(cartList.productPrice * cartList.productCount) * 0.99}"/>원</td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
                     </tr>
@@ -262,7 +262,7 @@
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="test(`${cartList}`);">이전 페이지</button>
             <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${cartList[0].book.bookTitle}` , `${productSum}`, `${userInfoList.userAddress} ${userInfoList.userDetailAddress}`
-            												, `${userInfoList.userName}`, `${cartList}`);">결제하기</button>
+            												, `${userInfoList.userName}`, `${needList}`);">결제하기</button>
             												
         </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -312,23 +312,32 @@
     	
     }
     
-    function test(cartList){
+/*     function test(cartList){
     	for(var i in cartList){
   			cartList[i].bookNo;
   		}
-    }
+    } */
     
-    function requestPay(price, firstTitle, productCount,buyer_Addr,buyer_Name, cartList) {
+    function requestPay(price, firstTitle, productCount,buyer_Addr, buyer_Name, needList) {
     	
     	const buyerPhone = $("#buyerPhone").val();
     	const buyerEmail = $("#buyerEmail").val();
     	const buyerZoneCode = $("#buyerZoneCode").val();
     	const paymentmethod = $('input:radio[name=paymentmethod]:checked').val();
     	
-/* 		for(var i in cartList){
-  			cartList[i].bookNo;
-  		} */
-		
+    	var bookNoArr = [];
+ 	    var productCountArr = [];
+ 	    
+    	$("input[name='bookNo']").each(function(i){
+    		bookNoArr.push($(this).val());
+ 		});
+    	$("input[name='productCount']").each(function(i){
+    		productCountArr.push($(this).val());
+ 		});
+    	
+    	console.log(bookNoArr);
+    	console.log(productCountArr);
+    	
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymentmethod,
@@ -340,26 +349,24 @@
             buyer_tel: buyerPhone,
             buyer_addr: buyer_Addr,
             buyer_postcode: buyerZoneCode,
-            custom_data: cartList
+            custom_data: {
+            	bookNoArr : bookNoArr,
+            	productCountArr : productCountArr
+            	}
         }, function (rsp) { // callback
             if (rsp.success) {
         	console.log("response Data : ", rsp.custom_data);
 				$.ajax({
 					url :"/order/insert.ready",
 					type : "POST",
-					headers : { "Content-Type": "application/json" },
-					traditional : true,
 					data : {
-						cartList : rsp.custom_data,
-						productCount : rsp.custom_data,
-						productPrice : rsp.custom_data,
-						paymethod: rsp.pay_method,
+						bookNoArr : rsp.custom_data.bookNoArr,
+						productCountArr : rsp.custom_data.productCountArr,
 						totalPrice : rsp.paid_amount,
 						buyerName : rsp.buyer_name,
 						buyerPhone : rsp.buyer_tel,
-						cartList : rsp.custom_data,
 						buyerPostCode: rsp.buyer_postcode,
-						buyerAddr: rsp.buyer_addr,
+						buyerAddr: rsp.buyer_addr
 					},
 					success : function(data){
 						console.log(data);
