@@ -37,4 +37,8 @@
 	<select id="selectUserByEmail" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_EMAIL = #{userEmail}
 	</select>
+	
+	<select id="selectUserByNickname" parameterType="String" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_NICKNAME = #{userNickname}
+	</select>
 </mapper>

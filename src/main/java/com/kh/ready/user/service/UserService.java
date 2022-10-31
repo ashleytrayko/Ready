@@ -12,4 +12,7 @@ public interface UserService {
 	
 	// 메일 중복확인
 	public String findUserByEmail(String userEmail);
+	
+	// 닉네임 중복확인
+	public String findUserByNickname(String userNickname);
 }

@@ -15,4 +15,6 @@ public interface UserRepository {
 	public User getUserById(String userId);
 
 	public User getUserByEmail(String userEmail);
+
+	public User getUserByNickname(String userNickname);
 }

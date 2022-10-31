@@ -15,7 +15,7 @@ import com.kh.ready.user.security.oauth.PrincipalOAuth2UserService;
 import com.kh.ready.user.service.UserService;
 
 @Configuration
-@EnableWebSecurity(debug=true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityContext extends WebSecurityConfigurerAdapter{
 	
@@ -40,7 +40,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-				.antMatchers("/user/**").authenticated()
+				.antMatchers("/","/resources/**","/common/**","/book/**").permitAll()
+				.antMatchers("/user/**","/cart/**","/order/**").authenticated()
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 				.anyRequest().permitAll()
 			.and()
@@ -53,6 +54,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 			.and()
 				.oauth2Login()
 				.loginPage("/login")
+				.defaultSuccessUrl("/moreInfo")
 				.userInfoEndpoint()
 				.userService(principalOAuth2UserService);
 		

@@ -65,5 +65,15 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	@Override
+	public String findUserByNickname(String userNickname) {
+		User user = userRepository.getUserByNickname(userNickname);
+		if(user != null) {
+			return "exist";
+		}else {
+			return "itsOk";
+		}
+	}
+
 
 }
