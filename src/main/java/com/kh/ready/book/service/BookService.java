@@ -32,4 +32,8 @@ public interface BookService {
 	public List<Book> printBestSeller();
 
 	public List<Book> printNewBook();
+
+	public List<Book> printAllByCategoryNewLine(String category);
+
+	public List<Book> printAllByCategoryBestLine(String category);
 }

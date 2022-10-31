@@ -120,8 +120,8 @@ public class BookController {
 	public ModelAndView showCategory(ModelAndView mv, @RequestParam("category")String category) {
 		try {
 			List<Book> bList = bService.printAllByCategory(category);
-			List<Book> bList1 = bService.printAllByCategory(category);
-			List<Book> bList2 = bService.printAllByCategory("연애");
+			List<Book> bList1 = bService.printAllByCategoryNewLine(category);
+			List<Book> bList2 = bService.printAllByCategoryBestLine(category);
 			List<Book> bList3 = bService.printAllByCategory("문학");
 			if(!bList1.isEmpty()) {
 				mv.addObject("bList", bList);

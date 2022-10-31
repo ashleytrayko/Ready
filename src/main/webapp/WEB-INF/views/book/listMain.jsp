@@ -41,11 +41,11 @@
 			</div>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<div>
-				<h5>장르 : </h5>
+				<h5>인기작 </h5>
 				<c:forEach items="${bList2 }" var="book" end="4">
-					<div class="book-area">
+					<div class="card" id="book-area" style="width: 12rem">
 						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail">
-							<img src=${book.imgPath } width="180" height="250"><br>
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
 							<div class="book-title">${book.bookTitle }</div><br>
 						</a>
 					</div>

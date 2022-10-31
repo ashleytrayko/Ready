@@ -84,7 +84,15 @@
 	</select>
 	
 	<select id="selectAllByCategory" resultMap="bookResultMap">
-		SELECT * FROM BOOK_TBL WHERE BOOk_CATEGORY LIKE '%' ||#{category}|| '%'
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' ||#{category}|| '%'
+	</select>
+	
+	<select id="selectCategoryNewLine" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' ||#{category}|| '%' ORDER BY PUB_DATE DESC
+	</select>
+	
+	<select id="selectCategoryBestLine" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' ||#{category}|| '%' ORDER BY SALE_COUNT DESC
 	</select>
 	
 	<select id="selectBestSeller" resultMap="bookResultMap">

@@ -29,7 +29,7 @@
 		</div>
 		<div class="main-section">
 		<br><br>
-			<h3>${principal.username}님의 마이페이지</h3><br><br>
+			<h3>${principal.user.userName}(${principal.user.userNickname })님의 마이페이지</h3><br><br>
 			<div>
 				<div>현재 회원님의 등급은 '${principal.user.userTier }' 입니다.</div>
 				<br><br>

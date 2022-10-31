@@ -95,4 +95,16 @@ public class BookServiceImpl implements BookService{
 		return bList2;
 	}
 
+	@Override
+	public List<Book> printAllByCategoryNewLine(String category) {
+		List<Book> bList1 = bStore.selectAllByCategoryNewLine(session, category);
+		return bList1;
+	}
+
+	@Override
+	public List<Book> printAllByCategoryBestLine(String category) {
+		List<Book> bList2 = bStore.selectAllByCategoryBestLine(session, category);
+		return bList2;
+	}
+
 }

@@ -103,5 +103,17 @@ public class BookStoreLogic implements BookStore{
 		return bList2;
 	}
 
+	@Override
+	public List<Book> selectAllByCategoryNewLine(SqlSessionTemplate session, String category) {
+		List<Book> bList1 = session.selectList("BookMapper.selectCategoryNewLine", category);
+		return bList1;
+	}
+
+	@Override
+	public List<Book> selectAllByCategoryBestLine(SqlSessionTemplate session, String category) {
+		List<Book> bList2 = session.selectList("BookMapper.selectCategoryBestLine", category);
+		return bList2;
+	}
+
 
 }

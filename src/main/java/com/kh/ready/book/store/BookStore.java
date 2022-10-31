@@ -36,4 +36,8 @@ public interface BookStore {
 
 	List<Book> selectNewBook(SqlSessionTemplate session);
 
+	List<Book> selectAllByCategoryNewLine(SqlSessionTemplate session, String category);
+
+	List<Book> selectAllByCategoryBestLine(SqlSessionTemplate session, String category);
+
 }
