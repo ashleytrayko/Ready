@@ -8,10 +8,9 @@ import com.kh.ready.cart.domain.Cart;
 public class Order {
 
 	private int orderNo;
-	private int bookNo;
+	private Integer bookNo;
 	private String userId;
-	private int productCount;
-	private int productPrice;
+	private Integer productCount;
 	private String orderId;
 	private String orderRName;
 	private String orderRPhone;
@@ -27,7 +26,7 @@ public class Order {
 	
 	public Order() {}
 
-	public Order(int orderNo, int bookNo, String userId, int productCount, int productPrice, String orderId,
+	public Order(int orderNo, Integer bookNo, String userId, Integer productCount, String orderId,
 			String orderRName, String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3,
 			String paymentMethod, String orderState, Date orderDate, Book book, Cart cart) {
 		super();
@@ -35,7 +34,6 @@ public class Order {
 		this.bookNo = bookNo;
 		this.userId = userId;
 		this.productCount = productCount;
-		this.productPrice = productPrice;
 		this.orderId = orderId;
 		this.orderRName = orderRName;
 		this.orderRPhone = orderRPhone;
@@ -57,11 +55,11 @@ public class Order {
 		this.orderNo = orderNo;
 	}
 
-	public int getBookNo() {
+	public Integer getBookNo() {
 		return bookNo;
 	}
 
-	public void setBookNo(int bookNo) {
+	public void setBookNo(Integer bookNo) {
 		this.bookNo = bookNo;
 	}
 
@@ -73,20 +71,12 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public int getProductCount() {
+	public Integer getProductCount() {
 		return productCount;
 	}
 
-	public void setProductCount(int productCount) {
+	public void setProductCount(Integer productCount) {
 		this.productCount = productCount;
-	}
-
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
 	}
 
 	public String getOrderId() {
@@ -180,10 +170,11 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
-				+ productCount + ", productPrice=" + productPrice + ", orderId=" + orderId + ", orderRName="
+				+ productCount + ",  orderId=" + orderId + ", orderRName="
 				+ orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1=" + orderAddress1 + ", orderAddress2="
 				+ orderAddress2 + ", orderAddress3=" + orderAddress3 + ", paymentMethod=" + paymentMethod
 				+ ", orderState=" + orderState + ", orderDate=" + orderDate + ", book=" + book + ", cart=" + cart + "]";
 	}
 
+	
 }
