@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>설문조사 페이지</title>
+<title>Insert title here</title>
 	<style>
 		.gender-img {
 			height : 150px;
@@ -32,7 +32,7 @@
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
 <body>
-	 <div class="main-contents">
+	<div class="main-contents">
 		<div class="col-md-3">
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
@@ -40,7 +40,7 @@
 		<div class="main-section">
 			<h1>Read'y 설문조사</h1>
 			<br><br><br><br><br><br><br>
-			<form action="/mypage/registSurvey.kh" method="POST">
+			<form action="/mypage/modifySurvey.kh" method="POST">
 			<div>
 				<h3>회원님의 성별을 알려주세요</h3><br><br>
 				<div class="half-area" align="center">
@@ -176,7 +176,7 @@
 				<input type="text" name="answerWriter" placeholder="저자 이름을 입력해주세요.">
 			</div>
 			<br><br><br>
-			<input type="submit" class="btn btn-outline-secondary" value="등록">
+			<input type="submit" class="btn btn-outline-secondary" value="수정">
 			</form>
 		</div>
 		

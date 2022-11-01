@@ -1,5 +1,7 @@
 package com.kh.ready.mypage.service.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,4 +22,11 @@ public class MypageServiceImpl implements MypageService{
 		int result = mStore.insertSurvey(survey, session);
 		return result;
 	}
+
+	@Override
+	public Survey printMySurvey(String userId) {
+		Survey survey = mStore.selectMySurvey(userId, session);
+		return survey;
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.kh.ready.mypage.store.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,12 @@ public class MypageStoreLogic implements MypageStore{
 	public int insertSurvey(Survey survey, SqlSessionTemplate session) {
 		int result = session.insert("MypageMapper.InsertSurvey", survey);
 		return result;
+	}
+
+	@Override
+	public Survey selectMySurvey(String userId, SqlSessionTemplate session) {
+		Survey survey = session.selectOne("MypageMapper.selectMySurvey", userId);
+		return survey;
 	}
 
 }
