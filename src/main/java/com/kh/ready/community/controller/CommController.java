@@ -27,12 +27,11 @@ import com.google.gson.GsonBuilder;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
 import com.kh.ready.community.service.CommService;
-import com.kh.ready.user.domain.User;
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
 @Controller
 public class CommController {
 	@Autowired private CommService cService;
+	//@Autowired private UserService uService;
 	
 	@RequestMapping(value="/comm/viewWrite.kh", method=RequestMethod.GET)
 	public String showBoardWrite() {
@@ -268,15 +267,9 @@ public class CommController {
 	public String boardReplyAdd(
 			@ModelAttribute CommReply cReply
 			, Principal principal) {		// RequstParam 대신 ModelAttribute를 사용할 수 있는 이유는
-		/* cReply.setrWriter(); */	// 로그인한 아이디
-		String userName = principal.getName();
-		/*
-		 * Object principal2 =
-		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal(); User
-		 * user = (User)principal2; String userNickname = user.getUserNickname();
-		 * cReply.setrWriter(userNickname);
-		 */
-		cReply.setrWriter(userName);
+		// cReply.setrWriter(); 	// 로그인한 아이디
+		// String userId = principal.getName();
+		//cReply.setrWriter(userId);
 		int result = cService.registerReply(cReply);
 		if(result > 0) {
 			return "success";

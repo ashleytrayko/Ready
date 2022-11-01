@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
 import com.kh.ready.community.store.CommStore;
+import com.kh.ready.user.domain.User;
 
 @Repository
 public class CommStoreLogic implements CommStore{
@@ -90,6 +91,12 @@ public class CommStoreLogic implements CommStore{
 			int boardLimit) {
 
 		return null;
+	}
+
+	@Override
+	public User selectUser(SqlSession session, String userId) {
+		User user = session.selectOne("CommMapper.selectUser", userId);
+		return user;
 	}
 
 }

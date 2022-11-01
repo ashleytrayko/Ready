@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
+import com.kh.ready.user.domain.User;
 
 public interface CommStore {
 	// 게시글 등록
@@ -33,5 +34,7 @@ public interface CommStore {
 	
 	List<Comm> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage,
 			int boardLimit);
+	
+	User selectUser(SqlSession session, String userId);
 
 }

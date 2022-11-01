@@ -5,7 +5,8 @@ import java.sql.Date;
 public class Like {
 	private int likeNo;
 	private int boardNo;
-	private long userIndex;
+//	private long userIndex;
+	private String userId;
 	private int likeCheck;
 	private Date likeDate;
 	
@@ -14,11 +15,11 @@ public class Like {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Like(int likeNo, int boardNo, long userIndex, int likeCheck, Date likeDate) {
+	public Like(int likeNo, int boardNo, String userId, int likeCheck, Date likeDate) {
 		super();
 		this.likeNo = likeNo;
 		this.boardNo = boardNo;
-		this.userIndex = userIndex;
+		this.userId = userId;
 		this.likeCheck = likeCheck;
 		this.likeDate = likeDate;
 	}
@@ -39,12 +40,12 @@ public class Like {
 		this.boardNo = boardNo;
 	}
 
-	public long getUserIndex() {
-		return userIndex;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserIndex(long userIndex) {
-		this.userIndex = userIndex;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getLikeCheck() {
@@ -65,9 +66,11 @@ public class Like {
 
 	@Override
 	public String toString() {
-		return "Like [likeNo=" + likeNo + ", boardNo=" + boardNo + ", userIndex=" + userIndex + ", likeCheck="
-				+ likeCheck + ", likeDate=" + likeDate + "]";
+		return "Like [likeNo=" + likeNo + ", boardNo=" + boardNo + ", userId=" + userId + ", likeCheck=" + likeCheck
+				+ ", likeDate=" + likeDate + "]";
 	}
+	
+	
 	
 	
 }

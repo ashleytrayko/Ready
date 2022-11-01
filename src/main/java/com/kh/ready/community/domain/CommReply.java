@@ -2,6 +2,8 @@ package com.kh.ready.community.domain;
 
 import java.sql.Date;
 
+import com.kh.ready.user.domain.User;
+
 public class CommReply {
 
 	private int cReplyNo;		// 댓글번호
@@ -15,6 +17,7 @@ public class CommReply {
 	private int rParentReplyNo;	// 원댓글번호
 	private int rChildReplyNo;	// 답글번호
 	
+	private User user;
 	
 	public CommReply() {
 		super();
@@ -108,6 +111,18 @@ public class CommReply {
 				+ "]";
 	}
 
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
+	
 
 	
 	

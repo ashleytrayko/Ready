@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
+import com.kh.ready.user.domain.User;
 
 public interface CommService {
 
@@ -28,5 +29,7 @@ public interface CommService {
 	int modifyReply(CommReply cReply);
 
 	List<Comm> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit);
+
+	User selectUser(String userId);
 
 }

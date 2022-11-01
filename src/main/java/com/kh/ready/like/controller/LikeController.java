@@ -1,12 +1,14 @@
 package com.kh.ready.like.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ready.like.domain.Like;
 import com.kh.ready.like.service.LikeService;
 
 @Controller
@@ -18,18 +20,23 @@ public class LikeController {
 	@RequestMapping(value="/like/recomm.kh", method=RequestMethod.POST)
 	public int commLike(
 			int boardNo
-			, long userIndex) {
-		int likeCheck = lService.likeCheck(boardNo, userIndex);
+//			, long userIndex
+			, Principal principal
+			, Like like) {
+		String userId = principal.getName();
+		like.setUserId(userId);
+		
+		int likeCheck = lService.likeCheck(boardNo, userId);
 		try {
 				
 			if(likeCheck == 0) {
-				lService.insertLike(boardNo, userIndex);
+				lService.insertLike(boardNo, userId);
 				lService.updateLike(boardNo);
-				lService.updateLikeCheck(boardNo, userIndex);
+				lService.updateLikeCheck(boardNo, userId);
 			}else if(likeCheck == 1) {
-				lService.updateLikeCheckCancel(boardNo, userIndex);
+				lService.updateLikeCheckCancel(boardNo, userId);
 				lService.updateLikeCancel(boardNo);
-				lService.deleteLike(boardNo, userIndex);
+				lService.deleteLike(boardNo, userId);
 		}
 		} catch (Exception e) {
 			System.out.println("에러발생");

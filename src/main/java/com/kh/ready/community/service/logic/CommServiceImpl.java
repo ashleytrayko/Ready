@@ -10,6 +10,7 @@ import com.kh.ready.community.domain.Comm;
 import com.kh.ready.community.domain.CommReply;
 import com.kh.ready.community.service.CommService;
 import com.kh.ready.community.store.CommStore;
+import com.kh.ready.user.domain.User;
 
 @Service
 public class CommServiceImpl implements CommService{
@@ -81,6 +82,11 @@ public class CommServiceImpl implements CommService{
 	public List<Comm> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
 		List<Comm> cList = cStore.selectAllByValue(session, searchCondition, searchValue, currentPage, boardLimit);
 		return cList;
+	}
+	@Override
+	public User selectUser(String userId) {
+		User user = cStore.selectUser(session, userId);
+		return user;
 	}
 
 }

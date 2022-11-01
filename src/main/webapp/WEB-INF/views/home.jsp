@@ -24,7 +24,7 @@
 </head>
 <body>
 	<div class="main-contents">
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
 				<button class="btn btn-outline-secondary" onclick="viewCategory(event);">소설</button>
 				<button class="btn btn-outline-secondary" onclick="viewCategory(event);">만화</button>
