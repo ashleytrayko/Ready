@@ -56,29 +56,30 @@ public class OrderController {
 		return mv;
 	}
 	
-	@ResponseBody
 	@RequestMapping(value="/order/getDirectOrderData", method=RequestMethod.GET)
-	public String getDirectOrderData(Principal principal, User user,
-								@RequestParam("bookNo") String getBookNo,
-								@RequestParam("productCount") String getProductCount,
-								Model model) {
+	public ModelAndView getDirectOrderData(ModelAndView mv, Principal principal, User user,
+								@RequestParam("bookNo") int bookNo,
+								@RequestParam("productCount") int productCount) {
+		
 		String userId = principal.getName();
 		
-		int bookNo = Integer.valueOf(getBookNo);
-		int productCount = Integer.valueOf(getProductCount);
+		/*
+		 * int bookNo = Integer.valueOf(getBookNo); int productCount =
+		 * Integer.valueOf(getProductCount);
+		 */
 		System.out.println(bookNo);
 		System.out.println(productCount);
 		
 		Book bookData = orderService.getbookDataByBookNo(bookNo);
 		User userInfo = orderService.getUserInfoByUserId(userId);
-		List<Object> orderData = new ArrayList<Object>();
-		orderData.add(bookData);
-		orderData.add(userInfo);
-		System.out.println(orderData);
-		model.addAttribute(bookData);
-		model.addAttribute(userInfo);
 		
-		return "/order/directOrderView";
+		System.out.println(bookData);
+		System.out.println(userInfo);
+		mv.addObject(bookData);
+		mv.addObject(userInfo);
+		mv.setViewName("/order/orderPageDirect");
+
+		return mv;
 	}
 	
 	@RequestMapping(value="/order/directOrderView", method=RequestMethod.GET)

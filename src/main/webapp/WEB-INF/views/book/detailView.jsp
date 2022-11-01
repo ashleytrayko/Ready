@@ -73,7 +73,7 @@
 					<div>주문수량</div>
 					<input type="text" id="productCount" value="1">
 					<br>
-					<button type="button" class="btn btn-outline-secondary" id="order-btn">구매하기</button>
+					<button type="button" class="btn btn-outline-secondary" id="order-btn" onclick="order(${book.bookNo});">구매하기</button>
 					<br>
 					<br>
 					<button type="button" class="btn btn-secondary" id="insertCart-btn">장바구니</button>
@@ -184,7 +184,7 @@
 			});
 		})
 		
-		$("#order-btn").click(function(){
+		/* $("#order-btn").click(function(){
 			      
 			var bookNo = $("#bookNo").val();
 			var productCount = $("#productCount").val();
@@ -202,7 +202,12 @@
  					location.href = orderData;
 				}
 			});
-		})
+		}) */
+		
+		function order(bookNo) {
+			var productCount = $("#productCount").val();
+			location.href="/order/getDirectOrderData?bookNo="+bookNo+"&productCount="+productCount;
+		}
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -265,6 +265,7 @@
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	console.log(${bookData});
 	
 	var IMP = window.IMP;
 	IMP.init('imp45674133');
