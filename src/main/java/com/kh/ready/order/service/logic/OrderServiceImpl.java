@@ -1,11 +1,11 @@
 package com.kh.ready.order.service.logic;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.domain.Order;
 import com.kh.ready.order.service.OrderService;
@@ -25,15 +25,15 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public User getUserInfoByUserId(String userId) {
-
-		return orderStore.getUserInfoByUserId(userId);
+	public Book getbookDataByBookNo(int bookNo) {
+		
+		return orderStore.getbookDataByBookNo(bookNo);
 	}
 
 	@Override
-	public List<Cart> getNeedDataByUserId(String userId) {
+	public User getUserInfoByUserId(String userId) {
 
-		return orderStore.getNeedDataByUserId(userId);
+		return orderStore.getUserInfoByUserId(userId);
 	}
 
 	@Override
@@ -41,5 +41,12 @@ public class OrderServiceImpl implements OrderService{
 		
 		return orderStore.insertOrder(order);
 	}
+
+	@Override
+	public int deleteCart(String userId) {
+		
+		return orderStore.deleteCart(userId);
+	}
+
 	
 }
