@@ -1,6 +1,8 @@
 package com.kh.ready.user.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.MessagingException;
