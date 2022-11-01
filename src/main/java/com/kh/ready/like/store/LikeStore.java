@@ -4,18 +4,18 @@ import org.apache.ibatis.session.SqlSession;
 
 public interface LikeStore {
 
-	int likeCheck(SqlSession session, int boardNo, long userIndex);
+	int likeCheck(SqlSession session, int boardNo, String userId);
 
-	int insertLike(SqlSession session, int boardNo, long userIndex);
+	int insertLike(SqlSession session, int boardNo, String userId);
 
 	int updateLike(SqlSession session, int boardNo);
 
-	int updateLikeCheck(SqlSession session, int boardNo, long userIndex);
+	int updateLikeCheck(SqlSession session, int boardNo, String userId);
 
-	int updateLikeCheckCancel(SqlSession session, int boardNo, long userIndex);
+	int updateLikeCheckCancel(SqlSession session, int boardNo, String userId);
 
 	int updateLikeCancel(SqlSession session, int boardNo);
 
-	int deleteLike(SqlSession session, int boardNo, long userIndex);
+	int deleteLike(SqlSession session, int boardNo, String userId);
 
 }

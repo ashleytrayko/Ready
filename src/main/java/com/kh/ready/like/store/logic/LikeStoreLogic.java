@@ -11,19 +11,19 @@ import com.kh.ready.like.store.LikeStore;
 public class LikeStoreLogic implements LikeStore{
 
 	@Override
-	public int likeCheck(SqlSession session, int boardNo, long userIndex) {
+	public int likeCheck(SqlSession session, int boardNo, String userId) {
 		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
 		paramMap.put("boardNo", boardNo);
-		paramMap.put("userIndex", userIndex);
+		paramMap.put("userId", userId);
 		int result = session.selectOne("LikeMapper.likeCheck", paramMap);
 		return result;
 	}
 
 	@Override
-	public int insertLike(SqlSession session, int boardNo, long userIndex) {
+	public int insertLike(SqlSession session, int boardNo, String userId) {
 		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
 		paramMap.put("boardNo", boardNo);
-		paramMap.put("userIndex", userIndex);
+		paramMap.put("userId", userId);
 		int result = session.insert("LikeMapper.insertLike", paramMap);
 		return result;
 	}
@@ -35,19 +35,19 @@ public class LikeStoreLogic implements LikeStore{
 	}
 
 	@Override
-	public int updateLikeCheck(SqlSession session, int boardNo, long userIndex) {
+	public int updateLikeCheck(SqlSession session, int boardNo, String userId) {
 		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
 		paramMap.put("boardNo", boardNo);
-		paramMap.put("userIndex", userIndex);
+		paramMap.put("userId", userId);
 		int result = session.update("LikeMapper.updateLikeCheck", paramMap);
 		return result;
 	}
 
 	@Override
-	public int updateLikeCheckCancel(SqlSession session, int boardNo, long userIndex) {
+	public int updateLikeCheckCancel(SqlSession session, int boardNo, String userId) {
 		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
 		paramMap.put("boardNo", boardNo);
-		paramMap.put("userIndex", userIndex);
+		paramMap.put("userId", userId);
 		int result = session.update("LikeMapper.updateLikeCheckCancel", paramMap);
 		return result;
 	}
@@ -59,10 +59,10 @@ public class LikeStoreLogic implements LikeStore{
 	}
 
 	@Override
-	public int deleteLike(SqlSession session, int boardNo, long userIndex) {
+	public int deleteLike(SqlSession session, int boardNo, String userId) {
 		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
 		paramMap.put("boardNo", boardNo);
-		paramMap.put("userIndex", userIndex);
+		paramMap.put("userId", userId);
 		int result = session.delete("LikeMapper.deleteLike", paramMap);
 		return result;
 	}

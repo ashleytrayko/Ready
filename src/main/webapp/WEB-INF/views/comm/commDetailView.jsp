@@ -44,7 +44,7 @@
 					<tr>
 						<td colspan="2">추천수 : ${comm.cLike }</td>
 						<%-- <td>${comm.cLike }</td> --%>
-						<td><i class="fa-regular fa-thumbs-up fa-lg"></i></td>
+						<td><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button onclick="updateLike()">추천하기</button></td>
 					</tr>
 					<c:if test="${principal.user.userNickname eq comm.commWriter }">
 						<tr>
@@ -64,7 +64,8 @@
 					<!-- 	댓글 등록 -->
 					<table align="center" width="500" border="1">
 						<tr>
-							<td align="left">${principal.user.userNickname }</td>
+							<td align="left" id="rWriter">${principal.user.userNickname }</td>	
+							<!-- 댓글등록을 닉네임으로 하기 위해 id에 rWriter 부여 -->
 						</tr>
 						<tr>
 							<td>
@@ -182,11 +183,13 @@
 		$("#rSubmit").on("click", function() {
 			var boardNo = "${comm.boardNo}";		// 자바 스크립트에서 사용하는 el 아래는 html에서 사용하는 el.
 			var replyContents = $("#commReplyContents").val();		// textarea나 input이면 val쓰면 됨. 아닐 시 html.
+			var rWriter = $("#rWriter").text();		// 댓글 작성자에 댓글 입력할 때 나오는 댓글입력자 값을 넣어줌
 			$.ajax({
 				url : "/comm/replyAdd.kh",
 				data : { 
 					"boardNo"	: boardNo,
-					"rContents" : replyContents 
+					"rContents" : replyContents,
+					"rWriter" : rWriter
 				},
 				type : "post",		// replyContents가 길어질 수 있어서 잘림방지를 위해 post로 함
 				success : function(result) {
@@ -241,6 +244,35 @@
 			console.log($form[0]);
 			$form.appendTo("body");
 			$form.submit();
+		}
+		
+		
+		function updateLike() {
+		var boardNo = "${comm.boardNo}";
+		var userIndex = "${principal.user.userIndex}";
+			$.ajax({
+				url : "/like/recomm.kh",
+				datatype : "json",
+				data : {
+					"boardNo"	: boardNo,
+					"userIndex" : userIndex 
+				},
+				type : "POST",
+				success : function(likeCheck) {
+					if(likeCheck == 1) {
+						alert("추천취소");
+						location.reload();
+					}
+					else if(likeCheck == 0) {
+						alert("추천완료");
+						location.reload();
+					}
+				},
+				error : function() {
+					alert("통신 에러");
+				}
+					
+			});
 		}
 		
 	</script>

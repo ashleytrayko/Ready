@@ -18,26 +18,26 @@
 		<!-- 이 안에서 작업! 여기가 본문-->
 			<div class="faq-div">
 				<h1>고객센터 FAQ</h1>
-				<table align="center" border="1" width="500">
+				<table align="center" border="1" width="700">
 					<tr>
-						<th class="faq-category">회원정보</th>
-						<th class="faq-category">배송관련</th>
-						<th class="faq-category">상품관련</th>
-						<th class="faq-category">교환/환불</th>
+						<th class="faq-category" colspan="2">회원정보</th>
+						<th class="faq-category" colspan="2">배송관련</th>
+						<th class="faq-category" colspan="2">상품관련</th>
+						<th class="faq-category" colspan="2">교환/환불</th>
 					</tr>
 					<tr class="faq-header">
 						<td>유형</td>
-						<td colspan="3" align="left">제목</td>
+						<td colspan="7" align="left">제목</td>
 					</tr>
 					<c:if test="${!empty qList }">
 						<c:forEach items="${qList }" var="question" varStatus="i">
 							<tr>
 								<td>${question.qCategory }<%-- ${fn:length(fList) - i.index} 얘는 DESC로 출력 --%><!--${i.count } 얘는 게시글 ASC로 출력--></td>
-								<td colspan="3" align="left">${question.queTitle }</td>
+								<td colspan="7" align="left">${question.queTitle }</td>
 							</tr>
 						</c:forEach>
 						<tr align="center" height="20">
-						<td colspan="4">
+						<td colspan="8">
 							<c:if test="${currentPage != 1 }">
 								<a href="/question/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 							</c:if>
@@ -57,11 +57,11 @@
 					</c:if>
 					<c:if test="${empty qList }">
 						<tr>
-							<td colspan="4" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+							<td colspan="8" align="center"><b>데이터가 존재하지 않습니다.</b></td>
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="4" align="center">
+						<td colspan="8" align="center">
 							<form action="/question/search.kh" method="get">
 								<select name="searchCondition">
 									<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>

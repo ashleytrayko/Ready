@@ -16,15 +16,15 @@ public class LikeServiceImpl implements LikeService{
 	
 
 	@Override
-	public int likeCheck(int boardNo, long userIndex) {
-		int result = lStore.likeCheck(session, boardNo, userIndex);
+	public int likeCheck(int boardNo, String userId) {
+		int result = lStore.likeCheck(session, boardNo, userId);
 		return result;
 	}
 
 
 	@Override
-	public int insertLike(int boardNo, long userIndex) {
-		int result = lStore.insertLike(session, boardNo, userIndex);
+	public int insertLike(int boardNo, String userId) {
+		int result = lStore.insertLike(session, boardNo, userId);
 		return result;
 	}
 
@@ -37,15 +37,15 @@ public class LikeServiceImpl implements LikeService{
 
 
 	@Override
-	public int updateLikeCheck(int boardNo, long userIndex) {
-		int result = lStore.updateLikeCheck(session, boardNo, userIndex);
+	public int updateLikeCheck(int boardNo, String userId) {
+		int result = lStore.updateLikeCheck(session, boardNo, userId);
 		return result;
 	}
 
 
 	@Override
-	public int updateLikeCheckCancel(int boardNo, long userIndex) {
-		int result = lStore.updateLikeCheckCancel(session, boardNo, userIndex);
+	public int updateLikeCheckCancel(int boardNo, String userId) {
+		int result = lStore.updateLikeCheckCancel(session, boardNo, userId);
 		return result;
 	}
 
@@ -58,8 +58,8 @@ public class LikeServiceImpl implements LikeService{
 
 
 	@Override
-	public int deleteLike(int boardNo, long userIndex) {
-		int result = lStore.deleteLike(session, boardNo, userIndex);
+	public int deleteLike(int boardNo, String userId) {
+		int result = lStore.deleteLike(session, boardNo, userId);
 		return result;
 	}
 
