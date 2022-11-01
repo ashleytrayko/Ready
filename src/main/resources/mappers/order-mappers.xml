@@ -32,12 +32,6 @@
 		<result property="productPrice" 		column="PRODUCT_PRICE"/>
 		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
-	
-	<resultMap type="Cart" id="testResultMap">
-		<result property="bookNo" 				column="BOOK_NO"/>
-		<result property="userId" 				column="USER_ID"/>
-		<result property="productCount" 		column="PRODUCT_COUNT"/>
-	</resultMap>
 
  	<resultMap type="Book" id="bookResultMap">
 		<id 	property="bookNo" 		column="BOOK_NO"/>
@@ -58,8 +52,12 @@
 		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
 	</select>
 	
+	<delete id="deleteCart">
+		DELETE FROM CART_TBL WHERE USER_ID = #{userId}
+	</delete>
+	
 	<insert id="insertOrder">
-		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, '1','1','1','1','1','1','1',DEFAULT, #{orderId})
+		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId})
 	</insert>
 	
 </mapper>

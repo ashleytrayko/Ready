@@ -45,32 +45,30 @@
                 <tbody class="cartbody">
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
-                	<c:forEach items="${cartList }" var="cartList" varStatus="i">
-                	<input type="hidden" name="bookNo" value="${cartList.book.bookNo }">
+                	<input type="hidden" name="bookNo" id="id-bookNo"value="${bookData.bookNo }">
                     <tr>
                         <td>
-                            <img class="product-img" src="${cartList.book.imgPath }">
+                            <img class="product-img" src="${bookData.imgPath }">
                         </td>
                         <td>
                             <c:choose>
-                            	<c:when test="${fn:length(cartList.book.bookTitle) gt 20 }">
-                            	<c:out value="${fn:substring(cartList.book.bookTitle, 0, 19) }...">
+                            	<c:when test="${fn:length(bookData.bookTitle ) gt 20 }">
+                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }...">
                             	</c:out></c:when>
                             	<c:otherwise>
-                            	<c:out value="${cartList.book.bookTitle }">
+                            	<c:out value="${bookData.bookTitle }">
                             	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice}"/>원</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice * 0.99}"/>원</td>
-                        <td><input type="text" name='productCount' value="${cartList.productCount }"  style="border:0 solid black; width:30px;"></td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(cartList.productPrice * cartList.productCount) * 0.99}"/>원</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.priceSales}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.priceSales * 0.99}"/>원</td>
+                        <td><input type="text" name='productCount' id="id-productCount" value="${productCount }"  style="border:0 solid black; width:30px;"></td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(bookData.priceSales * productCount) * 0.99}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.mileage * productCount }"/>원</td>
                     </tr>
-                    <c:set var="priceSum" value="${priceSum + (cartList.productPrice * cartList.productCount) }"/>
-                    <c:set var="productSum" value="${productSum + cartList.productCount }"/>
-                    </c:forEach>
+                    <c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
+                    <c:set var="productSum" value="${productSum + productCount }"/>
                 </tbody>
             </table>
         </div>
@@ -261,7 +259,7 @@
         </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${cartList[0].book.bookTitle}` , `${productSum}`);">결제하기</button>
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>
             ${priceSum * 0.99}										
         </div>
         
@@ -312,7 +310,7 @@
     }
     
     
-    function requestPay(price, firstTitle, totalCount) {
+    function requestPay(price, title, totalCount) {
     	
     	const pricefloor = Math.floor(price);
     	const buyerName = $("#buyerPhone").val();
@@ -320,28 +318,21 @@
     	const buyerEmail = $("#buyerEmail").val();
     	const paymethod = $('input:radio[name=paymentmethod]:checked').val();
     	
-    	var bookNoArr = [];
- 	    var productCountArr = [];
+    	const bookNo = $("id-bookNo").val();
+    	const productCount = $("id-productCount").val();
  	    
-    	$("input[name='bookNo']").each(function(i){
-    		bookNoArr.push($(this).val());
- 		});
-    	$("input[name='productCount']").each(function(i){
-    		productCountArr.push($(this).val());
- 		});
-
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
             merchant_uid: "",
-            name: firstTitle + " 등  총  "+ totalCount + "권",
+            name: title,
             amount: pricefloor,
             buyer_email: buyerEmail,
             buyer_name: buyerName,
             buyer_tel: buyerPhone,
             custom_data: {
-            	bookNoArr : bookNoArr,
-            	productCountArr : productCountArr,
+            	bookNo : bookNo,
+            	productCount : productCount,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -353,11 +344,11 @@
             if (rsp.success) {
         	console.log("response Data : ", rsp.custom_data);
 				$.ajax({
-					url :"/order/insertOrder",
+					url :"/order/insertDirectOrder",
 					type : "POST",
 					data : {
-						bookNoArr : rsp.custom_data.bookNoArr,
-						productCountArr : rsp.custom_data.productCountArr,
+						bookNo : rsp.custom_data.bookNo,
+						productCount : rsp.custom_data.productCount,
 						totalPrice : rsp.paid_amount,
 						paymethod : rsp.pay_method,
 						reciverName : rsp.custom_data.reciverName,

@@ -73,7 +73,7 @@
 					<div>주문수량</div>
 					<input type="text" id="productCount" value="1">
 					<br>
-					<button type="button" class="btn btn-outline-secondary">구매하기</button>
+					<button type="button" class="btn btn-outline-secondary" id="order-btn">구매하기</button>
 					<br>
 					<br>
 					<button type="button" class="btn btn-secondary" id="insertCart-btn">장바구니</button>
@@ -161,29 +161,48 @@
 			}
 		}
 		
-		   $("#insertCart-btn").click(function(){
+		$("#insertCart-btn").click(function(){
 			      
-			      var bookNo = $("#bookNo").val();
-			      var productPrice = $("#productPrice").val();
-			      var productCount = $("#productCount").val();
+			var bookNo = $("#bookNo").val();
+			var productPrice = $("#productPrice").val();
+			var productCount = $("#productCount").val();
 			      
-			      $.ajax({
-			         url : "/cart/insert.ready",
-			         data : {
-			            bookNo : bookNo,
-			            productPrice : productPrice,
-			            productCount : productCount
-			            },
-			         type : "POST",
-			         success : function(data) {
-			            alert("장바구니 담기 성공");
-			         },
-			         error : function() {
-			            alert("장바구니 담기 실패");
-			         }
-			      });
-			   })
-
+			$.ajax({
+				url : "/cart/insert.ready",
+				type : "POST",
+				data : {
+					bookNo : bookNo,
+					productPrice : productPrice,
+					productCount : productCount
+				},
+				success : function(data) {
+					alert("장바구니 담기 성공");
+				},
+				error : function() {
+					alert("장바구니 담기 실패");
+				}
+			});
+		})
+		
+		$("#order-btn").click(function(){
+			      
+			var bookNo = $("#bookNo").val();
+			var productCount = $("#productCount").val();
+			
+			
+			$.ajax({
+				url : "/order/getDirectOrderData",
+				type : "GET",
+				data : {
+					'bookNo' : bookNo,
+					'productCount' : productCount
+				},
+				success : function(orderData) {
+					console.log(orderData);
+ 					location.href = orderData;
+				}
+			});
+		})
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

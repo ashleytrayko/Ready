@@ -11,7 +11,6 @@ public class Order {
 	private Integer bookNo;
 	private String userId;
 	private Integer productCount;
-	private String orderId;
 	private String orderRName;
 	private String orderRPhone;
 	private String orderAddress1;
@@ -20,6 +19,7 @@ public class Order {
 	private String paymentMethod;
 	private String orderState;
 	private Date orderDate;
+	private String orderId;
 	
 	private Book book;
 	private Cart cart;

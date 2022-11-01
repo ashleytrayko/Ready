@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.domain.Order;
 import com.kh.ready.order.store.OrderStore;
@@ -34,6 +35,18 @@ public class OrderStoreLogic implements OrderStore{
 	public int insertOrder(Order order) {
 		
 		return session.insert("OrderMapper.insertOrder",order);
+	}
+
+	@Override
+	public int deleteCart(String userId) {
+		
+		return session.delete("OrderMapper.deleteCart", userId);
+	}
+
+	@Override
+	public Book getbookDataByBookNo(int bookNo) {
+		
+		return session.selectOne("BookMapper.selectOneBook", bookNo);
 	}
 	
 }
