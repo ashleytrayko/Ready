@@ -20,6 +20,7 @@
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
+     <input type="hidden" name="bookNo" id="id-bookNo" value="${bookData.bookNo }">
      <div id="order-title">
          <h1 id="order-text">ORDER</h1>
          <img src="../resources/images/cart_order/c-step02.png" >
@@ -45,7 +46,6 @@
                 <tbody class="cartbody">
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
-                	<input type="hidden" name="bookNo" id="id-bookNo"value="${bookData.bookNo }">
                     <tr>
                         <td>
                             <img class="product-img" src="${bookData.imgPath }">
@@ -87,7 +87,7 @@
                         <p>이름</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="buyerName" type="text" value="${userInfoList.userName }" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="buyerName" type="text" value="${userInfo.userName }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -95,7 +95,7 @@
                         <p>연락처</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" placeholder="01000000000" value="${userInfoList.userPhone }" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" placeholder="01000000000" value="${userInfo.userPhone }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -103,7 +103,7 @@
                         <p>E-mail</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfoList.userEmail }">
+                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfo.userEmail }">
                     </td>
                 </tr>
                 <tr>
@@ -112,7 +112,7 @@
                     </td>
                     <td class="addr-info-td" style="width : 400px;">
                     	<div class="div-floatLeft">
-                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfoList.userPostcode }" placeholder="우편번호" style="width:90px;">
+                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfo.userPostcode }" placeholder="우편번호" style="width:90px;">
                         </div>
                         <div class="div-floatLeft">
                         	<button class="btn btn-secondary searchAddr-btn" onclick="byuerAddrSearch();" style="font-size :12px;">우편번호 검색</button>
@@ -124,7 +124,7 @@
                         <p></p>
                     </td>
                     <td colspan="2">
-                        <input class="form-control form-control-sm detail-Addr" id="buyerRoadAddr" type="text" value="${userInfoList.userAddress }" placeholder="도로명 주소" style="width: 400px;">
+                        <input class="form-control form-control-sm detail-Addr" id="buyerRoadAddr" type="text" value="${userInfo.userAddress }" placeholder="도로명 주소" style="width: 400px;">
                     </td>
                 </tr>
                 <tr>
@@ -132,7 +132,7 @@
                         <p></p>
                     </td>
                     <td colspan="2" class="addr-td">
-                        <input class="form-control form-control-sm detail-Addr" id="buyerDetailAddr" type="text" value="${userInfoList.userDetailAddress }" placeholder="상세 주소" style="width: 400px;">
+                        <input class="form-control form-control-sm detail-Addr" id="buyerDetailAddr" type="text" value="${userInfo.userDetailAddress }" placeholder="상세 주소" style="width: 400px;">
                     </td>
                 </tr>
             </table>
@@ -259,13 +259,11 @@
         </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>
-            ${priceSum * 0.99}										
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>								
         </div>
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-	console.log(${bookData});
 	
 	var IMP = window.IMP;
 	IMP.init('imp45674133');
@@ -319,14 +317,17 @@
     	const buyerEmail = $("#buyerEmail").val();
     	const paymethod = $('input:radio[name=paymentmethod]:checked').val();
     	
-    	const bookNo = $("id-bookNo").val();
-    	const productCount = $("id-productCount").val();
+    	var bookNo = $("#id-bookNo").val();
+    	var productCount = $("#id-productCount").val();
+    	
+    	console.log(bookNo);
+    	console.log(productCount);
  	    
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
             merchant_uid: "",
-            name: title,
+            name: title + " 총 " + totalCount + "권",
             amount: pricefloor,
             buyer_email: buyerEmail,
             buyer_name: buyerName,

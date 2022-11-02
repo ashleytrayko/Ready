@@ -13,20 +13,20 @@ import com.kh.ready.order.store.OrderStore;
 import com.kh.ready.user.domain.User;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderStore orderStore;
 
 	@Override
 	public List<Cart> getCartdataByUserId(String userId) {
-		
+
 		return orderStore.getCartdataByUserId(userId);
 	}
 
 	@Override
 	public Book getbookDataByBookNo(int bookNo) {
-		
+
 		return orderStore.getbookDataByBookNo(bookNo);
 	}
 
@@ -38,15 +38,14 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public int insertOrder(Order order) {
-		
+
 		return orderStore.insertOrder(order);
 	}
 
 	@Override
 	public int deleteCart(String userId) {
-		
+
 		return orderStore.deleteCart(userId);
 	}
 
-	
 }

@@ -59,5 +59,7 @@
 	<insert id="insertOrder">
 		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId})
 	</insert>
+
+	
 	
 </mapper>
