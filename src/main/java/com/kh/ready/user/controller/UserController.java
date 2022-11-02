@@ -106,16 +106,17 @@ public class UserController {
 	@PostMapping("/forget-id")
 	public String findId(@RequestParam("userName") String userName,
 							@RequestParam("userEmail") String userEmail) {
-		System.out.println(userName);
-		System.out.println(userEmail);
 		String result = userService.findUserId(userName, userEmail);
 		return result;
 	}
 	
 	// 패스워드 찾기 요청
+	@ResponseBody
 	@PostMapping("/forget-password")
-	public String findPassword() {
-		return "";
+	public String findPassword(@RequestParam("userId") String userId,
+								@RequestParam("userEmail") String userEmail) {
+		String result = userService.findUserPassword(userId, userEmail);
+		return result;
 	}
 
 	// 회원가입 요청

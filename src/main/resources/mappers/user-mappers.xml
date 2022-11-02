@@ -42,8 +42,15 @@
 		SELECT * FROM USER_TBL WHERE USER_NICKNAME = #{userNickname}
 	</select>
 	
-	<select id="ssibal" parameterType="hashmap" resultType="String">
-		SELECT USER_ID FROM USER_TBL WHERE USER_NAME = #{userNameSSIBAL} AND USER_EMAIL = #{userEmailSSIBAL}
+	<select id="forgottenId" parameterType="hashmap" resultType="String">
+		SELECT USER_ID FROM USER_TBL WHERE USER_NAME = #{userName} AND USER_EMAIL = #{userEmail}
 	</select>
 	
+	<select id="forgettenPassword" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(USER_PASSWORD) FROM USER_TBL WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
+	</select>
+	
+	<update id="updatePassword">
+		UPDATE USER_TBL SET USER_PASSWORD = #{newEncodedPassword} WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
+	</update>
 </mapper>

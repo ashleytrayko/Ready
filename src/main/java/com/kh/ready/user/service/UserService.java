@@ -18,4 +18,7 @@ public interface UserService {
 	
 	// 아이디 찾기 
 	public String findUserId(String userName, String userEmail);
+	
+	// 비밀번호 찾기
+	public String findUserPassword(String userId, String userEmail);
 }

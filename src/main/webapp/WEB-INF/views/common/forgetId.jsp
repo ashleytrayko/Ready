@@ -44,7 +44,7 @@
 			},
 			type : "POST",
 			success : function(result){
-				if(result === "NULL"){
+				if(result === null || result === "null" || result === ""){
 					alert("아이디가 존재하지 않습니다. 다시 확인해 주세요.");
 				}else{
 					alert("찾으시는 아이디는 " + result + "입니다.");

@@ -20,4 +20,8 @@ public interface UserRepository {
 	public User getUserByNickname(String userNickname);
 
 	public String findUserId(HashMap<String, String> paraMap);
+
+	public int findUserPassword(HashMap<String, String> paraMap);
+
+	public int updateNewPassword(HashMap<String, String> paraMap);
 }

@@ -43,10 +43,22 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public String findUserId(HashMap<String, String> paraMap) {
-		System.out.println(paraMap);
-		String foundId = session.selectOne("UserMapper.ssibal",paraMap);
+		String foundId = session.selectOne("UserMapper.forgottenId",paraMap);
 		System.out.println(foundId);
 		return foundId;
+	}
+
+	@Override
+	public int findUserPassword(HashMap<String, String> paraMap) {
+		int foundPassword = session.selectOne("UserMapper.forgettenPassword", paraMap);
+		return foundPassword;
+	}
+
+	@Override
+	public int updateNewPassword(HashMap<String, String> paraMap) {
+		System.out.println(paraMap);
+		int result = session.update("UserMapper.updatePassword",paraMap);
+		return result;
 	}
 
 }
