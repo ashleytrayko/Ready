@@ -142,7 +142,7 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value="/order/insertDirectOrder", method=RequestMethod.POST)
-	public void insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
+	public ModelAndView insertDirectOrder(ModelAndView mv, Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
 												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
@@ -150,7 +150,6 @@ public class OrderController {
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
 												@RequestParam("paymethod") String paymethod){
-		try {
 			
 			System.out.println(bookNo);
 			System.out.println(productCount);
@@ -182,17 +181,20 @@ public class OrderController {
 			order.setUserId(userId);
 			
 			orderService.insertOrder(order);
-			String orderDetailId = order.getOrderId();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			String orderId2 = order.getOrderId();
+			mv.addObject("orderId2" , orderId2);
+			mv.setViewName("/order/orderDetailView");
+			return mv;
 	}
 	
 	@RequestMapping(value="/order/orderDetailView", method=RequestMethod.GET)
-	public ModelAndView orderDetailView(ModelAndView mv, Order order) {
+	public ModelAndView orderDetailView(ModelAndView mv, String orderId2) {
 		
+		List<Order> orderList = orderService.getOrderDataByOrderId(orderId2);
 		
+		mv.addObject("orderList", orderList);
+		mv.setViewName("/order/orderCompletePage");
 		return mv;
 	}
 	

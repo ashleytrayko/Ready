@@ -49,5 +49,11 @@ public class OrderStoreLogic implements OrderStore{
 		
 		return session.selectOne("BookMapper.selectOneBook", bookNo);
 	}
+
+	@Override
+	public List<Order> getOrderDataByOrderId(String orderId2) {
+
+		return session.selectList("OrderMapper.selectOrderListByOrderId", orderId2);
+	}
 	
 }

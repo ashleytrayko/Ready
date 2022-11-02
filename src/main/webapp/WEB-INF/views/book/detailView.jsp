@@ -139,6 +139,7 @@
 	</footer>
 
 	<script>
+	
 		function modifyView(obj, reviewContents, reviewNo) {
 			console.log(obj);
 			event.preventDefault();
@@ -183,29 +184,11 @@
 			});
 		})
 		
-		/* $("#order-btn").click(function(){
-			      
-			var bookNo = $("#bookNo").val();
-			var productCount = $("#productCount").val();
-			
-			
-			$.ajax({
-				url : "/order/getDirectOrderData",
-				type : "GET",
-				data : {
-					'bookNo' : bookNo,
-					'productCount' : productCount
-				},
-				success : function(orderData) {
-					console.log(orderData);
- 					location.href = orderData;
-				}
-			});
-		}) */
+		
 		
 		function order(bookNo) {
 			var productCount = $("#productCount").val();
-			location.href="/order/getDirectOrderData?bookNo="+bookNo+"&productCount="+productCount;
+			location.href="/order/directOrderView?bookNo="+bookNo+"&productCount="+productCount;
 		}
 	</script>
 	

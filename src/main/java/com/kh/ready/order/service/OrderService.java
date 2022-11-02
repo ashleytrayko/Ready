@@ -19,5 +19,7 @@ public interface OrderService {
 	int deleteCart(String userId);
 
 	Book getbookDataByBookNo(int bookNo);
+
+	List<Order> getOrderDataByOrderId(String orderId2);
 	
 }

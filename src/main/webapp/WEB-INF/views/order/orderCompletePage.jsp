@@ -100,6 +100,8 @@
                                     <td>적립금</td>
                                 </tr>
                             </thead>
+                            <c:forEach items="${orderList }"var="orderList" varStatus="i" >
+                            ${orderList.orderNo }
                             <tbody>
                               <tr class="acd-tr">
                                   <td>
@@ -114,20 +116,7 @@
                                   <td>600원</td>
                               </tr>
                           </tbody>
-                          <tbody>
-                              <tr>
-                                  <td>
-                                      <img class="product-img" src="#">
-                                  </td>
-                                  <td>
-                                      <p class="product-title">PRODUCT TITLE2</p>
-                                  </td>
-                                  <td>2</td>
-                                  <td>22,000원</td>
-                                  <td>19,800원</td>
-                                  <td>1100원</td>
-                              </tr>
-                          </tbody>
+                          </c:forEach>
                       </table>
                   </div>
                 </div>

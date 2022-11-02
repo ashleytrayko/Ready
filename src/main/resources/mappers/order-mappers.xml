@@ -52,6 +52,10 @@
 		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
 	</select>
 	
+	<select id="selectOrderListByOrderId" resultMap="OrderResultMap">
+		SELECT * FROM ORDER_TBL WHERE ORDER_ID = #{orderId}
+	</select>
+	
 	<delete id="deleteCart">
 		DELETE FROM CART_TBL WHERE USER_ID = #{userId}
 	</delete>
