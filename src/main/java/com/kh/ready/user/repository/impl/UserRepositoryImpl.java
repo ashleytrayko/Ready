@@ -1,6 +1,8 @@
 package com.kh.ready.user.repository.impl;
 
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,6 +39,26 @@ public class UserRepositoryImpl implements UserRepository {
 	public User getUserByNickname(String userNickname) {
 		User user = session.selectOne("UserMapper.selectUserByNickname",userNickname);
 		return user;
+	}
+
+	@Override
+	public String findUserId(HashMap<String, String> paraMap) {
+		String foundId = session.selectOne("UserMapper.forgottenId",paraMap);
+		System.out.println(foundId);
+		return foundId;
+	}
+
+	@Override
+	public int findUserPassword(HashMap<String, String> paraMap) {
+		int foundPassword = session.selectOne("UserMapper.forgettenPassword", paraMap);
+		return foundPassword;
+	}
+
+	@Override
+	public int updateNewPassword(HashMap<String, String> paraMap) {
+		System.out.println(paraMap);
+		int result = session.update("UserMapper.updatePassword",paraMap);
+		return result;
 	}
 
 }

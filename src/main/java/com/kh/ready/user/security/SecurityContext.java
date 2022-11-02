@@ -40,8 +40,8 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-				.antMatchers("/","/resources/**","/common/**","/book/**").permitAll()
-				.antMatchers("/user/**","/cart/**","/order/**").authenticated()
+				.antMatchers("/","/resources/**","/common/**","/book/**","/comm/list.kh","/que/list.kh").permitAll()
+				.antMatchers("/user/**","/cart/**","/order/**","/comm/**","/que/**").authenticated()
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
 				.anyRequest().permitAll()
 			.and()
@@ -51,6 +51,9 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 				.passwordParameter("userPassword")
 				.loginProcessingUrl("/login")
 				.defaultSuccessUrl("/")
+			.and()
+				.logout()
+				.logoutSuccessUrl("/")
 			.and()
 				.oauth2Login()
 				.loginPage("/login")

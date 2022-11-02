@@ -1,6 +1,7 @@
 package com.kh.ready.user.repository;
 
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
@@ -17,4 +18,10 @@ public interface UserRepository {
 	public User getUserByEmail(String userEmail);
 
 	public User getUserByNickname(String userNickname);
+
+	public String findUserId(HashMap<String, String> paraMap);
+
+	public int findUserPassword(HashMap<String, String> paraMap);
+
+	public int updateNewPassword(HashMap<String, String> paraMap);
 }
