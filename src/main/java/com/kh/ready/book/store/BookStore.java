@@ -30,7 +30,7 @@ public interface BookStore {
 	List<Book> selectAllByValue(SqlSessionTemplate session, String searchCondition, String searchValue, int currentPage,
 			int bookLimit);
 
-	List<Book> selectAllByCategory(SqlSessionTemplate session, String category);
+	List<Book> selectAllByCategory(SqlSessionTemplate session, String category, int currentPage, int bookLimit);
 
 	List<Book> selectBestSeller(SqlSessionTemplate session);
 
@@ -39,5 +39,15 @@ public interface BookStore {
 	List<Book> selectAllByCategoryNewLine(SqlSessionTemplate session, String category);
 
 	List<Book> selectAllByCategoryBestLine(SqlSessionTemplate session, String category);
+
+	List<Book> selectRecommendBook(SqlSessionTemplate session);
+
+	List<Book> selectNovel(SqlSessionTemplate session);
+
+	List<Book> selectComic(SqlSessionTemplate session);
+
+	List<Book> selectStudy(SqlSessionTemplate session);
+
+	int selectTotalCategoryCount(SqlSessionTemplate session, String category);
 
 }

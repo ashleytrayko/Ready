@@ -72,6 +72,11 @@ public class BookStoreLogic implements BookStore{
 		int totalCount = session.selectOne("BookMapper.selectTotalCount", paramMap);
 		return totalCount;
 	}
+	@Override
+	public int selectTotalCategoryCount(SqlSessionTemplate session, String category) {
+		int totalCategoryCount = session.selectOne("BookMapper.selectCategoryCount", category);
+		return totalCategoryCount;
+	}
 
 	@Override
 	public List<Book> selectAllByValue(SqlSessionTemplate session, String searchCondition, String searchValue,
@@ -86,8 +91,10 @@ public class BookStoreLogic implements BookStore{
 	}
 
 	@Override
-	public List<Book> selectAllByCategory(SqlSessionTemplate session, String category) {
-		List<Book> bList = session.selectList("BookMapper.selectAllByCategory", category);
+	public List<Book> selectAllByCategory(SqlSessionTemplate session, String category, int currentPage, int bookLimit) {
+		int offset = (currentPage - 1) * bookLimit;
+		RowBounds rowBounds = new RowBounds(offset, bookLimit);
+		List<Book> bList = session.selectList("BookMapper.selectAllByCategory", category, rowBounds);
 		return bList;
 	}
 
@@ -114,6 +121,32 @@ public class BookStoreLogic implements BookStore{
 		List<Book> bList2 = session.selectList("BookMapper.selectCategoryBestLine", category);
 		return bList2;
 	}
+
+	@Override
+	public List<Book> selectRecommendBook(SqlSessionTemplate session) {
+		List<Book> bList3 = session.selectList("BookMapper.selectRecommendBook");
+		return bList3;
+	}
+
+	@Override
+	public List<Book> selectNovel(SqlSessionTemplate session) {
+		List<Book> bList4 = session.selectList("BookMapper.selectNovel");
+		return bList4;
+	}
+
+	@Override
+	public List<Book> selectComic(SqlSessionTemplate session) {
+		List<Book> bList5 = session.selectList("BookMapper.selectComic");
+		return bList5;
+	}
+
+	@Override
+	public List<Book> selectStudy(SqlSessionTemplate session) {
+		List<Book> bList6 = session.selectList("BookMapper.selectStudy");
+		return bList6;
+	}
+
+
 
 
 }

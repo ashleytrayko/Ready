@@ -12,4 +12,6 @@ public interface MypageStore {
 
 	Survey selectMySurvey(String userId, SqlSessionTemplate session);
 
+	int updateSurvey(Survey survey, SqlSessionTemplate session);
+
 }

@@ -28,9 +28,21 @@ public class HomeController {
 	public ModelAndView home(ModelAndView mv, Principal principal) {
 		//베스트셀러 조회(메인페이지)
 		List<Book> bList1 = bService.printBestSeller();
+		//신간 조회
 		List<Book> bList2 = bService.printNewBook();
+		//추천 도서 조회 (설문조사 기반)
+		List<Book> bList3 = bService.printRecommendBook();
+		//소설
+		List<Book> bList4 = bService.printNovel();
+		//만화
+		List<Book> bList5 = bService.printComic();
+		//자기계발
+		List<Book> bList6 = bService.printStudy();
 			mv.addObject("bList1", bList1);
 			mv.addObject("bList2", bList2);
+			mv.addObject("bList4", bList4);
+			mv.addObject("bList5", bList5);
+			mv.addObject("bList6", bList6);
 			mv.setViewName("home");
 		
 		mv.addObject("principal", principal);

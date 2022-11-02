@@ -29,4 +29,10 @@ public class MypageServiceImpl implements MypageService{
 		return survey;
 	}
 
+	@Override
+	public int modifySurvey(Survey survey) {
+		int result = mStore.updateSurvey(survey, session);
+		return result;
+	}
+
 }

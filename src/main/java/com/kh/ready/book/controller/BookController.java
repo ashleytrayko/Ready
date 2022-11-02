@@ -117,23 +117,33 @@ public class BookController {
 	
 	//카테고리 조회
 	@RequestMapping(value="/book/category.kh", method=RequestMethod.GET)
-	public ModelAndView showCategory(ModelAndView mv, @RequestParam("category")String category) {
+	public ModelAndView showCategory(ModelAndView mv, @RequestParam("category")String category, @RequestParam(value="page", required=false) Integer page) {
 		try {
-			List<Book> bList = bService.printAllByCategory(category);
-			List<Book> bList1 = bService.printAllByCategoryNewLine(category);
-			List<Book> bList2 = bService.printAllByCategoryBestLine(category);
-			List<Book> bList3 = bService.printAllByCategory("문학");
-			if(!bList1.isEmpty()) {
+			//페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = bService.getTotalCatrgoryCount(category);
+			int bookLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int)((double)totalCount/bookLimit + 0.9);
+			startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1) * naviLimit +1;
+			endNavi = startNavi + naviLimit - 1;
+			if(maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			List<Book> bList = bService.printAllByCategory(category, currentPage, bookLimit);
+			if(!bList.isEmpty()) {
 				mv.addObject("bList", bList);
-				mv.addObject("bList1", bList1);
-				mv.addObject("bList2", bList2);
-				mv.addObject("bList3", bList3);
 			} else {
 				mv.addObject("bList", null);
 			}
-			mv.addObject("urlVal", "category");
 			mv.addObject("category", category);
-			//mv.addObject("searchValue", searchValue);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
 			mv.setViewName("book/listMain");
 		} catch(Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("main/errorPage");

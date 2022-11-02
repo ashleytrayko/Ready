@@ -62,11 +62,10 @@
 						<img src=${book.imgPath } width="200" height="250">
 		        	</div>
 		        	<div class="col p-4 d-flex flex-column position-relative">
-			        	
 			        	<h3 class="mb-0" id="product1">${book.bookTitle }</h3>
 			        	<div class="mb-1 text-muted">저자 : ${book.bookWriter } | 출판사 : ${book.publisher } | 발행일 : ${book.pubDate }</div><br>
-			        	<p class="mb-auto">판매가 ${book.priceSales }원</p>
-			        	<p class="mb-auto">적립금 ${book.mileage }원</p>
+			        	<p class="mb-auto">판매가 : <fmt:formatNumber type="number" value="${book.priceSales }" pattern="#,###"/>원</p>
+			        	<p class="mb-auto">적립금 : <fmt:formatNumber type="number" value="${book.mileage }" pattern="#,###"/>원</p>
 		        	</div>
 		    	</div>
 				<div id="container2">
