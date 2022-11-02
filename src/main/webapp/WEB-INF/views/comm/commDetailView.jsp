@@ -249,13 +249,13 @@
 		
 		function updateLike() {
 		var boardNo = "${comm.boardNo}";
-		var userIndex = "${principal.user.userIndex}";
+		var userId = "${principal.user.userId}";
 			$.ajax({
 				url : "/like/recomm.kh",
 				datatype : "json",
 				data : {
 					"boardNo"	: boardNo,
-					"userIndex" : userIndex 
+					"userId" 	: userId 
 				},
 				type : "POST",
 				success : function(likeCheck) {

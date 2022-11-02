@@ -33,7 +33,7 @@
 		</div>
 		<div class="main-section">
 		<h1 align="center">1:1 문의</h1>
-		<form action="/que/register.kh" method="post" enctype="multipart/form-data">
+		<form action="/que/myRegister.kh" method="post" enctype="multipart/form-data">
 			<table align="center" border="1">
 				<tr>
 					<td class="td">제목</td>
@@ -41,7 +41,7 @@
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td><input type="text" name="queWriter" value="${principal.user.userId }" readonly class="qTitle"></td>
+					<td><input type="text" name="queWriter" value="${principal.user.userNickname }" readonly class="qTitle"></td>
 					<td align="right" id="select-td">
 						<div class="input-group">
 							<select name="qCategory" class="input-group-text" id="inputGroup-sizing-sm" required>

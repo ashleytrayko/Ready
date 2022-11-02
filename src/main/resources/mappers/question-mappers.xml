@@ -41,5 +41,21 @@
 	<select id="selectAllBoard" resultMap="questionResultMap">
 		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
 	</select>
+	<!-- 내 문의글 갯수 -->
+	<select id="selectMyCount" resultType="_int">
+		SELECT COUNT(*) FROM QUESTION_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				QUE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+		</where>
+	</select>
+	<select id="selectMyBoard" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
+	</select>
 	
 </mapper>

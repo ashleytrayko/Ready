@@ -12,7 +12,7 @@ public class LikeStoreLogic implements LikeStore{
 
 	@Override
 	public int likeCheck(SqlSession session, int boardNo, String userId) {
-		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("userId", userId);
 		int result = session.selectOne("LikeMapper.likeCheck", paramMap);
@@ -21,7 +21,7 @@ public class LikeStoreLogic implements LikeStore{
 
 	@Override
 	public int insertLike(SqlSession session, int boardNo, String userId) {
-		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("userId", userId);
 		int result = session.insert("LikeMapper.insertLike", paramMap);
@@ -36,7 +36,7 @@ public class LikeStoreLogic implements LikeStore{
 
 	@Override
 	public int updateLikeCheck(SqlSession session, int boardNo, String userId) {
-		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("userId", userId);
 		int result = session.update("LikeMapper.updateLikeCheck", paramMap);
@@ -45,7 +45,7 @@ public class LikeStoreLogic implements LikeStore{
 
 	@Override
 	public int updateLikeCheckCancel(SqlSession session, int boardNo, String userId) {
-		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("userId", userId);
 		int result = session.update("LikeMapper.updateLikeCheckCancel", paramMap);
@@ -60,7 +60,7 @@ public class LikeStoreLogic implements LikeStore{
 
 	@Override
 	public int deleteLike(SqlSession session, int boardNo, String userId) {
-		HashMap<Object, Object> paramMap = new HashMap<Object, Object>();
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("userId", userId);
 		int result = session.delete("LikeMapper.deleteLike", paramMap);

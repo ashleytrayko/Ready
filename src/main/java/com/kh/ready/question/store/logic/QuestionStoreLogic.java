@@ -36,4 +36,21 @@ public class QuestionStoreLogic implements QuestionStore{
 		return qList;
 	}
 
+	@Override
+	public int selectMyCount(SqlSession session, String searchCondition, String searchValue) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		int myCount = session.selectOne("QuestionMapper.selectMyCount", paramMap);
+		return myCount;
+	}
+
+	@Override
+	public List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		List<Question> qList = session.selectList("QuestionMapper.selectMyBoard", null, rowBounds);
+		return qList;
+	}
+
 }
