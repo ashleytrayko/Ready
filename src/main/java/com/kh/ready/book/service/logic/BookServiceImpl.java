@@ -70,6 +70,12 @@ public class BookServiceImpl implements BookService{
 		int totalCount = bStore.selectTotalCount(session, searchCondition, searchValue);
 		return totalCount;
 	}
+	
+	@Override
+	public int getTotalCatrgoryCount(String category) {
+		int totalCategoryCount = bStore.selectTotalCategoryCount(session, category);
+		return totalCategoryCount;
+	}
 
 	@Override
 	public List<Book> printAllByValue(String searchCondition, String searchValue, int currentPage, int bookLimit) {
@@ -78,8 +84,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<Book> printAllByCategory(String category) {
-		List<Book> bList = bStore.selectAllByCategory(session, category);
+	public List<Book> printAllByCategory(String category, int currentPage, int bookLimit) {
+		List<Book> bList = bStore.selectAllByCategory(session, category, currentPage, bookLimit);
 		return bList;
 	}
 
@@ -106,5 +112,31 @@ public class BookServiceImpl implements BookService{
 		List<Book> bList2 = bStore.selectAllByCategoryBestLine(session, category);
 		return bList2;
 	}
+
+	@Override
+	public List<Book> printRecommendBook() {
+		List<Book> bList3 = bStore.selectRecommendBook(session);
+		return bList3;
+	}
+
+	@Override
+	public List<Book> printNovel() {
+		List<Book> bList4 = bStore.selectNovel(session);
+		return bList4;
+	}
+
+	@Override
+	public List<Book> printComic() {
+		List<Book> bList5 = bStore.selectComic(session);
+		return bList5;
+	}
+
+	@Override
+	public List<Book> printStudy() {
+		List<Book> bList6 = bStore.selectStudy(session);
+		return bList6;
+	}
+
+
 
 }

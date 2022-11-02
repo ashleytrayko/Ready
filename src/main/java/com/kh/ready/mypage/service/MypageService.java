@@ -10,4 +10,6 @@ public interface MypageService {
 
 	Survey printMySurvey(String userId);
 
+	int modifySurvey(Survey survey);
+
 }

@@ -27,7 +27,7 @@ public interface BookService {
 
 	public List<Review> printAllReview(Integer bookNo);
 
-	public List<Book> printAllByCategory(String category);
+	public List<Book> printAllByCategory(String category, int currentPage, int bookLimit);
 
 	public List<Book> printBestSeller();
 
@@ -36,4 +36,14 @@ public interface BookService {
 	public List<Book> printAllByCategoryNewLine(String category);
 
 	public List<Book> printAllByCategoryBestLine(String category);
+
+	public List<Book> printRecommendBook();
+
+	public List<Book> printNovel();
+
+	public List<Book> printComic();
+
+	public List<Book> printStudy();
+
+	public int getTotalCatrgoryCount(String category);
 }

@@ -59,6 +59,18 @@
 		</where>
 	</select>
 	
+	<select id="selectCategoryCount" resultType="_int">
+		SELECT COUNT(*) FROM BOOK_TBL
+		<where>
+			<if test="category.toString() == '소설'">
+				BOOK_CATEGORY LIKE '%' ||#{category}|| '%'
+			</if>
+			<if test="category.toString() == '만화'">
+				BOOK_CATEGORY LIKE '%' ||#{category}|| '%'
+			</if>
+		</where>
+	</select>
+	
 	<select id="selectAllByValue" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL
 		<where>
@@ -84,7 +96,21 @@
 	</select>
 	
 	<select id="selectAllByCategory" resultMap="bookResultMap">
-		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' ||#{category}|| '%'
+		SELECT * FROM BOOK_TBL 
+		<where>
+			<if test="category.toString() == '소설'">
+				BOOK_CATEGORY LIKE '%' ||'소설'|| '%'
+			</if>
+			<if test="category.toString() == '만화'">
+				BOOK_CATEGORY LIKE '%' ||'만화'|| '%'
+			</if>
+		</where>
+		<if test="category.toString() == 'Best'">
+			ORDER BY SALE_COUNT DESC
+		</if>
+		<if test="category.toString() == 'New'">
+			ORDER BY PUB_DATE DESC
+		</if>
 	</select>
 	
 	<select id="selectCategoryNewLine" resultMap="bookResultMap">
@@ -102,8 +128,22 @@
 	<select id="selectNewBook" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL ORDER BY PUB_DATE DESC
 	</select>
+		
+	<select id="selectRecommendBook" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || SURVEY_TBL.ANSWER_HOBBY || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+	</select>
 	
+	<select id="selectNovel" resultMap="bookResultMap">	
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' || '소설' || '%'
+	</select>
 	
+	<select id="selectComic" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' || '만화' || '%'
+	</select>
+	
+	<select id="selectStudy" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL WHERE BOOK_CATEGORY LIKE '%' || '고등' || '%' OR BOOK_CATEGORY LIKE '%' || '대학' || '%'
+	</select>
 	<!-- 리뷰관련 -->
 	<insert id="insertReview">
 		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{bookNo }, #{userId }, #{nickName }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
@@ -120,4 +160,5 @@
 	<select id="selectAllReview" resultMap="reviewResultMap">
 		SELECT * FROM REVIEW_TBL WHERE BOOK_NO = #{bookNo }
 	</select>
+	
 </mapper>

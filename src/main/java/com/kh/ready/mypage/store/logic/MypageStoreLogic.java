@@ -23,4 +23,10 @@ public class MypageStoreLogic implements MypageStore{
 		return survey;
 	}
 
+	@Override
+	public int updateSurvey(Survey survey, SqlSessionTemplate session) {
+		int result = session.update("MypageMapper.updateMySurvey", survey);
+		return result;
+	}
+
 }

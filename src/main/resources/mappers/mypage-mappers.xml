@@ -18,6 +18,11 @@
 	<insert id="InsertSurvey">
 	  INSERT INTO SURVEY_TBL VALUES(#{userId }, #{answerGender }, #{answerLove }, #{answerHobby }, #{answerReason }, #{answerWriter }, DEFAULT, DEFAULT)
 	</insert>
+	
+	<update id="updateMySurvey">
+		UPDATE SURVEY_TBL SET ANSWER_GENDER = #{answerGender }, ANSWER_LOVE = #{answerLove }, ANSWER_HOBBY = #{answerHobby }, ANSWER_REASON = #{answerReason }, ANSWER_WRITER = #{answerWriter }, UPDATE_DATE = DEFAULT 
+		WHERE USER_ID = #{userId }
+	</update>
 	  
 	<select id="selectMySurvey" resultMap="surveyResultMap">
 	  SELECT * FROM SURVEY_TBL WHERE USER_ID = #{userId}
