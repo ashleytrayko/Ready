@@ -37,7 +37,7 @@ public class LikeController {
 				lService.updateLikeCheckCancel(boardNo, userId);
 				lService.updateLikeCancel(boardNo);
 				lService.deleteLike(boardNo, userId);
-		}
+			}
 		} catch (Exception e) {
 			System.out.println("에러발생");
 		}

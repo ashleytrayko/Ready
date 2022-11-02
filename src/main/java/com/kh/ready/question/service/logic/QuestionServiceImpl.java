@@ -35,4 +35,16 @@ public class QuestionServiceImpl implements QuestionService{
 		return qList;
 	}
 
+	@Override
+	public int getMyCount(String searchValue, String searchCondition) {
+		int myCount = qStore.selectMyCount(session, searchCondition, searchValue);
+		return myCount;
+	}
+
+	@Override
+	public List<Question> printMyBoard(int currentPage, int boardLimit) {
+		List<Question> qList = qStore.selectMyBoard(session, currentPage, boardLimit);
+		return qList;
+	}
+
 }

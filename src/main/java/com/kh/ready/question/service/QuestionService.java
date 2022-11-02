@@ -11,8 +11,12 @@ public interface QuestionService {
 
 	int registerFAQ(Question que);
 
-	int getTotalCount(String string, String string2);
+	int getTotalCount(String searchCondition, String searchValue);
 
 	List<Question> printAllBoard(int currentPage, int boardLimit);
+	// 내 문의글 갯수
+	int getMyCount(String searchCondition, String searchValue);
+	// 내 문의글 리스트
+	List<Question> printMyBoard(int currentPage, int boardLimit);
 
 }

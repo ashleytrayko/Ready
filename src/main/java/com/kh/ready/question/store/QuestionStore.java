@@ -16,4 +16,8 @@ public interface QuestionStore {
 
 	List<Question> selectAllBoard(SqlSession session, int currentPage, int boardLimit);
 
+	int selectMyCount(SqlSession session, String searchCondition, String searchValue);
+
+	List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit);
+
 }
