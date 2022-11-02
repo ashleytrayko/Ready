@@ -41,4 +41,9 @@
 	<select id="selectUserByNickname" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_NICKNAME = #{userNickname}
 	</select>
+	
+	<select id="ssibal" parameterType="hashmap" resultType="String">
+		SELECT USER_ID FROM USER_TBL WHERE USER_NAME = #{userNameSSIBAL} AND USER_EMAIL = #{userEmailSSIBAL}
+	</select>
+	
 </mapper>

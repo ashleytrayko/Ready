@@ -3,6 +3,8 @@ package com.kh.ready.user.service.impl;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -73,6 +75,18 @@ public class UserServiceImpl implements UserService{
 		}else {
 			return "itsOk";
 		}
+	}
+
+	@Override
+	public String findUserId(String userName, String userEmail) {
+		HashMap<String, String> paraMap = new HashMap<String, String>();
+		paraMap.put("userNameSSIBAL", userName);
+		paraMap.put("userEmailSSIBAL", userEmail);
+		String foundId = userRepository.findUserId(paraMap);
+		if(foundId.equals("")) {
+			return "NULL";
+		}
+		return foundId;
 	}
 
 
