@@ -27,7 +27,6 @@ public class MypageController {
 	public ModelAndView showSurveyPage(ModelAndView mv, Principal principal) {
 		try {
 			String userId = principal.getName();
-			
 			Survey survey = mService.printMySurvey(userId);
 			mv.addObject("userId", userId);
 			mv.addObject("survey", survey);

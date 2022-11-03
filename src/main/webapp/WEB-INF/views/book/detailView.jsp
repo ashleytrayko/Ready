@@ -72,7 +72,7 @@
 					<div>주문수량</div>
 					<input type="text" id="productCount" value="1">
 					<br>
-					<button type="button" class="btn btn-outline-secondary" id="order-btn" onclick="order(${book.bookNo});">구매하기</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="order(${book.bookNo});">구매하기</button>
 					<br>
 					<br>
 					<button type="button" class="btn btn-secondary" id="insertCart-btn">장바구니</button>
@@ -93,7 +93,7 @@
 			<form action="/book/addReview.kh" method="post">
 					<input type="hidden" id="bookNo" name="bookNo" value="${book.bookNo }">
 				<br>
-				<h3>독자서평</h3>
+				<h3>독자서평 (${book.scoreAvg })</h3>
 				<div class="review-container">
 				<br>
 					<label>평점  : </label>
@@ -142,10 +142,19 @@
 		function modifyView(obj, reviewContents, reviewNo) {
 			console.log(obj);
 			event.preventDefault();
+			var sel = "";
 			var $div = $("<div>");
-				$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
-				$div.append("<button onclick='modifyReview(this,"+reviewNo+");'>수정</button>");
-				$(obj).parent().parent().after($div);
+			sel += "<select name='score'>"
+			sel += "<option value='"+1+"'>★☆☆☆☆</option>"
+			sel += "<option value='"+2+"'>★★☆☆☆</option>"
+			sel += "<option value='"+3+"'>★★★☆☆</option>"
+			sel += "<option value='"+4+"'>★★★★☆</option>"
+			sel += "<option value='"+5+"'>★★★★★</option>"
+			sel += "</select>"
+			$div.html(sel);
+			$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
+			$div.append("<button onclick='modifyReview(this,"+reviewNo+");'>수정</button>");
+			$(obj).parent().parent().after($div);
 		}
 	
 		function removeReview(reviewNo) {
@@ -155,6 +164,7 @@
 					$delForm.attr("action", "/book/removeReview.kh");
 					$delForm.attr("method", "post");
 					$delForm.append("<input type='hidden' name='reviewNo' value='"+reviewNo+"'>");
+					$delForm.append("<input type='hidden' name='bookNo' value='"+bookNo+"'>");
 					$delForm.appendTo("body");
 					$delForm.submit();
 			}
@@ -204,9 +214,9 @@
 		}) */
 		
 		function order(bookNo) {
-			var productCount = $("#productCount").val();
-			location.href="/order/getDirectOrderData?bookNo="+bookNo+"&productCount="+productCount;
-		}
+	         var productCount = $("#productCount").val();
+	         location.href="/order/directOrderView?bookNo="+bookNo+"&productCount="+productCount;
+	      }
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -133,6 +133,7 @@ public class BookController {
 			if(maxPage < endNavi) {
 				endNavi = maxPage;
 			}
+			//도서 목록
 			List<Book> bList = bService.printAllByCategory(category, currentPage, bookLimit);
 			if(!bList.isEmpty()) {
 				mv.addObject("bList", bList);
@@ -158,7 +159,6 @@ public class BookController {
 		review.setUserId(userId);
 		int bookNo = review.getBookNo();
 		int result = bService.registerReview(review);
-		System.out.println(principal);
 		if(result > 0) {
 			mv.setViewName("redirect:/book/detailView.kh?bookNo="+bookNo);
 		} 
@@ -168,15 +168,15 @@ public class BookController {
 	//평점 수정
 	@RequestMapping(value="/book/modifyReview.kh", method=RequestMethod.POST)
 	public String modifyBookReview(@ModelAttribute Review review) {
+		int bookNo = review.getBookNo();
 		int result = bService.modifyReview(review);
-		return "redirect:/book/bookList.kh";
+		return "redirect:/book/detailView.kh?bookNo="+bookNo;
 	}
 	
 	//평점 삭제
 	@RequestMapping(value="/book/removeReview.kh", method=RequestMethod.POST)
-	public String removeReview(@RequestParam("reviewNo") Integer reviewNo) {
+	public String removeReview(@RequestParam("reviewNo") Integer reviewNo, @RequestParam("bookNo") Integer bookNo) {
 		int result = bService.removeReview(reviewNo);
-		return "redirect:/book/bookList.kh";
+		return "redirect:/book/listView.kh";
 	}
-	
 }

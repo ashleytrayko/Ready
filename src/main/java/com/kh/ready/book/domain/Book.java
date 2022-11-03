@@ -16,8 +16,8 @@ public class Book {
 	private String imgPath;
 	private String publisher;
 	private int saleCount;
+	private double scoreAvg;
 	
-	//getter, setter
 	public int getBookNo() {
 		return bookNo;
 	}
@@ -96,16 +96,20 @@ public class Book {
 	public void setSaleCount(int saleCount) {
 		this.saleCount = saleCount;
 	}
-	//toString
+	public double getScoreAvg() {
+		return scoreAvg;
+	}
+	public void setScoreAvg(double scoreAvg) {
+		this.scoreAvg = scoreAvg;
+	}
+	
 	@Override
 	public String toString() {
 		return "Book [bookNo=" + bookNo + ", bookTitle=" + bookTitle + ", bookWriter=" + bookWriter + ", enrollDate="
 				+ enrollDate + ", pubDate=" + pubDate + ", category=" + category + ", bookContents=" + bookContents
 				+ ", ISBN=" + ISBN + ", priceSales=" + priceSales + ", mileage=" + mileage + ", imgPath=" + imgPath
-				+ ", publisher=" + publisher + ", saleCount=" + saleCount + "]";
+				+ ", publisher=" + publisher + ", saleCount=" + saleCount + ", scoreAvg=" + scoreAvg + "]";
 	}
-	
-	
 	
 	
 }
