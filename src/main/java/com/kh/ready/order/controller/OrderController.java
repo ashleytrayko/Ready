@@ -194,6 +194,7 @@ public class OrderController {
 		mv.addObject("userInfo",userInfo);
 		mv.addObject("orderInfo",orderInfo);
 		mv.addObject("orderList", orderList);
+		System.out.println(orderList);
 		mv.setViewName("/order/orderCompletePage");
 		return mv;
 	}
