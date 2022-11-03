@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.ready.user.domain.User;
 import com.kh.ready.user.repository.UserRepository;
@@ -27,27 +28,29 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepository userRepository;
 	
+	// 패스워드 암호화 라이브러리
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	// 메일 라이브러리
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 	
+	// 회원가입 서비스
+	@Transactional
 	@Override
 	public String userRegister(User user) { 
-		// password encoding
-		System.out.println("Before encoder : " + user.getUserPassword());
+		
+		// 패스워드 암호화 인코딩
 		String encodedPassword = encoder.encode(user.getUserPassword());
-		System.out.println("After encoder : " + encodedPassword);
 		user.setUserPassword(encodedPassword);
 		
-		// Setting UserAge
+		// 입력한 생일을 통해 현재 나이(만) 구하기
 		LocalDate birthDay = user.getUserBirthday().toLocalDate();
 		int birthYear = birthDay.getYear();
 		LocalDate now = LocalDate.now();
 		int thisYear = now.getYear();
-		user.setUserAge(thisYear- birthYear);
-		System.out.println("register userinfo : " + user.toString());
+		user.setUserAge(thisYear - birthYear);
 		
 		int result = userRepository.insertUser(user);
 		if(result > 0) {
@@ -56,7 +59,8 @@ public class UserServiceImpl implements UserService{
 			return "Insert Failed!";
 		}
 	}
-
+	
+	// 유저 아이디 중복확인
 	@Override
 	public String findUserById(String userId) {
 		User user = userRepository.getUserById(userId);
@@ -67,6 +71,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
+	// 유저 이메일 중복확인
 	@Override
 	public String findUserByEmail(String userEmail) {
 		User user = userRepository.getUserByEmail(userEmail);
@@ -76,7 +81,8 @@ public class UserServiceImpl implements UserService{
 			return "itsOk";
 		}
 	}
-
+	
+	// 유저 닉네임 중복확인
 	@Override
 	public String findUserByNickname(String userNickname) {
 		User user = userRepository.getUserByNickname(userNickname);
@@ -86,7 +92,8 @@ public class UserServiceImpl implements UserService{
 			return "itsOk";
 		}
 	}
-
+	
+	// 유저 아이디 찾기 from 아이디 찾기
 	@Override
 	public String findUserId(String userName, String userEmail) {
 		HashMap<String, String> paraMap = new HashMap<String, String>();
@@ -95,22 +102,35 @@ public class UserServiceImpl implements UserService{
 		String foundId = userRepository.findUserId(paraMap);
 		return foundId;
 	}
-
+	
+	// 유저 비밀번호 찾기 from 비밀번호 찾기
 	@Override
 	public String findUserPassword(String userId, String userEmail) {
+		
+		// 필요한 파라미터 해쉬맵에 넣기
 		HashMap<String, String> paraMap = new HashMap<String, String>();
 		paraMap.put("userId", userId);
 		paraMap.put("userEmail", userEmail);
+		
+		// 입력한 파라미터를 통해 유저가 존재하는지 확인
 		int foundPassword = userRepository.findUserPassword(paraMap);
-		System.out.println(foundPassword);
+		
+		// 존재할시 난수를 생성하여 비밀번호를 변경 후 메일로 발송
 		if(foundPassword == 1) {
+			
+			// 난수생성
 			Random rand = new Random();
 			int newPassword1 = rand.nextInt(123456) + 987654;
 			String newPassword2 = String.valueOf(newPassword1);
+			
+			// 암호화
 			String newEncodedPassword = encoder.encode(newPassword2);
 			paraMap.put("newEncodedPassword", newEncodedPassword);
+			
+			// 비밀번호 변경
 			int result = userRepository.updateNewPassword(paraMap);
-			System.out.println(result);
+			
+			// 변경성공시 메일발송
 			if(result == 1) {
 				String setFrom = "readyfinalproject@gmail.com";
 				String toMail = userEmail;
@@ -130,8 +150,8 @@ public class UserServiceImpl implements UserService{
 					e.printStackTrace();
 				}
 			}
+			// 비밀번호가 존재하지 않을시
 		}else {
-			System.out.println("비번 없어요!");
 			return "fail";
 		}
 		return "success";

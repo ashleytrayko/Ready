@@ -59,7 +59,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 		//객체 생성전 이전에 가입한 적이 있는지 체크
 		User user = userRepository.getUserById(userId) ;
 		
-		// 가입한적이 없을 경우 새롭게 회원 생성, 아닐경우 찾은 유저를 리턴
+		// 가입한적이 없을 경우 새롭게 회원 생성, 아닐경우 찾은 유저를 리턴하여 로그인
 		if(user == null) {
 			User oauthUser = new User(userId, userPassword, userName, userEmail);
 			return new CustomUserDetails(oauthUser, oauth2User.getAttributes());

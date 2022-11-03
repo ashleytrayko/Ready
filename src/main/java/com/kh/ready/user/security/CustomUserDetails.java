@@ -12,18 +12,21 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import com.kh.ready.user.domain.User;
 
 
-
+// Spring Security에서 사용되는 유저 정보 - 일반 로그인과 소셜 로그인 관련 인터페이스를 상속하여 같이 사용
 public class CustomUserDetails implements UserDetails, OAuth2User{
 	
-
+	// Ready 서비스에 사용할 User 콤포지션
 	private User user;
 	
+	// 소셜로그인에서 필요한 attribute 콤포지션
 	private Map<String, Object> attributes;
 	
+	// 일반 로그인시 생성자
 	public CustomUserDetails(User user) {
 		this.user = user;
 	}
 	
+	// 소셜 로그인시 생성자
 	public CustomUserDetails(User user, Map<String, Object> attributes) {
 		this.user = user; 
 		this.attributes = attributes;

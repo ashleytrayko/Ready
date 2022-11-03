@@ -14,16 +14,10 @@ import com.kh.ready.user.repository.UserRepository;
 import com.kh.ready.user.security.oauth.PrincipalOAuth2UserService;
 import com.kh.ready.user.service.UserService;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@Configuration // xml로 설정에 한계가 있어 부득이하게 java 방식으로 config 설정
+@EnableWebSecurity // security filter chain 가동
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // prePostEnabled -> 행동 전에 확인 
 public class SecurityContext extends WebSecurityConfigurerAdapter{
-	
-//	@Autowired
-//	private UserService userService;
-//	
-//	@Autowired
-//	private UserRepository userRepository;
 	
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
@@ -40,10 +34,10 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-				.antMatchers("/","/resources/**","/common/**","/book/**","/comm/list.kh","/que/list.kh").permitAll()
-				.antMatchers("/user/**","/cart/**","/order/**","/comm/**","/que/**").authenticated()
-				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-				.anyRequest().permitAll()
+				.antMatchers("/","/resources/**","/common/**","/book/**","/comm/list.kh","/que/list.kh").permitAll() // 모든 사용자가 접근가능
+				.antMatchers("/user/**","/cart/**","/order/**","/comm/**","/que/**").authenticated() // 권한이 있는 유저만 접근가능
+				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ADMIN 권한가진 유저만 접근 가능
+				.anyRequest().permitAll() // 모든 요청에 권한 확인
 			.and()
 				.formLogin()
 				.loginPage("/login")
@@ -52,10 +46,16 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 				.loginProcessingUrl("/login")
 				.defaultSuccessUrl("/")
 			.and()
+				.rememberMe() //로그인 유지
+				.rememberMeParameter("remember-me")
+				.tokenValiditySeconds(604800) // 1주일
+				.userDetailsService(customUserDetailService)
+			.and()
 				.logout()
 				.logoutSuccessUrl("/")
+				.invalidateHttpSession(true).deleteCookies("JSESSIONID") // 로그아웃시 세션만료처리, 쿠키삭제
 			.and()
-				.oauth2Login()
+				.oauth2Login() //소셜로그인 설정
 				.loginPage("/login")
 				.defaultSuccessUrl("/moreInfo")
 				.userInfoEndpoint()

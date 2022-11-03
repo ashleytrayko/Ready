@@ -83,7 +83,7 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<button>공지사항 등록</button>
+			<button onclick="writeNotice()">공지사항 등록</button>
 			<button>공지사항 삭제</button>
 
 
@@ -95,6 +95,9 @@
 	<script>
 	function modifyNotice(noticeNumber){
 		location.href="/modifyNoticeForm?noticeNumber="+noticeNumber;
+	}
+	function writeNotice(){
+		location.href="/admin-noticeForm";
 	}
 	</script>
 </body>
