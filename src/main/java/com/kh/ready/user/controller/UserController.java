@@ -80,7 +80,7 @@ public class UserController {
 	public String moreInfo() {
 		return "common/moreInfo";
 	}
-
+	
 	// user 화면
 	@GetMapping("/user")
 	public String userTest(Model model, Principal principal) {
