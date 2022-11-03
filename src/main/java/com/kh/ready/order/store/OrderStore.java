@@ -19,7 +19,9 @@ public interface OrderStore {
 
 	Book getbookDataByBookNo(int bookNo);
 
-	List<Order> getOrderDataByOrderId(String orderId2);
+	List<Order> getOrderDataByOrderId(String orderId);
+
+	Order getOrderInfoByOrderId(String orderId);
 
 
 }

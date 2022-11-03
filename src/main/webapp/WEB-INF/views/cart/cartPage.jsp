@@ -49,6 +49,7 @@
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
                     <c:forEach items="${cartList }" var="cartList" varStatus="i">
+                    <c:set var="salePrice" value="${(cartList.book.priceSales * 0.99)-((cartList.book.priceSales *0.99)%10)}"/>
                     <tr>
                         <td>
                             <input class="form-check-input" type="checkbox" value="${cartList.cartNo }" id="flexCheckDefault" name="chBox" data-cartNo="${cartList.cartNo}">
@@ -66,18 +67,25 @@
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice}"/>원</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.productPrice * 0.99}"/>원</td>
+                        <!-- 정가 -->
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
+                        <!-- 할인가 -->
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <!-- 수량 -->
                         <td>
                             <input class="form-control form-control-sm countControl" id="countControl" type="text" placeholder="수량"
                             aria-label=".form-control-sm example" value="${cartList.productCount }">
                             <button id="quantity-btn" class="btn btn-secondary quantity-btn" data-cartNo="${cartList.cartNo }">변경</button>
                         </td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(cartList.productPrice * cartList.productCount) * 0.99}"/>원</td>
+                        <!-- 할인가*수량 -->
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
+                        <!-- 적립금*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
                     </tr>
-                    <c:set var="priceSum" value="${priceSum + (cartList.productPrice * cartList.productCount) }"/>
+                    <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * cartList.productCount) }"/>
+                    <c:set var="mileageSum" value="${mileageSum + (cartList.book.mileage * cartList.productCount) }"/>
                    </c:forEach>
                 </tbody>
             </c:if>
@@ -103,8 +111,8 @@
                     <td>총 <c:out value="${productSum }"/>권</td>
                     <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
                     <td class="cartinfo-table-body">0원</td>
-                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.99}"/>원</p></td>
-                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.05}"/>원</td>
+                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/>원</td>
                 </tbody>
             </table>
         </div>
@@ -149,9 +157,6 @@
 		
 		var cartNo = $(this).attr("data-cartNo");
 		var productCount = $(this).prev().val();
-		
-		console.log(cartNo);
-		console.log(productCount);
 		
 		$.ajax({
 			url : "/cart/modifyCount.ready",

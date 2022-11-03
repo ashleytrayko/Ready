@@ -35,6 +35,7 @@ public class OrderController {
 	
 	@RequestMapping(value="/order/orderView", method=RequestMethod.GET)
 	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart, User user) {
+		
 		try {
 			String userId = principal.getName();
 			
@@ -60,15 +61,9 @@ public class OrderController {
 		try {
 			
 			String userId = principal.getName();
-			
-			System.out.println(bookNo);
-			System.out.println(productCount);
 
 			Book bookData = orderService.getbookDataByBookNo(bookNo);
 			User userInfo = orderService.getUserInfoByUserId(userId);
-			System.out.println(bookData);
-			System.out.println(userInfo);
-			System.out.println(productCount);
 			
 			mv.addObject("productCount" , productCount);
 			mv.addObject("bookData", bookData);
@@ -87,72 +82,71 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value="/order/insertOrder", method=RequestMethod.POST)
-	public void insertOrder(Principal principal, @RequestParam("bookNoArr[]") List<Integer> bookNoArr,
+	public String insertOrder(Principal principal, @RequestParam("bookNoArr[]") List<Integer> bookNoArr,
 												@RequestParam("productCountArr[]") List<Integer> productCountArr,
 												@RequestParam("reciverName") String reciverName,
+												@RequestParam("productPriceArr[]") List<Integer> productPriceArr,
 												@RequestParam("reciverPhone") String reciverPhone,
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
 												@RequestParam("paymethod") String paymethod){
-		
-		try {
-			
-			Order order = new Order();
-			
-			Calendar cal = Calendar.getInstance();
-			int year = cal.get(Calendar.YEAR);
-			String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
-			String ymd = ym +  new DecimalFormat("00").format(cal.get(Calendar.DATE));
-			String subNum = "";
-			
-			for(int i = 1; i <= 6; i ++) {
-				subNum += (int)(Math.random() * 10);
-			}
-			
-			String orderId = ymd + "_" + subNum;
-			String userId = principal.getName();
-			
-			int result = 0;
-			
-			for(int i=0; i<bookNoArr.size(); i++) {
 				
-				order.setBookNo(bookNoArr.get(i));
-				order.setProductCount(productCountArr.get(i));
-				order.setOrderRName(reciverName);
-				order.setOrderRPhone(reciverPhone);
-				order.setOrderAddress1(reciverZoneCode);
-				order.setOrderAddress2(reciverRoadAddr);
-				order.setOrderAddress3(reciverDetailAddr);
-				order.setPaymentMethod(paymethod);
-				order.setOrderId(orderId);
-				order.setUserId(userId);
+				Order order = new Order();
 				
-				result = orderService.insertOrder(order);
-			}
-			
-			if(result > 0) {
-				orderService.deleteCart(userId);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+				Calendar cal = Calendar.getInstance();
+				int year = cal.get(Calendar.YEAR);
+				String ym = year + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
+				String ymd = ym +  new DecimalFormat("00").format(cal.get(Calendar.DATE));
+				String subNum = "";
+				
+				for(int i = 1; i <= 6; i ++) {
+					subNum += (int)(Math.random() * 10);
+				}
+				
+				String orderId = ymd + "_" + subNum;
+				String userId = principal.getName();
+				
+				int result = 0;
+				
+				for(int i=0; i<bookNoArr.size(); i++) {
+					
+					order.setBookNo(bookNoArr.get(i));
+					order.setProductCount(productCountArr.get(i));
+					order.setProductPrice(productPriceArr.get(i));
+					order.setOrderRName(reciverName);
+					order.setOrderRPhone(reciverPhone);
+					order.setOrderAddress1(reciverZoneCode);
+					order.setOrderAddress2(reciverRoadAddr);
+					order.setOrderAddress3(reciverDetailAddr);
+					order.setPaymentMethod(paymethod);
+					order.setOrderId(orderId);
+					order.setUserId(userId);
+					
+					result = orderService.insertOrder(order);
+				}
+				
+				if(result > 0) {
+					orderService.deleteCart(userId);
+				}
+				
+				String getOrderId = order.getOrderId();
+				
+			return getOrderId;
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value="/order/insertDirectOrder", method=RequestMethod.POST)
-	public ModelAndView insertDirectOrder(ModelAndView mv, Principal principal, @RequestParam("bookNo") int bookNo,
+	public String insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
+												@RequestParam("productPrice") int productPrice,
 												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
 												@RequestParam("paymethod") String paymethod){
-			
-			System.out.println(bookNo);
-			System.out.println(productCount);
 			
 			Order order = new Order();
 			
@@ -171,6 +165,7 @@ public class OrderController {
 			
 			order.setBookNo(bookNo);
 			order.setProductCount(productCount);
+			order.setProductPrice(productPrice);
 			order.setOrderRName(reciverName);
 			order.setOrderRPhone(reciverPhone);
 			order.setOrderAddress1(reciverZoneCode);
@@ -182,17 +177,22 @@ public class OrderController {
 			
 			orderService.insertOrder(order);
 			
-			String orderId2 = order.getOrderId();
-			mv.addObject("orderId2" , orderId2);
-			mv.setViewName("/order/orderDetailView");
-			return mv;
+			
+			String getOrderId = order.getOrderId();
+			return getOrderId;
 	}
 	
 	@RequestMapping(value="/order/orderDetailView", method=RequestMethod.GET)
-	public ModelAndView orderDetailView(ModelAndView mv, String orderId2) {
+	public ModelAndView orderDetailView(ModelAndView mv, String orderId, Principal principal) {
 		
-		List<Order> orderList = orderService.getOrderDataByOrderId(orderId2);
+		String userId = principal.getName();
+		User userInfo = orderService.getUserInfoByUserId(userId);
 		
+		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
+		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
+		
+		mv.addObject("userInfo",userInfo);
+		mv.addObject("orderInfo",orderInfo);
 		mv.addObject("orderList", orderList);
 		mv.setViewName("/order/orderCompletePage");
 		return mv;

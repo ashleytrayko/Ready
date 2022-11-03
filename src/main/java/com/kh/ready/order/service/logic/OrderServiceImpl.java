@@ -49,9 +49,15 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrderDataByOrderId(String orderId2) {
+	public List<Order> getOrderDataByOrderId(String orderId) {
 
-		return orderStore.getOrderDataByOrderId(orderId2);
+		return orderStore.getOrderDataByOrderId(orderId);
+	}
+
+	@Override
+	public Order getOrderInfoByOrderId(String orderId) {
+
+		return orderStore.getOrderInfoByOrderId(orderId);
 	}
 
 }

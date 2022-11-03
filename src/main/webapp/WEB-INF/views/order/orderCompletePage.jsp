@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,49 +34,43 @@
             <hr>
             <table class="buyer-info-table">
                 <tr class="buyer-info-tr">
-                    <td class="buyer-info-td">
-                        <p class="order-info-p">수령인</p>
-                    </td>
-                    <td>
-                        <p class="order-info-p">일용자</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="buyer-info-td">
+                     <td class="buyer-info-td">
                         <p class="order-info-p">주문번호</p>
                     </td>
                     <td>
-                        <p class="order-info-p">202200000000</p>
+                        <p class="order-info-p">${orderInfo.orderId }</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="addr-info-td">
-                        <p class="order-info-p">배송지 정보</p>
+                        <p class="order-info-p">수취인</p>
                     </td>
                     <td>
-                        <p class="order-info-p">00000 (우편번호)</p>
+                        <p class="order-info-p">${orderInfo.orderRName }</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="addr-info-td">
+                        <p class="order-info-p">연락처</p>
                     </td>
                     <td>
-                        <p class="order-info-addr-p">서울시 중구 남대문로 120 대일빌딩 (도로명 주소)</p>
+                        <p class="order-info-p">${orderInfo.orderRPhone }</p>
                     </td>
                 </tr>
                 <tr>
                     <td class="addr-info-td">
+                    	<p class="order-info-p">배송지 정보</p>
                     </td>
                     <td>
-                        <p class="order-info-addr-p">3F F강의실 (상세 주소)</p>
+                        <p class="order-info-addr-p">${orderInfo.orderAddress1 }  ${orderInfo.orderAddress2 }  ${orderInfo.orderAddress3 }</p>
                     </td>
                 </tr>
                 <tr>
-                    <td class="buyer-info-td">
+                    <td class="addr-info-td">
                         <p class="order-info-p">결제 방법</p>
                     </td>
                     <td>
-                        <p class="order-info-p">신용카드</p>
+                        <p class="order-info-p">${orderInfo.paymentMethod }</p>
                     </td>
                 </tr>
             </table>
@@ -93,30 +89,47 @@
                       <table class="table table-hover">
                             <thead>
                                 <tr class="acd-tr">
-                                    <td colspan="2">이름</td>
+                                    <td colspan="2">상품 정보</td>
                                     <td>수량</td>
                                     <td>정가</td>
                                     <td>할인가</td>
                                     <td>적립금</td>
                                 </tr>
                             </thead>
-                            <c:forEach items="${orderList }"var="orderList" varStatus="i" >
-                            ${orderList.orderNo }
                             <tbody>
+                            <c:forEach items="${orderList }" var="orderList" varStatus="i">
                               <tr class="acd-tr">
+                              	  <!-- 이미지 -->
                                   <td>
-                                      <img class="product-img" src="#">
+                                      <img class="product-img" src="${orderList.book.imgPath }">
                                   </td>
+                                  <!-- 제목 -->
                                   <td>
-                                      <p class="product-title">PRODUCT TITLE</p>
+                                      <c:choose>
+                            		  	<c:when test="${fn:length(orderList.book.bookTitle) gt 20 }">
+                            				<c:out value="${fn:substring(orderList.book.bookTitle, 0, 19) }..."/>
+                            			</c:when>
+                            			<c:otherwise>
+                            				<c:out value="${orderList.book.bookTitle }"/>
+										</c:otherwise>
+<%--                             		<p id="bookTitle" style="margin-bottom: 10%;">${orderList.book.bookTitle }</p> --%>
+                            		  </c:choose>
                                   </td>
-                                  <td>1</td>
-                                  <td>12,000원</td>
-                                  <td>10,800원</td>
-                                  <td>600원</td>
+                                  <!-- 수량 -->
+                                  <td>${orderList.productCount }</td>
+                                  <!-- 정가 -->
+                                  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.priceSales}"/>원</td>
+                                  <!-- 할인가 -->
+                                  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice}"/>원</td>
+                                  <!-- 적립금 -->
+                                  <td>${orderList.book.mileage }원</td>
                               </tr>
-                          </tbody>
+                            <c:set var="priceSum" value="${priceSum + (orderList.book.priceSales * orderList.productCount) }"/>
+                    		<c:set var="productSum" value="${productSum + orderList.productCount }"/>
+                    		<c:set var="salePriceSum" value="${salePriceSum + (orderList.productPrice * orderList.productCount) }"/>
+                            <c:set var="mileageSum" value="${mileageSum + (orderList.book.mileage * orderList.productCount) }"/>
                           </c:forEach>
+                          </tbody>
                       </table>
                   </div>
                 </div>
@@ -135,17 +148,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>3권</td>
-                    <td class="orderinfo-table-body">30,600원</td>
-                    <td class="orderinfo-table-body">0원</td>
-                    <td class="orderinfo-table-body"><p class="total-price">30,600원</p></td>
-                    <td>1700원</td>
+                    <td>총 <c:out value="${productSum }"/>권</td>
+                    <td class="orderinfo-table-body">
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원
+                    </td>
+                    <td class="orderinfo-table-body">
+                    	0원
+                    </td>
+                    <td class="orderinfo-table-body">
+                    	<p class="total-price">
+                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원
+                    	</p>
+                    </td>
+                    <td>
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원
+                    </td>
                 </tbody>
             </table>
         </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn">메인으로</button>
-            <button class="btn btn-primary btm-btn">주문 내역으로</button>
+            <button class="btn btn-primary btm-btn" onclick="history.go(-3);">계속 쇼핑하기</button>
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

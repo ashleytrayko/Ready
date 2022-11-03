@@ -20,7 +20,9 @@
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
+     <c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
      <input type="hidden" name="bookNo" id="id-bookNo" value="${bookData.bookNo }">
+     <input type="hidden" name="productPrice" id="id-productPrice" value="${salePrice}">
      <div id="order-title">
          <h1 id="order-text">ORDER</h1>
          <img src="../resources/images/cart_order/c-step02.png" >
@@ -46,6 +48,7 @@
                 <tbody class="cartbody">
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
+                	<c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
                     <tr>
                         <td>
                             <img class="product-img" src="${bookData.imgPath }">
@@ -62,14 +65,15 @@
                             </c:choose>
                         </td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.priceSales}"/>원</td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.priceSales * 0.99}"/>원</td>
-                        <td><input type="text" name='productCount' id="id-productCount" value="${productCount }"  style="border:0 solid black; width:30px;"></td>
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${(bookData.priceSales * productCount) * 0.99}"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <td><input type="text" name='productCount' id="id-productCount" value="${productCount }"  style="border:0 solid black; width:30px;" readonly></td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * productCount}"/>원</td>
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.mileage * productCount }"/>원</td>
                     </tr>
-                    <c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
+					<c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
                     <c:set var="productSum" value="${productSum + productCount }"/>
-                </tbody>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount) }"/>
+                    <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>                </tbody>
             </table>
         </div>
         <div class="buyer-data-list">
@@ -219,19 +223,19 @@
            </table>
            <hr><br><br>
 	        <div class="form-check">
-			  <input class="form-check-input" type="radio" name="paymentmethod" value="card" id="flexRadioDefault1">
+			  <input class="form-check-input" type="radio" name="paymentmethod" value="card" id="flexRadioDefault1" checked>
 			  	<label class="form-check-label" for="flexRadioDefault1">
 			    	신용카드
 			  	</label>
 			</div><br>
 			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="paymentmethod" value="kakaopay" id="flexRadioDefault2" checked>
+			  <input class="form-check-input" type="radio" name="paymentmethod" value="kakaopay" id="flexRadioDefault2">
 			  	<label class="form-check-label" for="flexRadioDefault2">
 			    	카카오 페이
 			  	</label>
 			</div><br>
 			<div class="form-check">
-			  <input class="form-check-input" type="radio" name="paymentmethod" value="trans" id="flexRadioDefault2" checked>
+			  <input class="form-check-input" type="radio" name="paymentmethod" value="trans" id="flexRadioDefault2">
 			  	<label class="form-check-label" for="flexRadioDefault2">
 			    	실시간 계좌 이체
 			  	</label>
@@ -252,14 +256,14 @@
                     <td id="productSum">총 <c:out value="${productSum }"/>권</td>
                     <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
                     <td class="orderinfo-table-body">0원</td>
-					<td class="orderinfo-table-body"><p class="total-price" id="info-total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.99}"/>원</p></td>
-					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum * 0.05}"/>원</td>
+					<td class="orderinfo-table-body"><p class="total-price" id="info-total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
                 </tbody>
             </table>
         </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${priceSum * 0.99}` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>								
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum }` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>								
         </div>
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -270,7 +274,7 @@
 
     function byuerAddrSearch(){
         new daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function(data) { 
                document.querySelector('#buyerZoneCode').value = data.zonecode;
                document.querySelector('#buyerRoadAddr').value = data.roadAddress;
                document.querySelector("#buyerDetailAddr").focus();
@@ -309,32 +313,32 @@
     }
     
     
-    function requestPay(price, title, totalCount) {
+    function requestPay(priceSum, title, totalCount) {
     	
-    	const pricefloor = Math.floor(price);
+    	const totalPrice = Math.floor(priceSum);
     	const buyerName = $("#buyerPhone").val();
     	const buyerPhone = $("#buyerPhone").val();
     	const buyerEmail = $("#buyerEmail").val();
     	const paymethod = $('input:radio[name=paymentmethod]:checked').val();
     	
-    	var bookNo = $("#id-bookNo").val();
-    	var productCount = $("#id-productCount").val();
+    	const bookNo = $("#id-bookNo").val();
+    	const productCount = $("#id-productCount").val();
+    	const productPrice = Math.floor($("#id-productPrice").val());
     	
-    	console.log(bookNo);
-    	console.log(productCount);
  	    
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
             merchant_uid: "",
             name: title + " 총 " + totalCount + "권",
-            amount: pricefloor,
+            amount: totalPrice,
             buyer_email: buyerEmail,
             buyer_name: buyerName,
             buyer_tel: buyerPhone,
             custom_data: {
             	bookNo : bookNo,
             	productCount : productCount,
+            	productPrice : productPrice,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -351,6 +355,7 @@
 					data : {
 						bookNo : rsp.custom_data.bookNo,
 						productCount : rsp.custom_data.productCount,
+						productPrice : rsp.custom_data.productPrice,
 						totalPrice : rsp.paid_amount,
 						paymethod : rsp.pay_method,
 						reciverName : rsp.custom_data.reciverName,
@@ -360,8 +365,8 @@
 		            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
 		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr
 					},
-					success : function(data){
-						console.log(data);
+					success : function(orderId){
+						location.href="/order/orderDetailView?orderId="+orderId;
 					},
 					error : function(){
 						alert("fail");
