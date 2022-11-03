@@ -57,5 +57,7 @@
 	<select id="selectMyBoard" resultMap="questionResultMap">
 		SELECT * FROM QUESTION_TBL WHERE QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
 	</select>
-	
+	<select id="selectOneByNo" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE QUE_NO = #{queNo} AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+	</select>
 </mapper>

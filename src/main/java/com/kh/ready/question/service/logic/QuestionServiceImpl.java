@@ -42,9 +42,16 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<Question> printMyBoard(int currentPage, int boardLimit) {
-		List<Question> qList = qStore.selectMyBoard(session, currentPage, boardLimit);
+	public List<Question> printMyBoard(int currentPage, int boardLimit, String queWriter) {
+		List<Question> qList = qStore.selectMyBoard(session, currentPage, boardLimit, queWriter);
 		return qList;
+		// 컨트롤러단에서 넘겨준 정보중 mapper단에서 사용할 정보들을 스토어단으로 넘겨줌
+	}
+
+	@Override
+	public Question printOneByNo(Integer queNo) {
+		Question que = qStore.selectOneByNo(session, queNo);
+		return que;
 	}
 
 }

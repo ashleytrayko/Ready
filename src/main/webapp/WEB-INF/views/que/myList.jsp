@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,10 +17,9 @@
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
 </head>
 <body>
-	<jsp:include page="../main/commHeader.jsp"></jsp:include>
+	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바
-		
 		</div>
 		<div class="main-section">
 		<div class="faq-div">
@@ -38,7 +43,6 @@
 						<th>답변여부</th>
 					</tr>
 					<c:if test="${!empty qList }">
-						<input type="hidden">
 						<c:forEach items="${qList }" var="question" varStatus="i">
 							<tr>
 								<td>
@@ -48,9 +52,9 @@
 									<c:if test="${question.qCategory eq 'delivery'}">배송관련</c:if>
 									<c:if test="${question.qCategory eq 'etc'}">기타문의</c:if>
 								</td>
-								<td colspan="4" align="left">${question.queTitle }</td>
+								<td colspan="4" align="left"><a href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
 								<td>${question.qEnrollDate }</td>
-								<td><%-- <input type="text" name="queWriter" value="${principal.user.userNickname}"> --%>${question.queWriter }</td>
+								<td>${question.queWriter }</td>
 								<td>
 									<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
 									<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
@@ -60,18 +64,18 @@
 						<tr align="center" height="20">
 						<td colspan="8">
 							<c:if test="${currentPage != 1 }">
-								<a href="/question/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a href="/que/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
 									<b>${p }</b>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/question/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a href="/que/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/question/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a href="/que/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 							</c:if>
 						</td>
 					</tr>
@@ -91,16 +95,16 @@
 								<input type="text" name="searchValue" value="${searchValue }">
 								<input type="submit" value="검색">
 							</form>
-								<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
-								<button onclick="location.href='/que/list.kh'">FAQ 리스트</button>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="8" align="right">
+								<button onclick="location.href='/que/list.kh'">FAQ 리스트</button>
+								<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+						</td>
+					</tr>	
 				</table>
 			</div>
-		</div>
-		
-		
-		
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
     </div>

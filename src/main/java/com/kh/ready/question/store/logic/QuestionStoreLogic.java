@@ -46,11 +46,17 @@ public class QuestionStoreLogic implements QuestionStore{
 	}
 
 	@Override
-	public List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit) {
+	public List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit, String queWriter) {
 		int offset = (currentPage-1)*boardLimit;
 		RowBounds rowBounds = new RowBounds(offset, boardLimit);
-		List<Question> qList = session.selectList("QuestionMapper.selectMyBoard", null, rowBounds);
+		List<Question> qList = session.selectList("QuestionMapper.selectMyBoard", queWriter, rowBounds);
 		return qList;
+	}
+
+	@Override
+	public Question selectOneByNo(SqlSession session, Integer queNo) {
+		Question que = session.selectOne("QuestionMapper.selectOneByNo", queNo);
+		return que;
 	}
 
 }

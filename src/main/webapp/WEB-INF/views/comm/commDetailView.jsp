@@ -25,7 +25,7 @@
 		<div class="main-section">
 			<div class="list-div">
 				<h2>게시판 상세글</h2>
-				<table align="center" border="1" width="500">
+				<table align="center" border="1" width="500" class="table-style">
 					<tr>
 						<td>제목</td>
 						<td>${comm.commTitle }</td>
@@ -249,7 +249,7 @@
 		
 		function updateLike() {
 		var boardNo = "${comm.boardNo}";
-		var userId = "${principal.user.userId}";
+		var userId = "${like.userId}";
 			$.ajax({
 				url : "/like/recomm.kh",
 				datatype : "json",

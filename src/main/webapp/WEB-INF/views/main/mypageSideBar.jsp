@@ -44,8 +44,8 @@
 				        </button>
 		        		<div class="collapse" id="orders-collapse">
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 문의글</a></li>
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">문의글 작성</a></li>
+		            			<li><a href="/que/myList.kh" class="link-dark d-inline-flex text-decoration-none rounded">내 문의글</a></li>
+		            			<li><a href="/que/viewWrite.kh" class="link-dark d-inline-flex text-decoration-none rounded">문의글 작성</a></li>
 		          			</ul>
 		        		</div>
 		      		</li>

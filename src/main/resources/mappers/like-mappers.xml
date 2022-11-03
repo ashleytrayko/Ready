@@ -10,6 +10,21 @@
 		<result property="likeCheck"		column="LIKECHECK"/>
 		<result property="likeDate"			column="LIKEDATE"/>
 	</resultMap>
+	
+	<resultMap type="Comm" id="commResultMap">
+		<id property="boardNo" 				column="BOARD_NO"/>
+		<result property="commTitle" 		column="COMM_TITLE"/>
+		<result property="commWriter"		column="COMM_WRITER"/>
+		<result property="commContents"		column="COMM_CONTENTS"/>
+		<result property="commFilename"		column="COMM_FILENAME"/>
+		<result property="commFileRename"	column="COMM_FILERENAME"/>
+		<result property="commFilePath"		column="COMM_FILEPATH"/>
+		<result property="cCreateDate"		column="C_CREATE_DATE"/>
+		<result property="cUpdateDate"		column="C_UPDATE_DATE"/>
+		<result property="cStatus"			column="C_STATUS"/>
+		<result property="cLike"			column="C_LIKE"/>
+		<result property="cCount"			column="C_COUNT"/>
+	</resultMap>
 	<!-- 게시글 추천 insert -->
 	<insert id="insertLike">
 		INSERT INTO LIKE_TBL(LIKE_NO, BOARD_NO, USER_ID) VALUES((SELECT NVL(MAX(likeNo), 0) + 1  FROM LIKE_TBL), #{boardNo}, #{userId})

@@ -17,6 +17,10 @@ public interface QuestionService {
 	// 내 문의글 갯수
 	int getMyCount(String searchCondition, String searchValue);
 	// 내 문의글 리스트
-	List<Question> printMyBoard(int currentPage, int boardLimit);
+
+	List<Question> printMyBoard(int currentPage, int boardLimit, String queWriter);
+
+	Question printOneByNo(Integer queNo);
+
 
 }
