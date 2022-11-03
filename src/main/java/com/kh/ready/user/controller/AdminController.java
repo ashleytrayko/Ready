@@ -36,11 +36,15 @@ public class AdminController {
 	/**
 	 *  admin 화면 요청
 	 */
-	// admin 화면
+	// admin 메인 메뉴
 	@GetMapping("/admin")
 	public String adminTest() {
 		return "/admin/adminMenu";
 	}
+	
+	/**
+	 * 공지사항 관리
+	 */
 	
 	// admin - 공지관리
 	@GetMapping("/admin-notice")
@@ -64,6 +68,28 @@ public class AdminController {
 		return "/admin/adminNoticeModifyForm"; 
 	}
 	
+	// 공지사항 등록
+	@PostMapping("/postNotice")
+	public String registerNotice(@ModelAttribute Notice notice, Principal principal) {
+		String result = adminService.registerNotice(notice, principal);
+		System.out.println(result);
+		return "/admin/adminNotice";
+	}
+
+	// 공지사항 삭제
+	@GetMapping("/removeNotice")
+	public String removeNotice(@RequestParam("noticeNumber") Integer noticeNumber) {
+		adminService.removeNotice(noticeNumber);
+		return "/admin/adminNotice";
+	}
+
+	// 공지사항 수정
+	@PostMapping("/modifyNotice")
+	public String modifyNotice(@ModelAttribute Notice notice) {
+		String result = adminService.modifyNotice(notice);
+		return "/admin/adminNotice";
+	}
+
 	// admin - 공지 상세보기
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
@@ -72,7 +98,9 @@ public class AdminController {
 		return "/admin/adminNoticeDetail";
 	}
 	
-	
+	/**
+	 * 배너관리
+	 */
 	// admin - 배너관리
 	@GetMapping("/admin-banner")
 	public String bannerList(Model model) {
@@ -82,45 +110,7 @@ public class AdminController {
 		model.addAttribute("bannerList", bannerList);
 		return "/admin/adminBanner";
 	}
-	
-	// admin - 주문관리
-	@GetMapping("/admin-order")
-	public String orderList() {
-		return "/admin/adminOrder";
-	}
-	
-	// admin - 상품관리
-	@GetMapping("/admin-product")
-	public String productList(Model model) {
-		
-		// 상품 전체 조회
-		List<Book> bookList = bookService.printAllBook();
-		model.addAttribute("bookList", bookList);
-		return "/admin/adminProduct";
-	}
-	
-	// admin - 상품 등록 폼
-	@GetMapping("/admin-productForm")
-	public String productForm() {
-		return "/admin/adminProductRegistForm";
-	}
-	
-	// admin - QnA 관리
-	@GetMapping("/admin-qna")
-	public String qnaList() {
-		return "/admin/adminQna";
-	}
-	
-	// admin - 신고관리
-	@GetMapping("/admin-report")
-	public String reportList() {
-		return "/admin/adminReport";
-	}
-	
-	/**
-	 * 배너 관
-	 */
-	
+
 	// 배너 등록
 	@PostMapping("/registerBanner")
 	public String registerBanner(@RequestParam(value="bannerImage",required = false) MultipartFile bannerImage,
@@ -154,35 +144,62 @@ public class AdminController {
 		}
 		return "/admin/adminBanner";
 	}
-	
+
 	// 배너 삭제
 	@GetMapping("/removeBanner")
 	public String removeBanner(@RequestParam("bannerNumber") Integer bannerNumber) {
 		adminService.removeBanner(bannerNumber);
 		return "/admin/adminBanner";
 	}
-	
-	// 공지사항 등록
-	@PostMapping("/postNotice")
-	public String registerNotice(@ModelAttribute Notice notice, Principal principal) {
-		String result = adminService.registerNotice(notice, principal);
-		System.out.println(result);
-		return "/admin/adminNotice";
+
+	/**
+	 * 주문관리
+	 */
+	// admin - 주문관리
+	@GetMapping("/admin-order")
+	public String orderList() {
+		return "/admin/adminOrder";
 	}
 	
-	// 공지사항 삭제
-	@GetMapping("/removeNotice")
-	public String removeNotice(@RequestParam("noticeNumber") Integer noticeNumber) {
-		adminService.removeNotice(noticeNumber);
-		return "/admin/adminNotice";
+	/**
+	 * 상품관리
+	 */
+	
+	// admin - 상품관리
+	@GetMapping("/admin-product")
+	public String productList(Model model, @RequestParam(value="page", required=false) Integer page) {
+		//페이징
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = bookService.getTotalCount("", "");
+		int bookLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int)((double)totalCount/bookLimit + 0.9);
+		startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1) * naviLimit +1;
+		endNavi = startNavi + naviLimit - 1;
+		if(maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		
+		// 상품 전체 조회
+		List<Book> bookList = bookService.printAllBook(currentPage, bookLimit);
+		if(!bookList.isEmpty()) {
+			model.addAttribute("urlVal", "bookList");
+			model.addAttribute("currentPage",currentPage);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("startNavi", startNavi);
+			model.addAttribute("endNavi", endNavi);
+			model.addAttribute("bookList", bookList);
+		}
+		return "/admin/adminProduct";
 	}
 	
-	// 공지사항 수정
-	@PostMapping("/modifyNotice")
-	public String removeNotice(@ModelAttribute Notice notice) {
-		String result = adminService.modifyNotice(notice);
-		System.out.println(result);
-		return "/admin/adminNotice";
+	// admin - 상품 등록 폼
+	@GetMapping("/admin-productForm")
+	public String productForm() {
+		return "/admin/adminProductRegistForm";
 	}
 	
 	// 상품등록
@@ -197,12 +214,32 @@ public class AdminController {
 		}
 		
 	}
-	
+
 	// 상품삭제
 	@PostMapping("/deleteProduct")
 	public String removeProduct(@RequestParam("bookNo") Integer bookNo) {
 		int result = bookService.removeBook(bookNo);
 		return "/admin/adminProduct";
+	}
+	
+	/**
+	 * QnA 관리
+	 */
+
+	// admin - QnA 관리
+	@GetMapping("/admin-qna")
+	public String qnaList() {
+		return "/admin/adminQna";
+	}
+	
+	/**
+	 * 신고관리
+	 */
+	
+	// admin - 신고관리
+	@GetMapping("/admin-report")
+	public String reportList() {
+		return "/admin/adminReport";
 	}
 	
 	

@@ -39,16 +39,18 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	// Spring Security OAuth2 서비스
 	@Autowired
 	private PrincipalOAuth2UserService principalOAuth2UserService;
 	
+	// 메일 라이브러리
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 	
 	
 	/**
 	 * 
-	 * 로그인 화면
+	 * 로그인 관련 메소드
 	 */
 	
 	// 로그인 화면
@@ -57,6 +59,17 @@ public class UserController {
 		return "/common/loginForm";
 	}
 	
+	// 로그인 요청
+	@PostMapping("/login")
+	public String login() {
+		return "home";
+	}
+	
+	/**
+	 *
+	 * 정보찾기 메소드
+	 */
+
 	// 아이디 찾기 화면
 	@GetMapping("/forget-id")
 	public String findIdPage() {
@@ -69,38 +82,6 @@ public class UserController {
 		return "/common/forgetPassword";
 	}
 	
-	// 회원가입 화면
-	@GetMapping("/join")
-	public String joinForm() {
-		return "/common/joinForm";
-	}
-	
-	// oauth2 추가 화면
-	@GetMapping("/moreInfo")
-	public String moreInfo() {
-		return "common/moreInfo";
-	}
-
-	// user 화면
-	@GetMapping("/user")
-	public String userTest(Model model, Principal principal) {
-		model.addAttribute("principal",principal);
-		return "/user/userTest";
-	}
-	
-	
-	/**
-	 * 요청 url 모음
-	 */
-	
-	
-	// 로그인 요청
-	@PostMapping("/login")
-	public String login() {
-		return "home";
-	}
-	
-	
 	// 아이디 찾기 요청
 	@ResponseBody
 	@PostMapping("/forget-id")
@@ -109,7 +90,7 @@ public class UserController {
 		String result = userService.findUserId(userName, userEmail);
 		return result;
 	}
-	
+
 	// 패스워드 찾기 요청
 	@ResponseBody
 	@PostMapping("/forget-password")
@@ -119,25 +100,30 @@ public class UserController {
 		return result;
 	}
 
+	/**
+	 * 
+	 * 회원가입 관련 메소드
+	 */
+	
+	// 회원가입 화면
+	@GetMapping("/join")
+	public String joinForm() {
+		return "/common/joinForm";
+	}
+	
+	// oauth2 소셜로그인시 추가 정보 화면
+	@GetMapping("/moreInfo")
+	public String moreInfo() {
+		return "common/moreInfo";
+	}
+	
 	// 회원가입 요청
 	@PostMapping("/join")
 	public String join(@ModelAttribute User user) {
 		String result = userService.userRegister(user);
 		return "home";
 	}
-	
-	//
-	@GetMapping("/joinTest")
-	public String join2() {
-		return "/common/joinForm2";
-	}
-	
-	// 테스트
-	@PostMapping("/joinTest")
-	public void joinTest(@ModelAttribute User user) {
-		System.out.println(user);
-	}
-	
+
 	// 아이디 중복확인
 	@ResponseBody
 	@GetMapping("/checkId")
@@ -149,7 +135,7 @@ public class UserController {
 			return "exist";
 		}
 	}
-	
+
 	// 닉네임 중복확인
 	@ResponseBody
 	@GetMapping("/checkNickname")
@@ -161,7 +147,7 @@ public class UserController {
 			return "exist";
 		}
 	}
-	
+
 	// 이메일 확인
 	@ResponseBody
 	@PostMapping("/emailCheck")
@@ -199,6 +185,18 @@ public class UserController {
 		}
 		
 		
+	}
+
+	/**
+	 * 
+	 *  유저 정보 화면 관련 메소드
+	 */
+	
+	// user 화면 -> 지울듯
+	@GetMapping("/user")
+	public String userTest(Model model, Principal principal) {
+		model.addAttribute("principal",principal);
+		return "/user/userTest";
 	}
 	
 	

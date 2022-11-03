@@ -27,7 +27,7 @@
 	</delete>
 	
 	<select id="selectAllBanner" resultMap="bannerResultMap">
-		SELECT * FROM BANNER_TBL
+		SELECT * FROM BANNER_TBL 
 	</select>
 	
 	<insert id="insertNotice">
@@ -43,7 +43,7 @@
 	</update>
 	
 	<select id="selectAllNotice" resultMap="noticeResultMap">
-		SELECT * FROM NOTICE_TBL
+		SELECT A.NOTICE_NUMBER, A.NOTICE_TITLE, A.NOTICE_CONTENTS, B.USER_NICKNAME AS NOTICE_WRITER, A.POST_DATE  FROM NOTICE_TBL A, USER_TBL B WHERE NOTICE_WRITER = USER_ID ORDER BY NOTICE_NUMBER DESC
 	</select>
 	
 	<select id="selectNoticeByNumber" resultMap="noticeResultMap">

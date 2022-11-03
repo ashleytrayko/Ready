@@ -12,7 +12,8 @@ public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	// Security가 로그인시 인터셉트해서 사용하는 메소드 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		System.out.println("Login Start!");

@@ -26,10 +26,10 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 	
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-	
+		
 		// 소셜로그인 클릭시 작동하여 oauth2User 타입에 리턴 정보를 저장
 		OAuth2User oauth2User = super.loadUser(userRequest);
-		
+
 		// 최상위 인터페이스 선언
 		OAuth2UserInfo oAuth2UserInfo = null;
 		
@@ -40,6 +40,8 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 		} else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
 			System.out.println("네이버 로그인");
 			oAuth2UserInfo = new NaverUserInfo((Map)oauth2User.getAttributes().get("response"));
+		} else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+			oAuth2UserInfo = new KakaoUserInfo((Map)oauth2User.getAttributes());
 		} else {
 			System.out.println("제공하지 않는 서비스입니다.");
 			return new CustomUserDetails(null);
@@ -57,7 +59,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 		//객체 생성전 이전에 가입한 적이 있는지 체크
 		User user = userRepository.getUserById(userId) ;
 		
-		// 가입한적이 없을 경우 새롭게 회원 생성 아닐경우 찾은 유저를 리턴
+		// 가입한적이 없을 경우 새롭게 회원 생성, 아닐경우 찾은 유저를 리턴하여 로그인
 		if(user == null) {
 			User oauthUser = new User(userId, userPassword, userName, userEmail);
 			return new CustomUserDetails(oauthUser, oauth2User.getAttributes());
