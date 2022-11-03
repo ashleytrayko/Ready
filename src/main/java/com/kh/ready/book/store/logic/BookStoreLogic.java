@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.book.domain.Review;
+import com.kh.ready.book.domain.UpdateScore;
 import com.kh.ready.book.store.BookStore;
 
 @Repository
@@ -43,12 +44,14 @@ public class BookStoreLogic implements BookStore{
 	@Override
 	public int insertReview(SqlSessionTemplate session, Review review) {
 		int result = session.insert("BookMapper.insertReview", review);
+		setScore(session, review.getBookNo());
 		return result;
 	}
 
 	@Override
 	public int updateReview(SqlSessionTemplate session, Review review) {
 		int result = session.update("BookMapper.updateReview", review);
+		setScore(session, review.getBookNo());
 		return result;
 	}
 
@@ -146,7 +149,19 @@ public class BookStoreLogic implements BookStore{
 		return bList6;
 	}
 
-
+	public void setScore(SqlSessionTemplate session, int bookNo) {
+		Double scoreAvg = session.selectOne("BookMapper.selectScoreAvg", bookNo);
+		if(scoreAvg == null) {
+			scoreAvg = 0.0;
+		}
+		scoreAvg = (double) (Math.round(scoreAvg*10));
+		scoreAvg = scoreAvg / 10;
+		UpdateScore urd = new UpdateScore();
+		urd.setBookNo(bookNo);
+		urd.setScoreAvg(scoreAvg);
+			
+		session.update("BookMapper.updateScoreAvg", urd);
+	}
 
 
 }

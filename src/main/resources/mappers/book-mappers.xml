@@ -17,6 +17,8 @@
 		<result property="mileage" 		column="BOOK_MILEAGE"/>
 		<result property="imgPath" 		column="IMG_PATH"/>
 		<result property="publisher" 	column="BOOK_PUBLISHER"/>
+		<result property="saleCount"	column="SALE_COUNT"/>
+		<result property="scoreAvg"		column="SCORE_AVG"/>
 	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultMap">
@@ -150,7 +152,7 @@
 	</insert>
 	
 	<update id="updateReview">
-		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, R_UPDATE_DATE = DEFAULT WHERE REVIEW_NO = #{reviewNo }
+		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, SCORE = #{score }, R_UPDATE_DATE = DEFAULT WHERE REVIEW_NO = #{reviewNo }
 	</update>
 	
 	<delete id="deleteReview">
@@ -161,4 +163,11 @@
 		SELECT * FROM REVIEW_TBL WHERE BOOK_NO = #{bookNo }
 	</select>
 	
+	<select id="selectScoreAvg" resultType="double">
+		SELECT AVG(SCORE) FROM REVIEW_TBL WHERE BOOK_NO = #{bookNo }
+	</select>
+	
+	<update id="updateScoreAvg">
+		UPDATE BOOK_TBL SET SCORE_AVG = #{scoreAvg } WHERE BOOK_NO = #{bookNo }
+	</update>
 </mapper>
