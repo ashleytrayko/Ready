@@ -48,4 +48,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderStore.deleteCart(userId);
 	}
 
+	@Override
+	public List<Order> getOrderDataByOrderId(String orderId) {
+
+		return orderStore.getOrderDataByOrderId(orderId);
+	}
+
+	@Override
+	public Order getOrderInfoByOrderId(String orderId) {
+
+		return orderStore.getOrderInfoByOrderId(orderId);
+	}
+
 }

@@ -20,21 +20,22 @@ public class Order {
 	private String orderState;
 	private Date orderDate;
 	private String orderId;
+	private int productPrice;
 	
 	private Book book;
 	private Cart cart;
 	
 	public Order() {}
 
-	public Order(int orderNo, Integer bookNo, String userId, Integer productCount, String orderId,
-			String orderRName, String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3,
-			String paymentMethod, String orderState, Date orderDate, Book book, Cart cart) {
+
+	public Order(int orderNo, Integer bookNo, String userId, Integer productCount, String orderRName,
+			String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3, String paymentMethod,
+			String orderState, Date orderDate, String orderId, int productPrice, Book book, Cart cart) {
 		super();
 		this.orderNo = orderNo;
 		this.bookNo = bookNo;
 		this.userId = userId;
 		this.productCount = productCount;
-		this.orderId = orderId;
 		this.orderRName = orderRName;
 		this.orderRPhone = orderRPhone;
 		this.orderAddress1 = orderAddress1;
@@ -43,9 +44,13 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.orderState = orderState;
 		this.orderDate = orderDate;
+		this.orderId = orderId;
+		this.productPrice = productPrice;
 		this.book = book;
 		this.cart = cart;
 	}
+
+
 
 	public int getOrderNo() {
 		return orderNo;
@@ -77,14 +82,6 @@ public class Order {
 
 	public void setProductCount(Integer productCount) {
 		this.productCount = productCount;
-	}
-
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
 	}
 
 	public String getOrderRName() {
@@ -151,6 +148,14 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
 	public Book getBook() {
 		return book;
 	}
@@ -167,14 +172,26 @@ public class Order {
 		this.cart = cart;
 	}
 
+	
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
-				+ productCount + ",  orderId=" + orderId + ", orderRName="
-				+ orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1=" + orderAddress1 + ", orderAddress2="
-				+ orderAddress2 + ", orderAddress3=" + orderAddress3 + ", paymentMethod=" + paymentMethod
-				+ ", orderState=" + orderState + ", orderDate=" + orderDate + ", book=" + book + ", cart=" + cart + "]";
+				+ productCount + ", orderRName=" + orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1="
+				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderAddress3=" + orderAddress3
+				+ ", paymentMethod=" + paymentMethod + ", orderState=" + orderState + ", orderDate=" + orderDate
+				+ ", orderId=" + orderId + ", productPrice=" + productPrice + ", book=" + book + ", cart=" + cart + "]";
 	}
 
+	
 	
 }

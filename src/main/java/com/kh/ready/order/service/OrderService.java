@@ -1,7 +1,6 @@
 package com.kh.ready.order.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.cart.domain.Cart;
@@ -19,5 +18,9 @@ public interface OrderService {
 	int deleteCart(String userId);
 
 	Book getbookDataByBookNo(int bookNo);
+
+	List<Order> getOrderDataByOrderId(String orderId);
+
+	Order getOrderInfoByOrderId(String orderId);
 	
 }

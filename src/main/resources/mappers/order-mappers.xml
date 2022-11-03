@@ -7,19 +7,18 @@
 	<resultMap type="Order" id="OrderResultMap">
 		<id property="orderNo" 				column="ORDER_NO"/>
 		<result property="bookNo" 		column="BOOK_NO"/>
-		<result property="userIndex" 		column="USER_ID"/>
+		<result property="userId" 		column="USER_ID"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
-		<result property="productPrice" 		column="PRODUCT_PRICE"/>
-		<result property="totalPrice" 		column="TOTAL_PRICE"/>
-		<result property="orderId" 		column="ORDER_R_NAME"/>
-		<result property="orderRName" 		column="ORDER_R_PHONE"/>
-		<result property="orderRPhone" 		column="ORDER_ADDRESS1"/>
-		<result property="orderAddress1" 		column="ORDER_ADDRESS2"/>
-		<result property="orderAddress2" 		column="ORDER_ADDRESS3"/>
-		<result property="orderAddress3" 		column="PAYMENT_METHOD"/>
-		<result property="paymentMethod" 		column="ORDER_STATE"/>
-		<result property="orderState" 		column="ORDER_DATE"/>
-		<result property="orderDate" 		column="ORDER_ID"/>
+		<result property="orderRName" 		column="ORDER_R_NAME"/>
+		<result property="orderRPhone" 		column="ORDER_R_PHONE"/>
+		<result property="orderAddress1" 		column="ORDER_ADDRESS1"/>
+		<result property="orderAddress2" 		column="ORDER_ADDRESS2"/>
+		<result property="orderAddress3" 		column="ORDER_ADDRESS3"/>
+		<result property="paymentMethod" 		column="PAYMENT_METHOD"/>
+		<result property="orderState" 		column="ORDER_STATE"/>
+		<result property="orderDate" 		column="ORDER_DATE"/>
+		<result property="orderId" 		column="ORDER_ID"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
  		<collection property="cart" resultMap="CartResultMap"></collection>
 	</resultMap>
@@ -52,13 +51,21 @@
 		SELECT * FROM CART_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
 	</select>
 	
+	<select id="selectOrderListByOrderId" resultMap="OrderResultMap">
+		SELECT * FROM ORDER_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE ORDER_ID = #{orderId}
+	</select>
+	
 	<delete id="deleteCart">
 		DELETE FROM CART_TBL WHERE USER_ID = #{userId}
 	</delete>
 	
 	<insert id="insertOrder">
-		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId})
+		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId}, #{productPrice})
 	</insert>
+	
+	<select id="selectOneOrderByOrderId" resultMap="OrderResultMap">
+		SELECT * FROM ORDER_TBL WHERE ORDER_ID = #{orderId} AND ROWNUM = 1
+	</select>
 
 	
 	

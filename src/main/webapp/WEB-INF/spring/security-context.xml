@@ -14,4 +14,40 @@
 	<bean id="principalOAuth2UserService" class="com.kh.ready.user.security.oauth.PrincipalOAuth2UserService"/>
 	<bean id="customUserDetailService" class="com.kh.ready.user.security.CustomUserDetailService"/>
 	<bean id="encodePwd" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+	<security:client-registrations>
+        <security:client-registration registration-id="google" 
+                                        provider-id="google" 
+                                        client-id="333977211719-bv8fjnct5f8u2qvp1hdmu5ej6u2f073s.apps.googleusercontent.com"
+                                        client-secret="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"
+                                        redirect-uri="http://127.0.0.1:8888/login/oauth2/code/google"
+                                        authorization-grant-type="authorization_code"
+                                        scope="profile,email" />
+        <security:client-registration registration-id="naver" 
+                                        provider-id="naver" 
+                                        client-id="CaD7l1taovUW1xTscrik"
+                                        client-secret="GkZtvF1c5O"
+                                        redirect-uri="http://127.0.0.1:8888/login/oauth2/code/naver"
+                                        authorization-grant-type="authorization_code"/>
+    <security:client-registration registration-id="kakao" 
+                                provider-id="kakao" 
+                                client-id="23f39cc361293cd1567454c26706200a"
+                                client-secret="3rDj9sx4GT4D3XEGCqAhFbfzbepC9REk"
+                                redirect-uri="http://127.0.0.1:8888/login/oauth2/code/kakao"
+                                authorization-grant-type="authorization_code"
+                                client-name="kakao"
+                                client-authentication-method="post"/>
+                                
+        <security:provider provider-id="naver"
+                            authorization-uri="https://nid.naver.com/oauth2.0/authorize"
+                            token-uri="https://nid.naver.com/oauth2.0/token"
+                            user-info-uri="https://openapi.naver.com/v1/nid/me"
+                            user-info-user-name-attribute="response" />
+    
+        <security:provider provider-id="kakao"
+                       authorization-uri="https://kauth.kakao.com/oauth/authorize"
+                       token-uri="https://kauth.kakao.com/oauth/token"
+                       user-info-uri="https://kapi.kakao.com/v2/user/me"
+                       user-info-user-name-attribute="id"/>
+    </security:client-registrations>
 </beans>
