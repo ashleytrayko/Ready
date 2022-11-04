@@ -44,7 +44,7 @@ public class OrderController {
 			
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfoList", userInfoList);
-			mv.setViewName("/order/orderPage");
+			mv.setViewName("/order/orderPageCart");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +124,7 @@ public class OrderController {
 					order.setUserId(userId);
 					
 					result = orderService.insertOrder(order);
+					orderService.updateUserPurchase(order);
 				}
 				
 				if(result > 0) {
@@ -176,7 +177,7 @@ public class OrderController {
 			order.setUserId(userId);
 			
 			orderService.insertOrder(order);
-			
+			orderService.updateUserPurchase(order);
 			
 			String getOrderId = order.getOrderId();
 			return getOrderId;

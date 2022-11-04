@@ -70,7 +70,8 @@
                         <p class="order-info-p">결제 방법</p>
                     </td>
                     <td>
-                        <p class="order-info-p">${orderInfo.paymentMethod }</p>
+                        <p class="order-info-p"><input type="text" id="payMethod" value="${orderInfo.paymentMethod }" readonly style="border : 0px; text-align:left;"></p>
+                        
                     </td>
                 </tr>
             </table>
@@ -90,9 +91,10 @@
                             <thead>
                                 <tr class="acd-tr">
                                     <td colspan="2">상품 정보</td>
-                                    <td>수량</td>
                                     <td>정가</td>
                                     <td>할인가</td>
+                                    <td>수량</td>
+                                    <td>합계</td>
                                     <td>적립금</td>
                                 </tr>
                             </thead>
@@ -115,14 +117,16 @@
 <%--                             		<p id="bookTitle" style="margin-bottom: 10%;">${orderList.book.bookTitle }</p> --%>
                             		  </c:choose>
                                   </td>
-                                  <!-- 수량 -->
-                                  <td>${orderList.productCount }</td>
                                   <!-- 정가 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.priceSales}"/>원</td>
                                   <!-- 할인가 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice}"/>원</td>
-                                  <!-- 적립금 -->
-                                  <td>${orderList.book.mileage }원</td>
+                                  <!-- 수량 -->
+                                  <td>${orderList.productCount }</td>
+                                  <!-- 할인가*수량 -->
+                                  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice * orderList.productCount}"/>원</td>
+                                  <!-- 적립금*수량 -->
+                        		  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.mileage * orderList.productCount }"/>원</td>
                               </tr>
                             <c:set var="priceSum" value="${priceSum + (orderList.book.priceSales * orderList.productCount) }"/>
                     		<c:set var="productSum" value="${productSum + orderList.productCount }"/>
@@ -171,5 +175,18 @@
             <button class="btn btn-primary btm-btn" onclick="history.go(-3);">계속 쇼핑하기</button>
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+
+	var paymethod = $("#payMethod").val();
+	
+	if(paymethod == "card"){
+		$("#payMethod").val("신용카드");
+	} else if(paymethod == "kakaopay"){
+		$("#payMethod").val("카카오 페이");
+	} else if(paymethod == "trans"){
+		$("#payMethod").val("실시간 계좌 이체");
+	}
+
+</script>
 </body>
 </html>

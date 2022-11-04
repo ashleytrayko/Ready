@@ -341,9 +341,7 @@
     	$("input[name='productPrice']").each(function(i){
     		productPriceArr.push(Math.floor($(this).val()));
     	});
-		
-    	console.log(productPriceArr);
-    	
+
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
