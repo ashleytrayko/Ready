@@ -35,11 +35,11 @@
 				QUE_TITLE LIKE '%'||#{searchValue}||'%'
 				OR QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
 			</if>
-			AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+			AND Q_STATUS = 'F'
 		</where>
 	</select>
 	<select id="selectAllBoard" resultMap="questionResultMap">
-		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
+		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'F' ORDER BY QUE_NO DESC
 	</select>
 	<!-- 내 문의글 갯수 -->
 	<select id="selectMyCount" resultType="_int">
@@ -51,7 +51,7 @@
 			<if test="searchCondition.toString() == 'contents'">
 				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
 			</if>
-			AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+			AND QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' AND QUE_WRITER = #{queWriter}
 		</where>
 	</select>
 	<select id="selectMyBoard" resultMap="questionResultMap">

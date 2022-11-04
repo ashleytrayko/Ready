@@ -36,8 +36,8 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public int getMyCount(String searchValue, String searchCondition) {
-		int myCount = qStore.selectMyCount(session, searchCondition, searchValue);
+	public int getMyCount(String searchValue, String searchCondition, String queWriter) {
+		int myCount = qStore.selectMyCount(session, searchCondition, searchValue, queWriter);
 		return myCount;
 	}
 
