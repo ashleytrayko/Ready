@@ -106,9 +106,10 @@ public class QuestionController {
 		que.setQueWriter(queWriter);
 		// Question객체에 setter 메소드를 이용해서 queWriter에 principal.getName으로
 		// 현재 로그인중인 아이디의 정보를 저장
+		// queWriter가 작성한 글만 불러올 수 있도록 하기 위함.
 		/////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = qService.getMyCount("", "");
+		int totalCount = qService.getMyCount("", "", queWriter);
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
