@@ -9,7 +9,7 @@ public interface AdminRepository {
 
 	public int insertBanner(Banner banner);
 	
-	public int deleteBanner(Integer bannerNumber);
+	public int deleteBanner(Integer bannerFrom);
 	
 	public List<Banner> selectAllBanner();
 	

@@ -47,7 +47,7 @@ public class AdminController {
 	 */
 	
 	// admin - 공지관리
-	@GetMapping("/admin-notice")
+	@GetMapping("/admin/admin-notice")
 	public String noticeList(Model model) {
 		List<Notice> noticeList = adminService.showAllNotice();
 		model.addAttribute("noticeList", noticeList);
@@ -55,13 +55,13 @@ public class AdminController {
 	}
 	
 	// admin - 공지작성폼
-	@GetMapping("/admin-noticeForm")
+	@GetMapping("/admin/admin-noticeForm")
 	public String noticeForm() {
 		return "/admin/adminNoticeWriteForm";
 	}
 	
 	// 공지사항 수정화면
-	@GetMapping("/modifyNoticeForm")
+	@GetMapping("/admin/modifyNoticeForm")
 	public String modifyNotice(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		Notice notice = adminService.selectNoticeByNumber(noticeNumber);
 		model.addAttribute("notice", notice);
@@ -69,29 +69,34 @@ public class AdminController {
 	}
 	
 	// 공지사항 등록
-	@PostMapping("/postNotice")
-	public String registerNotice(@ModelAttribute Notice notice, Principal principal) {
+	@PostMapping("/admin/postNotice")
+	public String registerNotice(@ModelAttribute Notice notice, Principal principal, Model model) {
 		String result = adminService.registerNotice(notice, principal);
-		System.out.println(result);
+		List<Notice> noticeList = adminService.showAllNotice();
+		model.addAttribute("noticeList", noticeList);
 		return "/admin/adminNotice";
 	}
 
 	// 공지사항 삭제
-	@GetMapping("/removeNotice")
-	public String removeNotice(@RequestParam("noticeNumber") Integer noticeNumber) {
+	@GetMapping("/admin/removeNotice")
+	public String removeNotice(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		adminService.removeNotice(noticeNumber);
+		List<Notice> noticeList = adminService.showAllNotice();
+		model.addAttribute("noticeList", noticeList);
 		return "/admin/adminNotice";
 	}
 
 	// 공지사항 수정
-	@PostMapping("/modifyNotice")
-	public String modifyNotice(@ModelAttribute Notice notice) {
+	@PostMapping("/admin/modifyNotice")
+	public String modifyNotice(@ModelAttribute Notice notice, Model model) {
 		String result = adminService.modifyNotice(notice);
+		List<Notice> noticeList = adminService.showAllNotice();
+		model.addAttribute("noticeList", noticeList);
 		return "/admin/adminNotice";
 	}
 
 	// admin - 공지 상세보기
-	@GetMapping("/noticeDetail")
+	@GetMapping("/admin/noticeDetail")
 	public String noticeDetail(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		Notice notice = adminService.selectNoticeByNumber(noticeNumber);
 		model.addAttribute("notice", notice);
@@ -102,7 +107,7 @@ public class AdminController {
 	 * 배너관리
 	 */
 	// admin - 배너관리
-	@GetMapping("/admin-banner")
+	@GetMapping("/admin/admin-banner")
 	public String bannerList(Model model) {
 		
 		// 배너 전체조회
@@ -112,16 +117,17 @@ public class AdminController {
 	}
 
 	// 배너 등록
-	@PostMapping("/registerBanner")
+	@PostMapping("/admin/registerBanner")
 	public String registerBanner(@RequestParam(value="bannerImage",required = false) MultipartFile bannerImage,
 									HttpServletRequest request,
-									@ModelAttribute Banner banner) {
+									@ModelAttribute Banner banner,
+									Model model) {
 		try {
 			String bannerName = bannerImage.getOriginalFilename();
 			//banner.setBannerName(bannerImage.getOriginalFilename());
 			if(!bannerImage.getOriginalFilename().equals("")) {
 				String root = request.getSession().getServletContext().getRealPath("resources");
-				String savePath = root + "\\banner";
+				String savePath = root + "\\images\\banner";
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				String bannerRename = sdf.format(new Date(System.currentTimeMillis()))+"."+bannerName.substring(bannerName.lastIndexOf(".")+1);
 				//banner.setBannerRename(sdf.format(new Date(System.currentTimeMillis()))+"."+banner.getBannerName().substring(banner.getBannerName().lastIndexOf(".")+1));
@@ -129,7 +135,7 @@ public class AdminController {
 				if(!file.exists()) {
 					file.mkdir();
 				}
-				bannerImage.transferTo(new File(savePath+"\\"+bannerName));
+				bannerImage.transferTo(new File(savePath+"\\"+bannerRename));
 				
 				String bannerPath = savePath + "\\" + bannerRename;
 				banner.setBannerName(bannerName);
@@ -138,17 +144,21 @@ public class AdminController {
 			}
 			System.out.println(banner.toString());
 			int result = adminService.registerBanner(banner);
-			System.out.println(result);
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		List<Banner> bannerList = adminService.showAllBanner();
+		model.addAttribute("bannerList", bannerList);
 		return "/admin/adminBanner";
 	}
 
 	// 배너 삭제
-	@GetMapping("/removeBanner")
-	public String removeBanner(@RequestParam("bannerNumber") Integer bannerNumber) {
-		adminService.removeBanner(bannerNumber);
+	@GetMapping("/admin/removeBanner")
+	public String removeBanner(@RequestParam("bannerFrom") Integer bannerFrom,
+								Model model) {
+		adminService.removeBanner(bannerFrom);
+		List<Banner> bannerList = adminService.showAllBanner();
+		model.addAttribute("bannerList", bannerList);
 		return "/admin/adminBanner";
 	}
 
@@ -156,7 +166,7 @@ public class AdminController {
 	 * 주문관리
 	 */
 	// admin - 주문관리
-	@GetMapping("/admin-order")
+	@GetMapping("/admin/admin-order")
 	public String orderList() {
 		return "/admin/adminOrder";
 	}
@@ -166,7 +176,7 @@ public class AdminController {
 	 */
 	
 	// admin - 상품관리
-	@GetMapping("/admin-product")
+	@GetMapping("/admin/admin-product")
 	public String productList(Model model, @RequestParam(value="page", required=false) Integer page) {
 		//페이징
 		int currentPage = (page != null) ? page : 1;
@@ -186,7 +196,7 @@ public class AdminController {
 		// 상품 전체 조회
 		List<Book> bookList = bookService.printAllBook(currentPage, bookLimit);
 		if(!bookList.isEmpty()) {
-			model.addAttribute("urlVal", "bookList");
+			model.addAttribute("urlVal", "admin-product");
 			model.addAttribute("currentPage",currentPage);
 			model.addAttribute("maxPage", maxPage);
 			model.addAttribute("startNavi", startNavi);
@@ -197,13 +207,13 @@ public class AdminController {
 	}
 	
 	// admin - 상품 등록 폼
-	@GetMapping("/admin-productForm")
+	@GetMapping("/admin/admin-productForm")
 	public String productForm() {
 		return "/admin/adminProductRegistForm";
 	}
 	
 	// 상품등록
-	@PostMapping("/registerProduct")
+	@PostMapping("/admin/registerProduct")
 	public String registerProduct(Book book) {
 		int result = bookService.registerBook(book);
 		// 파일 관련 코드 추후 추가
@@ -216,7 +226,7 @@ public class AdminController {
 	}
 
 	// 상품삭제
-	@PostMapping("/deleteProduct")
+	@PostMapping("/admin/deleteProduct")
 	public String removeProduct(@RequestParam("bookNo") Integer bookNo) {
 		int result = bookService.removeBook(bookNo);
 		return "/admin/adminProduct";
@@ -227,7 +237,7 @@ public class AdminController {
 	 */
 
 	// admin - QnA 관리
-	@GetMapping("/admin-qna")
+	@GetMapping("/admin/admin-qna")
 	public String qnaList() {
 		return "/admin/adminQna";
 	}
@@ -237,7 +247,7 @@ public class AdminController {
 	 */
 	
 	// admin - 신고관리
-	@GetMapping("/admin-report")
+	@GetMapping("/admin/admin-report")
 	public String reportList() {
 		return "/admin/adminReport";
 	}

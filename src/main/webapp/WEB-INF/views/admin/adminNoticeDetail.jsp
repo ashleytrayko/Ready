@@ -36,17 +36,17 @@
 				<ul class="nav nav-pills flex-column mb-auto">
 					<li class="nav-item"><a href="/admin" class="nav-link active"
 						aria-current="page"> Admin Home </a></li>
-					<li><a href="/admin-notice" class="nav-link text-white">
+					<li><a href="/admin/admin-notice" class="nav-link text-white">
 							공지사항 </a></li>
-					<li><a href="/admin-banner" class="nav-link text-white">
+					<li><a href="/admin/admin-banner" class="nav-link text-white">
 							배너관리 </a></li>
-					<li><a href="/admin-report" class="nav-link text-white">
+					<li><a href="/admin/admin-report" class="nav-link text-white">
 							신고관리 </a></li>
-					<li><a href="/admin-product" class="nav-link text-white">
+					<li><a href="/admin/admin-product" class="nav-link text-white">
 							상품관리 </a></li>
-					<li><a href="/admin-order" class="nav-link text-white">
+					<li><a href="/admin/admin-order" class="nav-link text-white">
 							주문관리 </a></li>
-					<li><a href="/admin-qna" class="nav-link text-white">
+					<li><a href="/admin/admin-qna" class="nav-link text-white">
 							Q&A관리 </a></li>
 				</ul>
 				<hr>
@@ -72,8 +72,14 @@
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>공지사항 보기</h1>
 			<div>
-				<h5>${notice.noticeTitle }</h5>
-				<p>${notice.noticeContents }</p>
+				<div style="border:1px solid black">
+					<h5>${notice.noticeTitle }</h5>
+				</div>	
+				<div  style="border:1px solid black">
+					<p>${notice.noticeContents }</p>
+				</div>
+				<button onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
+				<button onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
 			</div>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
@@ -86,6 +92,14 @@
 			lang : "ko-KR",
 		/* 		  focus : true, */
 		});
+		
+		function removeNotice(noticeNumber){
+			location.href="/admin/removeNotice?noticeNumber="+noticeNumber;
+		}
+		
+		function modifyNotice(noticeNumber){
+			location.href="/admin/modifyNoticeForm?noticeNumber="+noticeNumber;
+		}
 	</script>
 </body>
 </html>
