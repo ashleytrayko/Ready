@@ -21,8 +21,6 @@ public interface BookStore {
 
 	int updateReview(SqlSessionTemplate session, Review review);
 
-	int deleteReview(SqlSessionTemplate session, Integer reviewNo);
-
 	List<Review> selectAllReview(SqlSessionTemplate session, Integer bookNo);
 
 	int selectTotalCount(SqlSessionTemplate session, String searchCondition, String searchValue);
@@ -49,5 +47,11 @@ public interface BookStore {
 	List<Book> selectStudy(SqlSessionTemplate session);
 
 	int selectTotalCategoryCount(SqlSessionTemplate session, String category);
+
+	int deleteReview(SqlSessionTemplate session, Review review);
+
+	int selectTotalMyReviewCount(SqlSessionTemplate session,String userId);
+
+	List<Review> selectMyReview(SqlSessionTemplate session, String userId, int currentPage, int reviewLimit);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ready.mypage.domain.Survey;
 import com.kh.ready.mypage.service.MypageService;
 import com.kh.ready.mypage.store.MypageStore;
+import com.kh.ready.user.domain.User;
 
 @Service
 public class MypageServiceImpl implements MypageService{
@@ -33,6 +34,12 @@ public class MypageServiceImpl implements MypageService{
 	public int modifySurvey(Survey survey) {
 		int result = mStore.updateSurvey(survey, session);
 		return result;
+	}
+
+	@Override
+	public User printOneUser(String userId) {
+		User user = mStore.selectOneUser(userId, session);
+		return user;
 	}
 
 }

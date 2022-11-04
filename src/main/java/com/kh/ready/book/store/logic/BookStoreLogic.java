@@ -56,8 +56,9 @@ public class BookStoreLogic implements BookStore{
 	}
 
 	@Override
-	public int deleteReview(SqlSessionTemplate session, Integer reviewNo) {
-		int result = session.delete("BookMapper.deleteReview", reviewNo);
+	public int deleteReview(SqlSessionTemplate session, Review review) {
+		int result = session.delete("BookMapper.deleteReview", review.getReviewNo());
+		setScore(session, review.getBookNo());
 		return result;
 	}
 
@@ -161,6 +162,20 @@ public class BookStoreLogic implements BookStore{
 		urd.setScoreAvg(scoreAvg);
 			
 		session.update("BookMapper.updateScoreAvg", urd);
+	}
+
+	@Override
+	public int selectTotalMyReviewCount(SqlSessionTemplate session,String userId) {
+		int selectTotalMyReviewCount = session.selectOne("BookMapper.selectMyReviewCount", userId);
+		return selectTotalMyReviewCount;
+	}
+
+	@Override
+	public List<Review> selectMyReview(SqlSessionTemplate session, String userId, int currentPage, int reviewLimit) {
+		int offset = (currentPage - 1) * reviewLimit;
+		RowBounds rowBounds = new RowBounds(offset, reviewLimit);
+		List<Review> rList = session.selectList("BookMapper.selectMyReview", userId, rowBounds);
+		return rList;
 	}
 
 

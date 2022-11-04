@@ -14,6 +14,29 @@
   		<result property="enrollDate" 	column="ENROLL_DATE"/>
   		<result property="updateDate" 	column="UPDATE_DATE"/>
   	</resultMap>
+  	
+  	<resultMap type="User" id="userResultMap">
+  		<id		property="userIndex"				column="USER_INDEX"/>
+  		<result	property="userId"					column="USER_ID"/>
+  		<result	property="userPassword"				column="USER_PASSWORD"/>
+  		<result	property="userName"					column="USER_NAME"/>
+  		<result	property="userEmail"				column="USER_EMAIL"/>
+  		<result	property="userPostcode"				column="USER_POSTCODE"/>
+  		<result	property="userAddress"				column="USER_ADDRESS"/>
+  		<result	property="userDetailAddress"		column="USER_DETAIL_ADDRESS"/>
+  		<result	property="userPhone"				column="USER_PHONE"/>
+  		<result	property="userNickname"				column="USER_NICKNAME"/>
+  		<result	property="userPurchase"				column="USER_PURCHASE"/>
+  		<result	property="userTier"					column="USER_TIER"/>
+  		<result	property="userEnrollDate"			column="USER_ENROLL_DATE"/>
+  		<result	property="userReserves"				column="USER_RESERVES"/>
+  		<result	property="userBirthday"				column="USER_BIRTHDAY"/>
+  		<result	property="userAge"					column="USER_AGE"/>
+  		<result	property="userRole"					column="USER_ROLE"/>
+  		<result	property="enabled"					column="ENABLED"/>
+  		
+  	</resultMap>
+  		
   
 	<insert id="InsertSurvey">
 	  INSERT INTO SURVEY_TBL VALUES(#{userId }, #{answerGender }, #{answerLove }, #{answerHobby }, #{answerReason }, #{answerWriter }, DEFAULT, DEFAULT)
@@ -26,5 +49,9 @@
 	  
 	<select id="selectMySurvey" resultMap="surveyResultMap">
 	  SELECT * FROM SURVEY_TBL WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="selectOneUser" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
 	</select>
   </mapper>

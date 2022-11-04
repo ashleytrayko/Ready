@@ -34,6 +34,7 @@
 				<div>현재 회원님의 등급은 '${principal.user.userTier }' 입니다.</div>
 				<br><br>
 				<div>총 결제 금액</div>
+				<h5>${principal.user.userPurchase }원</h5>
 			</div>
 			<table class="table table-hover">
 				<tr>

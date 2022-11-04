@@ -176,7 +176,45 @@ public class BookController {
 	//평점 삭제
 	@RequestMapping(value="/book/removeReview.kh", method=RequestMethod.POST)
 	public String removeReview(@RequestParam("reviewNo") Integer reviewNo, @RequestParam("bookNo") Integer bookNo) {
-		int result = bService.removeReview(reviewNo);
-		return "redirect:/book/listView.kh";
+		Review review = new Review();
+		review.setBookNo(bookNo);
+		review.setReviewNo(reviewNo);
+		bService.removeReview(review);
+		return "redirect:/book/detailView.kh?bookNo="+bookNo;
+	}
+	
+	//내 후기 조회
+	@RequestMapping(value="/mypage/myReview.kh", method=RequestMethod.GET)
+	public ModelAndView printMyReview(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, Principal principal) {
+		try {
+			String userId = principal.getName();
+			//페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = bService.getTotalMyReviewCount(userId);
+			int reviewLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int)((double)totalCount/reviewLimit + 0.9);
+			startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1) * naviLimit +1;
+			endNavi = startNavi + naviLimit - 1;
+			if(maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			List<Review> rList = bService.printMyReview(userId, currentPage, reviewLimit);
+			if(!rList.isEmpty()) {
+				mv.addObject("userId", userId);
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("rList", rList);
+			}
+			mv.setViewName("mypage/myReview");
+		} catch(Exception e ) {
+			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
+		}
+		return mv;
 	}
 }

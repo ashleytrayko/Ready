@@ -23,7 +23,7 @@ public interface BookService {
 
 	public int modifyReview(Review review);
 
-	public int removeReview(Integer reviewNo);
+	public int removeReview(Review review);
 
 	public List<Review> printAllReview(Integer bookNo);
 
@@ -46,4 +46,8 @@ public interface BookService {
 	public List<Book> printStudy();
 
 	public int getTotalCatrgoryCount(String category);
+
+	public int getTotalMyReviewCount(String userId);
+
+	public List<Review> printMyReview(String userId, int currentPage, int reviewLimit);
 }

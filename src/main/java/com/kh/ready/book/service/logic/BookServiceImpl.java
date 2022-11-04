@@ -54,8 +54,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public int removeReview(Integer reviewNo) {
-		int result = bStore.deleteReview(session, reviewNo);
+	public int removeReview(Review review) {
+		int result = bStore.deleteReview(session, review);
 		return result;
 	}
 
@@ -135,6 +135,18 @@ public class BookServiceImpl implements BookService{
 	public List<Book> printStudy() {
 		List<Book> bList6 = bStore.selectStudy(session);
 		return bList6;
+	}
+
+	@Override
+	public int getTotalMyReviewCount(String userId) {
+		int getTotalMyReviewCount = bStore.selectTotalMyReviewCount(session, userId);
+		return getTotalMyReviewCount;
+	}
+
+	@Override
+	public List<Review> printMyReview(String userId, int currentPage, int reviewLimit) {
+		List<Review> rList = bStore.selectMyReview(session, userId, currentPage, reviewLimit);
+		return rList;
 	}
 
 

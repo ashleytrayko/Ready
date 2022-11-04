@@ -30,7 +30,7 @@
 		<result property="reviewContents" 	column="REVIEW_CONTENTS"/>
 		<result property="enrollDate" 		column="ENROLL_DATE"/>
 		<result property="updateDate" 		column="UPDATE_DATE"/>
-		<result property="salecount"		column="SALE_COUNT"/>
+		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
 	
 	<insert id="insertBook">
@@ -152,7 +152,7 @@
 	</insert>
 	
 	<update id="updateReview">
-		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, SCORE = #{score }, R_UPDATE_DATE = DEFAULT WHERE REVIEW_NO = #{reviewNo }
+		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, SCORE = #{score }, UPDATE_DATE = DEFAULT WHERE REVIEW_NO = #{reviewNo }
 	</update>
 	
 	<delete id="deleteReview">
@@ -170,4 +170,12 @@
 	<update id="updateScoreAvg">
 		UPDATE BOOK_TBL SET SCORE_AVG = #{scoreAvg } WHERE BOOK_NO = #{bookNo }
 	</update>
+	
+	<select id="selectMyReviewCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL WHERE USER_ID = #{userId }
+	</select>
+	
+	<select id="selectMyReview" resultMap="reviewResultMap">
+		SELECT * FROM REVIEW_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
+	</select>
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ready.mypage.domain.Survey;
 import com.kh.ready.mypage.store.MypageStore;
+import com.kh.ready.user.domain.User;
 
 @Repository
 public class MypageStoreLogic implements MypageStore{
@@ -27,6 +28,12 @@ public class MypageStoreLogic implements MypageStore{
 	public int updateSurvey(Survey survey, SqlSessionTemplate session) {
 		int result = session.update("MypageMapper.updateMySurvey", survey);
 		return result;
+	}
+
+	@Override
+	public User selectOneUser(String userId, SqlSessionTemplate session) {
+		User user = session.selectOne("MypageMapper.selectOneUser", userId);
+		return user;
 	}
 
 }

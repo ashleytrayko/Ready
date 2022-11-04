@@ -122,8 +122,8 @@
 						</div>
 						<div class="review-btn" align="center">
 							<c:if test="${principal.username eq review.userId }">
-								<button onclick="modifyView(this, '${review.reviewContents}', ${review.reviewNo });" class="btn btn-secondary">수정</button>
-								<button onclick="removeReview('${review.reviewNo}');" class="btn btn-secondary">삭제</button>
+								<button onclick="modifyView(this, '${review.reviewContents}', ${review.reviewNo }, ${review.bookNo });" class="btn btn-secondary">수정</button>
+								<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn btn-secondary">삭제</button>
 							</c:if>
 							<br>
 						</div>
@@ -140,8 +140,7 @@
 
 	<script>
 	
-		function modifyView(obj, reviewContents, reviewNo) {
-			console.log(obj);
+		function modifyView(obj, reviewContents, reviewNo, bookNo) {
 			event.preventDefault();
 			var sel = "";
 			var $div = $("<div>");
@@ -154,18 +153,37 @@
 			sel += "</select>"
 			$div.html(sel);
 			$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
-			$div.append("<button onclick='modifyReview(this,"+reviewNo+");'>수정</button>");
-			$(obj).parent().parent().after($div);
+			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");'>수정</button>");
+			console.log($(obj).parent().parent().after($div));
+		}
+		
+		function modifyReview(obj, reviewNo, bookNo) {
+			event.preventDefault();
+			var inputTag = $(obj).parent().children();
+			console.log(inputTag);
+			var score = inputTag.eq(0).val();
+			var reviewContents = inputTag.eq(1).val();
+			console.log(score);  
+			console.log(reviewContents); 
+			var $form = $("<form>");
+				$form.attr("action", "/book/modifyReview.kh");
+				$form.attr("method", "post");
+				$form.append("<input type='hidden' value='"+score+"' name='score'>");
+				$form.append("<input type='hidden' value='"+reviewContents+"' name='reviewContents'>");
+				$form.append("<input type='hidden' value='"+reviewNo+"' name='reviewNo'>");
+				$form.append("<input type='hidden' value='"+bookNo+"' name='bookNo'>");
+				$form.appendTo("body");
+				$form.submit();
 		}
 	
-		function removeReview(reviewNo) {
+		function removeReview(reviewNo, rBookNo) {
 			event.preventDefault();
 			if(confirm("정말 삭제하시겠습니까?")) {
 				var $delForm = $("<form>");
 					$delForm.attr("action", "/book/removeReview.kh");
 					$delForm.attr("method", "post");
 					$delForm.append("<input type='hidden' name='reviewNo' value='"+reviewNo+"'>");
-					$delForm.append("<input type='hidden' name='bookNo' value='"+bookNo+"'>");
+					$delForm.append("<input type='hidden' name='bookNo' value='"+rBookNo+"'>");
 					$delForm.appendTo("body");
 					$delForm.submit();
 			}

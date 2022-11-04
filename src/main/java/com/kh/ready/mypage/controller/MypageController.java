@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.mypage.domain.Survey;
 import com.kh.ready.mypage.service.MypageService;
+import com.kh.ready.user.domain.User;
 
 @Controller
 public class MypageController {
@@ -78,6 +79,15 @@ public class MypageController {
 			mv.addObject("msg", "수정오류");
 			mv.setViewName("main/errorPage");
 		}
+		return mv;
+	}
+	//내 정보 조회
+	@RequestMapping(value="mypage/myInfo.kh", method=RequestMethod.GET)
+	public ModelAndView showMyInfo(ModelAndView mv, Principal principal) {
+		String userId = principal.getName();
+		User uOne = mService.printOneUser(userId);
+		mv.addObject("user", uOne);
+		mv.setViewName("mypage/myInfo");
 		return mv;
 	}
 }

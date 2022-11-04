@@ -20,7 +20,7 @@
 		        		<div class="collapse show" id="home-collapse">
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		            			<li><a href="/mypage/surveyMain.kh" class="link-dark d-inline-flex text-decoration-none rounded">설문조사</a></li>
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원정보</a></li>
+		            			<li><a href="/mypage/myInfo.kh" class="link-dark d-inline-flex text-decoration-none rounded">회원정보</a></li>
 		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">회원탈퇴</a></li>
 		          			</ul>
 		        		</div>
@@ -33,7 +33,7 @@
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">주문 내역</a></li>
 					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내가 쓴 글</a></li>
-					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 후기</a></li>
+					            <li><a href="/mypage/myReview.kh" class="link-dark d-inline-flex text-decoration-none rounded">내 후기</a></li>
 					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 댓글</a></li>
 							</ul>
 		        		</div>

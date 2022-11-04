@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.ready.mypage.domain.Survey;
+import com.kh.ready.user.domain.User;
 
 public interface MypageStore {
 
@@ -13,5 +14,7 @@ public interface MypageStore {
 	Survey selectMySurvey(String userId, SqlSessionTemplate session);
 
 	int updateSurvey(Survey survey, SqlSessionTemplate session);
+
+	User selectOneUser(String userId, SqlSessionTemplate session);
 
 }
