@@ -24,17 +24,17 @@
 				<ul class="nav nav-pills flex-column mb-auto">
 					<li class="nav-item"><a href="/admin" class="nav-link active"
 						aria-current="page"> Admin Home </a></li>
-					<li><a href="/admin-notice" class="nav-link text-white">
+					<li><a href="/admin/admin-notice" class="nav-link text-white">
 							공지사항 </a></li>
-					<li><a href="/admin-banner" class="nav-link text-white">
+					<li><a href="/admin/admin-banner" class="nav-link text-white">
 							배너관리 </a></li>
-					<li><a href="/admin-report" class="nav-link text-white">
+					<li><a href="/admin/admin-report" class="nav-link text-white">
 							신고관리 </a></li>
-					<li><a href="/admin-product" class="nav-link text-white">
+					<li><a href="/admin/admin-product" class="nav-link text-white">
 							상품관리 </a></li>
-					<li><a href="/admin-order" class="nav-link text-white">
+					<li><a href="/admin/admin-order" class="nav-link text-white">
 							주문관리 </a></li>
-					<li><a href="/admin-qna" class="nav-link text-white">
+					<li><a href="/admin/admin-qna" class="nav-link text-white">
 							Q&A관리 </a></li>
 				</ul>
 				<hr>
@@ -67,7 +67,6 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>등록시간</th>
-						<th>수정</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,10 +74,9 @@
 					<tr>
 						<td><input type="checkbox"></td>
 						<td>${noticeList.noticeNumber }</td>
-						<td><a href="/noticeDetail?noticeNumber=${noticeList.noticeNumber }">${noticeList.noticeTitle }</a></td>
+						<td><a href="/admin/noticeDetail?noticeNumber=${noticeList.noticeNumber }">${noticeList.noticeTitle }</a></td>
 						<td>${noticeList.noticeWriter }</td>
 						<td>${noticeList.postDate }</td>
-						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
 					</tr>
 					</c:forEach>
 				</tbody>
@@ -93,11 +91,9 @@
 	</div>
 	<footer> </footer>
 	<script>
-	function modifyNotice(noticeNumber){
-		location.href="/modifyNoticeForm?noticeNumber="+noticeNumber;
-	}
+
 	function writeNotice(){
-		location.href="/admin-noticeForm";
+		location.href="/admin/admin-noticeForm";
 	}
 	</script>
 </body>

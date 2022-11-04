@@ -24,17 +24,17 @@
 				<ul class="nav nav-pills flex-column mb-auto">
 					<li class="nav-item"><a href="/admin" class="nav-link active"
 						aria-current="page"> Admin Home </a></li>
-					<li><a href="/admin-notice" class="nav-link text-white">
+					<li><a href="/admin/admin-notice" class="nav-link text-white">
 							공지사항 </a></li>
-					<li><a href="/admin-banner" class="nav-link text-white">
+					<li><a href="/admin/admin-banner" class="nav-link text-white">
 							배너관리 </a></li>
-					<li><a href="/admin-report" class="nav-link text-white">
+					<li><a href="/admin/admin-report" class="nav-link text-white">
 							신고관리 </a></li>
-					<li><a href="/admin-product" class="nav-link text-white">
+					<li><a href="/admin/admin-product" class="nav-link text-white">
 							상품관리 </a></li>
-					<li><a href="/admin-order" class="nav-link text-white">
+					<li><a href="/admin/admin-order" class="nav-link text-white">
 							주문관리 </a></li>
-					<li><a href="/admin-qna" class="nav-link text-white">
+					<li><a href="/admin/admin-qna" class="nav-link text-white">
 							Q&A관리 </a></li>
 				</ul>
 				<hr>
@@ -87,7 +87,27 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<button>상품 등록</button>
+			<table>
+			        <tr align="center" height="20">
+			            <td colspan="6">
+			                <c:if test="${currentPage != 1}">
+			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">[이전]</a>
+			                </c:if>
+			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
+			                    <c:if test="${currentPage eq p }">
+			                        <b>${p}</b> 
+			                    </c:if>
+			                    <c:if test="${currentPage ne p }">
+			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+			                    </c:if>
+			                </c:forEach>
+			            	<c:if test = "${currentPage < maxPage }">
+			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">[다음]</a>
+			            	</c:if>
+			            </td>
+		        	</tr>
+			</table>
+			<button onclick="newBook();">상품 등록</button>
 			<button>상품 삭제</button>
 
 
@@ -97,8 +117,8 @@
 	</div>
 	<footer> </footer>
 	<script>
-	function modifyNotice(noticeNumber){
-		location.href="/modifyNoticeForm?noticeNumber="+noticeNumber;
+	function newBook(){
+		location.href = "/admin/admin-productForm";
 	}
 	</script>
 </body>

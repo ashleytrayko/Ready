@@ -12,7 +12,7 @@ public interface AdminService {
 	public int registerBanner(Banner banner);
 	
 	// 배너 삭제
-	public int removeBanner(Integer bannerNumber);
+	public int removeBanner(Integer bannerFrom);
 	
 	// 배너 전체 조회 
 	public List<Banner> showAllBanner();

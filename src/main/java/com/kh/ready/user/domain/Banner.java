@@ -6,13 +6,15 @@ public class Banner {
 	private String bannerName;
 	private String bannerRename;
 	private String bannerPath;
+	private Integer bannerFrom;
 	
-	public Banner(Integer bannerNumber, String bannerName, String bannerRename, String bannerPath) {
+	public Banner(Integer bannerNumber, String bannerName, String bannerRename, String bannerPath, Integer bannerFrom) {
 		super();
 		this.bannerNumber = bannerNumber;
 		this.bannerName = bannerName;
 		this.bannerRename = bannerRename;
 		this.bannerPath = bannerPath;
+		this.bannerFrom = bannerFrom;
 	}
 
 	public Integer getBannerNumber() {
@@ -47,11 +49,22 @@ public class Banner {
 		this.bannerPath = bannerPath;
 	}
 
+	
+	public Integer getBannerFrom() {
+		return bannerFrom;
+	}
+
+	public void setBannerFrom(Integer bannerFrom) {
+		this.bannerFrom = bannerFrom;
+	}
+
 	@Override
 	public String toString() {
 		return "Banner [bannerNumber=" + bannerNumber + ", bannerName=" + bannerName + ", bannerRename=" + bannerRename
-				+ ", bannerPath=" + bannerPath + "]";
+				+ ", bannerPath=" + bannerPath + ", bannerFrom=" + bannerFrom + "]";
 	}
+
+	
 	
 	
 }

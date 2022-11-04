@@ -36,17 +36,17 @@
 				<ul class="nav nav-pills flex-column mb-auto">
 					<li class="nav-item"><a href="/admin" class="nav-link active"
 						aria-current="page"> Admin Home </a></li>
-					<li><a href="/admin-notice" class="nav-link text-white">
+					<li><a href="/admin/admin-notice" class="nav-link text-white">
 							공지사항 </a></li>
-					<li><a href="/admin-banner" class="nav-link text-white">
+					<li><a href="/admin/admin-banner" class="nav-link text-white">
 							배너관리 </a></li>
-					<li><a href="/admin-report" class="nav-link text-white">
+					<li><a href="/admin/admin-report" class="nav-link text-white">
 							신고관리 </a></li>
-					<li><a href="/admin-product" class="nav-link text-white">
+					<li><a href="/admin/admin-product" class="nav-link text-white">
 							상품관리 </a></li>
-					<li><a href="/admin-order" class="nav-link text-white">
+					<li><a href="/admin/admin-order" class="nav-link text-white">
 							주문관리 </a></li>
-					<li><a href="/admin-qna" class="nav-link text-white">
+					<li><a href="/admin/admin-qna" class="nav-link text-white">
 							Q&A관리 </a></li>
 				</ul>
 				<hr>
@@ -71,7 +71,7 @@
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>공지사항 작성</h1>
-			<form method="post" action="/postNotice">
+			<form method="post" action="/admin/postNotice">
 				<input type="text" name="noticeTitle">
 				<textarea class="summernote" name="noticeContents"></textarea>
 				<button type="submit">공지사항 등록</button>

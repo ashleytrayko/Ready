@@ -26,8 +26,8 @@ public class AdminServiceImpl implements AdminService{
 
 	// 배너 삭제
 	@Override
-	public int removeBanner(Integer bannerNumber) {
-		int result = adminRepository.deleteBanner(bannerNumber);
+	public int removeBanner(Integer bannerFrom) {
+		int result = adminRepository.deleteBanner(bannerFrom);
 		return result;
 	}
 

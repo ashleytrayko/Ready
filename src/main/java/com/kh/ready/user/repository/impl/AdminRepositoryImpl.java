@@ -23,8 +23,8 @@ public class AdminRepositoryImpl implements AdminRepository{
 	}
 
 	@Override
-	public int deleteBanner(Integer bannerNumber) {
-		int result = session.delete("AdminMapper.deleteBanner", bannerNumber);
+	public int deleteBanner(Integer bannerFrom) {
+		int result = session.delete("AdminMapper.deleteBanner", bannerFrom);
 		return result;
 	}
 
@@ -48,7 +48,7 @@ public class AdminRepositoryImpl implements AdminRepository{
 
 	@Override
 	public int deleteNotice(Integer noticeNumber) {
-		int result = session.delete("AdminMapper.deleteNotice");
+		int result = session.delete("AdminMapper.deleteNotice", noticeNumber);
 		return result;
 	}
 
