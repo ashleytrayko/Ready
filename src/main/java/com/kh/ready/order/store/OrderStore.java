@@ -23,5 +23,7 @@ public interface OrderStore {
 
 	Order getOrderInfoByOrderId(String orderId);
 
+	int updateUserPurchase(Order order);
+
 
 }

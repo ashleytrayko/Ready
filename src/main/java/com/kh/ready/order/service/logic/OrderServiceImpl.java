@@ -60,4 +60,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderStore.getOrderInfoByOrderId(orderId);
 	}
 
+	@Override
+	public int updateUserPurchase(Order order) {
+
+		return orderStore.updateUserPurchase(order);
+	}
+
 }

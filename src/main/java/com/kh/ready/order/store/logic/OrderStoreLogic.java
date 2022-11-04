@@ -61,5 +61,11 @@ public class OrderStoreLogic implements OrderStore{
 
 		return session.selectOne("OrderMapper.selectOneOrderByOrderId", orderId);
 	}
+
+	@Override
+	public int updateUserPurchase(Order order) {
+
+		return session.update("OrderMapper.updateUserPurchase", order);
+	}
 	
 }

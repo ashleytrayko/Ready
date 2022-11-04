@@ -22,5 +22,7 @@ public interface OrderService {
 	List<Order> getOrderDataByOrderId(String orderId);
 
 	Order getOrderInfoByOrderId(String orderId);
+
+	int updateUserPurchase(Order order);
 	
 }
