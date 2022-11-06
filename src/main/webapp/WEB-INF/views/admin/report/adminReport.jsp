@@ -8,21 +8,9 @@
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 서머노트를 위해 추가해야할 부분 -->
-<script src="/resources/js/summernote-lite.js"></script>
-<script src="/resources/js/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -70,24 +58,35 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>공지사항 작성</h1>
-			<form method="post" action="/admin/modifyNotice">
-				<input type="text" name="noticeTitle" value="${notice.noticeTitle }">
-				<textarea class="summernote" name="noticeContents">${notice.noticeContents }</textarea>
-				<button type="submit">공지사항 수정</button>
-				<button type="button">뒤로가기</button>
-			</form>
+			<h1>신고 관리</h1>
+			<table border="1" align="center">
+				<thead>
+					<tr>
+						<th></th>
+						<th>글번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>등록시간</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${reportList }" var="reportList" varStatus="i">
+					<tr>
+						<td><input type="checkbox"></td>
+						<td>${reportList.boardNo }</td>
+						<td><a href="/admin/noticeDetail?noticeNumber=${reportList.boardNo }">${noticeList.commTitle }</a></td>
+						<td>${reportList.commWriter }</td>
+						<td>${reportList.cUpdateDate }</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
 	<script>
-		$('.summernote').summernote({
-			height : 150,
-			width : 600,
-			lang : "ko-KR",
-		/* 		  focus : true, */
-		});
+	console.log(${reportList});
 	</script>
 </body>
 </html>

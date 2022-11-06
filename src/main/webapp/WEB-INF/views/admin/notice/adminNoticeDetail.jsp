@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -70,13 +70,17 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>공지사항 작성</h1>
-			<form method="post" action="/admin/postNotice">
-				<input type="text" name="noticeTitle">
-				<textarea class="summernote" name="noticeContents"></textarea>
-				<button type="submit">공지사항 등록</button>
-				<button type="button">뒤로가기</button>
-			</form>
+			<h1>공지사항 보기</h1>
+			<div>
+				<div style="border:1px solid black">
+					<h5>${notice.noticeTitle }</h5>
+				</div>	
+				<div  style="border:1px solid black">
+					<p>${notice.noticeContents }</p>
+				</div>
+				<button onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
+				<button onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
+			</div>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
@@ -88,6 +92,14 @@
 			lang : "ko-KR",
 		/* 		  focus : true, */
 		});
+		
+		function removeNotice(noticeNumber){
+			location.href="/admin/removeNotice?noticeNumber="+noticeNumber;
+		}
+		
+		function modifyNotice(noticeNumber){
+			location.href="/admin/modifyNoticeForm?noticeNumber="+noticeNumber;
+		}
 	</script>
 </body>
 </html>

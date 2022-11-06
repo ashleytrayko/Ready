@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
+import com.kh.ready.user.domain.User;
 import com.kh.ready.user.repository.AdminRepository;
+import com.kh.ready.user.repository.UserRepository;
 import com.kh.ready.user.service.AdminService;
 
 @Service
@@ -16,6 +19,9 @@ public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	// 배너 등록
 	@Override
@@ -82,6 +88,27 @@ public class AdminServiceImpl implements AdminService{
 		}else {
 			return "update fail";
 		}
+	}
+
+	@Override
+	public List<Comm> showAllReport() {
+		List<Comm> reportList = adminRepository.selectAllReport();
+		return reportList;
+	}
+
+	@Override
+	public String punishUser(String punishment, String userId) {
+		// 유저 정보를 가져옴 
+		User user = userRepository.getUserById(userId);
+		user.setUserRole(punishment);
+		// role을 추가하든 혹은 상태컬럼을 추가해서 변경처리
+		int result = adminRepository.updateUserState(user);
+		if(result >= 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
+		
 	}
 
 

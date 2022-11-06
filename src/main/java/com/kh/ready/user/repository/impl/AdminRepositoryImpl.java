@@ -6,8 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
+import com.kh.ready.user.domain.User;
 import com.kh.ready.user.repository.AdminRepository;
 
 @Repository
@@ -61,6 +63,18 @@ public class AdminRepositoryImpl implements AdminRepository{
 	@Override
 	public int updateNotice(Notice notice) {
 		int result = session.update("AdminMapper.updateNotice", notice);
+		return result;
+	}
+
+	@Override
+	public List<Comm> selectAllReport() {
+		List<Comm> reportList = session.selectList("AdminMapper.selectAllReport");
+		return reportList;
+	}
+
+	@Override
+	public int updateUserState(User user) {
+		int result = session.update("AdminMapper.updateBadUser", user);
 		return result;
 	}
 
