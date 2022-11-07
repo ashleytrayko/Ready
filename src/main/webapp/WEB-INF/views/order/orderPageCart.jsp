@@ -270,7 +270,7 @@
         </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum}` , `${cartList[0].book.bookTitle}` , `${productSum}`);">결제하기</button>							
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum}` , `${cartList[0].book.bookTitle}` , `${productSum}`, `${mileageSum}`);">결제하기</button>							
         </div>
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -320,7 +320,7 @@
     }
     
     
-    function requestPay(priceSum, firstTitle, totalCount) {
+    function requestPay(priceSum, firstTitle, totalCount, mileageSum) {
     	
     	const totalprice = Math.floor(priceSum);
     	const buyerName = $("#buyerPhone").val();
@@ -355,6 +355,7 @@
             	bookNoArr : bookNoArr,
             	productCountArr : productCountArr,
             	productPriceArr : productPriceArr,
+            	mileageSum : mileageSum,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -366,12 +367,13 @@
             if (rsp.success) {
         	console.log("response Data : ", rsp.custom_data);
 				$.ajax({
-					url :"/order/insertOrder",
+					url :"/order/insertCartOrder",
 					type : "POST",
 					data : {
 						bookNoArr : rsp.custom_data.bookNoArr,
 						productCountArr : rsp.custom_data.productCountArr,
 						productPriceArr : rsp.custom_data.productPriceArr,
+						mileageSum : rsp.custom_data.mileageSum,
 						totalPrice : rsp.paid_amount,
 						paymethod : rsp.pay_method,
 						reciverName : rsp.custom_data.reciverName,

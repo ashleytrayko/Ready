@@ -73,7 +73,8 @@
 					<c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
                     <c:set var="productSum" value="${productSum + productCount }"/>
                     <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount) }"/>
-                    <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>                </tbody>
+                    <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>
+                </tbody>
             </table>
         </div>
         <div class="buyer-data-list">
@@ -212,7 +213,32 @@
                 </tr>
             </table>
         </div>
-        
+        <div class="order-data-list">
+        <h5 style="font-weight : bold;">결제 정보 확인</h5>
+        <hr>
+            <table id="order-Info"> 
+                <thead>
+                    <tr>
+                        <th id="orderinfo-table-left">주문 수량</th>
+                        <th class="orderinfo-table-header">주문 금액 합계</th>
+                        <th class="orderinfo-table-header">배송비</th>
+                        <th class="orderinfo-table-header"><p class="total-price">총 결제 금액</p></th>
+                        <th id="orderinfo-table-right">예상 적립금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td id="productSum">총 <c:out value="${productSum }"/>권</td>
+                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td class="orderinfo-table-body">0원</td>
+					<td class="orderinfo-table-body"><input readonly type="text" class="total-price" id="id-total-price" style="border:0px; width:100px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>">원</td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
+                </tbody>
+            </table>
+            <div style="text-align:right;">
+            	<p>현재 보유한 적립금 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>원</p>
+            	적립금 : <input type="text" value="0" id="useMileage" style="width:100px;">원 <button onclick="useMileage(${salePriceSum });">사용</button>
+        	</div>
+        </div>
         <div class="buyer-data-list">
         	<table class="buyer-info buyer-info-title">
               <tr>
@@ -241,29 +267,9 @@
 			  	</label>
 			</div><br>
 		</div>
-        <div class="order-data-list">
-            <table id="order-Info"> 
-                <thead>
-                    <tr>
-                        <th id="orderinfo-table-left">주문 수량</th>
-                        <th class="orderinfo-table-header">주문 금액 합계</th>
-                        <th class="orderinfo-table-header">배송비</th>
-                        <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th id="orderinfo-table-right">예상 적립금</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <td id="productSum">총 <c:out value="${productSum }"/>권</td>
-                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
-                    <td class="orderinfo-table-body">0원</td>
-					<td class="orderinfo-table-body"><p class="total-price" id="info-total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
-					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
-                </tbody>
-            </table>
-        </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum }` , `${bookData.bookTitle}` , `${productSum}`);">결제하기</button>								
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${bookData.bookTitle}` , `${productSum}`, `${mileageSum }`);">결제하기</button>								
         </div>
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -312,10 +318,19 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
+    function useMileage(totalPrice){
+    	console.log("총 구매액 : " + totalPrice, typeof totalPrice);
+    	var useMileage = +$("#useMileage").val();
+    	console.log("사용할 마일리지 : " + useMileage, typeof useMileage);
+    	var calPrice = totalPrice - useMileage;
+    	console.log(calPrice, typeof calPrice);
+    	$("#id-total-price").attr("value", calPrice);
+    }
     
-    function requestPay(priceSum, title, totalCount) {
+    
+    function requestPay(title, totalCount, mileageSum) {
     	
-    	const totalPrice = Math.floor(priceSum);
+    	const totalPrice = $("#id-total-price").val()
     	const buyerName = $("#buyerPhone").val();
     	const buyerPhone = $("#buyerPhone").val();
     	const buyerEmail = $("#buyerEmail").val();
@@ -339,6 +354,7 @@
             	bookNo : bookNo,
             	productCount : productCount,
             	productPrice : productPrice,
+            	mileageSum : mileageSum,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -356,6 +372,7 @@
 						bookNo : rsp.custom_data.bookNo,
 						productCount : rsp.custom_data.productCount,
 						productPrice : rsp.custom_data.productPrice,
+						mileageSum : rsp.custom_data.mileageSum,
 						totalPrice : rsp.paid_amount,
 						paymethod : rsp.pay_method,
 						reciverName : rsp.custom_data.reciverName,

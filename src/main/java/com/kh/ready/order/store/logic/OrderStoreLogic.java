@@ -1,5 +1,6 @@
 package com.kh.ready.order.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,9 +64,18 @@ public class OrderStoreLogic implements OrderStore{
 	}
 
 	@Override
-	public int updateUserPurchase(Order order) {
+	public int updateUserPurchase(String userId, int totalPurchase, int mileageSum) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userId", userId);
+		paramMap.put("totalPurchase", totalPurchase);
+		paramMap.put("mileageSum", mileageSum);
+		return session.update("OrderMapper.updateUserPurchase", paramMap);
+	}
 
-		return session.update("OrderMapper.updateUserPurchase", order);
+	@Override
+	public User getUserInfo(String userId) {
+
+		return session.selectOne("getUserInfo",userId);
 	}
 	
 }

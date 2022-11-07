@@ -81,11 +81,12 @@ public class OrderController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/order/insertOrder", method=RequestMethod.POST)
+	@RequestMapping(value="/order/insertCartOrder", method=RequestMethod.POST)
 	public String insertOrder(Principal principal, @RequestParam("bookNoArr[]") List<Integer> bookNoArr,
 												@RequestParam("productCountArr[]") List<Integer> productCountArr,
-												@RequestParam("reciverName") String reciverName,
 												@RequestParam("productPriceArr[]") List<Integer> productPriceArr,
+												@RequestParam("mileageSum") int mileageSum,
+												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
@@ -107,10 +108,12 @@ public class OrderController {
 				String orderId = ymd + "_" + subNum;
 				String userId = principal.getName();
 				
+				User user = orderService.getUserInfo(userId);
 				int result = 0;
 				
-				for(int i=0; i<bookNoArr.size(); i++) {
-					
+				int totalMileage = user.getUserReserves() + mileageSum;
+				
+				for(int i=0; i<bookNoArr.size(); i++) {		
 					order.setBookNo(bookNoArr.get(i));
 					order.setProductCount(productCountArr.get(i));
 					order.setProductPrice(productPriceArr.get(i));
@@ -124,7 +127,17 @@ public class OrderController {
 					order.setUserId(userId);
 					
 					result = orderService.insertOrder(order);
-					orderService.updateUserPurchase(order);
+					
+				}
+				for(int i=0; i<bookNoArr.size(); i++) {
+					System.out.println("책 가격 : " + productPriceArr.get(i));
+					int beforePurchase = user.getUserPurchase();
+					int totalPurchase = beforePurchase + productPriceArr.get(i);
+					user.setUserPurchase(totalPurchase);
+					System.out.println("이전 총 구매금액 : " + beforePurchase);
+					System.out.println("합친 총 구매금액 : " + totalPurchase);
+					System.out.println("==============================");
+					orderService.updateUserPurchase(userId, totalPurchase, totalMileage);
 				}
 				
 				if(result > 0) {
@@ -142,6 +155,7 @@ public class OrderController {
 	public String insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
 												@RequestParam("productPrice") int productPrice,
+												@RequestParam("mileageSum") int mileageSum,
 												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
@@ -161,9 +175,9 @@ public class OrderController {
 				subNum += (int)(Math.random() * 10);
 			}
 			
+			
 			String orderId = ymd + "_" + subNum;
 			String userId = principal.getName();
-			
 			order.setBookNo(bookNo);
 			order.setProductCount(productCount);
 			order.setProductPrice(productPrice);
@@ -176,10 +190,18 @@ public class OrderController {
 			order.setOrderId(orderId);
 			order.setUserId(userId);
 			
+			
 			orderService.insertOrder(order);
-			orderService.updateUserPurchase(order);
+			
+			User user = orderService.getUserInfo(userId);
+			int totalPurchase = user.getUserPurchase() + productPrice;
+			int totalMileage = user.getUserReserves() + mileageSum;
+			
+			
+			orderService.updateUserPurchase(userId, totalPurchase, totalMileage);
 			
 			String getOrderId = order.getOrderId();
+			
 			return getOrderId;
 	}
 	
