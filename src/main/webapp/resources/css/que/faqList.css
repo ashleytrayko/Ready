@@ -15,8 +15,8 @@
 	font-weight:bold;
 }
 .faq-category:hover {
-	background-color:#D8BB9C;
 	cursor:pointer;
+	background-color:#D8BB9C;
 }
 .category-box {
 	display:flex;
@@ -24,4 +24,7 @@
 	justify-content:center;
 	width:97%;
 	margin-left:30px;
+}
+.category-select {
+	background-color:#D8BB9C;
 }

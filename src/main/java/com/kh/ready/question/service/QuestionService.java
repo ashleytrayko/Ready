@@ -15,12 +15,24 @@ public interface QuestionService {
 
 	List<Question> printAllBoard(int currentPage, int boardLimit);
 	// 내 문의글 갯수
-	int getMyCount(String searchCondition, String searchValue, String queWriter);
+	int getMyCount(String searchCondition, String searchValue);
 	// 내 문의글 리스트
 
-	List<Question> printMyBoard(int currentPage, int boardLimit, String queWriter);
+	List<Question> printMyBoard(int currentPage, int boardLimit);
 
 	Question printOneByNo(Integer queNo);
+
+	List<Question> printFAQBoard(Question que);
+
+	List<Question> printFAQItem(Question que);
+
+	List<Question> printFAQDelivery(Question que);
+
+	List<Question> printFAQChange(Question que);
+
+	int getMangeTotalCount(String searchCondition, String searchValue);
+
+	List<Question> printManageBoard(int currentPage, int boardLimit);
 
 
 }

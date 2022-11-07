@@ -102,14 +102,15 @@ public class QuestionController {
 			, Principal principal
 			, @ModelAttribute Question que
 			, @RequestParam(value="page", required=false) Integer page) {
-		String queWriter = principal.getName();
-		que.setQueWriter(queWriter);
+//		String queWriter = principal.getName();
+//		que.setQueWriter();
 		// Question객체에 setter 메소드를 이용해서 queWriter에 principal.getName으로
 		// 현재 로그인중인 아이디의 정보를 저장
 		// queWriter가 작성한 글만 불러올 수 있도록 하기 위함.
 		/////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = qService.getMyCount("", "", queWriter);
+		int totalCount = qService.getMyCount("", "");
+		// queWriter가 작성한 글만 count되도록 객체를 넘겨줌
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
@@ -121,7 +122,7 @@ public class QuestionController {
 		if (maxPage < endNavi) {
 			endNavi = maxPage;
 		}
-		List<Question> qList = qService.printMyBoard(currentPage, boardLimit, queWriter);
+		List<Question> qList = qService.printMyBoard(currentPage, boardLimit);
 		if (!qList.isEmpty()) {
 			mv.addObject("urlVal", "myList");
 			mv.addObject("maxPage", maxPage);
@@ -129,7 +130,7 @@ public class QuestionController {
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
 			mv.addObject("qList", qList);
-			mv.addObject("queWriter", queWriter);
+//			mv.addObject("queWriter", queWriter);
 			// addObject를 써서 queWriter정보를 넘겨주고 서비스단과 스토어단에서도 받아줌
 		}
 		mv.setViewName("/que/myList");
@@ -153,6 +154,98 @@ public class QuestionController {
 			mv.addObject("msg", e.toString());
 			mv.setViewName("main/errorPage");
 		}
+		return mv;
+	}
+	
+	// FAQ 자주찾는질문 회원정보
+	@RequestMapping(value="/que/faq01.kh", method=RequestMethod.GET)
+	public ModelAndView viewUserFAQ(
+			ModelAndView mv) {
+		Question que = new Question();
+		List<Question> qList = qService.printFAQBoard(que);
+		if (!qList.isEmpty()) {
+			
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/FAQListUser");
+		return mv;
+	}
+	
+	// FAQ 자주찾는 상품관련 
+	@RequestMapping(value="/que/faq02.kh", method=RequestMethod.GET)
+	public ModelAndView viewItemFAQ(
+			ModelAndView mv) {
+		Question que = new Question();
+		List<Question> qList = qService.printFAQItem(que);
+		if (!qList.isEmpty()) {
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/FAQListItem");
+		return mv;
+	}
+	
+	// FAQ 자주찾는 배송관련
+	@RequestMapping(value="/que/faq03.kh", method=RequestMethod.GET)
+	public ModelAndView viewDeliveryFAQ(
+			ModelAndView mv) {
+		Question que = new Question();
+		List<Question> qList = qService.printFAQDelivery(que);
+		if (!qList.isEmpty()) {
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/FAQListDelivery");
+		return mv;
+	}
+	
+	// FAQ 자주찾는 질문 교환/환불
+	@RequestMapping(value="/que/faq04.kh", method=RequestMethod.GET)
+	public ModelAndView viewChangeFAQ(
+			ModelAndView mv) {
+		Question que = new Question();
+		List<Question> qList = qService.printFAQChange(que);
+		if (!qList.isEmpty()) {
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/FAQListChange");
+		return mv;
+	}
+	
+	/**
+	 * 질문글 확인 관리자용
+	 * @param mv
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/que/manageList.kh", method=RequestMethod.GET)
+	public ModelAndView viewManageList(
+			ModelAndView mv
+			, @RequestParam(value="page", required=false) Integer page) {
+		/////////////////////////////////////////////////////////////////////////
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = qService.getMangeTotalCount("", "");
+		int boardLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		// 23/5 = 4.8 + 0.9 = 5(.7)
+		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		//////////////////////////////////////////////////////////////////////////
+		List<Question> qList = qService.printManageBoard(currentPage, boardLimit);
+		if (!qList.isEmpty()) {
+			mv.addObject("urlVal", "manageList");
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/manageList");
 		return mv;
 	}
 }

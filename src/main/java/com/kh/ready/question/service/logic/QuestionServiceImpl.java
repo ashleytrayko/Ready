@@ -36,14 +36,14 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public int getMyCount(String searchValue, String searchCondition, String queWriter) {
-		int myCount = qStore.selectMyCount(session, searchCondition, searchValue, queWriter);
+	public int getMyCount(String searchValue, String searchCondition) {
+		int myCount = qStore.selectMyCount(session, searchCondition, searchValue);
 		return myCount;
 	}
 
 	@Override
-	public List<Question> printMyBoard(int currentPage, int boardLimit, String queWriter) {
-		List<Question> qList = qStore.selectMyBoard(session, currentPage, boardLimit, queWriter);
+	public List<Question> printMyBoard(int currentPage, int boardLimit) {
+		List<Question> qList = qStore.selectMyBoard(session, currentPage, boardLimit);
 		return qList;
 		// 컨트롤러단에서 넘겨준 정보중 mapper단에서 사용할 정보들을 스토어단으로 넘겨줌
 	}
@@ -52,6 +52,42 @@ public class QuestionServiceImpl implements QuestionService{
 	public Question printOneByNo(Integer queNo) {
 		Question que = qStore.selectOneByNo(session, queNo);
 		return que;
+	}
+
+	@Override
+	public List<Question> printFAQBoard(Question que) {
+		List<Question> qList = qStore.selectFAQUser(session, que);
+		return qList;
+	}
+
+	@Override
+	public List<Question> printFAQItem(Question que) {
+		List<Question> qList = qStore.selectFAQItem(session, que);
+		return qList;
+	}
+
+	@Override
+	public List<Question> printFAQDelivery(Question que) {
+		List<Question> qList = qStore.selectFAQDelivery(session, que);
+		return qList;
+	}
+
+	@Override
+	public List<Question> printFAQChange(Question que) {
+		List<Question> qList = qStore.selectFAQChange(session, que);
+		return qList;
+	}
+
+	@Override
+	public int getMangeTotalCount(String searchCondition, String searchValue) {
+		int manageTotalCount = qStore.selectManageTotalCount(session, searchCondition, searchValue);
+		return manageTotalCount;
+	}
+
+	@Override
+	public List<Question> printManageBoard(int currentPage, int boardLimit) {
+		List<Question> qList = qStore.selectManageBoard(session, currentPage, boardLimit);
+		return qList;
 	}
 
 }

@@ -43,7 +43,7 @@
 	</select>
 	<!-- 내 문의글 갯수 -->
 	<select id="selectMyCount" resultType="_int">
-		SELECT COUNT(*) FROM QUESTION_TBL
+		SELECT COUNT(A.QUE_NO) FROM QUESTION_TBL A, USER_TBL B
 		<where>
 			<if test="searchCondition.toString() == 'title'">
 				QUE_TITLE LIKE '%'||#{searchValue}||'%'
@@ -51,13 +51,37 @@
 			<if test="searchCondition.toString() == 'contents'">
 				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
 			</if>
-			AND QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' AND QUE_WRITER = #{queWriter}
+			AND QUE_WRITER = USER_ID AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
 		</where>
 	</select>
 	<select id="selectMyBoard" resultMap="questionResultMap">
-		SELECT * FROM QUESTION_TBL WHERE QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
+		<!-- SELECT * FROM QUESTION_TBL WHERE QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC -->
+		SELECT A.QUE_NO, B.USER_NICKNAME AS QUE_WRITER, A.QUE_TITLE, A.QUE_CONTENTS, A.Q_ENROLL_DATE, A.Q_ANSWER, A.Q_STATUS, A.Q_CATEGORY  FROM QUESTION_TBL A, USER_TBL B WHERE QUE_WRITER = USER_ID ORDER BY QUE_NO DESC
 	</select>
 	<select id="selectOneByNo" resultMap="questionResultMap">
 		SELECT * FROM QUESTION_TBL WHERE QUE_NO = #{queNo} AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+	</select>
+	<!-- FAQUser -->
+	<select id="selectFAQUser" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_CATEGORY = 'user' AND Q_STATUS = 'F'
+	</select>
+	<!-- FAQUser -->
+	<select id="selectFAQItem" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_CATEGORY = 'item' AND Q_STATUS = 'F'
+	</select>
+	<!-- FAQUser -->
+	<select id="selectFAQDelivery" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_CATEGORY = 'delivery' AND Q_STATUS = 'F'
+	</select>
+	<!-- FAQUser -->
+	<select id="selectFAQChange" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_CATEGORY = 'order' AND Q_STATUS = 'F'
+	</select>
+	<!-- 관리자용 리스트 -->
+	<select id="selectManageTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS ='Y'
+	</select>
+	<select id="selectManageBoard" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
 	</select>
 </mapper>

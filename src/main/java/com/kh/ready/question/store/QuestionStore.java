@@ -16,10 +16,22 @@ public interface QuestionStore {
 
 	List<Question> selectAllBoard(SqlSession session, int currentPage, int boardLimit);
 
-	int selectMyCount(SqlSession session, String searchCondition, String searchValue, String queWriter);
+	int selectMyCount(SqlSession session, String searchCondition, String searchValue);
 
-	List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit, String queWriter);
+	List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit);
 
 	Question selectOneByNo(SqlSession session, Integer queNo);
+
+	List<Question> selectFAQUser(SqlSession session, Question que);
+
+	List<Question> selectFAQItem(SqlSession session, Question que);
+
+	List<Question> selectFAQDelivery(SqlSession session, Question que);
+
+	List<Question> selectFAQChange(SqlSession session, Question que);
+
+	int selectManageTotalCount(SqlSession session, String searchCondition, String searchValue);
+
+	List<Question> selectManageBoard(SqlSession session, int currentPage, int boardLimit);
 
 }
