@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -70,12 +70,13 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>공지사항 작성</h1>
+			<h1>공지사항 수정</h1>
 			<form method="post" action="/admin/modifyNotice">
+				<input type="hidden" name="noticeNumber" value="${notice.noticeNumber }">
 				<input type="text" name="noticeTitle" value="${notice.noticeTitle }">
 				<textarea class="summernote" name="noticeContents">${notice.noticeContents }</textarea>
 				<button type="submit">공지사항 수정</button>
-				<button type="button">뒤로가기</button>
+				<button type="button" onclick="history.back();">뒤로가기</button>
 			</form>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>

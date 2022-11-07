@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,21 +9,9 @@
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 서머노트를 위해 추가해야할 부분 -->
-<script src="/resources/js/summernote-lite.js"></script>
-<script src="/resources/js/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -70,36 +59,32 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>공지사항 보기</h1>
-			<div>
-				<div style="border:1px solid black">
-					<h5>${notice.noticeTitle }</h5>
-				</div>	
-				<div  style="border:1px solid black">
-					<p>${notice.noticeContents }</p>
-				</div>
-				<button onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
-				<button onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
+			<h1>판결 페이지</h1>
+			<div class="container">
+				<form action="/admin/punish" method="post">
+					<div class="form-group">
+						<label for="userId">닉네임</label> 
+						<input type="text" class="form-control" id="userNickname" name="userNickname" value="${commWriter }">
+					</div>
+					<div class="form-group">
+						<label for="punishment">처벌내용</label>
+						<select name="punishment">
+							<option value="suspend">글쓰기 정지</option>
+							<option value="getout">강제탈퇴</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="">처벌사유</label>
+						<textarea rows="10" cols="50" name="punishReason"></textarea>
+					</div>
+					<button type="submit">판결</button>
+				</form>
 			</div>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
 	<script>
-		$('.summernote').summernote({
-			height : 150,
-			width : 600,
-			lang : "ko-KR",
-		/* 		  focus : true, */
-		});
-		
-		function removeNotice(noticeNumber){
-			location.href="/admin/removeNotice?noticeNumber="+noticeNumber;
-		}
-		
-		function modifyNotice(noticeNumber){
-			location.href="/admin/modifyNoticeForm?noticeNumber="+noticeNumber;
-		}
 	</script>
 </body>
 </html>

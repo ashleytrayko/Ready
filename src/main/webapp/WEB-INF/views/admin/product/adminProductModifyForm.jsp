@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,21 @@
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- 서머노트를 위해 추가해야할 부분 -->
+<script src="/resources/js/summernote-lite.js"></script>
+<script src="/resources/js/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -57,30 +70,24 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h2>관리자님 안녕하세요.</h2>
-			<h5>관리자 메뉴입니다.</h5>
-			<h5>원하는 메뉴를 왼쪽에서 선택해주세요.</h5>
-			<p>오늘의 주요 업무</p>
-			<p>문의 n건, 처리 n-m건</p>
-			</div>
+			<h1>공지사항 작성</h1>
+			<form method="post" action="/admin/modifyNotice">
+				<input type="text" name="noticeTitle" value="${notice.noticeTitle }">
+				<textarea class="summernote" name="noticeContents">${notice.noticeContents }</textarea>
+				<button type="submit">공지사항 수정</button>
+				<button type="button">뒤로가기</button>
+			</form>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
 	<script>
-	function readFile(input){
-  		if(input.files && input.files[0]){
-  			var reader = new FileReader();
-  			reader.onload = function(e){
-  				document.getElementById('preview').src = e.target.result;
-  			};
-  			reader.readAsDataURL(input.files[0]);
-  		}else{
-  			document.getElementById('preview').src = "";
-  		}
-  	}
-	
-	
+		$('.summernote').summernote({
+			height : 150,
+			width : 600,
+			lang : "ko-KR",
+		/* 		  focus : true, */
+		});
 	</script>
 </body>
 </html>

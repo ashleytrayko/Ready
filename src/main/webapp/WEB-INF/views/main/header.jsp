@@ -96,6 +96,14 @@
 							class="nav-link link-dark px-2">회원가입</a></li>
 					</ul>
 				</c:when>
+				<c:when test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+					<ul class="nav">
+						<li class="nav-item"><a href="/admin"
+							class="nav-link link-dark px-2">관리자페이지</a></li>
+						<li class="nav-item"><a href="/logout"
+							class="nav-link link-dark px-2">로그아웃</a></li>
+					</ul>
+				</c:when>
 				<c:otherwise>
 					<ul class="nav">
 						<li class="nav-item"><a href="/logout"

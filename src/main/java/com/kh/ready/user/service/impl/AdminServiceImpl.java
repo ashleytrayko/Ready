@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
+import com.kh.ready.user.domain.User;
 import com.kh.ready.user.repository.AdminRepository;
+import com.kh.ready.user.repository.UserRepository;
 import com.kh.ready.user.service.AdminService;
 
 @Service
@@ -16,6 +19,9 @@ public class AdminServiceImpl implements AdminService{
 
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	// 배너 등록
 	@Override
@@ -81,6 +87,35 @@ public class AdminServiceImpl implements AdminService{
 			return "update success";
 		}else {
 			return "update fail";
+		}
+	}
+
+	@Override
+	public List<Comm> showAllReport() {
+		List<Comm> reportList = adminRepository.selectAllReport();
+		return reportList;
+	}
+
+	@Override
+	public String punishUser(String punishment, String userNickname) {
+		if(punishment.equals("suspend")) {
+			//ROLE_BAD -> 해서 글쓰기라든지를 막음
+			int result = adminRepository.updateBadUser(userNickname);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else if(punishment.equals("getout")) {
+			// enabled -> n 해서 로그인을 막음
+			int result = adminRepository.kickOutUser(userNickname);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else {
+			return "error";
 		}
 	}
 

@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.book.service.BookService;
+import com.kh.ready.community.domain.Comm;
+import com.kh.ready.community.service.CommService;
+import com.kh.ready.question.domain.Question;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
 import com.kh.ready.user.service.AdminService;
@@ -32,6 +35,9 @@ public class AdminController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private CommService commService;
 	
 	/**
 	 *  admin 화면 요청
@@ -51,13 +57,13 @@ public class AdminController {
 	public String noticeList(Model model) {
 		List<Notice> noticeList = adminService.showAllNotice();
 		model.addAttribute("noticeList", noticeList);
-		return "/admin/adminNotice";
+		return "/admin/notice/adminNotice";
 	}
 	
 	// admin - 공지작성폼
 	@GetMapping("/admin/admin-noticeForm")
 	public String noticeForm() {
-		return "/admin/adminNoticeWriteForm";
+		return "/admin/notice/adminNoticeWriteForm";
 	}
 	
 	// 공지사항 수정화면
@@ -65,7 +71,7 @@ public class AdminController {
 	public String modifyNotice(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		Notice notice = adminService.selectNoticeByNumber(noticeNumber);
 		model.addAttribute("notice", notice);
-		return "/admin/adminNoticeModifyForm"; 
+		return "/admin/notice/adminNoticeModifyForm"; 
 	}
 	
 	// 공지사항 등록
@@ -74,7 +80,7 @@ public class AdminController {
 		String result = adminService.registerNotice(notice, principal);
 		List<Notice> noticeList = adminService.showAllNotice();
 		model.addAttribute("noticeList", noticeList);
-		return "/admin/adminNotice";
+		return "/admin/notice/adminNotice";
 	}
 
 	// 공지사항 삭제
@@ -83,7 +89,7 @@ public class AdminController {
 		adminService.removeNotice(noticeNumber);
 		List<Notice> noticeList = adminService.showAllNotice();
 		model.addAttribute("noticeList", noticeList);
-		return "/admin/adminNotice";
+		return "/admin/notice/adminNotice";
 	}
 
 	// 공지사항 수정
@@ -92,7 +98,7 @@ public class AdminController {
 		String result = adminService.modifyNotice(notice);
 		List<Notice> noticeList = adminService.showAllNotice();
 		model.addAttribute("noticeList", noticeList);
-		return "/admin/adminNotice";
+		return "/admin/notice/adminNotice";
 	}
 
 	// admin - 공지 상세보기
@@ -100,7 +106,7 @@ public class AdminController {
 	public String noticeDetail(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		Notice notice = adminService.selectNoticeByNumber(noticeNumber);
 		model.addAttribute("notice", notice);
-		return "/admin/adminNoticeDetail";
+		return "/admin/notice/adminNoticeDetail";
 	}
 	
 	/**
@@ -113,7 +119,7 @@ public class AdminController {
 		// 배너 전체조회
 		List<Banner> bannerList = adminService.showAllBanner();
 		model.addAttribute("bannerList", bannerList);
-		return "/admin/adminBanner";
+		return "/admin/banner/adminBanner";
 	}
 
 	// 배너 등록
@@ -149,7 +155,7 @@ public class AdminController {
 		}
 		List<Banner> bannerList = adminService.showAllBanner();
 		model.addAttribute("bannerList", bannerList);
-		return "/admin/adminBanner";
+		return "/admin/banner/adminBanner";
 	}
 
 	// 배너 삭제
@@ -159,7 +165,7 @@ public class AdminController {
 		adminService.removeBanner(bannerFrom);
 		List<Banner> bannerList = adminService.showAllBanner();
 		model.addAttribute("bannerList", bannerList);
-		return "/admin/adminBanner";
+		return "/admin/banner/adminBanner";
 	}
 
 	/**
@@ -168,7 +174,7 @@ public class AdminController {
 	// admin - 주문관리
 	@GetMapping("/admin/admin-order")
 	public String orderList() {
-		return "/admin/adminOrder";
+		return "/admin/order/adminOrder";
 	}
 	
 	/**
@@ -203,13 +209,13 @@ public class AdminController {
 			model.addAttribute("endNavi", endNavi);
 			model.addAttribute("bookList", bookList);
 		}
-		return "/admin/adminProduct";
+		return "/admin/product/adminProduct";
 	}
 	
 	// admin - 상품 등록 폼
 	@GetMapping("/admin/admin-productForm")
 	public String productForm() {
-		return "/admin/adminProductRegistForm";
+		return "/admin/product/adminProductRegistForm";
 	}
 	
 	// 상품등록
@@ -218,9 +224,9 @@ public class AdminController {
 		int result = bookService.registerBook(book);
 		// 파일 관련 코드 추후 추가
 		if(result > 0) {
-			return "/admin/adminProduct";
+			return "/admin/product/adminProduct";
 		}else {
-			return "/admin/adminProduct";
+			return "/admin/product/adminProduct";
 		}
 		
 	}
@@ -229,7 +235,7 @@ public class AdminController {
 	@PostMapping("/admin/deleteProduct")
 	public String removeProduct(@RequestParam("bookNo") Integer bookNo) {
 		int result = bookService.removeBook(bookNo);
-		return "/admin/adminProduct";
+		return "/admin/product/adminProduct";
 	}
 	
 	/**
@@ -239,18 +245,98 @@ public class AdminController {
 	// admin - QnA 관리
 	@GetMapping("/admin/admin-qna")
 	public String qnaList() {
-		return "/admin/adminQna";
+		List<Question> qList = qService.printAllQuestion(); // 답변등록안된 모든 게시글 불러오기
+		return "/admin/qna/adminQna";
 	}
 	
+	// admin - QnA 게시글 읽기
+	@GetMapping("/admin/adminQnaDetail") 
+	public String qnaDetail() {
+		Qna qna = qService.printOneQuestion(pk);
+		return	"/admin/qna/qnaDetail";
+	}
+	
+	// admin - QnA 게시글 답변작성 -> 수정보다는 추가 답변을 작성하는 게 좋을수도 
+	@PostMapping("/admin/qnaAnswer")
+	public String qnaAnswer(@ModelAttribute Question question) {
+		qService.registerAnswer(question);
+		return "/admin/qna/adminQna"; // 일단은 목록으로 돌아가게 했으나 Ajax를 사용하여 바로 확인하게 할수도 
+	}
+	
+	// 삭제는 고민..
 	/**
 	 * 신고관리
 	 */
 	
-	// admin - 신고관리
+	// admin - 신고관리 -> 조치 했는지 표시 고민..
 	@GetMapping("/admin/admin-report")
-	public String reportList() {
-		return "/admin/adminReport";
+	public String reportList(@RequestParam(value="page", required=false) Integer page,
+							Model model) {
+		
+		// admin- 신고관리 - 커뮤니티 - 신고게시글 리스트 불러오기
+		// 일단은 충돌우려로 adminService에씀
+		
+		///////////////////////////////////////////////////////////////////////// -> 일단은 전체 불러오기했음 나중에 쿼리 변경해서 연결
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = commService.getTotalCount("", "");
+		int boardLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		
+		// 23/5 = 4.8 + 0.9 = 5(.7)
+		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+		endNavi = maxPage;
+		}
+		
+		List<Comm> reportList = commService.printAllBoard(currentPage, boardLimit);
+		if (!reportList.isEmpty()) {
+			model.addAttribute("urlVal","admin-report");
+			model.addAttribute("maxPage",maxPage);
+			model.addAttribute("cuurentPage", currentPage);
+			model.addAttribute("startNavi", startNavi);
+			model.addAttribute("endNavi", endNavi);
+			model.addAttribute("reportList", reportList);
+		}
+		
+		return "/admin/report/adminReport";
 	}
+	
+	// 신고 내용 보기 
+	@GetMapping("/admin/reportDetail")
+	public String reportDetail(@RequestParam("boardNo") Integer boardNo, Model model) {
+		Comm comm = commService.printOneByNo(boardNo);
+		model.addAttribute("comm", comm);
+		return "/admin/report/adminReportDetail";
+	}
+	
+	// 처벌페이지
+	@GetMapping("/admin/punishPage")
+	public String punishPage(Model model, @RequestParam("commWriter") String commWriter) {
+		model.addAttribute("commWriter", commWriter);
+		return "/admin/report/adminJudgementPage";
+	}
+	
+	// 유저에게 처벌 내리기 -> 처벌 페이지 만들기
+	@PostMapping("/admin/punish")
+	public String punishUser(@RequestParam("punishment") String punishment,
+							@RequestParam("userNickname") String userNickname) {
+		// 처벌의 내용(일단은 커뮤니티 접근금지or글쓰기금지//회원로그인금or탈퇴)이  -> 시큐리티 기능을 이용하면 좋을거같음 
+		// 컨트롤러로 넘어옴 
+		// 서비스로 보냄 
+		
+		String result = adminService.punishUser(punishment, userNickname);
+		
+		// 이후 상황은 추가하던가 함 
+	
+		return "/admin/reportDetail";
+	}
+	
+	 
 	
 	
 	

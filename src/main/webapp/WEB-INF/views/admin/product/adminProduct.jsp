@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
 <body>
-	<jsp:include page="../admin/adminHeader.jsp"></jsp:include>
+	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
 			여기는 사이드바
@@ -57,30 +58,68 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h2>관리자님 안녕하세요.</h2>
-			<h5>관리자 메뉴입니다.</h5>
-			<h5>원하는 메뉴를 왼쪽에서 선택해주세요.</h5>
-			<p>오늘의 주요 업무</p>
-			<p>문의 n건, 처리 n-m건</p>
-			</div>
+			<h1>상품 관리</h1>
+			<table border="1" align="center">
+				<thead>
+					<tr>
+						<th></th>
+						<th>상품번호</th>
+						<th>책 제목</th>
+						<th>저자</th>
+						<th>출판사</th>
+						<th>수정</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${bookList }" var="bookList" varStatus="i">
+					<tr>
+						<td><input type="checkbox"></td>
+						<td>${bookList.bookNo }</td>
+						<td>
+						<a href="/book/detailView.kh?bookNo=${bookList.bookNo }">
+						${bookList.bookTitle }
+						</a>
+						</td>
+						<td>${bookList.bookWriter }</td>
+						<td>${bookList.publisher }</td>
+						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<table>
+			        <tr align="center" height="20">
+			            <td colspan="6">
+			                <c:if test="${currentPage != 1}">
+			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">[이전]</a>
+			                </c:if>
+			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
+			                    <c:if test="${currentPage eq p }">
+			                        <b>${p}</b> 
+			                    </c:if>
+			                    <c:if test="${currentPage ne p }">
+			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+			                    </c:if>
+			                </c:forEach>
+			            	<c:if test = "${currentPage < maxPage }">
+			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">[다음]</a>
+			            	</c:if>
+			            </td>
+		        	</tr>
+			</table>
+			<button onclick="newBook();">상품 등록</button>
+			<button>상품 삭제</button>
+
+
+
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
 	<footer> </footer>
 	<script>
-	function readFile(input){
-  		if(input.files && input.files[0]){
-  			var reader = new FileReader();
-  			reader.onload = function(e){
-  				document.getElementById('preview').src = e.target.result;
-  			};
-  			reader.readAsDataURL(input.files[0]);
-  		}else{
-  			document.getElementById('preview').src = "";
-  		}
-  	}
-	
-	
+	function newBook(){
+		location.href = "/admin/admin-productForm";
+	}
 	</script>
 </body>
 </html>

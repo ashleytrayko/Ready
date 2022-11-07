@@ -3,6 +3,7 @@ package com.kh.ready.user.service;
 import java.security.Principal;
 import java.util.List;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
 
@@ -31,5 +32,11 @@ public interface AdminService {
 	
 	// 공지 수정
 	public String modifyNotice(Notice notice);
+	
+	// 신고글 전체 조회
+	public List<Comm> showAllReport();
+	
+	// 처벌등록 
+	public String punishUser(String punishment, String userNickname);
 
 }
