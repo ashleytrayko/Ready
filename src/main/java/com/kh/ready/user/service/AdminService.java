@@ -37,6 +37,6 @@ public interface AdminService {
 	public List<Comm> showAllReport();
 	
 	// 처벌등록 
-	public String punishUser(String punishment, String userId);
+	public String punishUser(String punishment, String userNickname);
 
 }

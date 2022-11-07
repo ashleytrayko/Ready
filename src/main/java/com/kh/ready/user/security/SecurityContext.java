@@ -35,7 +35,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 		http.csrf().disable();
 		http.authorizeRequests()
 				.antMatchers("/","/resources/**","/common/**","/book/**","/comm/list.kh","/que/list.kh").permitAll() // 모든 사용자가 접근가능
-				.antMatchers("/user/**","/cart/**","/order/**","/comm/**","/que/**").authenticated() // 권한이 있는 유저만 접근가능
+				.antMatchers("/user/**","/cart/**","/order/**","/comm/**","/que/**").hasAnyRole("ROLE_USER","ROLE_ADMIN") // 권한이 있는 유저만 접근가능
 				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ADMIN 권한가진 유저만 접근 가능
 				.anyRequest().permitAll() // 모든 요청에 권한 확인
 			.and()

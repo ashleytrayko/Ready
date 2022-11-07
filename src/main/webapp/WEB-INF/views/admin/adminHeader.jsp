@@ -101,6 +101,8 @@
         	</c:when>
 			<c:otherwise>
 				<ul class="nav">
+					<li class="nav-item"><a href="/admin"
+							class="nav-link link-dark px-2">관리자페이지</a></li>
 					<li class="nav-item"><a href="/logout"
 						class="nav-link link-dark px-2">로그아웃</a></li>
 				</ul>
@@ -111,7 +113,7 @@
     <header class="py-3 mb-4 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
         <a
-          href="/comm/list.kh"
+          href="/"
           class="d-flex mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
         >
           <span class="fs-4 center">

@@ -97,18 +97,26 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public String punishUser(String punishment, String userId) {
-		// 유저 정보를 가져옴 
-		User user = userRepository.getUserById(userId);
-		user.setUserRole(punishment);
-		// role을 추가하든 혹은 상태컬럼을 추가해서 변경처리
-		int result = adminRepository.updateUserState(user);
-		if(result >= 1) {
-			return "success";
+	public String punishUser(String punishment, String userNickname) {
+		if(punishment.equals("suspend")) {
+			//ROLE_BAD -> 해서 글쓰기라든지를 막음
+			int result = adminRepository.updateBadUser(userNickname);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		}else if(punishment.equals("getout")) {
+			// enabled -> n 해서 로그인을 막음
+			int result = adminRepository.kickOutUser(userNickname);
+			if(result > 0) {
+				return "success";
+			}else {
+				return "fail";
+			}
 		}else {
-			return "fail";
+			return "error";
 		}
-		
 	}
 
 

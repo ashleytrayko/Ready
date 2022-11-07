@@ -31,7 +31,7 @@
 	</insert>
 	
 	<select id="selectOneUser" parameterType="String" resultMap="userResultMap">
-		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
+		SELECT * FROM USER_TBL WHERE USER_ID = #{userId} AND ENABLED = 'Y'
 	</select>
 	
 	<select id="selectUserByEmail" parameterType="String" resultMap="userResultMap">
@@ -52,5 +52,13 @@
 	
 	<update id="updatePassword">
 		UPDATE USER_TBL SET USER_PASSWORD = #{newEncodedPassword} WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
+	</update>
+	
+	<update id="updateBadUser">
+		UPDATE USER_TBL SET USER_ROLE = 'ROLE_BAD' WHERE USER_NICKNAME = #{userNickname}
+	</update>
+	
+	<update id="kickOutUser">
+		UPDATE USER_TBL SET ENABLED = 'N' WHERE USER_NICKNAME = #{userNickname}
 	</update>
 </mapper>

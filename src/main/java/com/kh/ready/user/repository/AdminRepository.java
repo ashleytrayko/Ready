@@ -27,5 +27,8 @@ public interface AdminRepository {
 
 	public List<Comm> selectAllReport();
 
-	public int updateUserState(User user);
+	public int updateBadUser(String userNickname);
+
+	public int kickOutUser(String userNickname);
+
 }

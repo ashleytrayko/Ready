@@ -73,9 +73,16 @@ public class AdminRepositoryImpl implements AdminRepository{
 	}
 
 	@Override
-	public int updateUserState(User user) {
-		int result = session.update("AdminMapper.updateBadUser", user);
+	public int updateBadUser(String userNickname) {
+		int result = session.update("UserMapper.updateBadUser", userNickname);
 		return result;
 	}
+
+	@Override
+	public int kickOutUser(String userNickname) {
+		int result = session.update("UserMapper.kickOutUser", userNickname);
+		return result;
+	}
+
 
 }

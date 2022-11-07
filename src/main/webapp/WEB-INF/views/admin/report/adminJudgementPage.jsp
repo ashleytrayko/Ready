@@ -59,47 +59,27 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>신고 관리</h1>
-			<table border="1" align="center">
-				<thead>
-					<tr>
-						<th></th>
-						<th>글번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>등록시간</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${reportList }" var="reportList" varStatus="i">
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>${reportList.boardNo}</td>
-						<td><a href="/admin/reportDetail?boardNo=${reportList.boardNo}">${reportList.commTitle }</a></td>
-						<td>${reportList.commWriter }</td>
-						<td>${reportList.cUpdateDate }</td>
-					</tr>
-					</c:forEach>
-					<tr align="center" height="20">
-						<td colspan="7">
-							<c:if test="${currentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
-							</c:if>
-							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
-								<c:if test="${currentPage eq p }">
-									<b>${p }</b>
-								</c:if>
-								<c:if test="${currentPage ne p }">
-									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
-								</c:if>
-							</c:forEach>
-							<c:if test="${maxPage > currentPage }">
-								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
-							</c:if>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<h1>판결 페이지</h1>
+			<div class="container">
+				<form action="/admin/punish" method="post">
+					<div class="form-group">
+						<label for="userId">닉네임</label> 
+						<input type="text" class="form-control" id="userNickname" name="userNickname" value="${commWriter }">
+					</div>
+					<div class="form-group">
+						<label for="punishment">처벌내용</label>
+						<select name="punishment">
+							<option value="suspend">글쓰기 정지</option>
+							<option value="getout">강제탈퇴</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="">처벌사유</label>
+						<textarea rows="10" cols="50" name="punishReason"></textarea>
+					</div>
+					<button type="submit">판결</button>
+				</form>
+			</div>
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
