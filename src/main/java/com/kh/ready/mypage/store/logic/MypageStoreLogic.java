@@ -36,4 +36,16 @@ public class MypageStoreLogic implements MypageStore{
 		return user;
 	}
 
+	@Override
+	public int updateInfo(User user, SqlSessionTemplate session) {
+		int result = session.update("MypageMapper.updateUser", user);
+		return result;
+	}
+
+	@Override
+	public User getUserByNickname(String userNickname, SqlSessionTemplate session) {
+		User user = session.selectOne("MypageMapper.selectUserByNickname", userNickname);
+		return user;
+	}
+
 }

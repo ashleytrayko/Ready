@@ -17,4 +17,8 @@ public interface MypageStore {
 
 	User selectOneUser(String userId, SqlSessionTemplate session);
 
+	int updateInfo(User user, SqlSessionTemplate session);
+
+	User getUserByNickname(String userNickname, SqlSessionTemplate session);
+
 }

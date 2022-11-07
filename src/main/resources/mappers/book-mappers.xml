@@ -19,6 +19,7 @@
 		<result property="publisher" 	column="BOOK_PUBLISHER"/>
 		<result property="saleCount"	column="SALE_COUNT"/>
 		<result property="scoreAvg"		column="SCORE_AVG"/>
+		<collection property="survey" resultMap="surveyResultMap"></collection>
 	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultMap">
@@ -31,6 +32,17 @@
 		<result property="enrollDate" 		column="ENROLL_DATE"/>
 		<result property="updateDate" 		column="UPDATE_DATE"/>
 		<collection property="book" resultMap="bookResultMap"></collection>
+	</resultMap>
+	
+	<resultMap type="Survey" id="surveyResultMap">
+		<id 	property="userId" 		column="USER_ID"/>
+  		<result property="answerGender" column="ANSWER_GENDER"/>
+  		<result property="answerLove" 	column="ANSWER_LOVE"/>
+  		<result property="answerHobby" 	column="ANSWER_HOBBY"/>
+  		<result property="answerReason" column="ANSWER_REASON"/>
+  		<result property="answerWriter" column="ANSWER_WRITER"/>
+  		<result property="enrollDate" 	column="ENROLL_DATE"/>
+  		<result property="updateDate" 	column="UPDATE_DATE"/>
 	</resultMap>
 	
 	<insert id="insertBook">
@@ -132,7 +144,31 @@
 	</select>
 		
 	<select id="selectRecommendBook" resultMap="bookResultMap">
-		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || SURVEY_TBL.ANSWER_HOBBY || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		SELECT * FROM BOOK_TBL 
+		<if test='answerGender.toString() == "남"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '액션' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerGender.toString() =="여"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '뷰티' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerLove.toString() =="family"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '어린이' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerLove.toString() == "married"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '유아' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerHobby.toString() == "요리"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '요리' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerHobby.toString() == "여행"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '여행' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerHobby.toString() == "음악"'>
+		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '음악' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test="answerWriter != null">
+		JOIN SURVEY_TBL ON BOOK_WRITER LIKE '%' || '#{answerWriter}' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
 	</select>
 	
 	<select id="selectNovel" resultMap="bookResultMap">	

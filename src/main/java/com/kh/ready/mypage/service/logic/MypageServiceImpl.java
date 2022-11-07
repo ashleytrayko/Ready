@@ -42,4 +42,20 @@ public class MypageServiceImpl implements MypageService{
 		return user;
 	}
 
+	@Override
+	public int modifyInfo(User user) {
+		int result = mStore.updateInfo(user, session);
+		return result;
+	}
+
+	@Override
+	public String findUserByNickname(String userNickname) {
+		User user = mStore.getUserByNickname(userNickname, session);
+		if(user != null) {
+			return "exist";
+		} else {
+			return "itsOk";	
+		}
+	}
+
 }

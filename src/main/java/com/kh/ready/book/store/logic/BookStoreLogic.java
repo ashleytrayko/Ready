@@ -127,8 +127,8 @@ public class BookStoreLogic implements BookStore{
 	}
 
 	@Override
-	public List<Book> selectRecommendBook(SqlSessionTemplate session) {
-		List<Book> bList3 = session.selectList("BookMapper.selectRecommendBook");
+	public List<Book> selectRecommendBook(SqlSessionTemplate session,String userId) {
+		List<Book> bList3 = session.selectList("BookMapper.selectRecommendBook", userId);
 		return bList3;
 	}
 

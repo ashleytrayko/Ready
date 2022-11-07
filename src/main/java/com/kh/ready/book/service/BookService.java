@@ -37,7 +37,7 @@ public interface BookService {
 
 	public List<Book> printAllByCategoryBestLine(String category);
 
-	public List<Book> printRecommendBook();
+	public List<Book> printRecommendBook(String userId);
 
 	public List<Book> printNovel();
 
