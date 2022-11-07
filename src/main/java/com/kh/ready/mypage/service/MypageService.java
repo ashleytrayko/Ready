@@ -15,4 +15,8 @@ public interface MypageService {
 
 	User printOneUser(String userId);
 
+	int modifyInfo(User user);
+
+	String findUserByNickname(String userNickname);
+
 }

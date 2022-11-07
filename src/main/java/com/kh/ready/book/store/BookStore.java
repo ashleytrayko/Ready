@@ -38,7 +38,7 @@ public interface BookStore {
 
 	List<Book> selectAllByCategoryBestLine(SqlSessionTemplate session, String category);
 
-	List<Book> selectRecommendBook(SqlSessionTemplate session);
+	List<Book> selectRecommendBook(SqlSessionTemplate session, String userId);
 
 	List<Book> selectNovel(SqlSessionTemplate session);
 

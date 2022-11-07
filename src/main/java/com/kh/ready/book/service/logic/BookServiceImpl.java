@@ -114,8 +114,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<Book> printRecommendBook() {
-		List<Book> bList3 = bStore.selectRecommendBook(session);
+	public List<Book> printRecommendBook(String userId) {
+		List<Book> bList3 = bStore.selectRecommendBook(session, userId);
 		return bList3;
 	}
 

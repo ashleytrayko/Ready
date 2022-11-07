@@ -62,6 +62,33 @@
 					</div>
 				</c:forEach>
 				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				<c:if test="${!empty bList3 && !empty principal }">
+				<div>
+					<h5>READ'Y 추천도서</h5>
+					<a href = "/book/category.kh?category=Best" class="more">더보기</a>
+				</div>
+				<c:forEach items="${bList3 }" var="book" end="4">
+					<div class="card" id="book-area">
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail">
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
+							<div class="card-body">
+								<c:choose>
+                            		<c:when test="${fn:length(book.bookTitle) gt 20 }">
+                            			<c:out value="${fn:substring(book.bookTitle, 0, 19) }...">
+                            			</c:out>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:out value="${book.bookTitle }">
+                            			</c:out>
+                            		</c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            	</c:choose>	
+							</div><br>
+						</a>
+					</div>
+				</c:forEach>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+				</c:if>
 				<div>
 					<h5>READ'Y 신작</h5>
 					<a href = "/book/category.kh?category=New" class="more">더보기</a>
