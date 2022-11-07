@@ -17,7 +17,7 @@
 <style>
 </style>
 <body>
-    <body>
+<jsp:include page="../main/header.jsp"></jsp:include>
         <div id="order-title">
             <h1 id="order-text">ORDER COMPLETE</h1>
             <img src="../resources/images/cart_order/c-step03.png" >
@@ -139,11 +139,10 @@
                 </div>
               </div>
             </div>
-
         <div class="order-data-list">
             <table id="order-Info"> 
                 <thead>
-                    <tr id="">
+                    <tr>
                         <th id="orderinfo-table-left">주문 수량</th>
                         <th class="orderinfo-table-header">주문 금액 합계</th>
                         <th class="orderinfo-table-header">배송비</th>

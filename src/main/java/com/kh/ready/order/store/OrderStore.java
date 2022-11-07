@@ -23,7 +23,9 @@ public interface OrderStore {
 
 	Order getOrderInfoByOrderId(String orderId);
 
-	int updateUserPurchase(Order order);
+	int updateUserPurchase(String userId, int totalPurchase, int mileageSum);
+
+	User getUserInfo(String userId);
 
 
 }
