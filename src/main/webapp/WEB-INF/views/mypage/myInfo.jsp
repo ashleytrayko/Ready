@@ -157,7 +157,26 @@
 				$(".modal-body").html("이미 사용중인 닉네임입니다. 다시 확인해주세요.")
 				$("#exampleModal").modal('show');
 				return false;
-			}
+			} else if(userPassword === ''){
+				$(".modal-body").html("비밀번호를 입력해주세요.")
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPasswordCheck === ''){
+				$(".modal-body").html("비밀번호를 확인해주세요.")
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPostcode === '' || userAddress === '' || userDetailAddress === ''){
+				$(".modal-body").html("주소를 입력해주세요.")
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPhone === ''){
+				$(".modal-body").html("전화번호를 입력해주세요.")
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userNickname === ''){
+				$(".modal-body").html("닉네임을 입력해주세요.")
+				$("#exampleModal").modal('show');
+				return false;
 		})
 		
 		$("#userPhone").keyup(function(e){

@@ -115,12 +115,12 @@
 	<select id="selectTotalBCount" resultType="_int">
 		SELECT COUNT(*) FROM COMMUNITY_TBL
 		<where>
-			USER_ID = #{userId }
+			COMM_ID = #{userId }
 		</where>
 	</select>
 	
 	<select id="selectMyBoard" resultMap="commResultMap">
-		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' AND USER_ID = #{userId }
+		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' AND COMM_ID = #{userId }
 	</select>
 	
 	<select id="selectMyOrder" resultMap="OrderResultMap">

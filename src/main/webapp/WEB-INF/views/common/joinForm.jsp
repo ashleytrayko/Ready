@@ -144,7 +144,7 @@ span.error {
 			$("#exampleModal").modal('show');
 			return false;
 		}else if(userPasswordCheck === ''){
-			$(".modal-body").html("비밀번호를 학인해주세요.")
+			$(".modal-body").html("비밀번호를 확인해주세요.")
 			$("#exampleModal").modal('show');
 			return false;
 		}else if(userName === ''){

@@ -55,7 +55,7 @@
         							<h5 class="card-title"><a href="/book/detailView.kh?bookNo=${book.bookNo }">${book.bookTitle }</a></h5>
         							<p class="card-text"><small class="text-muted">${book.publisher }</small></p>
        								<p class="card-text">판매가 : <fmt:formatNumber type="number" value="${book.priceSales }" pattern="#,###"/> 원</p>
-       								<p class="card-text">평점 : ★★★★☆(4.3)</p>
+       								<p class="card-text">평점 : ${book.scoreAvg }</p>
        								<p class="card-text"><small class="text-muted">적립금 : <fmt:formatNumber type="number" value="${book.mileage }" pattern="#,###"/>원</small></p>
       							</div>
     						</div>
