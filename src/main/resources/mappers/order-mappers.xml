@@ -19,6 +19,7 @@
 		<result property="orderDate" 		column="ORDER_DATE"/>
 		<result property="orderId" 		column="ORDER_ID"/>
 		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="totalPrice" column="TOTAL_PRICE"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
  		<collection property="cart" resultMap="CartResultMap"></collection>
 	</resultMap>
@@ -81,7 +82,7 @@
 	</delete>
 	
 	<insert id="insertOrder">
-		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId}, #{productPrice})
+		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId}, #{productPrice}, #{totalPrice})
 	</insert>
 	
 	<select id="selectOneOrderByOrderId" resultMap="OrderResultMap">

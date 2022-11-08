@@ -166,3 +166,11 @@ p {
     padding-right: 1.5rem;
     padding-top: 1.5rem;
 }
+.div-confirmPurchase{
+	width : 1400px;
+    padding-top: 10px;
+    padding-left : 250px;
+    padding-right : 250px;
+    margin : 0 auto;
+    text-align: right;
+}

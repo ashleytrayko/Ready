@@ -169,6 +169,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="div-confirmPurchase">
+            <button class="btn btn-primary btm-btn" onclick="confirmPurchase();">구매 확정</button>
+       	</div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn">메인으로</button>
             <button class="btn btn-primary btm-btn" onclick="history.go(-3);">계속 쇼핑하기</button>
@@ -184,6 +187,18 @@
 		$("#payMethod").val("카카오 페이");
 	} else if(paymethod == "trans"){
 		$("#payMethod").val("실시간 계좌 이체");
+	}
+	
+	function confirmPurchase(){
+		const plusMileage = ${mileageSum};
+		const orderId = ${orderInfo.orderId };
+		
+		console.log(orderId);
+		
+/* 		$.ajax({
+			url : "/order/confirmPurchase",
+			type : ""
+		}) */
 	}
 
 </script>

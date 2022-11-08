@@ -21,16 +21,16 @@ public class Order {
 	private Date orderDate;
 	private String orderId;
 	private int productPrice;
+	private int totalPrice; 
 	
 	private Book book;
 	private Cart cart;
 	
 	public Order() {}
 
-
 	public Order(int orderNo, Integer bookNo, String userId, Integer productCount, String orderRName,
 			String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3, String paymentMethod,
-			String orderState, Date orderDate, String orderId, int productPrice, Book book, Cart cart) {
+			String orderState, Date orderDate, String orderId, int productPrice, int totalPrice, Book book, Cart cart) {
 		super();
 		this.orderNo = orderNo;
 		this.bookNo = bookNo;
@@ -46,11 +46,10 @@ public class Order {
 		this.orderDate = orderDate;
 		this.orderId = orderId;
 		this.productPrice = productPrice;
+		this.totalPrice = totalPrice;
 		this.book = book;
 		this.cart = cart;
 	}
-
-
 
 	public int getOrderNo() {
 		return orderNo;
@@ -156,6 +155,22 @@ public class Order {
 		this.orderId = orderId;
 	}
 
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	public Book getBook() {
 		return book;
 	}
@@ -172,26 +187,15 @@ public class Order {
 		this.cart = cart;
 	}
 
-	
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
-
 	@Override
 	public String toString() {
 		return "Order [orderNo=" + orderNo + ", bookNo=" + bookNo + ", userId=" + userId + ", productCount="
 				+ productCount + ", orderRName=" + orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1="
 				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderAddress3=" + orderAddress3
 				+ ", paymentMethod=" + paymentMethod + ", orderState=" + orderState + ", orderDate=" + orderDate
-				+ ", orderId=" + orderId + ", productPrice=" + productPrice + ", book=" + book + ", cart=" + cart + "]";
+				+ ", orderId=" + orderId + ", productPrice=" + productPrice + ", totalPrice=" + totalPrice + ", book="
+				+ book + ", cart=" + cart + "]";
 	}
 
-	
-	
+
 }

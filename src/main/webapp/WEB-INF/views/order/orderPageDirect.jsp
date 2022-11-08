@@ -100,7 +100,7 @@
                         <p>연락처</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" placeholder="01000000000" value="${userInfo.userPhone }" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" value="${userInfo.userPhone }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -108,7 +108,7 @@
                         <p>E-mail</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfo.userEmail }">
+                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" style="width:200px" value="${userInfo.userEmail }">
                     </td>
                 </tr>
                 <tr>
@@ -117,7 +117,7 @@
                     </td>
                     <td class="addr-info-td" style="width : 400px;">
                     	<div class="div-floatLeft">
-                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfo.userPostcode }" placeholder="우편번호" style="width:90px;">
+                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfo.userPostcode }" style="width:90px;">
                         </div>
                         <div class="div-floatLeft">
                         	<button class="btn btn-secondary searchAddr-btn" onclick="byuerAddrSearch();" style="font-size :12px;">우편번호 검색</button>
@@ -159,7 +159,7 @@
                     </td>
                     <td>
                     	<div class="div-floatLeft">
-                        	<input class="form-control form-control-sm name-phone" id="reciverName" type="text" placeholder="일용자" value="" style="width:130px">
+                        	<input class="form-control form-control-sm name-phone" id="reciverName" type="text" placeholder="이름" value="" style="width:130px">
                     	</div>
                     	<div class="div-floatLeft">
                         	<button class="btn btn-secondary" id="infocopy-btn" onclick="copyInfo();">구매자정보 복사</button>
@@ -171,7 +171,7 @@
                         <p>연락처</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="reciverPhone" type="text" placeholder="01000000000" value="" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="reciverPhone" type="text" placeholder="전화번호" value="" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -179,7 +179,7 @@
                         <p>E-mail</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm Email" id="reciverEmail" type="text" placeholder="khuser01@iei.or.kr" style="width:200px" value="">
+                        <input class="form-control form-control-sm Email" id="reciverEmail" type="text" placeholder="이메일" style="width:200px" value="">
                     </td>
                 </tr>
                 <tr>
@@ -318,15 +318,21 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
-    function useMileage(totalPrice){
-
+	function useMileage(totalPrice){
+    	
+    	var currentMileage = +$("#currentMileage").val();
     	var useMileage = +$("#useMileage").val();
-    	var calPrice = totalPrice - useMileage;
-    	var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-    	$("#id-total-price").attr("value", calPrice2);
+    	
+    	if(currentMileage < useMileage) {
+    		alert("현재 보유한 적립금이 부족합니다!");
+    		return false;
+    	} else {
+    		var calPrice = totalPrice - useMileage;
+    		var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		
+    		$("#id-total-price").attr("value", calPrice2);    		
+    	}
     }
-    
     
     function requestPay(priceSum, title, totalCount, mileageSum) {
     	
@@ -358,6 +364,7 @@
             	productPrice : productPrice,
             	mileageSum : mileageSum,
             	useMileage : useMileage,
+            	totalPrice : totalPrice,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -384,7 +391,8 @@
 		            	reciverZoneCode : rsp.custom_data.reciverZoneCode,
 		            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
 		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr,
-		            	useMileage : rsp.custom_data.useMileage
+		            	useMileage : rsp.custom_data.useMileage,
+		            	totalPrice : rsp.custom_data.totalPrice
 					},
 					success : function(orderId){
 						location.href="/order/orderDetailView?orderId="+orderId;

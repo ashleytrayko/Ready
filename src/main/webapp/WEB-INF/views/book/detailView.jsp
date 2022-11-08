@@ -123,7 +123,7 @@
 						</div>
 						<div class="review-btn" align="center">
 							<c:if test="${principal.username eq review.userId }">
-								<button onclick="modifyView(this, '${review.reviewContents}', ${review.reviewNo }, ${review.bookNo });" class="btn btn-secondary">수정</button>
+								<button onclick="modifyView(this, '${review.reviewContents}', ${review.reviewNo }, ${review.bookNo });" class="btn btn-secondary" id="btn-mr">수정</button>
 								<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn btn-secondary">삭제</button>
 							</c:if>
 							<br>
@@ -156,6 +156,8 @@
 			$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
 			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");'>수정</button>");
 			console.log($(obj).parent().parent().after($div));
+			const target = document.getElementById('btn-mr');
+	         target.disabled = true;
 		}
 		
 		function modifyReview(obj, reviewNo, bookNo) {
@@ -191,7 +193,14 @@
 		}
 		
 		$("#insertCart-btn").click(function(){
-			      
+			
+			var login = "${principal }";
+			
+			if(login == "") {
+				alert("로그인이 필요합니다");
+				return false;
+			}
+			
 			var bookNo = $("#bookNo").val();
 			var productPrice = $("#productPrice").val();
 			var productCount = $("#productCount").val();
