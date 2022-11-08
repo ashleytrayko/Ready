@@ -28,3 +28,11 @@
 .category-select {
 	background-color:#D8BB9C;
 }
+.btn-right{
+	display:flex;
+	justify-content:right;
+	
+}
+button + button {
+	margin-left:10px;
+}

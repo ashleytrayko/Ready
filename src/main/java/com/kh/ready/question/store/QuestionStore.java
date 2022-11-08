@@ -30,8 +30,11 @@ public interface QuestionStore {
 
 	List<Question> selectFAQChange(SqlSession session, Question que);
 
+	List<Question> selectFAQEtc(SqlSession session, Question que);
+	
 	int selectManageTotalCount(SqlSession session, String searchCondition, String searchValue);
 
 	List<Question> selectManageBoard(SqlSession session, int currentPage, int boardLimit);
+
 
 }

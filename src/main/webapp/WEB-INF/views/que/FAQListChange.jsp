@@ -40,6 +40,7 @@
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq02.kh'">상품관련</div>
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq03.kh'">배송관련</div>
 						<div class="faq-category category-select" colspan="2" onclick="location.href='#'">교환/환불</div>
+						<div class="faq-category" colspan="2" onclick="location.href='/que/faq05.kh'">기타문의</div>
 				</div>
 			   <ul class="accordion">
 				<c:if test="${!empty qList }">
@@ -50,21 +51,11 @@
 			      </li>
 					</c:forEach>
 				</c:if>
-			      <!-- <li class="item">
-			         <h2 class="accordionTitle">Paris <span class="accIcon"></span></h2>
-			         <div class="text">Paris is the capital and most populous city of France, with an area of 105 square kilometres (41 square miles) and a population of 2,206,488. Since the 17th century, Paris has been one of Europe's major centres of finance, commerce, fashion, science, and the arts.</div>
-			      </li>
-			      <li class="item">
-			         <h2 class="accordionTitle">Barcelona <span class="accIcon"></span></h2>
-			         <div class="text">Barcelona is a city in Spain. It is the capital and largest city of Catalonia, as well as the second most populous municipality of Spain. With a population of 1.6 million within city limits, its urban area extends to numerous neighbouring municipalities within the Province of Barcelona and is home to around 4.8 million people.</div>
-			      </li>
-			      <li class="item">
-			         <h2 class="accordionTitle">Milan <span class="accIcon"></span></h2>
-			         <div class="text">Milan is a city in northern Italy, capital of Lombardy, and the second-most populous city in Italy after Rome, with the city proper having a population of 1,372,810 while its metropolitan area has a population of 3,242,820.</div>
-			      </li> -->
 			   </ul>
-				<button onclick="location.href='/que/myList.kh'">내 문의글</button>
-				<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+				<div class="btn-right">
+					<button onclick="location.href='/que/myList.kh'">내 문의글</button>
+					<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+			   	</div>
 			</div>
 			</section>
 		</div>

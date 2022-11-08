@@ -210,6 +210,19 @@ public class QuestionController {
 		return mv;
 	}
 	
+	// FAQ 자주찾는 질문 기타문의
+	@RequestMapping(value="/que/faq05.kh", method=RequestMethod.GET)
+	public ModelAndView viewEtcFAQ(
+			ModelAndView mv) {
+		Question que = new Question();
+		List<Question> qList = qService.printFAQEtc(que);
+		if (!qList.isEmpty()) {
+			mv.addObject("qList", qList);
+		}
+		mv.setViewName("/que/FAQListEtc");
+		return mv;
+	}
+	
 	/**
 	 * 질문글 확인 관리자용
 	 * @param mv
