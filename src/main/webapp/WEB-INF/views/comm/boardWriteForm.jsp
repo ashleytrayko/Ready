@@ -37,6 +37,7 @@
 					<tr>
 						<td>작성자</td>
 						<td><input type="text" name="commWriter" value="${principal.user.userNickname }" readonly class="qTitle"></td>
+						<input type="hidden" name="commId" value="${principal.user.userId }" readonly>
 					</tr>
 					<tr>
 						<td>내용</td>

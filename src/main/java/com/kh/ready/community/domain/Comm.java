@@ -16,6 +16,7 @@ public class Comm {
 	private String cStatus;			// 게시글 상태
 	private int cLike;				// 추천수
 	private int cCount;				// 조회수
+	private String commId;			// 아이디
 	
 	
 	public Comm() {
@@ -26,7 +27,7 @@ public class Comm {
 
 	public Comm(int boardNo, String commWriter, String commTitle, String commContents, String commFilename,
 			String commFileRename, String commFilePath, Date cCreateDate, Date cUpdateDate, String cStatus, int cLike,
-			int cCount) {
+			int cCount, String commId) {
 		super();
 		this.boardNo = boardNo;
 		this.commWriter = commWriter;
@@ -40,6 +41,7 @@ public class Comm {
 		this.cStatus = cStatus;
 		this.cLike = cLike;
 		this.cCount = cCount;
+		this.commId = commId;
 	}
 
 
@@ -163,13 +165,27 @@ public class Comm {
 	}
 
 
+	public String getCommId() {
+		return commId;
+	}
+
+
+	public void setCommId(String commId) {
+		this.commId = commId;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Comm [boardNo=" + boardNo + ", commWriter=" + commWriter + ", commTitle=" + commTitle
 				+ ", commContents=" + commContents + ", commFilename=" + commFilename + ", commFileRename="
 				+ commFileRename + ", commFilePath=" + commFilePath + ", cCreateDate=" + cCreateDate + ", cUpdateDate="
-				+ cUpdateDate + ", cStatus=" + cStatus + ", cLike=" + cLike + ", cCount=" + cCount + "]";
+				+ cUpdateDate + ", cStatus=" + cStatus + ", cLike=" + cLike + ", cCount=" + cCount + ", commId="
+				+ commId + "]";
 	}
+
+
+	
 	
 	
 }

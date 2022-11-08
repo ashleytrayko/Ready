@@ -15,6 +15,7 @@ public class Question {
 	private String qAnswer;			// 답변
 	private String qStatus;			// 답변여부
 	private String qCategory;		// 문의유형
+	private String queId;			// 아이디
 	
 	public Question() {
 		super();
@@ -23,7 +24,7 @@ public class Question {
 
 	public Question(int queNo, String queWriter, String queTitle, String queContents, String queFilename,
 			String queFileRename, String queFilePath, Date qEnrollDate, String qAnswer, String qStatus,
-			String qCategory) {
+			String qCategory, String queId) {
 		super();
 		this.queNo = queNo;
 		this.queWriter = queWriter;
@@ -36,6 +37,7 @@ public class Question {
 		this.qAnswer = qAnswer;
 		this.qStatus = qStatus;
 		this.qCategory = qCategory;
+		this.queId = queId;
 	}
 
 	public int getQueNo() {
@@ -126,13 +128,23 @@ public class Question {
 		this.qCategory = qCategory;
 	}
 
+	public String getQueId() {
+		return queId;
+	}
+
+	public void setQueId(String queId) {
+		this.queId = queId;
+	}
+
 	@Override
 	public String toString() {
 		return "Question [queNo=" + queNo + ", queWriter=" + queWriter + ", queTitle=" + queTitle + ", queContents="
 				+ queContents + ", queFilename=" + queFilename + ", queFileRename=" + queFileRename + ", queFilePath="
 				+ queFilePath + ", qEnrollDate=" + qEnrollDate + ", qAnswer=" + qAnswer + ", qStatus=" + qStatus
-				+ ", qCategory=" + qCategory + "]";
+				+ ", qCategory=" + qCategory + ", queId=" + queId + "]";
 	}
+
+	
 	
 	
 }

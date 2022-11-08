@@ -102,14 +102,14 @@ public class QuestionController {
 			, Principal principal
 			, @ModelAttribute Question que
 			, @RequestParam(value="page", required=false) Integer page) {
-//		String queWriter = principal.getName();
-//		que.setQueWriter();
+		String queWriter = principal.getName();
+		que.setQueWriter(queWriter);
 		// Question객체에 setter 메소드를 이용해서 queWriter에 principal.getName으로
 		// 현재 로그인중인 아이디의 정보를 저장
 		// queWriter가 작성한 글만 불러올 수 있도록 하기 위함.
 		/////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = qService.getMyCount("", "");
+		int totalCount = qService.getMyCount("", "", queWriter);
 		// queWriter가 작성한 글만 count되도록 객체를 넘겨줌
 		int boardLimit = 10;
 		int naviLimit = 5;
@@ -122,7 +122,7 @@ public class QuestionController {
 		if (maxPage < endNavi) {
 			endNavi = maxPage;
 		}
-		List<Question> qList = qService.printMyBoard(currentPage, boardLimit);
+		List<Question> qList = qService.printMyBoard(currentPage, boardLimit, queWriter);
 		if (!qList.isEmpty()) {
 			mv.addObject("urlVal", "myList");
 			mv.addObject("maxPage", maxPage);
@@ -130,7 +130,7 @@ public class QuestionController {
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
 			mv.addObject("qList", qList);
-//			mv.addObject("queWriter", queWriter);
+			mv.addObject("queWriter", queWriter);
 			// addObject를 써서 queWriter정보를 넘겨주고 서비스단과 스토어단에서도 받아줌
 		}
 		mv.setViewName("/que/myList");

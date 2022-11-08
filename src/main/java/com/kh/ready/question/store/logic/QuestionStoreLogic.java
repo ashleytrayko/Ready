@@ -37,21 +37,21 @@ public class QuestionStoreLogic implements QuestionStore{
 	}
 
 	@Override
-	public int selectMyCount(SqlSession session, String searchCondition, String searchValue) {
+	public int selectMyCount(SqlSession session, String searchCondition, String searchValue, String queWriter) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchValue", searchValue);
-//		paramMap.put("queWriter", queWriter);
+		paramMap.put("queWriter", queWriter);
 		// 로그인유저가 작성한 글만 불러올 수 있도록 paramMap으로 queWriter도 넘겨줌
 		int myCount = session.selectOne("QuestionMapper.selectMyCount", paramMap);
 		return myCount;
 	}
 
 	@Override
-	public List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit) {
+	public List<Question> selectMyBoard(SqlSession session, int currentPage, int boardLimit, String queWriter) {
 		int offset = (currentPage-1)*boardLimit;
 		RowBounds rowBounds = new RowBounds(offset, boardLimit);
-		List<Question> qList = session.selectList("QuestionMapper.selectMyBoard", null, rowBounds);
+		List<Question> qList = session.selectList("QuestionMapper.selectMyBoard", queWriter, rowBounds);
 		return qList;
 	}
 
