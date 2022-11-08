@@ -40,6 +40,7 @@
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq02.kh'">상품관련</div>
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq03.kh'">배송관련</div>
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq04.kh'">교환/환불</div>
+						<div class="faq-category" colspan="2" onclick="location.href='/que/faq05.kh'">기타문의</div>
 				</div>
 			   <ul class="accordion">
 				<c:if test="${!empty qList }">
@@ -51,11 +52,13 @@
 					</c:forEach>
 				</c:if>
 			   </ul>
-				<button onclick="location.href='/que/myList.kh'">내 문의글</button>
-				<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
-				<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
-				<button onclick="location.href='/que/manageList.kh'">문의글 관리</button>
-				</c:if>
+			   <div class="btn-right">
+					<button onclick="location.href='/que/myList.kh'">내 문의글</button>
+					<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
+					<button onclick="location.href='/que/manageList.kh'">문의글 관리</button>
+					</c:if>
+			   </div>
 			</div>
 			</section>
 		</div>

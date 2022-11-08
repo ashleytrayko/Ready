@@ -37,10 +37,10 @@
 			<div class="container">
 				<div class="category-box">
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq01.kh'">회원정보</div>
-						<div class="faq-category category-select" colspan="2" onclick="location.href='#'">상품관련</div>
+						<div class="faq-category" colspan="2" onclick="location.href='/que/faq02.kh'">상품관련</div>
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq03.kh'">배송관련</div>
 						<div class="faq-category" colspan="2" onclick="location.href='/que/faq04.kh'">교환/환불</div>
-						<div class="faq-category" colspan="2" onclick="location.href='/que/faq05.kh'">기타문의</div>
+						<div class="faq-category category-select" colspan="2" onclick="location.href='#'">기타문의</div>
 				</div>
 			   <ul class="accordion">
 				<c:if test="${!empty qList }">

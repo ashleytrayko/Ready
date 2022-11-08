@@ -30,9 +30,12 @@ public interface QuestionService {
 
 	List<Question> printFAQChange(Question que);
 
+	List<Question> printFAQEtc(Question que);
+
 	int getMangeTotalCount(String searchCondition, String searchValue);
 
 	List<Question> printManageBoard(int currentPage, int boardLimit);
+
 
 
 }

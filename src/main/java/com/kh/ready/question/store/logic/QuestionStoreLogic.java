@@ -84,6 +84,13 @@ public class QuestionStoreLogic implements QuestionStore{
 		List<Question> qList = session.selectList("QuestionMapper.selectFAQChange", que);
 		return qList;
 	}
+	
+	@Override
+	public List<Question> selectFAQEtc(SqlSession session, Question que) {
+		// TODO Auto-generated method stub
+		List<Question> qList = session.selectList("QuestionMapper.selectFAQEtc", que);
+		return qList;
+	}
 
 	@Override
 	public int selectManageTotalCount(SqlSession session, String searchCondition, String searchValue) {
@@ -101,5 +108,6 @@ public class QuestionStoreLogic implements QuestionStore{
 		List<Question> qList = session.selectList("QuestionMapper.selectManageBoard", null, rowBounds);
 		return qList;
 	}
+
 
 }

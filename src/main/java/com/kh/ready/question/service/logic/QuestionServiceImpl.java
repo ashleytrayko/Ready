@@ -77,6 +77,12 @@ public class QuestionServiceImpl implements QuestionService{
 		List<Question> qList = qStore.selectFAQChange(session, que);
 		return qList;
 	}
+	
+	@Override
+	public List<Question> printFAQEtc(Question que) {
+		List<Question> qList = qStore.selectFAQEtc(session, que);
+				return qList;
+	}
 
 	@Override
 	public int getMangeTotalCount(String searchCondition, String searchValue) {
@@ -89,5 +95,6 @@ public class QuestionServiceImpl implements QuestionService{
 		List<Question> qList = qStore.selectManageBoard(session, currentPage, boardLimit);
 		return qList;
 	}
+
 
 }

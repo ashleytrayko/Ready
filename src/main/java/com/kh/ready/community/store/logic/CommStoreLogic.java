@@ -89,8 +89,13 @@ public class CommStoreLogic implements CommStore{
 	@Override
 	public List<Comm> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage,
 			int boardLimit) {
-
-		return null;
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		List<Comm> cList = session.selectList("CommMapper.selectAllByValue", paramMap, rowBounds);
+		return cList;
 	}
 
 	@Override
