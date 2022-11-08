@@ -31,8 +31,8 @@
 		        		</button>
 		        		<div class="collapse" id="dashboard-collapse">
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">주문 내역</a></li>
-					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내가 쓴 글</a></li>
+					            <li><a href="/mypage/myOrder.kh" class="link-dark d-inline-flex text-decoration-none rounded">주문 내역</a></li>
+					            <li><a href="/mypage/myBoard.kh" class="link-dark d-inline-flex text-decoration-none rounded" type="submit">내가 쓴 글</a></li>
 					            <li><a href="/mypage/myReview.kh" class="link-dark d-inline-flex text-decoration-none rounded">내 후기</a></li>
 					            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">내 댓글</a></li>
 							</ul>

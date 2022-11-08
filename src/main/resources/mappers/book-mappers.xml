@@ -26,7 +26,7 @@
 		<id 	property="reviewNo" 		column="REVIEW_NO"/>
 		<result property="bookNo" 			column="BOOK_NO"/>
 		<result property="userId" 			column="USER_ID"/>
-		<result property="nickName" 		column="USER_NICKNAME"/>
+		<result property="userNickname" 		column="USER_NICKNAME"/>
 		<result property="score" 			column="SCORE"/>
 		<result property="reviewContents" 	column="REVIEW_CONTENTS"/>
 		<result property="enrollDate" 		column="ENROLL_DATE"/>
@@ -43,6 +43,27 @@
   		<result property="answerWriter" column="ANSWER_WRITER"/>
   		<result property="enrollDate" 	column="ENROLL_DATE"/>
   		<result property="updateDate" 	column="UPDATE_DATE"/>
+	</resultMap>
+	
+	<resultMap type="User" id="userResultMap">
+		<id 	property="userIndex" 			column="USER_INDEX"/>
+		<result property="userId"				column="USER_ID"/>
+		<result property="userPassword" 		column="USER_PASSWORD"/>
+		<result property="userName" 			column="USER_NAME"/>
+		<result property="userEmail"			column="USER_EMAIL"/>
+		<result property="userPostcode"			column="USER_POSTCODE"/>
+		<result property="userAddress" 			column="USER_ADDRESS"/>
+		<result property="userDetailAddress" 	column="USER_DETAIL_ADDRESS"/>
+		<result property="userPhone"			column="USER_PHONE"/>
+		<result property="userNickname"			column="USER_NICKNAME"/>
+		<result property="userPurchase"			column="USER_PURCHASE"/>
+		<result property="userTier"				column="USER_TIER"/>
+		<result property="userEnrollDate"		column="USER_ENROLL_DATE"/>
+		<result property="userReserves"			column="USER_RESERVES"/>
+		<result property="userBirthday"			column="USER_BIRTHDAY"/>
+		<result property="userAge"				column="USER_AGE"/>
+		<result property="userRole" 			column="USER_ROLE"/>
+		<result property="enabled" 				column="ENABLED"/>
 	</resultMap>
 	
 	<insert id="insertBook">
@@ -184,7 +205,7 @@
 	</select>
 	<!-- 리뷰관련 -->
 	<insert id="insertReview">
-		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{bookNo }, #{userId }, #{nickName }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
+		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{bookNo }, #{userId }, #{userNickname }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
 	</insert>
 	
 	<update id="updateReview">

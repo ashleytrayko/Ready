@@ -6,9 +6,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.mypage.domain.Survey;
 import com.kh.ready.mypage.service.MypageService;
 import com.kh.ready.mypage.store.MypageStore;
+import com.kh.ready.order.domain.Order;
 import com.kh.ready.user.domain.User;
 
 @Service
@@ -56,6 +58,24 @@ public class MypageServiceImpl implements MypageService{
 		} else {
 			return "itsOk";	
 		}
+	}
+
+	@Override
+	public int getTotalBCount(String userId) {
+		int totalBCount = mStore.selectTotalBCount(session, userId);
+		return totalBCount;
+	}
+
+	@Override
+	public List<Comm> printMyBoard(int currentPage, int boardLimit, String userId) {
+		List<Comm> cList = mStore.selectMyBoard(session, currentPage, boardLimit, userId);
+		return cList;
+	}
+
+	@Override
+	public List<Order> printMyOrder(String userId) {
+		List<Order> oList = mStore.selectMyOrder(session, userId);
+		return oList;
 	}
 
 }

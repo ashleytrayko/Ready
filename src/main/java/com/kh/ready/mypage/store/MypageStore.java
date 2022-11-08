@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.mypage.domain.Survey;
+import com.kh.ready.order.domain.Order;
 import com.kh.ready.user.domain.User;
 
 public interface MypageStore {
@@ -20,5 +22,11 @@ public interface MypageStore {
 	int updateInfo(User user, SqlSessionTemplate session);
 
 	User getUserByNickname(String userNickname, SqlSessionTemplate session);
+
+	int selectTotalBCount(SqlSessionTemplate session, String userId);
+
+	List<Comm> selectMyBoard(SqlSessionTemplate session, int currentPage, int boardLimit, String userId);
+
+	List<Order> selectMyOrder(SqlSessionTemplate session, String userId);
 
 }
