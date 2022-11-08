@@ -87,6 +87,7 @@ public class OrderController {
 												@RequestParam("productPriceArr[]") List<Integer> productPriceArr,
 												@RequestParam("mileageSum") int mileageSum,
 												@RequestParam("useMileage") int useMileage,
+												@RequestParam("totalPrice") int totalPrice,
 												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
@@ -127,6 +128,7 @@ public class OrderController {
 					order.setPaymentMethod(paymethod);
 					order.setOrderId(orderId);
 					order.setUserId(userId);
+					order.setTotalPrice(totalPrice);
 					
 					result = orderService.insertOrder(order);
 					
@@ -157,6 +159,7 @@ public class OrderController {
 	public String insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
 												@RequestParam("productPrice") int productPrice,
+												@RequestParam("totalPrice") int totalPrice,
 												@RequestParam("mileageSum") int mileageSum,
 												@RequestParam("reciverName") String reciverName,
 												@RequestParam("reciverPhone") String reciverPhone,
@@ -192,6 +195,7 @@ public class OrderController {
 			order.setPaymentMethod(paymethod);
 			order.setOrderId(orderId);
 			order.setUserId(userId);
+			order.setTotalPrice(totalPrice);
 			
 			orderService.insertOrder(order);
 			
@@ -199,9 +203,6 @@ public class OrderController {
 			int totalPurchase = user.getUserPurchase() + productPrice;
 			int usedMileage = user.getUserReserves() - useMileage;
 			orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
-			
-//			int totalMileage = user.getUserReserves() + mileageSum;
-//			orderService.updateUserPurchase(userId, totalPurchase, totalMileage);
 			
 			String getOrderId = order.getOrderId();
 			
@@ -222,6 +223,19 @@ public class OrderController {
 		mv.addObject("orderList", orderList);
 		mv.setViewName("/order/orderCompletePage");
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/order/confirmPurchase", method=RequestMethod.POST)
+	public int confirmPurchase(Principal principal, @RequestParam("plusMileage") int plusMileage) {
+		
+		String userId = principal.getName();
+		
+		User user = orderService.getUserInfo(userId);
+		int plusedMileage = user.getUserReserves() + plusMileage;
+		
+//		orderService.confirmPurchase(plusedMileage);
+		return 0;
 	}
 	
 }
