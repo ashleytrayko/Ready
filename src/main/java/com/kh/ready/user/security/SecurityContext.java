@@ -67,6 +67,6 @@ public class SecurityContext extends WebSecurityConfigurerAdapter{
 				.defaultSuccessUrl("/moreInfo")
 				.userInfoEndpoint()
 				.userService(principalOAuth2UserService);
-		
+		http.exceptionHandling().accessDeniedPage("/denied");
 	}
 }

@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container">
-		<img src="../resources/images/exception/page-not-found.png"/>
+		<img src="../resources/images/exception/something-went-wrong.png"/>
 	</div>
 </body>
 </html>

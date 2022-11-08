@@ -218,7 +218,7 @@ public class AdminController {
 		return "/admin/product/adminProductRegistForm";
 	}
 	
-	// 상품등록
+	// 상품등록 -> 수정
 	@PostMapping("/admin/registerProduct")
 	public String registerProduct(Book book) {
 		int result = bookService.registerBook(book);
@@ -242,26 +242,7 @@ public class AdminController {
 	 * QnA 관리
 	 */
 
-	// admin - QnA 관리
-	@GetMapping("/admin/admin-qna")
-	public String qnaList() {
-		List<Question> qList = qService.printAllQuestion(); // 답변등록안된 모든 게시글 불러오기
-		return "/admin/qna/adminQna";
-	}
-	
-	// admin - QnA 게시글 읽기
-	@GetMapping("/admin/adminQnaDetail") 
-	public String qnaDetail() {
-		Qna qna = qService.printOneQuestion(pk);
-		return	"/admin/qna/qnaDetail";
-	}
-	
-	// admin - QnA 게시글 답변작성 -> 수정보다는 추가 답변을 작성하는 게 좋을수도 
-	@PostMapping("/admin/qnaAnswer")
-	public String qnaAnswer(@ModelAttribute Question question) {
-		qService.registerAnswer(question);
-		return "/admin/qna/adminQna"; // 일단은 목록으로 돌아가게 했으나 Ajax를 사용하여 바로 확인하게 할수도 
-	}
+
 	
 	// 삭제는 고민..
 	/**
