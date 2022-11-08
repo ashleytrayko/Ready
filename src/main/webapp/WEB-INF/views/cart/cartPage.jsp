@@ -127,46 +127,67 @@
 <script>
 
 	$("#del-btn").click(function(){
+		
 		var confirm_val = confirm("정말 삭제하시겠습니까?");
 		  
 		if(confirm_val) {
-
 	    	var checkArr = [];
-	   
+	 
 	    	$("input[name='chBox']:checked").each(function(i){
 	    	    checkArr.push($(this).attr("data-cartNo"));
 	 		});
 
 		  	$.ajax({
-			  	url : "/cart/delete.ready",
+			  	url : "/cart/delete",
 			    type : "post",
 			    data : { 
 			    	checkArr : checkArr
 			    },
 			    success : function(){
-			    	location.href = "/cart/cartView.ready";
+			    	location.href = "/cart/cartView";
 			    },
 			    error : function(){
 			    	console.log('error');
 			    }
 		  	});
-	   } 
+	   }
 	});
+	
+	
 	
 	$(".quantity-btn").click(function(){
 		
 		var cartNo = $(this).attr("data-cartNo");
 		var productCount = $(this).prev().val();
+		var countControl = $("#countControl");
+		
+ 		if(productCount==""){
+			alert ("숫자를 입력해주세요");
+			countControl.focus();
+			return false;
+		} else {
+			var num_check=/^[0-9]*$/;
+			if(num_check.test(productCount)){
+				if(productCount > 99){
+					alert("99개 이상 주문할 수 없습니다.");
+					countControl.focus();
+					return false;
+				}
+			} else {
+				alert ("숫자만 입력할 수 있습니다.");
+				countControl.focus();
+			}
+		};
 		
 		$.ajax({
-			url : "/cart/modifyCount.ready",
+			url : "/cart/modifyCount",
 			type : "post",
 			data : {
 	            cartNo : cartNo,
 	            productCount : productCount
 			},
 			success : function(){
-				location.href = "/cart/cartView.ready";
+				location.href = "/cart/cartView";
 			},
 			error : function(){
 		    	console.log('error');

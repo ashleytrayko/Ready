@@ -192,29 +192,37 @@
 			}
 		}
 		
+		
 		$("#insertCart-btn").click(function(){
 			
 			var login = "${principal }";
-			
+
 			if(login == "") {
 				alert("로그인이 필요합니다");
 				return false;
 			}
 			
 			var bookNo = $("#bookNo").val();
-			var productPrice = $("#productPrice").val();
 			var productCount = $("#productCount").val();
 			      
 			$.ajax({
-				url : "/cart/insert.ready",
+				url : "/cart/insert",
 				type : "POST",
 				data : {
 					bookNo : bookNo,
-					productPrice : productPrice,
 					productCount : productCount
 				},
-				success : function(data) {
-					alert("장바구니 담기 성공");
+				success : function(result) {
+					if(result > 0){
+						var cartConfirm = confirm("장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?");
+						if(cartConfirm) {
+							location.href="/cart/cartView";
+						} else {
+							return false;
+						}
+					} else if(result == 0) {
+						alert("장바구니에 이미 있는 상품입니다.");
+					}
 				},
 				error : function() {
 					alert("장바구니 담기 실패");

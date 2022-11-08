@@ -328,9 +328,9 @@
     		return false;
     	} else {
     		var calPrice = totalPrice - useMileage;
-    		var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
-    		$("#id-total-price").attr("value", calPrice2);    		
+    		$("#id-total-price").attr("value", caledPrice);    		
     	}
     }
     
