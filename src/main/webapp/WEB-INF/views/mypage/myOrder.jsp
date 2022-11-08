@@ -32,6 +32,11 @@
 			</c:if>
 			<c:if test="${!empty oList}">
 				<c:forEach items="${oList }" var="order" varStatus="i">
+					<%-- <c:forEach items="${oList }" var="order" varStatus="j">
+						<c:if test="${j.orderId = j+1.orderId }">
+						
+						</c:if>
+					</c:forEach >--%>
 					<div class="listOne">
 					<a href="/order/orderDetailView?orderId=${order.orderId }">
 						<div>주문 번호 : ${order.orderId }</div>
@@ -39,7 +44,7 @@
 							<img src=${order.book.imgPath } width="150" height="100">
 						</div>
 						<div>
-							결제 가격 : ${order.productPrice }
+							결제 가격 : <fmt:formatNumber type="number" value="${order.productPrice }" pattern="#,###"/>원
 						</div>
 						<div>
 							구매 일자 : ${order.orderDate }

@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="isAuthenticated()">
+   <sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,12 +20,21 @@
 		<div class="main-section">
 			<c:if test="${!empty bList }">
 				<c:forEach items="${bList }" var="book" varStatus="i">
-					<div>
-						<img src=${book.imgPath } width="200" height="250"><br>
-						<a href="/book/detailView.kh?bookNo=${book.bookNo }">${book.bookTitle }</a><br>
-						<span>${book.priceSales }</span><br>
-						<span>${book.mileage }</span><br>
-						<span>${book.publisher }</span><br>
+					<div class="card mb-3" style="width: 700px;">
+						<div class="row g-0"> 
+							<div class="col-md-4">
+								<img src=${book.imgPath } width="200" height="250">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title"><a href="/book/detailView.kh?bookNo=${book.bookNo }">${book.bookTitle }</a></h5>
+        							<p class="card-text"><small class="text-muted">${book.publisher }</small></p>
+       								<p class="card-text">판매가 : <fmt:formatNumber type="number" value="${book.priceSales }" pattern="#,###"/> 원</p>
+       								<p class="card-text">평점 : ${book.scoreAvg }</p>
+       								<p class="card-text"><small class="text-muted">적립금 : <fmt:formatNumber type="number" value="${book.mileage }" pattern="#,###"/>원</small></p>
+								</div>
+							</div>
+						</div>
 					</div>
 					<br>
 					<br>
