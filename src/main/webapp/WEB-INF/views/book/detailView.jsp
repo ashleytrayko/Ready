@@ -92,6 +92,7 @@
 			</div>
 			<form action="/book/addReview.kh" method="post">
 					<input type="hidden" id="bookNo" name="bookNo" value="${book.bookNo }">
+					<input type="hidden" id="userNickname" name="userNickname" value="${principal.user.userNickname }">
 				<br>
 				<h3>독자서평 (${book.scoreAvg })</h3>
 				<div class="review-container">

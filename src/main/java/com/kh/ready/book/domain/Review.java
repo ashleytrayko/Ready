@@ -7,7 +7,7 @@ public class Review {
 	private int reviewNo;
 	private int bookNo;
 	private String userId;
-	private String nickName;
+	private String userNickname;
 	private int score;
 	private String reviewContents;
 	private Date enrollDate;
@@ -17,12 +17,12 @@ public class Review {
 	
 	public Review() {}
 	
-	public Review (int reviewNo, int bookNo, String userId, String nickName, int score, String reviewContents, Date enrollDate, Date updateDate, Book book) {
+	public Review (int reviewNo, int bookNo, String userId, String userNickname, int score, String reviewContents, Date enrollDate, Date updateDate, Book book) {
 		super();
 		this.reviewNo = reviewNo;
 		this.bookNo = bookNo;
 		this.userId = userId;
-		this.nickName = nickName;
+		this.userNickname = userNickname;
 		this.score = score;
 		this.reviewContents = reviewContents;
 		this.enrollDate = enrollDate;
@@ -54,12 +54,12 @@ public class Review {
 		this.userId = userId;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getUserNickname() {
+		return userNickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickName(String userNickname) {
+		this.userNickname = userNickname;
 	}
 
 	public int getScore() {
@@ -104,7 +104,7 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [reviewNo=" + reviewNo + ", bookNo=" + bookNo + ", userId=" + userId + ", nickName=" + nickName
+		return "Review [reviewNo=" + reviewNo + ", bookNo=" + bookNo + ", userId=" + userId + ", userNickname=" + userNickname
 				+ ", score=" + score + ", reviewContents=" + reviewContents + ", enrollDate=" + enrollDate
 				+ ", updateDate=" + updateDate + ", book=" + book + "]";
 	}

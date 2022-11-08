@@ -44,6 +44,11 @@
 					<br>
 				</c:forEach>		
 			</c:if>
+			<c:if test="${empty rList }">
+				<div>
+					등록한 후기가 없습니다.
+				</div>
+			</c:if>
 		</div>
 		<div class="main-sidebar">side Bar</div>
 	</div>

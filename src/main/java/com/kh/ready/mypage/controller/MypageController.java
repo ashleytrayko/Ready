@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.mypage.domain.Survey;
 import com.kh.ready.mypage.service.MypageService;
+import com.kh.ready.order.domain.Order;
 import com.kh.ready.user.domain.User;
 
 @Controller
@@ -125,6 +127,38 @@ public class MypageController {
 		return mv;
 	}
 	
+	//내가 쓴 글 조회
+	@RequestMapping(value="mypage/myBoard.kh", method=RequestMethod.GET)
+	public ModelAndView printMyBoard(ModelAndView mv,
+			@RequestParam(value="page", required=false) Integer page,
+			Principal principal) {
+		String userId = principal.getName();
+		int currentPage = (page != null)? page : 1;
+		int totalBCount = mService.getTotalBCount(userId);
+		int boardLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int) ((double) totalBCount / boardLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		List<Comm> cList = mService.printMyBoard(currentPage, boardLimit, userId);
+		if (!cList.isEmpty()) {
+			mv.addObject("urlVal", "myBoard");
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("cList", cList);
+		}
+		mv.setViewName("/mypage/myBoard");
+		return mv;
+	}
+	
 	// 닉네임 중복확인
 		@ResponseBody
 		@GetMapping("/checkNickname2")
@@ -135,5 +169,17 @@ public class MypageController {
 			}else {
 				return "exist";
 			}
+		}
+		
+		//내 주문내역 리스트
+		@RequestMapping(value="mypage/myOrder.kh", method=RequestMethod.GET)
+		public ModelAndView printMyOrder(ModelAndView mv, Principal principal) {
+			String userId = principal.getName();
+			List<Order> oList = mService.printMyOrder(userId);
+			if(!oList.isEmpty()) {
+				mv.addObject("oList", oList);
+			}
+			mv.setViewName("mypage/myOrder");
+			return mv;
 		}
 }

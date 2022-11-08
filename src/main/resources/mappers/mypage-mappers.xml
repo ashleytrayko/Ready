@@ -34,10 +34,58 @@
   		<result	property="userAge"					column="USER_AGE"/>
   		<result	property="userRole"					column="USER_ROLE"/>
   		<result	property="enabled"					column="ENABLED"/>
-  		
   	</resultMap>
   		
-  
+  	<resultMap type="Comm" id="commResultMap">
+		<id property="boardNo" 				column="BOARD_NO"/>
+		<result property="commTitle" 		column="COMM_TITLE"/>
+		<result property="commWriter"		column="COMM_WRITER"/>
+		<result property="commContents"		column="COMM_CONTENTS"/>
+		<result property="commFilename"		column="COMM_FILENAME"/>
+		<result property="commFileRename"	column="COMM_FILERENAME"/>
+		<result property="commFilePath"		column="COMM_FILEPATH"/>
+		<result property="cCreateDate"		column="C_CREATE_DATE"/>
+		<result property="cUpdateDate"		column="C_UPDATE_DATE"/>
+		<result property="cStatus"			column="C_STATUS"/>
+		<result property="cLike"			column="C_LIKE"/>
+		<result property="cCount"			column="C_COUNT"/>
+	</resultMap>
+	
+	<resultMap type="Order" id="OrderResultMap">
+		<id property="orderNo" 				column="ORDER_NO"/>
+		<result property="bookNo" 		column="BOOK_NO"/>
+		<result property="userId" 		column="USER_ID"/>
+		<result property="productCount" 		column="PRODUCT_COUNT"/>
+		<result property="orderRName" 		column="ORDER_R_NAME"/>
+		<result property="orderRPhone" 		column="ORDER_R_PHONE"/>
+		<result property="orderAddress1" 		column="ORDER_ADDRESS1"/>
+		<result property="orderAddress2" 		column="ORDER_ADDRESS2"/>
+		<result property="orderAddress3" 		column="ORDER_ADDRESS3"/>
+		<result property="paymentMethod" 		column="PAYMENT_METHOD"/>
+		<result property="orderState" 		column="ORDER_STATE"/>
+		<result property="orderDate" 		column="ORDER_DATE"/>
+		<result property="orderId" 		column="ORDER_ID"/>
+		<result property="productPrice" column="PRODUCT_PRICE"/>
+ 		<collection property="book" resultMap="bookResultMap"></collection>
+	</resultMap>
+	
+	<resultMap type="Book" id="bookResultMap">
+		<id 	property="bookNo" 		column="BOOK_NO"/>
+		<result property="bookTitle" 	column="BOOK_TITLE"/>
+		<result property="bookWriter" 	column="BOOK_WRITER"/>
+		<result property="enrollDate" 	column="ENROLL_DATE"/>
+		<result property="pubDate" 		column="PUB_DATE"/>
+		<result property="category" 	column="BOOK_CATEGORY"/>
+		<result property="bookContents" column="BOOK_CONTENTS"/>
+		<result property="ISBN" 		column="BOOK_ISBN"/>
+		<result property="priceSales" 	column="BOOK_PRICE"/>
+		<result property="mileage" 		column="BOOK_MILEAGE"/>
+		<result property="imgPath" 		column="IMG_PATH"/>
+		<result property="publisher" 	column="BOOK_PUBLISHER"/>
+		<result property="saleCount"	column="SALE_COUNT"/>
+		<result property="scoreAvg"		column="SCORE_AVG"/>
+	</resultMap>
+	
 	<insert id="InsertSurvey">
 	  INSERT INTO SURVEY_TBL VALUES(#{userId }, #{answerGender }, #{answerLove }, #{answerHobby }, #{answerReason }, #{answerWriter }, DEFAULT, DEFAULT)
 	</insert>
@@ -62,5 +110,20 @@
 	
 	<select id="selectUserByNickname" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_NICKNAME = #{userNickname} AND USER_ID != #{userId }
+	</select>
+	
+	<select id="selectTotalBCount" resultType="_int">
+		SELECT COUNT(*) FROM COMMUNITY_TBL
+		<where>
+			USER_ID = #{userId }
+		</where>
+	</select>
+	
+	<select id="selectMyBoard" resultMap="commResultMap">
+		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' AND USER_ID = #{userId }
+	</select>
+	
+	<select id="selectMyOrder" resultMap="OrderResultMap">
+		SELECT * FROM ORDER_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId }
 	</select>
   </mapper>

@@ -154,9 +154,10 @@ public class BookController {
 	
 	//평점 등록
 	@RequestMapping(value="/book/addReview.kh", method=RequestMethod.POST)
-	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal) {
+	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal, @RequestParam("userNickname") String userNickname) {
 		String userId = principal.getName();
 		review.setUserId(userId);
+		review.setNickName(userNickname);
 		int bookNo = review.getBookNo();
 		int result = bService.registerReview(review);
 		if(result > 0) {
