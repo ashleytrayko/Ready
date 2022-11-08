@@ -29,6 +29,7 @@
 				<input type="email" class="form-control" placeholder="가입시 등록하신 이메일을 입력해주세요." id="userEmail"name="userEmail">
 			</div>
 			<button type="button" class="btn btn-primary col-lg" id="requestButton">비밀번호 찾기</button>
+			<button type="button" class="btn btn-primary col-lg" id="redirectButton" onclick="getBack();">돌아가기</button>
 		</form>
 	</div>
 	</div>
@@ -49,6 +50,7 @@
 					alert("비밀번호가 존재하지 않습니다. 다시 확인해 주세요.");
 				}else if(result == "success"){
 					alert("등록된 이메일로 변경된 비밀번호가 전송되었습니다.");
+					location.href = "/";
 				}
 			},
 			error : function(result){
@@ -59,6 +61,10 @@
 		});
 		
 	});
+	
+	function getBack(){
+		location.href="/login";
+	}
 	</script>
 </body>
 </html>

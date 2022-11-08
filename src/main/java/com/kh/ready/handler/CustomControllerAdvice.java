@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+
+
 @ControllerAdvice
 public class CustomControllerAdvice {
 	
@@ -16,10 +18,10 @@ public class CustomControllerAdvice {
 		return "exception/notFoundPage";
 	}
 	
-//	@ExceptionHandler(NoHandlerFoundException.class)
-//	@ResponseStatus(HttpStatus.FORBIDDEN)
-//	public String forbidden() {
-//		return "exception/accessDeniedPage";
-//	}
+	@ExceptionHandler({Throwable.class, Exception.class})
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public String except() {
+		return "exception/something";
+	}
 	
 }

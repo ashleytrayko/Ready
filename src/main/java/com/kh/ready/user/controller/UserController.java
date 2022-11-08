@@ -65,6 +65,11 @@ public class UserController {
 		return "home";
 	}
 	
+	// 접금금지 화면
+	@GetMapping("/denied")
+	public String accessDenied() {
+		return "/exception/accessDeniedPage";
+	}
 	/**
 	 *
 	 * 정보찾기 메소드
@@ -121,7 +126,7 @@ public class UserController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute User user) {
 		String result = userService.userRegister(user);
-		return "home";
+		return "redirect:/";
 	}
 
 	// 아이디 중복확인

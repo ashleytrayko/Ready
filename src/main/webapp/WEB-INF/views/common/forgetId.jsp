@@ -29,6 +29,7 @@
 				<input type="email" class="form-control" placeholder="가입시 등록하신 이메일을 입력해주세요." id="userEmail"name="userEmail">
 			</div>
 			<button type="button" class="btn btn-primary col-lg" id="findId">아이디 찾기</button>
+			<button type="button" class="btn btn-primary col-lg" id="redirectButton" onclick="getBack();">돌아가기</button>
 		</form>
 	</div>
 	</div>
@@ -56,6 +57,10 @@
 		});
 		
 	});
+	
+	function getBack(){
+		location.href="/login";
+	}
 </script>
 </body>
 </html>
