@@ -33,10 +33,6 @@
 	<div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
-				<button class="btn btn-outline-secondary" onclick="viewCategory(event);">소설</button>
-				<button class="btn btn-outline-secondary" onclick="viewCategory(event);">만화</button>
-				<button class="btn btn-outline-secondary" onclick="viewCategory(event);">자기계발</button>
-				
 				<div>
 					<h5>READ'Y 베스트셀러</h5>
 					<a href = "/book/category.kh?category=Best" class="more">더보기</a>
