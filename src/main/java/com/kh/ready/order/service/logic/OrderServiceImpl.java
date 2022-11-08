@@ -61,9 +61,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateUserPurchase(String userId, int totalPurchase, int mileageSum) {
+	public int updateUserPurchase(String userId, int totalPurchase, int usedMileage) {
 
-		return orderStore.updateUserPurchase(userId, totalPurchase, mileageSum);
+		return orderStore.updateUserPurchase(userId, totalPurchase, usedMileage);
 	}
 
 	@Override

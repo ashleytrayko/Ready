@@ -64,12 +64,12 @@ public class OrderStoreLogic implements OrderStore{
 	}
 
 	@Override
-	public int updateUserPurchase(String userId, int totalPurchase, int mileageSum) {
+	public int updateUserPurchase(String userId, int totalPurchase, int usedMileage) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
 		paramMap.put("totalPurchase", totalPurchase);
-		paramMap.put("mileageSum", mileageSum);
-		return session.update("OrderMapper.updateUserPurchase", paramMap);
+		paramMap.put("usedMileage", usedMileage);
+		return session.update("OrderMapper.updateUserPurchaseMileage", paramMap);
 	}
 
 	@Override

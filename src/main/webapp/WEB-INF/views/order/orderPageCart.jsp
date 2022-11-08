@@ -98,7 +98,7 @@
                         <p>이름</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="buyerName" type="text" value="${userInfoList.userName }" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="buyerName" type="text" value="${userInfo.userName }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -106,7 +106,7 @@
                         <p>연락처</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" placeholder="01000000000" value="${userInfoList.userPhone }" style="width:130px">
+                        <input class="form-control form-control-sm name-phone" id="buyerPhone" type="text" placeholder="01000000000" value="${userInfo.userPhone }" style="width:130px">
                     </td>
                 </tr>
                 <tr>
@@ -114,7 +114,7 @@
                         <p>E-mail</p>
                     </td>
                     <td>
-                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfoList.userEmail }">
+                        <input class="form-control form-control-sm Email" type="text" id="buyerEmail" placeholder="khuser01@iei.or.kr" style="width:200px" value="${userInfo.userEmail }">
                     </td>
                 </tr>
                 <tr>
@@ -123,7 +123,7 @@
                     </td>
                     <td class="addr-info-td" style="width : 400px;">
                     	<div class="div-floatLeft">
-                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfoList.userPostcode }" placeholder="우편번호" style="width:90px;">
+                        	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfo.userPostcode }" placeholder="우편번호" style="width:90px;">
                         </div>
                         <div class="div-floatLeft">
                         	<button class="btn btn-secondary searchAddr-btn" onclick="byuerAddrSearch();" style="font-size :12px;">우편번호 검색</button>
@@ -135,7 +135,7 @@
                         <p></p>
                     </td>
                     <td colspan="2">
-                        <input class="form-control form-control-sm detail-Addr" id="buyerRoadAddr" type="text" value="${userInfoList.userAddress }" placeholder="도로명 주소" style="width: 400px;">
+                        <input class="form-control form-control-sm detail-Addr" id="buyerRoadAddr" type="text" value="${userInfo.userAddress }" placeholder="도로명 주소" style="width: 400px;">
                     </td>
                 </tr>
                 <tr>
@@ -143,7 +143,7 @@
                         <p></p>
                     </td>
                     <td colspan="2" class="addr-td">
-                        <input class="form-control form-control-sm detail-Addr" id="buyerDetailAddr" type="text" value="${userInfoList.userDetailAddress }" placeholder="상세 주소" style="width: 400px;">
+                        <input class="form-control form-control-sm detail-Addr" id="buyerDetailAddr" type="text" value="${userInfo.userDetailAddress }" placeholder="상세 주소" style="width: 400px;">
                     </td>
                 </tr>
             </table>
@@ -219,6 +219,31 @@
                 </tr>
             </table>
         </div>
+        <div class="order-data-list">
+            <table id="order-Info"> 
+                <thead>
+                    <tr>
+                        <th id="orderinfo-table-left">주문 수량</th>
+                        <th class="orderinfo-table-header">주문 금액 합계</th>
+                        <th class="orderinfo-table-header">배송비</th>
+                        <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
+                        <th id="orderinfo-table-right">예상 적립금</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td id="productSum">총 <c:out value="${productSum }"/>권</td>
+                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td class="orderinfo-table-body">0원</td>
+					<td class="orderinfo-table-body"><input readonly type="text" class="total-price" id="id-total-price" style="border:0px; width:100px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>">원</td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
+                </tbody>
+            </table>
+            <div style="text-align:right;">
+            	<p>현재 보유한 적립금 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>원</p>
+            	적립금 : <input type="text" value="0" id="useMileage" style="width:100px;">원 <button onclick="useMileage(${salePriceSum });">사용</button>
+        	</div>
+        </div>
+        
         
         <div class="buyer-data-list">
         	<table class="buyer-info buyer-info-title">
@@ -248,26 +273,6 @@
 			  	</label>
 			</div><br>
 		</div>
-        <div class="order-data-list">
-            <table id="order-Info"> 
-                <thead>
-                    <tr>
-                        <th id="orderinfo-table-left">주문 수량</th>
-                        <th class="orderinfo-table-header">주문 금액 합계</th>
-                        <th class="orderinfo-table-header">배송비</th>
-                        <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th id="orderinfo-table-right">예상 적립금</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <td id="productSum">총 <c:out value="${productSum }"/>권</td>
-                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
-                    <td class="orderinfo-table-body">0원</td>
-					<td class="orderinfo-table-body"><p class="total-price" id="info-total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
-					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
-                </tbody>
-            </table>
-        </div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
             <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum}` , `${cartList[0].book.bookTitle}` , `${productSum}`, `${mileageSum}`);">결제하기</button>							
@@ -319,10 +324,19 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
+    function useMileage(totalPrice){
+    	
+    	var useMileage = +$("#useMileage").val();
+    	var calPrice = totalPrice - useMileage;
+    	var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		
+    	$("#id-total-price").attr("value", calPrice2);
+    }
+    
     
     function requestPay(priceSum, firstTitle, totalCount, mileageSum) {
     	
-    	const totalprice = Math.floor(priceSum);
+    	const totalPrice = Math.floor(priceSum);
     	const buyerName = $("#buyerPhone").val();
     	const buyerPhone = $("#buyerPhone").val();
     	const buyerEmail = $("#buyerEmail").val();
@@ -331,6 +345,9 @@
     	var bookNoArr = [];
  	    var productCountArr = [];
  	    var productPriceArr = [];
+ 	    
+ 	    var useMileage = +$("#useMileage").val();
+   		var calPrice = totalPrice - useMileage;
  	    
     	$("input[name='bookNo']").each(function(i){
     		bookNoArr.push($(this).val());
@@ -347,7 +364,7 @@
             pay_method: paymethod,
             merchant_uid: "",
             name: firstTitle + " 등  총  "+ totalCount + "권",
-            amount: totalprice,
+            amount: calPrice,
             buyer_email: buyerEmail,
             buyer_name: buyerName,
             buyer_tel: buyerPhone,
@@ -356,6 +373,7 @@
             	productCountArr : productCountArr,
             	productPriceArr : productPriceArr,
             	mileageSum : mileageSum,
+            	useMileage : useMileage,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -381,7 +399,8 @@
 						reciverEmail : rsp.custom_data.reciverEmail,
 		            	reciverZoneCode : rsp.custom_data.reciverZoneCode,
 		            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
-		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr
+		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr,
+		            	useMileage : rsp.custom_data.useMileage
 					},
 					success : function(orderId){
 						location.href="/order/orderDetailView?orderId="+orderId;

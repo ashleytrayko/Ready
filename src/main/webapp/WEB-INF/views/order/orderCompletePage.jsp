@@ -27,7 +27,7 @@
             <table class="buyer-info buyer-info-title">
                 <tr>
                     <th colspan="6">
-                        <h5>주문 정보</h5>
+                        <h5 style="font-weight : bold;">주문 정보</h5>
                     </th>
                 </tr>
             </table>
@@ -81,7 +81,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="flush-headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                  <h5>상품 정보</h5>
+                  <h5 style="font-weight : bold;">상품 정보</h5>
                 </button>
                 <hr>
               </h2>

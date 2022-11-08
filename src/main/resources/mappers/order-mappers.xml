@@ -92,8 +92,8 @@
 		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
 	</select>
 	
-	<update id="updateUserPurchase">
-		UPDATE USER_TBL SET USER_PURCHASE = #{totalPurchase}, USER_RESERVES = #{mileageSum} WHERE USER_ID = #{userId}
+	<update id="updateUserPurchaseMileage">
+		UPDATE USER_TBL SET USER_PURCHASE = #{totalPurchase}, USER_RESERVES = #{usedMileage} WHERE USER_ID = #{userId}
 	</update>
 
 	

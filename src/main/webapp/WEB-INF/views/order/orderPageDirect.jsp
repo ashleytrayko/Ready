@@ -269,7 +269,7 @@
 		</div>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="history.back();">이전 페이지</button>
-            <button class="btn btn-primary btm-btn" onclick="requestPay(`${bookData.bookTitle}` , `${productSum}`, `${mileageSum }`);">결제하기</button>								
+            <button class="btn btn-primary btm-btn" onclick="requestPay(`${salePriceSum}` , `${bookData.bookTitle}` , `${productSum}`, `${mileageSum }`);">결제하기</button>								
         </div>
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -319,18 +319,18 @@
     }
     
     function useMileage(totalPrice){
-    	console.log("총 구매액 : " + totalPrice, typeof totalPrice);
+
     	var useMileage = +$("#useMileage").val();
-    	console.log("사용할 마일리지 : " + useMileage, typeof useMileage);
     	var calPrice = totalPrice - useMileage;
-    	console.log(calPrice, typeof calPrice);
-    	$("#id-total-price").attr("value", calPrice);
+    	var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    	$("#id-total-price").attr("value", calPrice2);
     }
     
     
-    function requestPay(title, totalCount, mileageSum) {
+    function requestPay(priceSum, title, totalCount, mileageSum) {
     	
-    	const totalPrice = $("#id-total-price").val()
+    	const totalPrice = Math.floor(priceSum);
     	const buyerName = $("#buyerPhone").val();
     	const buyerPhone = $("#buyerPhone").val();
     	const buyerEmail = $("#buyerEmail").val();
@@ -340,13 +340,15 @@
     	const productCount = $("#id-productCount").val();
     	const productPrice = Math.floor($("#id-productPrice").val());
     	
+     	var useMileage = +$("#useMileage").val();
+    	var calPrice = totalPrice - useMileage;
  	    
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
             merchant_uid: "",
             name: title + " 총 " + totalCount + "권",
-            amount: totalPrice,
+            amount: calPrice,
             buyer_email: buyerEmail,
             buyer_name: buyerName,
             buyer_tel: buyerPhone,
@@ -355,6 +357,7 @@
             	productCount : productCount,
             	productPrice : productPrice,
             	mileageSum : mileageSum,
+            	useMileage : useMileage,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -380,7 +383,8 @@
 						reciverEmail : rsp.custom_data.reciverEmail,
 		            	reciverZoneCode : rsp.custom_data.reciverZoneCode,
 		            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
-		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr
+		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr,
+		            	useMileage : rsp.custom_data.useMileage
 					},
 					success : function(orderId){
 						location.href="/order/orderDetailView?orderId="+orderId;
