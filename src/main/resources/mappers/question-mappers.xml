@@ -19,7 +19,7 @@
 	
 	<insert id="insertFAQ">
 		INSERT INTO QUESTION_TBL VALUES(SEQ_QUE_NO.NEXTVAL, #{queWriter}, #{queTitle}, #{queContents}
-		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, DEFAULT, #{qCategory})
+		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, DEFAULT, #{qCategory}, #{queId})
 	</insert>
 	<!-- 고객센터에 문의한 문의글 보여줄 쿼리 -->
 	<select id="selectTotalCount" resultType="_int">
@@ -43,7 +43,8 @@
 	</select>
 	<!-- 내 문의글 갯수 -->
 	<select id="selectMyCount" resultType="_int">
-		SELECT COUNT(A.QUE_NO) FROM QUESTION_TBL A, USER_TBL B
+		SELECT COUNT(*) FROM QUESTION_TBL
+<!-- 		SELECT COUNT(A.QUE_NO) FROM QUESTION_TBL A, USER_TBL B -->
 		<where>
 			<if test="searchCondition.toString() == 'title'">
 				QUE_TITLE LIKE '%'||#{searchValue}||'%'
@@ -51,12 +52,13 @@
 			<if test="searchCondition.toString() == 'contents'">
 				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
 			</if>
-			AND QUE_WRITER = USER_ID AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
+			AND QUE_ID = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y'
 		</where>
 	</select>
 	<select id="selectMyBoard" resultMap="questionResultMap">
-		<!-- SELECT * FROM QUESTION_TBL WHERE QUE_WRITER = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC -->
-		SELECT A.QUE_NO, B.USER_NICKNAME AS QUE_WRITER, A.QUE_TITLE, A.QUE_CONTENTS, A.Q_ENROLL_DATE, A.Q_ANSWER, A.Q_STATUS, A.Q_CATEGORY  FROM QUESTION_TBL A, USER_TBL B WHERE QUE_WRITER = USER_ID ORDER BY QUE_NO DESC
+		SELECT * FROM QUESTION_TBL WHERE QUE_ID = #{queWriter} AND Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
+		<!-- SELECT A.QUE_NO, B.USER_NICKNAME AS QUE_WRITER, A.QUE_TITLE, A.QUE_CONTENTS, A.Q_ENROLL_DATE, A.Q_ANSWER, A.Q_STATUS, A.Q_CATEGORY  FROM QUESTION_TBL A, USER_TBL B WHERE QUE_WRITER = USER_ID ORDER BY QUE_NO DESC -->
+ 		<!-- SELECT QUESTION_TBL.QUE_TITLE, QUESTION_TBL.QUE_WRITER, QUESTION_TBL.QUE_CONTENTS, QUESTION_TBL.Q_ANSWER, QUESTION_TBL.Q_STATUS, QUESTION_TBL.Q_CATEGORY FROM QUESTION_TBL FULL OUTER JOIN USER_TBL ON USER_TBL.USER_NICKNAME = QUESTION_TBL.QUE_WRITER WHERE QUE_WRITER = #{queWriter} -->
 	</select>
 	<select id="selectOneByNo" resultMap="questionResultMap">
 		SELECT * FROM QUESTION_TBL WHERE QUE_NO = #{queNo} AND Q_STATUS = 'N' OR Q_STATUS = 'Y'

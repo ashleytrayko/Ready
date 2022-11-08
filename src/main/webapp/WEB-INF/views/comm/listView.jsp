@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +30,7 @@
 						<th>조회수</th>
 						<th>추천수</th>
 					</tr>
+					
 					<c:if test="${!empty cList }">
 						<c:forEach items="${cList }" var="comm" varStatus="i">
 							<tr>
@@ -35,7 +38,11 @@
 								<td colspan="2"><a href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
 								<!--  -->
 								<td>${comm.commWriter }</td>
-								<td>${comm.cCreateDate }</td>
+ 	<%-- 							<td>${comm.cCreateDate }</td> --%>
+ 								<td>
+								<fmt:formatDate value="${comm.cCreateDate}" pattern="YY/MM/dd" />
+								<c:set var="now" value="<%=new java.util.Date()%>" />
+								</td>
 								<td>${comm.cCount }</td>
 								<td>${comm.cLike }</td>
 							</tr>
@@ -93,3 +100,4 @@
 	</footer>
 </body>
 </html>
+
