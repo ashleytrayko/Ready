@@ -56,6 +56,7 @@
 								<td>${question.qEnrollDate }</td>
 								<td>${question.queWriter }</td>
 								<td>
+									<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }"><button>공지등록</button></c:if>
 									<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
 									<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
 								</td>

@@ -118,7 +118,7 @@
 							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
 								$btnArea = $("<td width='80'>")
-											 	.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
+											 	.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
 												/* .append("<a href='javascript:void(0);' onclick='modifyReplyAjax(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ") */
 												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
 							}
@@ -230,7 +230,7 @@
 			event.preventDefault();
 			var $tr = $("<tr>");
 			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
+			$tr.append("<td><button id='btn-click' onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
 			$(obj).parent().parent().after($tr);
 		}
 		function modifyReply(obj, cReplyNo) {
