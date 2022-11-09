@@ -61,15 +61,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateUserPurchase(String userId, int totalPurchase, int usedMileage) {
+	public int updateMileageByUserId(String userId, int usedMileage) {
 
-		return orderStore.updateUserPurchase(userId, totalPurchase, usedMileage);
-	}
-
-	@Override
-	public User getUserInfo(String userId) {
-
-		return orderStore.getUserInfo(userId);
+		return orderStore.updateMileageByUserId(userId, usedMileage);
 	}
 
 	@Override
@@ -79,9 +73,20 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updatePlusMileageByUserId(String userId, int plusedMileage) {
-
-		return orderStore.updatePlusMileageByUserId(userId, plusedMileage);
+	public int updatePurchaseInfoByUserId(String userId, int plusedMileage, int userPurchase) {
+		
+		String userTier = "BRONZE";
+		
+		if(userPurchase >= 200000) {
+			userTier = "SILVER";	
+		} else if(userPurchase >= 500000) {
+			userTier = "GOLD";
+		} else if(userPurchase >= 1000000) {
+			userTier = "VIP";
+		}
+		System.out.println("service : " + userTier);
+		
+		return orderStore.updatePurchaseInfoByUserId(userId, plusedMileage, userTier, userPurchase);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.kh.ready.order.controller;
 
 import java.security.Principal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -110,7 +111,7 @@ public class OrderController {
 				String orderId = ymd + "_" + subNum;
 				String userId = principal.getName();
 				
-				User user = orderService.getUserInfo(userId);
+				User user = orderService.getUserInfoByUserId(userId);
 				int result = 0;
 				
 				int usedMileage = user.getUserReserves() - useMileage;
@@ -132,13 +133,8 @@ public class OrderController {
 					result = orderService.insertOrder(order);
 					
 				}
-				for(int i=0; i<bookNoArr.size(); i++) {
-					int beforePurchase = user.getUserPurchase();
-					int totalPurchase = beforePurchase + (productPriceArr.get(i) * productCountArr.get(i));
-					user.setUserPurchase(totalPurchase);
-					orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
-				}
-				
+					orderService.updateMileageByUserId(userId, usedMileage);
+					
 				if(result > 0) {
 					orderService.deleteCart(userId);
 				}
@@ -150,7 +146,7 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value="/order/insertDirectOrder", method=RequestMethod.POST)
-	public String insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
+	public List<Object> insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
 												@RequestParam("productPrice") int productPrice,
 												@RequestParam("totalPrice") int totalPrice,
@@ -193,14 +189,16 @@ public class OrderController {
 			
 			orderService.insertOrder(order);
 			
-			User user = orderService.getUserInfo(userId);
-			int totalPurchase = user.getUserPurchase() + productPrice;
-			int usedMileage = user.getUserReserves() - useMileage;
-			orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
+			User userInfo = orderService.getUserInfoByUserId(userId);
+			int usedMileage = userInfo.getUserReserves() - useMileage;
+			orderService.updateMileageByUserId(userId, usedMileage);
 			
 			String getOrderId = order.getOrderId();
-			
-			return getOrderId;
+			List<Object> list = new ArrayList<>();
+			list.add(getOrderId);
+			list.add(useMileage);
+			System.out.println(list);
+			return list;
 	}
 	
 	
@@ -223,17 +221,19 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value="/order/confirmPurchase", method=RequestMethod.POST)
 	public int confirmPurchase(Principal principal, @RequestParam("plusMileage") int plusMileage,
-													@RequestParam("orderId") String orderId) {
+													@RequestParam("orderId") String orderId,
+													@RequestParam("salePriceSum") int salePriceSum) {
 		
 		String userId = principal.getName();
 		
-		User user = orderService.getUserInfo(userId);
-		int plusedMileage = user.getUserReserves() + plusMileage;
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		int plusedMileage = userInfo.getUserReserves() + plusMileage;
+		int userPurchase = userInfo.getUserPurchase() + salePriceSum;
 		
+		int updateorderStatus = orderService.updateStatusByOrderId(orderId);
+		int updataUserInfo = orderService.updatePurchaseInfoByUserId(userId, plusedMileage, userPurchase);
 		
-		int data = orderService.updateStatusByOrderId(orderId);
-		int data2 = orderService.updatePlusMileageByUserId(userId, plusedMileage);
-		int result = data + data2;
+		int result = updateorderStatus + updataUserInfo;
 		
 		return result;
 	}

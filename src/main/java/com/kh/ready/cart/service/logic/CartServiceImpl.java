@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.cart.service.CartService;
 import com.kh.ready.cart.store.CartStore;
+import com.kh.ready.user.domain.User;
 
 @Service
 public class CartServiceImpl implements CartService{
@@ -38,6 +39,12 @@ public class CartServiceImpl implements CartService{
 	public List<Cart> getCartdataByUserId(String userId) {
 		
 		return cartStore.getCartdataByUserId(userId);
+	}
+
+	@Override
+	public User getUserInfoByUserId(String userId) {
+
+		return cartStore.getUserInfoByUserId(userId);
 	}
 
 

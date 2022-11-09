@@ -171,7 +171,7 @@
         </div>
         <c:if test="${orderInfo.orderState eq 'N'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase();">구매 확정</button>
+	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
 	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
@@ -197,9 +197,10 @@
 	}
 	
 	
-	function confirmPurchase(){
+	function confirmPurchase(salePriceSum){
 		
 			const confirmPurchase = confirm("구매 확정하시겠습니까?");
+			const salePriceSum = salePriceSum;
 			
 			if(confirmPurchase == true){
 				
@@ -211,7 +212,8 @@
 					type : "POST",
 					data : {
 						plusMileage : plusMileage,
-						orderId : orderId
+						orderId : orderId,
+						salePriceSum : salePriceSum
 					},
 					success : function(result){
 						if(result > 2) {

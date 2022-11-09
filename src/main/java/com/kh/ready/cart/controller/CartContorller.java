@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.cart.service.CartService;
+import com.kh.ready.user.domain.User;
 
 @Controller
 public class CartContorller {
@@ -87,7 +88,23 @@ public class CartContorller {
 			String userId = principal.getName();
 			
 			List<Cart> cartList = cartService.getCartdataByUserId(userId);
-				
+			
+			User userInfo = cartService.getUserInfoByUserId(userId);
+			String userTier = userInfo.getUserTier();
+			double discountRate = 0;
+			
+			if(userTier.equals("BRONZE")) {
+				discountRate = 0.99;
+			} else if(userTier.equals("SILVER")) {
+				discountRate = 0.97;
+			} else if(userTier.equals("GOLD")) {
+				discountRate = 0.95;
+			} else if(userTier.equals("VIP")) {
+				discountRate = 0.90;
+			}
+			mv.addObject("discountRate",discountRate);
+			
+			mv.addObject("userInfo", userInfo);
 			mv.addObject("cartList", cartList);
 			mv.setViewName("cart/cartPage");
 			

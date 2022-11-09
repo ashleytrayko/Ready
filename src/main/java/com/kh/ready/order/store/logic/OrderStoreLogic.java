@@ -2,7 +2,6 @@ package com.kh.ready.order.store.logic;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,18 +63,14 @@ public class OrderStoreLogic implements OrderStore{
 	}
 
 	@Override
-	public int updateUserPurchase(String userId, int totalPurchase, int usedMileage) {
+	public int updateMileageByUserId(String userId, int usedMileage) {
+		
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		
 		paramMap.put("userId", userId);
-		paramMap.put("totalPurchase", totalPurchase);
 		paramMap.put("usedMileage", usedMileage);
-		return session.update("OrderMapper.updateUserPurchaseMileage", paramMap);
-	}
-
-	@Override
-	public User getUserInfo(String userId) {
-
-		return session.selectOne("OrderMapper.getUserInfo",userId);
+		
+		return session.update("OrderMapper.updateUserMileage", paramMap);
 	}
 
 	@Override
@@ -85,10 +80,13 @@ public class OrderStoreLogic implements OrderStore{
 	}
 
 	@Override
-	public int updatePlusMileageByUserId(String userId, int plusedMileage) {
+	public int updatePurchaseInfoByUserId(String userId, int plusedMileage, String userTier, int userPurchase) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
 		paramMap.put("plusedMileage", plusedMileage);
+		paramMap.put("userTier", userTier);
+		paramMap.put("userPurchase", userPurchase);
+		
 		return session.update("OrderMapper.updatePlusMileageByUserId", paramMap);
 	}
 	

@@ -55,12 +55,12 @@
                         </td>
                         <td>
                             <c:choose>
-                            <c:when test="${fn:length(bookData.bookTitle ) gt 20 }">
-                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }..."/>
-                            </c:when>
-                            <c:otherwise>
-                            	<c:out value="${bookData.bookTitle }"/>
-                            </c:otherwise>
+                            	<c:when test="${fn:length(bookData.bookTitle) gt 20 }">
+                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }...">
+                            	</c:out></c:when>
+                            	<c:otherwise>
+                            	<c:out value="${bookData.bookTitle }">
+                            	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
@@ -77,13 +77,12 @@
                     </tr>
 					<c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
                     <c:set var="productSum" value="${productSum + productCount }"/>
-                    <c:if test="${priceSum ge 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))}"/>
-                    </c:if>
-                    <c:if test="${priceSum lt 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))+2500}"/>
-                    </c:if>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount)}"/>
+                    <c:set var="onlysalePriceSum" value="${salePriceSum}"/>
                     <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>
+                    <c:if test="${priceSum < 10000}">
+                    	<c:set var="salePriceSum" value="${salePriceSum + 2500}"/>
+                    </c:if>
                 </tbody>
             </table>
         </div>
@@ -246,7 +245,7 @@
             </table>
             <div style="text-align:right;">
             	<p>현재 보유한 마일리지 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>P</p>
-            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum });">사용</button>
+            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum } ,${onlysalePriceSum });">사용</button>
         	</div>
         </div>
         <div class="buyer-data-list">
@@ -286,8 +285,8 @@
 <script>
 	window.onload = function(){
 		var bookPrice = ${priceSum};
+		console.log(bookPrice);
 		if(bookPrice < 10000) {
-			var deliveryFeeId = $("#id-delivery-fee").val;
 			$("#id-delivery-fee").attr("value", "2,500");
 		}
 	}
@@ -333,16 +332,21 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
-	function useMileage(totalPrice){
+	function useMileage(salePriceSum, onlysalePriceSum){
     	
     	var currentMileage = +$("#currentMileage").val();
     	var useMileage = +$("#useMileage").val();
+    	var pacSalePriceSum = salePriceSum;
+    	var onlySalePriceSum = onlysalePriceSum;
     	
     	if(currentMileage < useMileage) {
     		alert("현재 보유한 마일리지가 부족합니다!");
     		return false;
+    	} else if(useMileage > onlySalePriceSum) {
+    		alert("사용 마일리지는 최소 결제 금액을 넘을 수 없습니다!");
+    		return false;
     	} else {
-    		var calPrice = totalPrice - useMileage;
+    		var calPrice = pacSalePriceSum - useMileage;
     		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
     		$("#id-total-price").attr("value", caledPrice);    		
@@ -412,7 +416,13 @@
 		            	useMileage : rsp.custom_data.useMileage,
 		            	totalPrice : rsp.custom_data.totalPrice
 					},
-					success : function(orderId){
+					success : function(list){
+						var orderId = list.indexOf(0);
+						console.log("orderId : " + orderId);
+						
+						var useMileage = list.indexOf(1);
+						console.log("useMileage : " + useMileage);
+						
 						location.href="/order/orderDetailView?orderId="+orderId;
 					},
 					error : function(){

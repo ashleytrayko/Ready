@@ -3,6 +3,7 @@ package com.kh.ready.cart.store;
 import java.util.List;
 
 import com.kh.ready.cart.domain.Cart;
+import com.kh.ready.user.domain.User;
 
 public interface CartStore {
 
@@ -13,6 +14,8 @@ public interface CartStore {
 	int modifyCart(Cart cart);
 
 	List<Cart> getCartdataByUserId(String userId);
+
+	User getUserInfoByUserId(String userId);
 
 
 }

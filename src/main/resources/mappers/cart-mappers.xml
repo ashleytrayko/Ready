@@ -26,6 +26,27 @@
 		<result property="imgPath" 		column="IMG_PATH"/>
 		<result property="publisher" 	column="BOOK_PUBLISHER"/>
 	</resultMap>
+	
+	<resultMap type="User" id="userResultMap">
+		<id 	property="userIndex" 			column="USER_INDEX"/>
+		<result property="userId"				column="USER_ID"/>
+		<result property="userPassword" 		column="USER_PASSWORD"/>
+		<result property="userName" 			column="USER_NAME"/>
+		<result property="userEmail"			column="USER_EMAIL"/>
+		<result property="userPostcode"			column="USER_POSTCODE"/>
+		<result property="userAddress" 			column="USER_ADDRESS"/>
+		<result property="userDetailAddress" 	column="USER_DETAIL_ADDRESS"/>
+		<result property="userPhone"			column="USER_PHONE"/>
+		<result property="userNickname"			column="USER_NICKNAME"/>
+		<result property="userPurchase"			column="USER_PURCHASE"/>
+		<result property="userTier"				column="USER_TIER"/>
+		<result property="userEnrollDate"		column="USER_ENROLL_DATE"/>
+		<result property="userReserves"			column="USER_RESERVES"/>
+		<result property="userBirthday"			column="USER_BIRTHDAY"/>
+		<result property="userAge"				column="USER_AGE"/>
+		<result property="userRole" 			column="USER_ROLE"/>
+		<result property="enabled" 				column="ENABLED"/>
+	</resultMap>
 
 	<insert id="insertCart">
 		INSERT INTO CART_TBL VALUES(SEQ_CART_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount})
@@ -49,6 +70,10 @@
 	
 	<select id="selectTotalPrice" resultMap="CartResultMap">
 		SELECT SUM(PRODUCT_COUNT * PRODUCT_PRICE) FROM CART_TBL WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getUserInfoByUserId" resultMap="userResultMap">
+		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
 	</select>
 	
 </mapper>
