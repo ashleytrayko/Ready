@@ -1,6 +1,7 @@
 package com.kh.ready.user.service.impl;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,13 +66,30 @@ public class AdminServiceImpl implements AdminService{
 		return result;
 	}
 	
+	// 공지 갯수
+	@Override
+	public int getTotalCount(String searchCondition, String searchValue) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		int totalCount = adminRepository.selectTotalCount(paramMap);
+		return totalCount;
+	}
+	
 	// 공지 전체보기
 	@Override
-	public List<Notice> showAllNotice() {
-		List<Notice> noticeList = adminRepository.selectAllNotice();
+	public List<Notice> showAllNotice(int currentPage, int noticeLimit) {
+		List<Notice> noticeList = adminRepository.selectAllNotice(currentPage, noticeLimit);
 		return noticeList;
 	}
-
+	
+	// 공지 뿌리기
+	@Override
+	public Notice selectRecentNotice() {
+		Notice notice = adminRepository.selectRecentNotice();
+		return notice;
+	}
+	
 	// 공지 상세보기
 	@Override
 	public Notice selectNoticeByNumber(Integer noticeNumber) {
@@ -118,6 +136,12 @@ public class AdminServiceImpl implements AdminService{
 			return "error";
 		}
 	}
+
+
+
+
+
+
 
 
 

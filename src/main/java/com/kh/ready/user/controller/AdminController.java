@@ -44,7 +44,9 @@ public class AdminController {
 	 */
 	// admin 메인 메뉴
 	@GetMapping("/admin")
-	public String adminTest() {
+	public String adminTest(Model model) {
+		Notice notice = adminService.selectRecentNotice();
+		model.addAttribute("notice", notice);
 		return "/admin/adminMenu";
 	}
 	
@@ -54,9 +56,34 @@ public class AdminController {
 	
 	// admin - 공지관리
 	@GetMapping("/admin/admin-notice")
-	public String noticeList(Model model) {
-		List<Notice> noticeList = adminService.showAllNotice();
-		model.addAttribute("noticeList", noticeList);
+	public String noticeList(@RequestParam(value="page", required=false) Integer page, Model model) {
+		//페이징
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = adminService.getTotalCount("", "");
+		int noticeLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int)((double)totalCount/noticeLimit + 0.9);
+		startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1) * naviLimit +1;
+		endNavi = startNavi + naviLimit - 1;
+		
+		if(maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		
+		List<Notice> noticeList = adminService.showAllNotice(currentPage, noticeLimit);
+		
+		if (!noticeList.isEmpty()) {
+			model.addAttribute("urlVal","admin-notice");
+			model.addAttribute("maxPage",maxPage);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("startNavi", startNavi);
+			model.addAttribute("endNavi", endNavi);
+			model.addAttribute("noticeList", noticeList);
+		}
+		
 		return "/admin/notice/adminNotice";
 	}
 	
@@ -78,27 +105,21 @@ public class AdminController {
 	@PostMapping("/admin/postNotice")
 	public String registerNotice(@ModelAttribute Notice notice, Principal principal, Model model) {
 		String result = adminService.registerNotice(notice, principal);
-		List<Notice> noticeList = adminService.showAllNotice();
-		model.addAttribute("noticeList", noticeList);
-		return "/admin/notice/adminNotice";
+		return "redirect:/admin/admin-notice";
 	}
 
 	// 공지사항 삭제
 	@GetMapping("/admin/removeNotice")
 	public String removeNotice(@RequestParam("noticeNumber") Integer noticeNumber, Model model) {
 		adminService.removeNotice(noticeNumber);
-		List<Notice> noticeList = adminService.showAllNotice();
-		model.addAttribute("noticeList", noticeList);
-		return "/admin/notice/adminNotice";
+		return "redirect:/admin/admin-notice";
 	}
 
 	// 공지사항 수정
 	@PostMapping("/admin/modifyNotice")
 	public String modifyNotice(@ModelAttribute Notice notice, Model model) {
 		String result = adminService.modifyNotice(notice);
-		List<Notice> noticeList = adminService.showAllNotice();
-		model.addAttribute("noticeList", noticeList);
-		return "/admin/notice/adminNotice";
+		return "redirect:/admin/admin-notice";
 	}
 
 	// admin - 공지 상세보기
@@ -278,7 +299,7 @@ public class AdminController {
 		if (!reportList.isEmpty()) {
 			model.addAttribute("urlVal","admin-report");
 			model.addAttribute("maxPage",maxPage);
-			model.addAttribute("cuurentPage", currentPage);
+			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("startNavi", startNavi);
 			model.addAttribute("endNavi", endNavi);
 			model.addAttribute("reportList", reportList);
@@ -314,7 +335,7 @@ public class AdminController {
 		
 		// 이후 상황은 추가하던가 함 
 	
-		return "/admin/reportDetail";
+		return "redirect:/admin/reportDetail";
 	}
 	
 	 
