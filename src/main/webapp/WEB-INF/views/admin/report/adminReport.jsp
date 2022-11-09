@@ -23,7 +23,6 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th></th>
 						<th>글번호</th>
 						<th>제목</th>
 						<th>작성자</th>
@@ -33,7 +32,6 @@
 				<tbody>
 					<c:forEach items="${reportList }" var="reportList" varStatus="i">
 					<tr>
-						<td><input type="checkbox"></td>
 						<td>${reportList.boardNo}</td>
 						<td><a href="/admin/reportDetail?boardNo=${reportList.boardNo}">${reportList.commTitle }</a></td>
 						<td>${reportList.commWriter }</td>
@@ -43,18 +41,26 @@
 					<tr align="center" height="20">
 						<td colspan="7">
 							<c:if test="${currentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<button class="btn btn-outline-dark">이전</button>
+								</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
-									<b>${p }</b>
+									<button class="btn btn-outline-dark">${p}</button>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<button class="btn btn-outline-dark">${p}</button>
+									</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<button class="btn btn-outline-dark">
+			                		다음
+			                	</button>
+								</a>
 							</c:if>
 						</td>
 					</tr>

@@ -32,19 +32,17 @@
 			<h1>공지사항 수정</h1>
 			<form method="post" action="/admin/modifyNotice">
 				<input type="hidden" name="noticeNumber" value="${notice.noticeNumber }">
-				<input type="text" name="noticeTitle" value="${notice.noticeTitle }">
+				<input class="form-control" type="text" name="noticeTitle" value="${notice.noticeTitle }">
 				<textarea class="summernote" name="noticeContents">${notice.noticeContents }</textarea>
-				<button type="submit">공지사항 수정</button>
-				<button type="button" onclick="history.back();">뒤로가기</button>
+				<button class="btn btn-outline-dark" type="submit">공지사항 수정</button>
+				<button class="btn btn-outline-dark" type="button" onclick="history.back();">뒤로가기</button>
 			</form>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
-	</div>
 	<footer> </footer>
 	<script>
 		$('.summernote').summernote({
-			height : 150,
-			width : 600,
+			height : 300,
+			width : 900,
 			lang : "ko-KR",
 		/* 		  focus : true, */
 		});

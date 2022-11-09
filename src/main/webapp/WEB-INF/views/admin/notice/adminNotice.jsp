@@ -39,27 +39,33 @@
 					
 					</tr>
 					</c:forEach>
-				</tbody>
-			</table>
-			<table>
-			        <tr align="center" height="20">
+						<tr align="center" height="20">
 			            <td colspan="6">
 			                <c:if test="${currentPage != 1}">
-			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">[이전]</a>
+			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">
+			                    	<button class="btn btn-outline-dark">이전</button>
+			                    </a>
 			                </c:if>
 			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
 			                    <c:if test="${currentPage eq p }">
-			                        <b>${p}</b> 
+			                        <button class="btn btn-outline-dark">${p}</button> 
 			                    </c:if>
 			                    <c:if test="${currentPage ne p }">
-			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">
+			                        <button class="btn btn-outline-dark">${p}</button>
+			                        </a>
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">[다음]</a>
+			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">
+			                	<button class="btn btn-outline-dark">
+			                		다음
+			                	</button>
+			                	</a>
 			            	</c:if>
 			            </td>
-		        	</tr>
+					</tr>
+				</tbody>
 			</table>
 			<button class="btn btn-primary" onclick="writeNotice()">공지사항 등록</button>
 
