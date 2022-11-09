@@ -113,7 +113,6 @@ public class OrderController {
 				User user = orderService.getUserInfo(userId);
 				int result = 0;
 				
-//				int totalMileage = user.getUserReserves() + mileageSum;
 				int usedMileage = user.getUserReserves() - useMileage;
 				
 				for(int i=0; i<bookNoArr.size(); i++) {		

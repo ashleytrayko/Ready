@@ -99,6 +99,9 @@
         margin : auto 0;
         text-align : left;
     }
+    #id-delivery-fee{
+    	text-align : center;
+    }
 	
 	
 }
