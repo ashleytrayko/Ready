@@ -9,6 +9,7 @@
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -19,7 +20,7 @@
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
-			<table border="1" align="center">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th></th>

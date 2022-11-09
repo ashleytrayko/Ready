@@ -45,8 +45,6 @@ public class AdminController {
 	// admin 메인 메뉴
 	@GetMapping("/admin")
 	public String adminTest(Model model) {
-		Notice notice = adminService.selectRecentNotice();
-		model.addAttribute("notice", notice);
 		return "/admin/adminMenu";
 	}
 	

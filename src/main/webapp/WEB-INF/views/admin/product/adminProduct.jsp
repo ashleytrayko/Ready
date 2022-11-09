@@ -18,7 +18,7 @@
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>상품 관리</h1>
-			<table border="1" align="center">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th></th>

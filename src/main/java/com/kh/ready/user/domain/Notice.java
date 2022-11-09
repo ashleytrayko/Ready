@@ -1,15 +1,16 @@
 package com.kh.ready.user.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Notice {
 	private Integer noticeNumber;
 	private String noticeTitle;
 	private String noticeContents;
 	private String noticeWriter;
-	private Date postDate;
+	private Timestamp postDate;
 	
-	public Notice(Integer noticeNumber, String noticeTitle, String noticeContents, String noticeWriter, Date postDate) {
+	public Notice(Integer noticeNumber, String noticeTitle, String noticeContents, String noticeWriter, Timestamp postDate) {
 		super();
 		this.noticeNumber = noticeNumber;
 		this.noticeTitle = noticeTitle;
@@ -35,10 +36,10 @@ public class Notice {
 	public void setNoticeContents(String noticeContents) {
 		this.noticeContents = noticeContents;
 	}
-	public Date getPostDate() {
+	public Timestamp getPostDate() {
 		return postDate;
 	}
-	public void setPostDate(Date postDate) {
+	public void setPostDate(Timestamp postDate) {
 		this.postDate = postDate;
 	}
 	
