@@ -69,7 +69,7 @@
 						</tr>
 						<tr>
 							<td>
-								<textarea rows="3" cols="55" name="commReplyContents" id="commReplyContents"></textarea>
+								<textarea rows="3" cols="55" name="rContents" id="rContents"></textarea>
 							</td>
 							<td align="center">
 								<button width="100" id="rSubmit">등록</button>
@@ -118,8 +118,7 @@
 							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
 								$btnArea = $("<td width='80'>")
-											 	.append("<a href='javascript:void(0);' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>수정</a> ")
-												/* .append("<a href='javascript:void(0);' onclick='modifyReplyAjax(this,\""+cRList[i].commReplyContents+"\","+cRList[i].cReplyNo+")'>수정</a> ") */
+											 	.append("<button href='javascript:void(0);' id='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>수정</button> ")
 												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
 							}
 							$tr.append($rWriter); // <tr><td width='100'>khuser01</td></tr>
@@ -182,13 +181,13 @@
 	
 		$("#rSubmit").on("click", function() {
 			var boardNo = "${comm.boardNo}";		// 자바 스크립트에서 사용하는 el 아래는 html에서 사용하는 el.
-			var replyContents = $("#commReplyContents").val();		// textarea나 input이면 val쓰면 됨. 아닐 시 html.
+			var rContents = $("#rContents").val();		// textarea나 input이면 val쓰면 됨. 아닐 시 html.
 			var rWriter = $("#rWriter").text();		// 댓글 작성자에 댓글 입력할 때 나오는 댓글입력자 값을 넣어줌
 			$.ajax({
 				url : "/comm/replyAdd.kh",
 				data : { 
 					"boardNo"	: boardNo,
-					"rContents" : replyContents,
+					"rContents" : rContents,
 					"rWriter" : rWriter
 				},
 				type : "post",		// replyContents가 길어질 수 있어서 잘림방지를 위해 post로 함
@@ -196,7 +195,7 @@
 					if(result == "success") {
 						alert("댓글 등록 성공!");
 						// DOM조작, 함수호출 등.. 가능
-						$("#commReplyContents").val("");	// 작성 후 내용 초기화
+						$("#rContents").val("");	// 작성 후 내용 초기화
 						getReplyList();	// 댓글 리스트 출력
 					}else {
 						alert("댓글 등록 실패!");
@@ -230,12 +229,15 @@
 			event.preventDefault();
 			var $tr = $("<tr>");
 			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td><button id='btn-click' onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
+			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
 			$(obj).parent().parent().after($tr);
+			const target = document.getElementById('btn-click');
+	        target.disabled = true;
 		}
 		function modifyReply(obj, cReplyNo) {
 			var inputTag = $(obj).parent().prev().children();
-			var commReplyContents = inputTag.val(); //= $("#modifyInput").val();
+			console.log(inputTag.val());
+			var rContents = inputTag.val();
 			var $form =$("<form>");
 			$form.attr("action", "/comm/replyModify.kh");
 			$form.attr("method", "post");
@@ -245,7 +247,6 @@
 			$form.appendTo("body");
 			$form.submit();
 		}
-		
 		
 		function updateLike() {
 		var boardNo = "${comm.boardNo}";

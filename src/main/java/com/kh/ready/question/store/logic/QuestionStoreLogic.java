@@ -110,4 +110,11 @@ public class QuestionStoreLogic implements QuestionStore{
 	}
 
 
+	@Override
+	public int insertAdmin(SqlSession session, Question que) {
+		int result = session.insert("QuestionMapper.insertAdmin", que);
+		return result;
+	}
+
+
 }

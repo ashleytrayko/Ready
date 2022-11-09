@@ -56,9 +56,12 @@
 								<td>${question.qEnrollDate }</td>
 								<td>${question.queWriter }</td>
 								<td>
-									<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }"><button>공지등록</button></c:if>
-									<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
-									<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
+									<%-- <c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }"><button href="#" onclick="enrollFAQ(${page})">공지등록</button></c:if> --%>
+									<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
+										<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
+										<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
+									</c:if>
+									<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">공지사항</c:if>
 								</td>
 							</tr>
 						</c:forEach>
@@ -112,5 +115,13 @@
 	<footer>
 		
 	</footer>
+	<script>
+		function enrollFAQ(value) {
+			event.preventDefault(); // 하이퍼링크 이동 방지
+			if(confirm("공지사항으로 등록하시겠습니까?")) {
+				location.href="/que/enroll.kh";
+			}
+		}
+	</script>
 </body>
 </html>

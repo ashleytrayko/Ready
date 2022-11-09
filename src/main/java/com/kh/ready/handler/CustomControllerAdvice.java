@@ -18,10 +18,11 @@ public class CustomControllerAdvice {
 		return "exception/notFoundPage";
 	}
 	
-	@ExceptionHandler({Throwable.class, Exception.class})
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public String except() {
-		return "exception/something";
-	}
+//	@ExceptionHandler({Throwable.class, Exception.class})
+//	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//	public String except() {
+//		
+//		return "exception/something";
+//	}
 	
 }

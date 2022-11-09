@@ -308,17 +308,17 @@ public class CommController {
 		}
 	}
 	
-	@ResponseBody
 	@RequestMapping(value="/comm/replyModify.kh", method=RequestMethod.POST)
 	public String boardReplyModify(
 			// @RequestParam("replyNo") Integer replyNo
 			// , @RequestParam("replyContents") String replyContents
 			@ModelAttribute CommReply cReply
-			, @RequestParam("boardNo") Integer boardNo
-			, @RequestParam("page") Integer page) {
+//			, @RequestParam("boardNo") Integer boardNo
+//			, @RequestParam("page") Integer page
+			) {
 		int result = cService.modifyReply(cReply);
 		if(result > 0) {
-			return "redirect:/comm/detail.kh?boardNo=" + boardNo + "&page=" + page;
+			return "redirect:/comm/list.kh";
 		} else {
 			return "fail";
 		}
