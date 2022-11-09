@@ -20,15 +20,21 @@ public interface AdminService {
 	
 	// 공지 등록
 	public String registerNotice(Notice notice, Principal principal);
-
+	
 	// 공지 삭제
 	public int removeNotice(Integer noticeNumber);
 
+	// 페이징
+	public int getTotalCount(String string, String string2);
+
 	// 공지 전체 조회
-	public List<Notice> showAllNotice();
+	public List<Notice> showAllNotice(int currentPage, int noticeLimit);
 	
 	// 공지 1개 조회
 	public Notice selectNoticeByNumber(Integer noticeNumber);
+	
+	// 메인페이지 공지 뿌리기
+	public Notice selectRecentNotice();
 	
 	// 공지 수정
 	public String modifyNotice(Notice notice);
@@ -38,5 +44,6 @@ public interface AdminService {
 	
 	// 처벌등록 
 	public String punishUser(String punishment, String userNickname);
+
 
 }

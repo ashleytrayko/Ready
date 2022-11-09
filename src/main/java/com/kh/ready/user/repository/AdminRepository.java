@@ -1,5 +1,6 @@
 package com.kh.ready.user.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.ready.community.domain.Comm;
@@ -17,7 +18,7 @@ public interface AdminRepository {
 	
 	public int insertNotice(Notice notice);
 
-	public List<Notice> selectAllNotice();
+	public List<Notice> selectAllNotice(int currentPage, int noticeLimit);
 
 	public int deleteNotice(Integer noticeNumber);
 
@@ -30,5 +31,9 @@ public interface AdminRepository {
 	public int updateBadUser(String userNickname);
 
 	public int kickOutUser(String userNickname);
+
+	public int selectTotalCount(HashMap<String, String> paramMap);
+
+	public Notice selectRecentNotice();
 
 }
