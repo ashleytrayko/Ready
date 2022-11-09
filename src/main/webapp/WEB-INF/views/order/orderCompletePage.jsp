@@ -169,12 +169,19 @@
                 </tbody>
             </table>
         </div>
-        <div class="div-confirmPurchase">
-            <button class="btn btn-primary btm-btn" onclick="confirmPurchase();">구매 확정</button>
-       	</div>
+        <c:if test="${orderInfo.orderState eq 'N'}">
+	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase();">구매 확정</button>
+	       	</div>
+       	</c:if>
+       	<c:if test="${orderInfo.orderState eq 'Y'}">
+	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다');">구매 확정</button>
+	       	</div>
+       	</c:if>
         <div id="order-btn">
-            <button class="btn btn-secondary btm-btn">메인으로</button>
-            <button class="btn btn-primary btm-btn" onclick="history.go(-3);">계속 쇼핑하기</button>
+            <button class="btn btn-secondary btm-btn" onclick="location.href='/';">메인으로</button>
+            <button class="btn btn-primary btm-btn" onclick="history.go(-2);">계속 쇼핑하기</button>
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
@@ -189,16 +196,39 @@
 		$("#payMethod").val("실시간 계좌 이체");
 	}
 	
+	
 	function confirmPurchase(){
-		const plusMileage = ${mileageSum};
-		const orderId = ${orderInfo.orderId };
 		
-		console.log(orderId);
-		
-/* 		$.ajax({
-			url : "/order/confirmPurchase",
-			type : ""
-		}) */
+			const confirmPurchase = confirm("구매 확정하시겠습니까?");
+			
+			if(confirmPurchase == true){
+				
+				const plusMileage = ${mileageSum};
+				const orderId = '${orderInfo.orderId }';
+				
+		 		$.ajax({
+					url : "/order/confirmPurchase",
+					type : "POST",
+					data : {
+						plusMileage : plusMileage,
+						orderId : orderId
+					},
+					success : function(result){
+						if(result > 2) {
+							alert("구매 확정 되었습니다.");
+							location.href="/mypage/myOrder.kh";
+						}
+					},
+					error : function(result){
+						alert("구매 확정 불가");
+						console.log(result);
+					}
+				}) 
+			} else {
+				alert("취소하였습니다.");
+				return false;
+			}
+			
 	}
 
 </script>

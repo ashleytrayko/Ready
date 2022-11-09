@@ -42,7 +42,7 @@
                                 <td>할인가</td>
                                 <td>수량</td>
                                 <td>합계</td>
-                                <td>예상 적립금</td>
+                                <td>예상 마일리지</td>
                             </tr>
                         </tbody>
                 <tbody class="cartbody">
@@ -79,12 +79,17 @@
                         </td>
                         <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
-                        <!-- 적립금*수량 -->
+                        <!-- 마일리지*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
-                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * cartList.productCount) }"/>
+                    <c:if test="${priceSum ge 10000}">
+                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))}"/>
+                    </c:if>
+                    <c:if test="${priceSum lt 10000}">
+                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))+2500}"/>
+                    </c:if>
                     <c:set var="mileageSum" value="${mileageSum + (cartList.book.mileage * cartList.productCount) }"/>
                    </c:forEach>
                 </tbody>
@@ -104,15 +109,15 @@
                         <th class="cartinfo-table-header">주문 금액 합계</th>
                         <th class="cartinfo-table-header">배송비</th>
                         <th class="cartinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th id="cartinfo-table-right">예상 적립금</th>
+                        <th id="cartinfo-table-right">예상 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
                     <td>총 <c:out value="${productSum }"/>권</td>
                     <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
-                    <td class="cartinfo-table-body">0원</td>
+                    <td class="cartinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
                     <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
-                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/>원</td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/>P</td>
                 </tbody>
             </table>
         </div>
@@ -125,48 +130,77 @@
 	</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
+	
+	window.onload = function(){
+		var bookPrice = ${priceSum};
+		if(bookPrice < 10000) {
+			var deliveryFeeId = $("#id-delivery-fee").val;
+			$("#id-delivery-fee").attr("value", "2,500");
+		}
+	}
 
 	$("#del-btn").click(function(){
+		
 		var confirm_val = confirm("정말 삭제하시겠습니까?");
 		  
 		if(confirm_val) {
-
 	    	var checkArr = [];
-	   
+	 
 	    	$("input[name='chBox']:checked").each(function(i){
 	    	    checkArr.push($(this).attr("data-cartNo"));
 	 		});
 
 		  	$.ajax({
-			  	url : "/cart/delete.ready",
+			  	url : "/cart/delete",
 			    type : "post",
 			    data : { 
 			    	checkArr : checkArr
 			    },
 			    success : function(){
-			    	location.href = "/cart/cartView.ready";
+			    	location.href = "/cart/cartView";
 			    },
 			    error : function(){
 			    	console.log('error');
 			    }
 		  	});
-	   } 
+	   }
 	});
+	
+	
 	
 	$(".quantity-btn").click(function(){
 		
 		var cartNo = $(this).attr("data-cartNo");
 		var productCount = $(this).prev().val();
+		var countControl = $("#countControl");
+		
+ 		if(productCount==""){
+			alert ("숫자를 입력해주세요");
+			countControl.focus();
+			return false;
+		} else {
+			var num_check=/^[0-9]*$/;
+			if(num_check.test(productCount)){
+				if(productCount > 99){
+					alert("99개 이상 주문할 수 없습니다.");
+					countControl.focus();
+					return false;
+				}
+			} else {
+				alert ("숫자만 입력할 수 있습니다.");
+				countControl.focus();
+			}
+		};
 		
 		$.ajax({
-			url : "/cart/modifyCount.ready",
+			url : "/cart/modifyCount",
 			type : "post",
 			data : {
 	            cartNo : cartNo,
 	            productCount : productCount
 			},
 			success : function(){
-				location.href = "/cart/cartView.ready";
+				location.href = "/cart/cartView";
 			},
 			error : function(){
 		    	console.log('error');

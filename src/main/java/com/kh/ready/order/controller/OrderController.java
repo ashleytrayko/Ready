@@ -113,7 +113,6 @@ public class OrderController {
 				User user = orderService.getUserInfo(userId);
 				int result = 0;
 				
-//				int totalMileage = user.getUserReserves() + mileageSum;
 				int usedMileage = user.getUserReserves() - useMileage;
 				
 				for(int i=0; i<bookNoArr.size(); i++) {		
@@ -134,20 +133,15 @@ public class OrderController {
 					
 				}
 				for(int i=0; i<bookNoArr.size(); i++) {
-					System.out.println("책 가격 : " + productPriceArr.get(i));
 					int beforePurchase = user.getUserPurchase();
 					int totalPurchase = beforePurchase + (productPriceArr.get(i) * productCountArr.get(i));
 					user.setUserPurchase(totalPurchase);
-					System.out.println("이전 총 구매금액 : " + beforePurchase);
-					System.out.println("합친 총 구매금액 : " + totalPurchase);
-					System.out.println("==============================");
 					orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
 				}
 				
 				if(result > 0) {
 					orderService.deleteCart(userId);
 				}
-				
 				String getOrderId = order.getOrderId();
 				
 			return getOrderId;
@@ -209,6 +203,7 @@ public class OrderController {
 			return getOrderId;
 	}
 	
+	
 	@RequestMapping(value="/order/orderDetailView", method=RequestMethod.GET)
 	public ModelAndView orderDetailView(ModelAndView mv, String orderId, Principal principal) {
 		
@@ -227,15 +222,20 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value="/order/confirmPurchase", method=RequestMethod.POST)
-	public int confirmPurchase(Principal principal, @RequestParam("plusMileage") int plusMileage) {
+	public int confirmPurchase(Principal principal, @RequestParam("plusMileage") int plusMileage,
+													@RequestParam("orderId") String orderId) {
 		
 		String userId = principal.getName();
 		
 		User user = orderService.getUserInfo(userId);
 		int plusedMileage = user.getUserReserves() + plusMileage;
 		
-//		orderService.confirmPurchase(plusedMileage);
-		return 0;
+		
+		int data = orderService.updateStatusByOrderId(orderId);
+		int data2 = orderService.updatePlusMileageByUserId(userId, plusedMileage);
+		int result = data + data2;
+		
+		return result;
 	}
 	
 }

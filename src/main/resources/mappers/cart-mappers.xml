@@ -9,7 +9,6 @@
 		<result property="bookNo" 				column="BOOK_NO"/>
 		<result property="userId" 				column="USER_ID"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
-		<result property="productPrice" 		column="PRODUCT_PRICE"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
 
@@ -29,7 +28,7 @@
 	</resultMap>
 
 	<insert id="insertCart">
-		INSERT INTO CART_TBL VALUES(SEQ_CART_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{productPrice})
+		INSERT INTO CART_TBL VALUES(SEQ_CART_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount})
 	</insert>
 	
 	<delete id="deleteCart">

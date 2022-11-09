@@ -72,4 +72,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderStore.getUserInfo(userId);
 	}
 
+	@Override
+	public int updateStatusByOrderId(String orderId) {
+
+		return orderStore.updateStatusByOrderId(orderId);
+	}
+
+	@Override
+	public int updatePlusMileageByUserId(String userId, int plusedMileage) {
+
+		return orderStore.updatePlusMileageByUserId(userId, plusedMileage);
+	}
+
 }

@@ -75,7 +75,21 @@ public class OrderStoreLogic implements OrderStore{
 	@Override
 	public User getUserInfo(String userId) {
 
-		return session.selectOne("getUserInfo",userId);
+		return session.selectOne("OrderMapper.getUserInfo",userId);
+	}
+
+	@Override
+	public int updateStatusByOrderId(String orderId) {
+
+		return session.update("OrderMapper.updateStatusByOrderId", orderId);
+	}
+
+	@Override
+	public int updatePlusMileageByUserId(String userId, int plusedMileage) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userId", userId);
+		paramMap.put("plusedMileage", plusedMileage);
+		return session.update("OrderMapper.updatePlusMileageByUserId", paramMap);
 	}
 	
 }
