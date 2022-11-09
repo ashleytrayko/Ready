@@ -97,4 +97,11 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 
+	@Override
+	public int registerAdmin(Question que) {
+		int result = qStore.insertAdmin(session, que);
+		return result;
+	}
+
+
 }

@@ -1,6 +1,9 @@
 package com.kh.ready.question.controller;
 
+import java.io.File;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.question.domain.Question;
 import com.kh.ready.question.service.QuestionService;
 
@@ -261,4 +265,27 @@ public class QuestionController {
 		mv.setViewName("/que/manageList");
 		return mv;
 	}
+	
+	// FAQ 공지등록화면
+	@RequestMapping(value="/que/viewWriteAdmin.kh", method=RequestMethod.GET)
+	public String showFAQWrite() {
+		return "que/FAQWriteForm";
+	}
+	
+	// FAQ 공지등록
+	@RequestMapping(value="/que/registerAdmin.kh", method=RequestMethod.POST)
+	public ModelAndView registerFAQ(
+			ModelAndView mv
+			, @ModelAttribute Question que
+			, HttpServletRequest request) {
+		try {
+			int result = qService.registerAdmin(que);
+			mv.setViewName("redirect:/que/list.kh");
+		} catch (Exception e) {
+				e.printStackTrace();
+				mv.addObject("msg", e.getMessage());
+				mv.setViewName("main/errorPage");
+		}
+		return mv;
+	} 
 }

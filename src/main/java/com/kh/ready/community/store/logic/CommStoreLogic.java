@@ -104,4 +104,10 @@ public class CommStoreLogic implements CommStore{
 		return user;
 	}
 
+//	@Override
+//	public int updateReply(SqlSession session, CommReply cReply, Integer boardNo, Integer page) {
+//		int result = session.update("CommReplyMapper.updateReply", cReply, boardNo, page);
+//		return result;
+//	}
+
 }

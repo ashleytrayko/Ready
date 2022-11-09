@@ -54,9 +54,12 @@
 			   </ul>
 			   <div class="btn-right">
 					<button onclick="location.href='/que/myList.kh'">내 문의글</button>
+					<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
 					<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+					</c:if>
 					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
 					<button onclick="location.href='/que/manageList.kh'">문의글 관리</button>
+					<button onclick="location.href='/que/viewWriteAdmin.kh'">공지글 등록</button>
 					</c:if>
 			   </div>
 			</div>

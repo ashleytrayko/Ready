@@ -36,5 +36,7 @@ public interface CommStore {
 			int boardLimit);
 	
 	User selectUser(SqlSession session, String userId);
+	
+//	int updateReply(SqlSession session, CommReply cReply, Integer boardNo, Integer page);
 
 }

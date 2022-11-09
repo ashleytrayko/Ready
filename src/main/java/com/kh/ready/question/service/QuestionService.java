@@ -36,6 +36,9 @@ public interface QuestionService {
 
 	List<Question> printManageBoard(int currentPage, int boardLimit);
 
+	// 공지사항 등록
+	int registerAdmin(Question que);
+
 
 
 }
