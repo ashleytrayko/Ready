@@ -15,6 +15,7 @@
 		<result property="qAnswer" 			column="Q_ANSWER"/>
 		<result property="qStatus" 			column="Q_STATUS"/>
 		<result property="qCategory" 		column="Q_CATEGORY"/>
+		<result property="queId" 			column="QUE_ID"/>
 	</resultMap>
 	
 	<insert id="insertFAQ">
@@ -90,4 +91,8 @@
 	<select id="selectManageBoard" resultMap="questionResultMap">
 		SELECT * FROM QUESTION_TBL WHERE Q_STATUS = 'N' OR Q_STATUS = 'Y' ORDER BY QUE_NO DESC
 	</select>
+	<insert id="insertAdmin">
+		INSERT INTO QUESTION_TBL VALUES(SEQ_QUE_NO.NEXTVAL, #{queWriter}, #{queTitle}, #{queContents}
+		, #{queFilename}, #{queFileRename}, #{queFilePath}, DEFAULT, #{qAnswer}, 'F', #{qCategory}, #{queId})
+	</insert>
 </mapper>

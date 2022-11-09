@@ -54,4 +54,6 @@ public interface BookStore {
 
 	List<Review> selectMyReview(SqlSessionTemplate session, String userId, int currentPage, int reviewLimit);
 
+	List<Book> selectRecommendBook1(SqlSessionTemplate session, String userId);
+
 }

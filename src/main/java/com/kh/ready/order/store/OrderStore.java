@@ -27,5 +27,9 @@ public interface OrderStore {
 
 	User getUserInfo(String userId);
 
+	int updateStatusByOrderId(String orderId);
+
+	int updatePlusMileageByUserId(String userId, int plusedMileage);
+
 
 }

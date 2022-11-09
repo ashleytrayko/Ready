@@ -1,7 +1,9 @@
 package com.kh.ready.user.repository.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,10 +43,18 @@ public class AdminRepositoryImpl implements AdminRepository{
 		int result = session.insert("AdminMapper.insertNotice", notice);
 		return result;
 	}
+	
+	@Override
+	public int selectTotalCount(HashMap<String, String> paramMap) {
+		int result = session.selectOne("AdminMapper.selectNoticeCount", paramMap);
+		return result;
+	}
 
 	@Override
-	public List<Notice> selectAllNotice() {
-		List<Notice> noticeList =  session.selectList("AdminMapper.selectAllNotice");
+	public List<Notice> selectAllNotice(int currentPage, int noticeLimit) {
+		int offset = (currentPage - 1) * noticeLimit;
+		RowBounds rowBounds = new RowBounds(offset, noticeLimit);
+		List<Notice> noticeList =  session.selectList("AdminMapper.selectAllNotice", null, rowBounds);
 		return noticeList;
 	}
 
@@ -57,6 +67,12 @@ public class AdminRepositoryImpl implements AdminRepository{
 	@Override
 	public Notice selectNoticeByNumber(Integer noticeNumber) {
 		Notice notice = session.selectOne("AdminMapper.selectNoticeByNumber", noticeNumber);
+		return notice;
+	}
+	
+	@Override
+	public Notice selectRecentNotice() {
+		Notice notice = session.selectOne("AdminMapper.selectRecentNotice");
 		return notice;
 	}
 
@@ -83,6 +99,10 @@ public class AdminRepositoryImpl implements AdminRepository{
 		int result = session.update("UserMapper.kickOutUser", userNickname);
 		return result;
 	}
+
+
+
+
 
 
 }

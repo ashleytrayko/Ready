@@ -47,7 +47,7 @@
 					</div>
 					<div class="form-group">
 						<label for="userPassword">패스워드 </label> 
-						<input type="password" class="form-control" placeholder="문자, 숫자 1개 이상 포함, 8자리 이상"" id="userPassword" name="userPassword">
+						<input type="password" class="form-control" placeholder="문자, 숫자 1개 이상 포함, 8자리 이상" id="userPassword" name="userPassword">
 						<span class="guide ok pwd">사용가능한 패스워드입니다.</span> 
 						<span class="guide error pwd" id="pwdCheck">규칙에 맞게 패스워드를 설정해주세요.</span>
 					</div>
@@ -134,14 +134,34 @@
 		
 		$("#submit").on("click", function() {
 			const userPassword = $("#userPassword").val();
-			const userPasswordChech = $("$userPasswordCheck").val();
+			const userPasswordCheck = $("#userPasswordCheck").val();
 			const userPostcode = $("#userPostcode").val();
 			const userAddress = $("#userAddress").val();
 			const userDetailAddress = $("#userDetailAddress").val();
 			const userPhone = $("#userPhone").val();
 			const userNickName = $("#userNickname").val();
-			
-			if($("#pwdCheck").css("display") == "block") {
+			console.log(userPassword);
+			if(userPassword == null){
+				$(".modal-body").html("비밀번호를 입력해주세요.");
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPasswordCheck === ''){
+				$(".modal-body").html("비밀번호를 확인해주세요.");
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPostcode === '' || userAddress === '' || userDetailAddress === ''){
+				$(".modal-body").html("주소를 입력해주세요.");
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userPhone === ''){
+				$(".modal-body").html("전화번호를 입력해주세요.");
+				$("#exampleModal").modal('show');
+				return false;
+			} else if(userNickname === ''){
+				$(".modal-body").html("닉네임을 입력해주세요.");
+				$("#exampleModal").modal('show');
+				return false;
+			} else if($("#pwdCheck").css("display") == "block") {
 				$(".modal-body").html("사용불가능한 비밀번호입니다. 다시 확인해주세요.")
 				$("#exampleModal").modal('show');
 				return false;
@@ -157,27 +177,8 @@
 				$(".modal-body").html("이미 사용중인 닉네임입니다. 다시 확인해주세요.")
 				$("#exampleModal").modal('show');
 				return false;
-			} else if(userPassword === ''){
-				$(".modal-body").html("비밀번호를 입력해주세요.")
-				$("#exampleModal").modal('show');
-				return false;
-			} else if(userPasswordCheck === ''){
-				$(".modal-body").html("비밀번호를 확인해주세요.")
-				$("#exampleModal").modal('show');
-				return false;
-			} else if(userPostcode === '' || userAddress === '' || userDetailAddress === ''){
-				$(".modal-body").html("주소를 입력해주세요.")
-				$("#exampleModal").modal('show');
-				return false;
-			} else if(userPhone === ''){
-				$(".modal-body").html("전화번호를 입력해주세요.")
-				$("#exampleModal").modal('show');
-				return false;
-			} else if(userNickname === ''){
-				$(".modal-body").html("닉네임을 입력해주세요.")
-				$("#exampleModal").modal('show');
-				return false;
-		})
+			} 
+		});
 		
 		$("#userPhone").keyup(function(e){
 			let inputPhone = e.target.value;

@@ -21,25 +21,25 @@ public class CartContorller {
 	@Autowired
 	private CartService cartService;
 	
-	
 	@ResponseBody
-	@RequestMapping(value="/cart/insert.ready", method=RequestMethod.POST)
-	public void insertCart(Cart cart, Principal principal) {
+	@RequestMapping(value="/cart/insert", method=RequestMethod.POST)
+	public int insertCart(Cart cart, Principal principal){
 		
 		try {
 			String userId = principal.getName();
 			cart.setUserId(userId);
 			
-			cartService.insertCart(cart);
-			
+			int result = cartService.insertCart(cart);
+
+			return result;			
 		} catch (Exception e) {
-			e.printStackTrace();
+			return 0;
 		}
 	}
 
 	
 	@ResponseBody
-	@RequestMapping(value="/cart/delete.ready", method=RequestMethod.POST)
+	@RequestMapping(value="/cart/delete", method=RequestMethod.POST)
 	public void deleteCart(Cart cart, Principal principal, @RequestParam(value="checkArr[]") List<String> chArr) {
 		
 		try {
@@ -61,7 +61,7 @@ public class CartContorller {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/cart/modifyCount.ready", method=RequestMethod.POST)
+	@RequestMapping(value="/cart/modifyCount", method=RequestMethod.POST)
 	public void modifyCart(Cart cart, Principal principal,
 			@RequestParam("cartNo") int cartNo, @RequestParam("productCount") int productCount) {
 		
@@ -80,7 +80,7 @@ public class CartContorller {
 	}
 	
 
-	@RequestMapping(value="/cart/cartView.ready", method=RequestMethod.GET)
+	@RequestMapping(value="/cart/cartView", method=RequestMethod.GET)
 	public ModelAndView showCartView(ModelAndView mv, Principal principal) {
 		
 		try {

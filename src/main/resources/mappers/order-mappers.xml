@@ -29,7 +29,6 @@
 		<result property="bookNo" 				column="BOOK_NO"/>
 		<result property="userId" 				column="USER_ID"/>
 		<result property="productCount" 		column="PRODUCT_COUNT"/>
-		<result property="productPrice" 		column="PRODUCT_PRICE"/>
 		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
 
@@ -97,6 +96,12 @@
 		UPDATE USER_TBL SET USER_PURCHASE = #{totalPurchase}, USER_RESERVES = #{usedMileage} WHERE USER_ID = #{userId}
 	</update>
 
+	<update id="updateStatusByOrderId">
+		UPDATE ORDER_TBL SET ORDER_STATE = 'Y' WHERE ORDER_ID = #{orderId}
+	</update>
 	
+	<update id="updatePlusMileageByUserId">
+		UPDATE USER_TBL SET USER_RESERVES = #{plusedMileage} WHERE USER_ID = #{userId}
+	</update>
 	
 </mapper>

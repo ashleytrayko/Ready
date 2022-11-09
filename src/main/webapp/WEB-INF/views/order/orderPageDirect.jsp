@@ -42,7 +42,7 @@
                                 <td>할인가</td>
                                 <td>수량</td>
                                 <td>합계</td>
-                                <td>예상 적립금</td>
+                                <td>예상 마일리지</td>
                             </tr>
                         </tbody>
                 <tbody class="cartbody">
@@ -55,24 +55,34 @@
                         </td>
                         <td>
                             <c:choose>
-                            	<c:when test="${fn:length(bookData.bookTitle ) gt 20 }">
-                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }...">
-                            	</c:out></c:when>
-                            	<c:otherwise>
-                            	<c:out value="${bookData.bookTitle }">
-                            	</c:out></c:otherwise>
+                            <c:when test="${fn:length(bookData.bookTitle ) gt 20 }">
+                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }..."/>
+                            </c:when>
+                            <c:otherwise>
+                            	<c:out value="${bookData.bookTitle }"/>
+                            </c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
+                        <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.priceSales}"/>원</td>
+                        <!-- 할인가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <!-- 수량 -->
                         <td><input type="text" name='productCount' id="id-productCount" value="${productCount }"  style="border:0 solid black; width:30px;" readonly></td>
+                        <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * productCount}"/>원</td>
+                        <!-- 마일리지*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${bookData.mileage * productCount }"/>원</td>
                     </tr>
 					<c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
                     <c:set var="productSum" value="${productSum + productCount }"/>
-                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount) }"/>
+                    <c:if test="${priceSum ge 10000}">
+                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))}"/>
+                    </c:if>
+                    <c:if test="${priceSum lt 10000}">
+                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))+2500}"/>
+                    </c:if>
                     <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>
                 </tbody>
             </table>
@@ -223,20 +233,20 @@
                         <th class="orderinfo-table-header">주문 금액 합계</th>
                         <th class="orderinfo-table-header">배송비</th>
                         <th class="orderinfo-table-header"><p class="total-price">총 결제 금액</p></th>
-                        <th id="orderinfo-table-right">예상 적립금</th>
+                        <th id="orderinfo-table-right">예상 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
                     <td id="productSum">총 <c:out value="${productSum }"/>권</td>
                     <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
-                    <td class="orderinfo-table-body">0원</td>
+                    <td class="orderinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
 					<td class="orderinfo-table-body"><input readonly type="text" class="total-price" id="id-total-price" style="border:0px; width:100px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>">원</td>
-					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원</td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>P</td>
                 </tbody>
             </table>
             <div style="text-align:right;">
-            	<p>현재 보유한 적립금 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>원</p>
-            	적립금 : <input type="text" value="0" id="useMileage" style="width:100px;">원 <button onclick="useMileage(${salePriceSum });">사용</button>
+            	<p>현재 보유한 마일리지 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>P</p>
+            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum });">사용</button>
         	</div>
         </div>
         <div class="buyer-data-list">
@@ -274,9 +284,14 @@
         
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	window.onload = function(){
+		var bookPrice = ${priceSum};
+		if(bookPrice < 10000) {
+			var deliveryFeeId = $("#id-delivery-fee").val;
+			$("#id-delivery-fee").attr("value", "2,500");
+		}
+	}
 	
-	var IMP = window.IMP;
-	IMP.init('imp45674133');
 
     function byuerAddrSearch(){
         new daum.Postcode({
@@ -324,16 +339,19 @@
     	var useMileage = +$("#useMileage").val();
     	
     	if(currentMileage < useMileage) {
-    		alert("현재 보유한 적립금이 부족합니다!");
+    		alert("현재 보유한 마일리지가 부족합니다!");
     		return false;
     	} else {
     		var calPrice = totalPrice - useMileage;
-    		var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
-    		$("#id-total-price").attr("value", calPrice2);    		
+    		$("#id-total-price").attr("value", caledPrice);    		
     	}
     }
     
+	var IMP = window.IMP;
+	IMP.init('imp45674133');
+	
     function requestPay(priceSum, title, totalCount, mileageSum) {
     	
     	const totalPrice = Math.floor(priceSum);

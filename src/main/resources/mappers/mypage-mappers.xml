@@ -66,6 +66,7 @@
 		<result property="orderDate" 		column="ORDER_DATE"/>
 		<result property="orderId" 		column="ORDER_ID"/>
 		<result property="productPrice" column="PRODUCT_PRICE"/>
+		<result property="totalPrice"	column="TOTAL_PRICE"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
 	</resultMap>
 	
@@ -124,6 +125,17 @@
 	</select>
 	
 	<select id="selectMyOrder" resultMap="OrderResultMap">
-		SELECT * FROM ORDER_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId }
+		SELECT *
+FROM (
+    SELECT ORDER_ID,
+           TOTAL_PRICE,
+           ORDER_DATE,
+           BOOK_NO,
+           USER_ID,
+	   ORDER_STATE,
+           ROW_NUMBER() OVER(PARTITION BY ORDER_ID ORDER BY ORDER_NO DESC) AS A
+           FROM ORDER_TBL
+    ) JOIN BOOK_TBL USING(BOOK_NO)
+	WHERE A = 1 AND USER_ID = #{userId }
 	</select>
   </mapper>

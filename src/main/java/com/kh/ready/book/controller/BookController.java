@@ -43,7 +43,7 @@ public class BookController {
 		//도서 목록 조회
 		List<Book> bList = bService.printAllBook(currentPage, bookLimit);
 		if(!bList.isEmpty()) {
-			mv.addObject("urlVal", "bookList");
+			mv.addObject("urlVal", "searchBook");
 			mv.addObject("currentPgae", currentPage);
 			mv.addObject("maxPage", maxPage);
 			mv.addObject("startNavi", startNavi);

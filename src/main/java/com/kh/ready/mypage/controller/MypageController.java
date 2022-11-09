@@ -174,12 +174,17 @@ public class MypageController {
 		//내 주문내역 리스트
 		@RequestMapping(value="mypage/myOrder.kh", method=RequestMethod.GET)
 		public ModelAndView printMyOrder(ModelAndView mv, Principal principal) {
-			String userId = principal.getName();
-			List<Order> oList = mService.printMyOrder(userId);
-			if(!oList.isEmpty()) {
-				mv.addObject("oList", oList);
+			try {				
+				String userId = principal.getName();
+				List<Order> oList = mService.printMyOrder(userId);
+				if(!oList.isEmpty()) {
+					mv.addObject("oList", oList);
+				}
+				mv.setViewName("mypage/myOrder");
+			} catch (Exception e) {
+				e.printStackTrace();
+				mv.setViewName("/main/errorPage");
 			}
-			mv.setViewName("mypage/myOrder");
 			return mv;
 		}
 }

@@ -36,5 +36,8 @@ public interface QuestionStore {
 
 	List<Question> selectManageBoard(SqlSession session, int currentPage, int boardLimit);
 
+	// 공지사항 등록
+	int insertAdmin(SqlSession session, Question que);
+
 
 }

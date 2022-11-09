@@ -26,5 +26,9 @@ public interface OrderService {
 	int updateUserPurchase(String userId, int totalPurchase, int usedMileage);
 
 	User getUserInfo(String userId);
+
+	int updateStatusByOrderId(String orderId);
+
+	int updatePlusMileageByUserId(String userId, int plusedMileage);
 	
 }
