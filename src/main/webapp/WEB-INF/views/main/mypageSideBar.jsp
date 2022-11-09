@@ -29,7 +29,7 @@
 		        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
 		          			나의 활동
 		        		</button>
-		        		<div class="collapse" id="dashboard-collapse">
+		        		<div class="collapse show" id="dashboard-collapse">
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 					            <li><a href="/mypage/myOrder.kh" class="link-dark d-inline-flex text-decoration-none rounded">주문 내역</a></li>
 					            <li><a href="/mypage/myBoard.kh" class="link-dark d-inline-flex text-decoration-none rounded" type="submit">내가 쓴 글</a></li>
@@ -42,7 +42,7 @@
 				        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
 				          1:1 문의
 				        </button>
-		        		<div class="collapse" id="orders-collapse">
+		        		<div class="collapse show" id="orders-collapse">
 		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 		            			<li><a href="/que/myList.kh" class="link-dark d-inline-flex text-decoration-none rounded">내 문의글</a></li>
 		            			<li><a href="/que/viewWrite.kh" class="link-dark d-inline-flex text-decoration-none rounded">문의글 작성</a></li>
@@ -50,19 +50,6 @@
 		        		</div>
 		      		</li>
 		      		<li class="border-top my-3"></li>
-		      		<li class="mb-1">
-		        		<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-		          			Account
-		        		</button>
-		        		<div class="collapse" id="account-collapse">
-		          			<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
-		            			<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
-		          			</ul>
-		        		</div>
-		      		</li>
     			</ul>
   			</div>
 </body>

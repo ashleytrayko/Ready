@@ -149,5 +149,11 @@ public class BookServiceImpl implements BookService{
 		return rList;
 	}
 
+	@Override
+	public List<Book> printRecommemdBook1(String userId) {
+		List<Book> rbook1 = bStore.selectRecommendBook1(session, userId);
+		return rbook1;
+	}
+
 
 }

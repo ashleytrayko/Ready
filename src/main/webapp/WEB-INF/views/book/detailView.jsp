@@ -14,12 +14,12 @@
 <title>Insert title here</title>
 	<script src="/resources/js/jquery-3.6.1.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-	<style>
+	<style >
 		[id^=product] {
 			border-bottom : 1px solid #dcdcdc;
 		}
 		.review-container {
-			background-color : #E0E0E0;
+			background-color : #E4DDD3;
 		}
 		.product {
 			border-top : 1px solid white;
@@ -38,12 +38,16 @@
 		}
 		.review-area{
 			display : flex;
+			background-color : #E4DDD3;
 		}
 		.review-text {
 			width : 80%;
 		}
 		.review-btn {
 			width : 20%;
+		}
+		select {
+			color : orange;
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -96,42 +100,45 @@
 				<br>
 				<h3>독자서평 (${book.scoreAvg })</h3>
 				<div class="review-container">
-				<br>
-					<label>평점  : </label>
-					<select name="score">
-						<option value="1">★☆☆☆☆</option>
-						<option value="2">★★☆☆☆</option>
-						<option value="3">★★★☆☆</option>
-						<option value="4">★★★★☆</option>
-						<option value="5">★★★★★</option>
-					</select>
-					<br><br>
-					<h5>한줄평</h5>
-					<div class="review-area">
-						<textarea rows="3" cols="100" name="reviewContents" class="review-text"></textarea>
-						<button type="submit" class="btn btn-secondary" class="review-btn">등록하기</button>
-					</div>
-				<br>
-				<c:forEach items="${rList }" var="review">
-					<div class="review-area">
-						<div class="product review-text">
-							<span>${review.userId }</span>
-							<span>평점 ${review.score } / 5</span>
-							<div>${review.reviewContents }</div>
-							<div>${review.updateDate }</div>
-							<br>
+					<c:if test="${!empty principal }">
+					<br>
+						<label>평점  : </label>
+						<select name="score">
+							<option value="1">★☆☆☆☆</option>
+							<option value="2">★★☆☆☆</option>
+							<option value="3">★★★☆☆</option>
+							<option value="4">★★★★☆</option>
+							<option value="5">★★★★★</option>
+						</select>
+						<br><br>
+						<h5>한줄평</h5>
+						<div class="review-area">
+							<input type="text" name="reviewContents" class="review-text">
+							<button type="submit" class="btn btn-secondary" class="review-btn">등록하기</button>
 						</div>
-						<div class="review-btn" align="center">
-							<c:if test="${principal.username eq review.userId }">
-								<button onclick="modifyView(this, '${review.reviewContents}', ${review.reviewNo }, ${review.bookNo });" class="btn btn-secondary" id="btn-mr">수정</button>
-								<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn btn-secondary">삭제</button>
-							</c:if>
-							<br>
-						</div>
-					</div>
-				</c:forEach>
+						<br>
+					</c:if>
 				</div>
 			</form>
+			<c:forEach items="${rList }" var="review">
+				<div class="review-area">
+					<div class="product review-text">
+						<span><b>${review.userNickname }</b></span>
+						<span>평점 ${review.score } / 5</span>
+						<div>${review.reviewContents }</div>
+						<div>${review.updateDate }</div>
+						<br>
+					</div>
+					<div class="product review-btn" align="center">
+						<c:if test="${principal.username eq review.userId }">
+							<br>
+							<button onclick="modifyView(this,'${review.score }', '${review.reviewContents}', '${review.reviewNo }', '${review.bookNo }');" class="btn btn-secondary" id="btn-mr">수정</button>
+							<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn btn-secondary">삭제</button>
+						</c:if>
+						<br>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="col-md-3">여기는 사이드바</div>
     </div>
@@ -141,11 +148,11 @@
 
 	<script>
 	
-		function modifyView(obj, reviewContents, reviewNo, bookNo) {
+		function modifyView(obj, score, reviewContents, reviewNo, bookNo) {
 			event.preventDefault();
 			var sel = "";
-			var $div = $("<div>");
-			sel += "<select name='score'>"
+			var $div = $("<div class='review-area'>");
+			sel += "<select name='score' value='"+score+"'>"
 			sel += "<option value='"+1+"'>★☆☆☆☆</option>"
 			sel += "<option value='"+2+"'>★★☆☆☆</option>"
 			sel += "<option value='"+3+"'>★★★☆☆</option>"
@@ -154,7 +161,7 @@
 			sel += "</select>"
 			$div.html(sel);
 			$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
-			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");'>수정</button>");
+			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");' class='btn btn-secondary'>수정</button>");
 			console.log($(obj).parent().parent().after($div));
 			const target = document.getElementById('btn-mr');
 	         target.disabled = true;
@@ -193,34 +200,41 @@
 		}
 		
 		$("#insertCart-btn").click(function(){
-			
-			var login = "${principal }";
-			
-			if(login == "") {
-				alert("로그인이 필요합니다");
-				return false;
-			}
-			
-			var bookNo = $("#bookNo").val();
-			var productPrice = $("#productPrice").val();
-			var productCount = $("#productCount").val();
-			      
-			$.ajax({
-				url : "/cart/insert.ready",
-				type : "POST",
-				data : {
-					bookNo : bookNo,
-					productPrice : productPrice,
-					productCount : productCount
-				},
-				success : function(data) {
-					alert("장바구니 담기 성공");
-				},
-				error : function() {
-					alert("장바구니 담기 실패");
-				}
-			});
-		})
+	         
+	         var login = "${principal }";
+
+	         if(login == "") {
+	            alert("로그인이 필요합니다");
+	            return false;
+	         }
+	         
+	         var bookNo = $("#bookNo").val();
+	         var productCount = $("#productCount").val();
+	               
+	         $.ajax({
+	            url : "/cart/insert",
+	            type : "POST",
+	            data : {
+	               bookNo : bookNo,
+	               productCount : productCount
+	            },
+	            success : function(result) {
+	               if(result > 0){
+	                  var cartConfirm = confirm("장바구니에 추가되었습니다.\n 장바구니로 이동하시겠습니까?");
+	                  if(cartConfirm) {
+	                     location.href="/cart/cartView";
+	                  } else {
+	                     return false;
+	                  }
+	               } else if(result == 0) {
+	                  alert("장바구니에 이미 있는 상품입니다.");
+	               }
+	            },
+	            error : function() {
+	               alert("장바구니 담기 실패");
+	            }
+	         });
+	      })
 		
 		
 		

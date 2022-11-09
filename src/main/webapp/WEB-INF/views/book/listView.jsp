@@ -18,6 +18,9 @@
 	<div class="main-contents">
 		<div class="col-md-3">여기는 사이드바</div>
 		<div class="main-section">
+			<c:if test="${empty bList }">
+				<h3>검색조건에 맞는 도서가 없습니다.</h3>
+			</c:if>
 			<c:if test="${!empty bList }">
 				<c:forEach items="${bList }" var="book" varStatus="i">
 					<div class="card mb-3" style="width: 700px;">
@@ -56,7 +59,7 @@
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/book/${urlVal}.kh?page=${currentPage + 1}">[다음]</a>
+			                	<a href = "/book/${urlVal}.kh?page=${currentPage + 1}&searchCondition=${searchCondition }&searchValue=${searchValue }">[다음]</a>
 			            	</c:if>
 			            </td>
 		        	</tr>

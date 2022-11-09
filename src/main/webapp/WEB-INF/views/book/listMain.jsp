@@ -81,7 +81,7 @@
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/book/catrgory.kh?page=${currentPage + 1}">[다음]</a>
+			                	<a href = "/book/category.kh?page=${currentPage + 1}&category=${category }">[다음]</a>
 			            	</c:if>
 			            </td>
 		        	</tr>

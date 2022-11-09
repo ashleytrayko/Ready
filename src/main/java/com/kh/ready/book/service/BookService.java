@@ -50,4 +50,6 @@ public interface BookService {
 	public int getTotalMyReviewCount(String userId);
 
 	public List<Review> printMyReview(String userId, int currentPage, int reviewLimit);
+
+	public List<Book> printRecommemdBook1(String userId);
 }

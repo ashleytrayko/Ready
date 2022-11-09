@@ -29,13 +29,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView home(ModelAndView mv,Principal principal) {
-//		if(principal != null) {		
-//			String userId = principal.getName();
-//			System.out.println(userId);
-//			//추천 도서 조회 (설문조사 기반)
-//			List<Book> bList3 = bService.printRecommendBook(userId);
-//			mv.addObject("bList3", bList3);
-//		}
+		if(principal != null) {		
+			String userId = principal.getName();
+			System.out.println(userId);
+			//추천 도서 조회 (설문조사 기반)
+			List<Book> rbook1 = bService.printRecommemdBook1(userId);
+			mv.addObject("rbook1", rbook1);
+//			List<Book> book2 = bService.printRecommendBook2(userId);
+		}
 		//베스트셀러 조회(메인페이지)
 		List<Book> bList1 = bService.printBestSeller();
 		//신간 조회

@@ -87,7 +87,7 @@
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
 			<if test="searchCondition.toString() == 'all'">
-				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+				BOOK_TITLE LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
@@ -119,7 +119,7 @@
 				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
 			<if test="searchCondition.toString() == 'all'">
-				BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
+				BOOK_TITLE LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_CONTENTS LIKE '%' ||#{searchValue }|| '%'
 				OR BOOK_WRITER LIKE '%' ||#{searchValue }|| '%'
 			</if>
@@ -162,6 +162,16 @@
 	
 	<select id="selectNewBook" resultMap="bookResultMap">
 		SELECT * FROM BOOK_TBL ORDER BY PUB_DATE DESC
+	</select>
+	
+	<select id="selectRecommendBook1" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL
+		<if test='answerGender.toString() == "남"'>
+			JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '액션' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
+		<if test='answerGender.toString() =="여"'>
+			JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '뷰티' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		</if>
 	</select>
 		
 	<select id="selectRecommendBook" resultMap="bookResultMap">
