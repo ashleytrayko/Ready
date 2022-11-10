@@ -9,6 +9,7 @@
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -17,12 +18,12 @@
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
+			<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
-			<table border="1" align="center">
+			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th></th>
 						<th>글번호</th>
 						<th>제목</th>
 						<th>작성자</th>
@@ -32,7 +33,6 @@
 				<tbody>
 					<c:forEach items="${reportList }" var="reportList" varStatus="i">
 					<tr>
-						<td><input type="checkbox"></td>
 						<td>${reportList.boardNo}</td>
 						<td><a href="/admin/reportDetail?boardNo=${reportList.boardNo}">${reportList.commTitle }</a></td>
 						<td>${reportList.commWriter }</td>
@@ -42,25 +42,41 @@
 					<tr align="center" height="20">
 						<td colspan="7">
 							<c:if test="${currentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<button class="btn btn-outline-dark">이전</button>
+								</a>
+							</c:if>
+							<c:if test="${currentPage == 1 }">
+									<button class="btn btn-outline-dark disabled">이전</button>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
-									<b>${p }</b>
+									<button class="btn btn-dark">${p}</button>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<button class="btn btn-outline-dark">${p}</button>
+									</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<button class="btn btn-outline-dark">
+			                		다음
+			                	</button>
+								</a>
+							</c:if>
+							<c:if test="${maxPage == currentPage }">
+								<button class="btn btn-outline-dark disabled">
+			                		다음
+			                	</button>
 							</c:if>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		</div>
 	</div>
 	<footer> </footer>
 	<script>

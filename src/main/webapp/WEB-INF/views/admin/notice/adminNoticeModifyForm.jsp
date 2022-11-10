@@ -29,22 +29,24 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
+			<div class="container col-lg-8">
 			<h1>공지사항 수정</h1>
 			<form method="post" action="/admin/modifyNotice">
-				<input type="hidden" name="noticeNumber" value="${notice.noticeNumber }">
-				<input type="text" name="noticeTitle" value="${notice.noticeTitle }">
-				<textarea class="summernote" name="noticeContents">${notice.noticeContents }</textarea>
-				<button type="submit">공지사항 수정</button>
-				<button type="button" onclick="history.back();">뒤로가기</button>
+				<input type="hidden" name="noticeNumber" value="${notice.noticeNumber }" required>
+				<input width="100%" class="form-control mb-3" type="text" name="noticeTitle" value="${notice.noticeTitle }" >
+				<textarea width="100%" class="summernote" name="noticeContents" required>${notice.noticeContents }</textarea>
+			<div class="mt-5" style="text-align:center">
+				<button class="btn btn-outline-dark" type="submit">공지사항 수정</button>
+				<button class="btn btn-outline-dark" type="button" onclick="history.back();">뒤로가기</button>
+			</div>
 			</form>
+			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
-	</div>
 	<footer> </footer>
 	<script>
 		$('.summernote').summernote({
-			height : 150,
-			width : 600,
+			placeholder: '공지사항 내용을 입력하세요.',
+			height : 300,
 			lang : "ko-KR",
 		/* 		  focus : true, */
 		});

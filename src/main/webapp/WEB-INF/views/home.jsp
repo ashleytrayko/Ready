@@ -47,6 +47,7 @@
 	</style>
 	<jsp:include page="../views/main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+	<script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<div class="main-contents">
@@ -216,12 +217,39 @@
 		</div>
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	   	 <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">${notice.noticeTitle }</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	${notice.noticeContents }
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
 	
 	<script>
 		function viewCategory(event) {
 			category = event.target.innerText;
 			location.href="/book/category.kh?category=" + category;
 		}
+		
+		$(document).ready(function(){
+			const principalCheck = '${principal.user.userId }';
+			if(principalCheck == ''){
+				$("#exampleModal").modal('show');
+			}else{
+				console.log("No Notice");
+			}
+		});
+
 	</script>
 
 </body>

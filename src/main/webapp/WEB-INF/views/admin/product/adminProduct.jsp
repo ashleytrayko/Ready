@@ -16,9 +16,10 @@
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
+			<div class="container col-lg-8"> 
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>상품 관리</h1>
-			<table border="1" align="center">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th></th>
@@ -44,36 +45,67 @@
 						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
 					</tr>
 					</c:forEach>
-				</tbody>
-			</table>
-			<table>
-			        <tr align="center" height="20">
+					<tr align="center">
+						<td colspan="6">
+						<form class="col-12 search mb-3 mb-lg-auto me-lg-auto center"
+							role="search" action="/admin/searchProduct" method="get">
+							<div class="input-group">
+								<select name="searchCondition" class="input-group-text" id="inputGroup-sizing-sm">
+									<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
+									<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작가</option>
+									<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
+									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
+								</select>
+								<input type="search" class="form-control" name="searchValue" value="${searchValue }"
+									placeholder="도서 검색" aria-label="Search" />
+							</div>
+						</form>
+						</td>
+					</tr>
+					<tr align="center" height="20">
 			            <td colspan="6">
 			                <c:if test="${currentPage != 1}">
-			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">[이전]</a>
+			                    <a href="/admin/${urlVal }?page=${currentPage - 1 }">
+			                    <button class="btn btn-outline-dark">이전</button>
+			                    </a>
+			                </c:if>
+			                <c:if test="${currentPage == 1}">
+			                    <button class="btn btn-outline-dark disabled">이전</button>
 			                </c:if>
 			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
 			                    <c:if test="${currentPage eq p }">
-			                        <b>${p}</b> 
+			                       <button class="btn btn-dark">${p}</button>  
 			                    </c:if>
 			                    <c:if test="${currentPage ne p }">
-			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">
+			                        <button class="btn btn-outline-dark">${p}</button>
+			                        </a>
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">[다음]</a>
+			                	<a href = "/admin/${urlVal}?page=${currentPage + 1}">
+			                	<button class="btn btn-outline-dark">
+			                		다음
+			                	</button>
+			                	</a>
+			            	</c:if>
+			            	<c:if test = "${currentPage == maxPage }">
+			                	<button class="btn btn-outline-dark disalbed">
+			                		다음
+			                	</button>
 			            	</c:if>
 			            </td>
 		        	</tr>
+				</tbody>
 			</table>
+			        
 			<button onclick="newBook();">상품 등록</button>
 			<button>상품 삭제</button>
 
 
-
+			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
-	</div>
+		
 	<footer> </footer>
 	<script>
 	function newBook(){

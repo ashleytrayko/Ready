@@ -107,11 +107,43 @@ public class AdminServiceImpl implements AdminService{
 			return "update fail";
 		}
 	}
+	
+	// 신고된 게시글 전체 보기
+	@Override
+	public List<Comm> showAllReport(int currentPage, int boardLimit) {
+		List<Comm> reportList = adminRepository.selectAllReport(currentPage, boardLimit);
+		return reportList;
+	}
+	
+	// 신고 게시글 상세 보기
+	@Override
+	public Comm showReportDetail(Integer boardNo) {
+		Comm reportedComm = adminRepository.selectOneReport(boardNo);
+		if(reportedComm != null) {
+			return reportedComm;
+		}else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String recoverComm(Integer boardNo) {
+		int result = adminRepository.updateReportedComm(boardNo);
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 
 	@Override
-	public List<Comm> showAllReport() {
-		List<Comm> reportList = adminRepository.selectAllReport();
-		return reportList;
+	public String terminateComm(Integer boardNo) {
+		int result = adminRepository.deleteReportedComm(boardNo);
+		if(result == 1) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 
 	@Override
@@ -136,6 +168,10 @@ public class AdminServiceImpl implements AdminService{
 			return "error";
 		}
 	}
+
+
+
+
 
 
 

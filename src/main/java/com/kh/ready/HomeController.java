@@ -21,11 +21,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.book.service.BookService;
+import com.kh.ready.user.domain.Notice;
+import com.kh.ready.user.service.AdminService;
 
 @Controller
 public class HomeController {
 	@Autowired
 	private BookService bService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView home(ModelAndView mv,Principal principal) {
@@ -55,6 +60,9 @@ public class HomeController {
 			mv.setViewName("home");
 		
 		mv.addObject("principal", principal);
+		
+		Notice notice = adminService.selectRecentNotice();
+		mv.addObject("notice", notice);
 		
 		return mv;
 	}

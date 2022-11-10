@@ -26,7 +26,7 @@ public interface AdminRepository {
 
 	public int updateNotice(Notice notice);
 
-	public List<Comm> selectAllReport();
+	public List<Comm> selectAllReport(int currentPage, int boardLimit);
 
 	public int updateBadUser(String userNickname);
 
@@ -35,5 +35,13 @@ public interface AdminRepository {
 	public int selectTotalCount(HashMap<String, String> paramMap);
 
 	public Notice selectRecentNotice();
+
+	public int updateReportedComm(Integer boardNo);
+	
+	public int deleteReportedComm(Integer boardNo);
+
+	public Comm selectOneReport(Integer boardNo);
+
+
 
 }

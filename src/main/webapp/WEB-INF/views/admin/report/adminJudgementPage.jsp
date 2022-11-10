@@ -17,31 +17,36 @@
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
+			<div class="container col-lg-8">
+			
+		
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>판결 페이지</h1>
 			<div class="container">
 				<form action="/admin/punish" method="post">
 					<div class="form-group">
-						<label for="userId">닉네임</label> 
-						<input type="text" class="form-control" id="userNickname" name="userNickname" value="${commWriter }">
+						<label for="userNickname">닉네임</label> 
+						<input type="text" class="form-control mt-2 mb-3" id="userNickname" name="userNickname" value="${commWriter }">
 					</div>
 					<div class="form-group">
-						<label for="punishment">처벌내용</label>
-						<select name="punishment">
-							<option value="suspend">글쓰기 정지</option>
-							<option value="getout">강제탈퇴</option>
-						</select>
+						<label for="punishment">처벌내용</label><br>
+						<input type="radio" name="punishment" value="suspend">
+						<label>글쓰기 정지</label>
+						<input type="radio" name="punishment" value="getout">
+						<label>강제 탈퇴</label>
+<!-- 							<option value="suspend">글쓰기 정지</option>
+							<option value="getout">강제탈퇴</option> -->
 					</div>
+						<label for="punishReason">처벌사유</label>
 					<div class="form-group">
-						<label for="">처벌사유</label>
-						<textarea rows="10" cols="50" name="punishReason"></textarea>
+						<textarea class="form-control" rows="10" cols="50" name="punishReason"></textarea>
 					</div>
-					<button type="submit">판결</button>
+					<button class="btn btn-outline-dark" type="submit">판결</button>
 				</form>
 			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
 	</div>
+		</div>
 	<footer> </footer>
 	<script>
 	</script>
