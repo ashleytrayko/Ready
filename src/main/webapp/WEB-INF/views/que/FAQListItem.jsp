@@ -32,7 +32,7 @@
 		<!-- 이 안에서 작업! 여기가 본문-->
 			
 			
-			<h1 align="center">고객센터 FAQ</h1>
+			<h1 align="center">FAQ</h1>
 			<section id="wrapper">
 			<div class="container">
 				<div class="category-box">
@@ -53,9 +53,16 @@
 				</c:if>
 			   </ul>
 				<div class="btn-right">
-					<button onclick="location.href='/que/myList.kh'">내 문의글</button>
-					<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
-			   	</div>
+					<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
+						<button onclick="location.href='/que/myList.kh'">내 문의글</button>
+						<button onclick="location.href='/que/viewWrite.kh'">1:1문의하기</button>
+					</c:if>
+					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
+						<button onclick="location.href='/que/myList.kh'">FAQ 관리</button>
+						<button onclick="location.href='/que/manageList.kh'">1:1문의글 관리</button>
+						<button onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
+					</c:if>
+			   </div>
 			</div>
 			</section>
 		</div>

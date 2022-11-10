@@ -32,4 +32,6 @@ public interface CommService {
 
 	User selectUser(String userId);
 
+	int reportBoard(int boardNo);
+
 }

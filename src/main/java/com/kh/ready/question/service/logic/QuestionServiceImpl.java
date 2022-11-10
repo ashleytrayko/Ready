@@ -103,5 +103,11 @@ public class QuestionServiceImpl implements QuestionService{
 		return result;
 	}
 
+	@Override
+	public int modifyQna(Question que) {
+		int result = qStore.updateQue(session, que);
+		return result;
+	}
+
 
 }

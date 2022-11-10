@@ -25,7 +25,7 @@
 		</div>
 		<div class="main-section">
 			<div class="faq-div">
-				<h2>게시판 상세글</h2>
+				<h2>1:1문의글</h2>
 				<table align="center" border="1" width="500">
 					<tr>
 						<th>유형</th>
@@ -48,12 +48,24 @@
 					<tr>
 						<td colspan="4" align="left">${que.queContents }</td>
 					</tr>
-					<c:if test="${principal.user.userNickname eq question.queWriter }">
+					<c:if test="${!empty que.qAnswer }">
 						<tr>
-							<td colspan="4" align="center">
-								<a href="#" onclick="commRemove(${page});">삭제하기</a>
+							<td colspan="4">
+								<h2>답변</h2>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="4" align="left">${que.qAnswer }</td>
+						</tr>
+					</c:if>
+					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+						<c:if test="${que.qStatus ne 'F' }">
+							<tr>
+								<td colspan="4" align="center">
+									<a href="/que/answerView.kh?queNo=${que.queNo }&page=${page}">답변등록</a>
+								</td>
+							</tr>
+						</c:if>
 					</c:if>
 					<tr>
 						<td colspan="4" align="right">

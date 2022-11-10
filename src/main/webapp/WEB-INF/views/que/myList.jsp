@@ -23,7 +23,11 @@
 		</div>
 		<div class="main-section">
 		<div class="faq-div">
-				<h1>내 문의글</h1>
+				<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
+					<h1>내 문의글</h1>
+				</c:if>
+				<c:if test="${principal.user.userRole ne 'ROLE_USER' }">
+				</c:if>
 				<table align="center" border="1" width="700">
 				<colgroup>
 				    <col width="12%"/>
@@ -38,8 +42,8 @@
 					<tr class="faq-header">
 						<th>유형</th>
 						<th colspan="4" align="left">제목</th>
-						<th>등록일</th>
 						<th>작성자</th>
+						<th>등록일</th>
 						<th>답변여부</th>
 					</tr>
 					<c:if test="${!empty qList }">
@@ -53,8 +57,8 @@
 									<c:if test="${question.qCategory eq 'etc'}">기타문의</c:if>
 								</td>
 								<td colspan="4" align="left"><a href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
-								<td>${question.qEnrollDate }</td>
 								<td>${question.queWriter }</td>
+								<td>${question.qEnrollDate }</td>
 								<td>
 									<%-- <c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }"><button href="#" onclick="enrollFAQ(${page})">공지등록</button></c:if> --%>
 									<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
@@ -103,8 +107,13 @@
 					</tr>
 					<tr>
 						<td colspan="8" align="right">
-								<button onclick="location.href='/que/list.kh'">FAQ 리스트</button>
-								<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
+								<button onclick="location.href='/que/faq01.kh'">FAQ 리스트</button>
+								<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
+									<button onclick="location.href='/que/viewWrite.kh'">1:1문의하기</button>
+								</c:if>
+								<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
+									<button onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
+								</c:if>
 						</td>
 					</tr>	
 				</table>

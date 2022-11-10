@@ -37,6 +37,7 @@ public interface CommStore {
 	
 	User selectUser(SqlSession session, String userId);
 	
-//	int updateReply(SqlSession session, CommReply cReply, Integer boardNo, Integer page);
+	int updateBoardReport(SqlSession session, int boardNo);
+	
 
 }

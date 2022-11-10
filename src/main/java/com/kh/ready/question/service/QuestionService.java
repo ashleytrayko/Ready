@@ -38,6 +38,9 @@ public interface QuestionService {
 
 	// 공지사항 등록
 	int registerAdmin(Question que);
+	
+	// que 답변등록
+	int modifyQna(Question que);
 
 
 

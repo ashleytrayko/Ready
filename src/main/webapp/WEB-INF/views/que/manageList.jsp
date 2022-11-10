@@ -99,7 +99,7 @@
 					</tr>
 					<tr>
 						<td colspan="8" align="right">
-								<button onclick="location.href='/que/list.kh'">FAQ 리스트</button>
+								<button onclick="location.href='/que/faq01.kh'">FAQ 리스트</button>
 								<button onclick="location.href='/que/viewWrite.kh'">글쓰기</button>
 						</td>
 					</tr>	

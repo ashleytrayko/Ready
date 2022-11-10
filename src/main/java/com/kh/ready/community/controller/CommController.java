@@ -324,5 +324,20 @@ public class CommController {
 		}
 	}
 
+	@RequestMapping(value="/comm/report.kh", method=RequestMethod.GET)
+	public String boardReport(
+			HttpSession session
+			, Model model
+			, @RequestParam("page") Integer page) {
+		try {
+			int boardNo = (int) session.getAttribute("boardNo");
+			int result = cService.reportBoard(boardNo);
+			return "redirect:/comm/list.kh?page=" + page;
+		} catch (Exception e) {
+			model.addAttribute("msg", e.toString());
+			return "main/errorPage";
+		}
+	}
+	
 	
 }

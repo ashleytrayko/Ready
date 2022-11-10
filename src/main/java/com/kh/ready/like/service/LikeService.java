@@ -2,18 +2,20 @@ package com.kh.ready.like.service;
 
 public interface LikeService {
 
-	int likeCheck(int boardNo, String userId);
+	int likeCheck(int boardNo, String commId);
 
-	int insertLike(int boardNo, String userId);
+	void insertLike(int boardNo, String commId);
 
-	int updateLike(int boardNo);
+	void updateLike(int boardNo);
 
-	int updateLikeCheck(int boardNo, String userId);
+	void updateLikeCheck(int boardNo, String commId);
 
-	int updateLikeCheckCancel(int boardNo, String userId);
+	void updateLikeCheckCancel(int boardNo, String commId);
 
-	int updateLikeCancel(int boardNo);
+	void updateLikeCancel(int boardNo);
 
-	int deleteLike(int boardNo, String userId);
+	void deleteLike(int boardNo, String commId);
+
+	
 
 }
