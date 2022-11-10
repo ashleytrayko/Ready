@@ -49,7 +49,7 @@
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
                     <c:forEach items="${cartList }" var="cartList" varStatus="i">
-                    <c:set var="salePrice" value="${(cartList.book.priceSales * 0.99)-((cartList.book.priceSales *0.99)%10)}"/>
+                    <c:set var="salePrice" value="${(cartList.book.priceSales * discountRate)-((cartList.book.priceSales * discountRate)%10)}"/>
                     <tr>
                         <td>
                             <input class="form-check-input" type="checkbox" value="${cartList.cartNo }" id="flexCheckDefault" name="chBox" data-cartNo="${cartList.cartNo}">
@@ -84,14 +84,12 @@
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
-                    <c:if test="${priceSum ge 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))}"/>
-                    </c:if>
-                    <c:if test="${priceSum lt 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))+2500}"/>
-                    </c:if>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * cartList.productCount)}"/>
                     <c:set var="mileageSum" value="${mileageSum + (cartList.book.mileage * cartList.productCount) }"/>
-                   </c:forEach>
+                    </c:forEach>
+                    <c:if test="${priceSum < 10000}">
+                    	<c:set var="salePriceSum" value="${salePriceSum + 2500}"/>
+                    </c:if>
                 </tbody>
             </c:if>
             <c:if test="${empty cartList }">
@@ -176,6 +174,10 @@
 		
  		if(productCount==""){
 			alert ("숫자를 입력해주세요");
+			countControl.focus();
+			return false;
+		} else if(productCount == 0){
+			alert ("1개 이상의 숫자를 입력해주세요");
 			countControl.focus();
 			return false;
 		} else {

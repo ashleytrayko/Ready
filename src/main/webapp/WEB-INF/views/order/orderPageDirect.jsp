@@ -20,8 +20,8 @@
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
-     <c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
      <input type="hidden" name="bookNo" id="id-bookNo" value="${bookData.bookNo }">
+     <c:set var="salePrice" value="${(bookData.priceSales * discountRate)-((bookData.priceSales *discountRate)%10)}"/>
      <input type="hidden" name="productPrice" id="id-productPrice" value="${salePrice}">
      <div id="order-title">
          <h1 id="order-text">ORDER</h1>
@@ -48,19 +48,18 @@
                 <tbody class="cartbody">
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
-                	<c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
                     <tr>
                         <td>
                             <img class="product-img" src="${bookData.imgPath }">
                         </td>
                         <td>
                             <c:choose>
-                            <c:when test="${fn:length(bookData.bookTitle ) gt 20 }">
-                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }..."/>
-                            </c:when>
-                            <c:otherwise>
-                            	<c:out value="${bookData.bookTitle }"/>
-                            </c:otherwise>
+                            	<c:when test="${fn:length(bookData.bookTitle) gt 20 }">
+                            	<c:out value="${fn:substring(bookData.bookTitle, 0, 19) }...">
+                            	</c:out></c:when>
+                            	<c:otherwise>
+                            	<c:out value="${bookData.bookTitle }">
+                            	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
                         </td>
@@ -77,13 +76,12 @@
                     </tr>
 					<c:set var="priceSum" value="${priceSum + (bookData.priceSales * productCount) }"/>
                     <c:set var="productSum" value="${productSum + productCount }"/>
-                    <c:if test="${priceSum ge 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))}"/>
-                    </c:if>
-                    <c:if test="${priceSum lt 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * productCount))+2500}"/>
-                    </c:if>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount)}"/>
+                    <c:set var="onlysalePriceSum" value="${salePriceSum}"/>
                     <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>
+                    <c:if test="${priceSum < 10000}">
+                    	<c:set var="salePriceSum" value="${salePriceSum + 2500}"/>
+                    </c:if>
                 </tbody>
             </table>
         </div>
@@ -246,7 +244,7 @@
             </table>
             <div style="text-align:right;">
             	<p>현재 보유한 마일리지 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>P</p>
-            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum });">사용</button>
+            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum } ,${onlysalePriceSum });">사용</button>
         	</div>
         </div>
         <div class="buyer-data-list">
@@ -287,7 +285,6 @@
 	window.onload = function(){
 		var bookPrice = ${priceSum};
 		if(bookPrice < 10000) {
-			var deliveryFeeId = $("#id-delivery-fee").val;
 			$("#id-delivery-fee").attr("value", "2,500");
 		}
 	}
@@ -333,19 +330,32 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
-	function useMileage(totalPrice){
+	function useMileage(salePriceSum, onlysalePriceSum){
     	
+		var inputMileage = $("#useMileage");
     	var currentMileage = +$("#currentMileage").val();
     	var useMileage = +$("#useMileage").val();
-    	
+    	var pacSalePriceSum = salePriceSum;
+    	var onlySalePriceSum = onlysalePriceSum;
+		var num_check= /^[0-9]+$/;
+		
     	if(currentMileage < useMileage) {
     		alert("현재 보유한 마일리지가 부족합니다!");
+    		inputMileage.focus();
     		return false;
+    	} else if(useMileage > onlySalePriceSum) {
+    		alert("사용 마일리지는 최소 결제 금액을 넘을 수 없습니다!");
+    		inputMileage.focus();
+    		return false;
+    	} else if(!num_check.test(useMileage)){
+    		alert ("숫자만 입력할 수 있습니다.");
+			inputMileage.focus();
+			return false;
     	} else {
-    		var calPrice = totalPrice - useMileage;
+    		var calPrice = pacSalePriceSum - useMileage;
     		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
-    		$("#id-total-price").attr("value", caledPrice);    		
+    		$("#id-total-price").attr("value", caledPrice);
     	}
     }
     
@@ -366,7 +376,7 @@
     	
      	var useMileage = +$("#useMileage").val();
     	var calPrice = totalPrice - useMileage;
- 	    
+
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
@@ -397,6 +407,7 @@
 					url :"/order/insertDirectOrder",
 					type : "POST",
 					data : {
+						imp_uid: rsp.imp_uid,
 						bookNo : rsp.custom_data.bookNo,
 						productCount : rsp.custom_data.productCount,
 						productPrice : rsp.custom_data.productPrice,

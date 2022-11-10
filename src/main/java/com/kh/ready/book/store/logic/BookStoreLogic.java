@@ -2,6 +2,7 @@ package com.kh.ready.book.store.logic;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -179,10 +180,32 @@ public class BookStoreLogic implements BookStore{
 	}
 
 	@Override
-	public List<Book> selectRecommendBook1(SqlSessionTemplate session, String userId) {
-		List<Book> rbook1 = session.selectList("BookMapper.selectRecommendBook1", userId);
+	public List<Book> selectRecommendBook1(SqlSessionTemplate session, String userId, String answerGender) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("answerGender", answerGender);
+		List<Book> rbook1 = session.selectList("BookMapper.selectRecommendBook1", paramMap);
 		return rbook1;
 	}
+
+	@Override
+	public List<Book> selectRecommendBook2(SqlSessionTemplate session, String userId, String answerLove) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("answerGender", answerLove);
+		List<Book> rbook2 = session.selectList("BookMapper.selectRecommendBook2", paramMap);
+		return rbook2;
+	}
+	
+	@Override
+	public int selectInsertCount(SqlSessionTemplate session, int bookNo, String userId) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("bookNo", bookNo);
+		paramMap.put("userId", userId);
+		int insertCount = session.selectOne("BookMapper.selectInsertCount", paramMap);
+		return insertCount;
+	}
+
 
 
 }

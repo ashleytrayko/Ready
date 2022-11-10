@@ -37,7 +37,7 @@
 			<table align="center" border="1">
 				<tr>
 					<td class="td">제목</td>
-					<td colspan="2"><input type="text" class="qTitle" name="queTitle"></td>
+					<td colspan="2"><input type="text" class="qTitle" name="queTitle" placeholder="제목을 입력해주세요." autofocus></td>
 				</tr>
 				<tr>
 					<td>작성자</td>
@@ -48,9 +48,9 @@
 							<select name="qCategory" class="input-group-text" id="inputGroup-sizing-sm" required>
 								<option disabled value="" selected>문의유형</option>
 								<option value="user" <c:if test="${searchCondition eq 'user' }">selected</c:if>>회원정보</option>
-								<option value="order" <c:if test="${searchCondition eq 'order' }">selected</c:if>>주문관련</option>
 								<option value="item" <c:if test="${searchCondition eq 'item' }">selected</c:if>>상품관련</option>
 								<option value="delivery" <c:if test="${searchCondition eq 'delivery' }">selected</c:if>>배송관련</option>
+								<option value="order" <c:if test="${searchCondition eq 'order' }">selected</c:if>>교환/환불</option>
 								<option value="etc" <c:if test="${searchCondition eq 'etc' }">selected</c:if>>기타문의</option>
 							</select>
 						</div>
@@ -80,13 +80,14 @@
 		
 	</footer>
 	<script>
-		$('.summernote').summernote({
-			  height: 150,
-			  width: 600,
-			  lang: "ko-KR"
-		});
+	$('.summernote').summernote({
+	 	placeholder: '내용을 입력해주세요.',
+        height: 300,
+        width: 600,
+        lang: 'ko-KR',
+ 	});
 		function goList() {
-			location.href="/que/list.kh";
+			location.href="/que/faq01.kh";
 		}
 	</script>
 </body>

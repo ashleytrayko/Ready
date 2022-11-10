@@ -2,6 +2,7 @@ package com.kh.ready.order.service.logic;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,15 +62,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateUserPurchase(String userId, int totalPurchase, int usedMileage) {
+	public int updateMileageByUserId(String userId, int usedMileage) {
 
-		return orderStore.updateUserPurchase(userId, totalPurchase, usedMileage);
-	}
-
-	@Override
-	public User getUserInfo(String userId) {
-
-		return orderStore.getUserInfo(userId);
+		return orderStore.updateMileageByUserId(userId, usedMileage);
 	}
 
 	@Override
@@ -79,9 +74,19 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updatePlusMileageByUserId(String userId, int plusedMileage) {
-
-		return orderStore.updatePlusMileageByUserId(userId, plusedMileage);
+	public int updatePurchaseInfoByUserId(String userId, int plusedMileage, int userPurchase) {
+		
+		String userTier = "BRONZE";
+		
+		if(userPurchase >= 200000 && userPurchase < 500000) {
+			userTier = "SILVER";	
+		} else if(userPurchase >= 500000 && userPurchase < 1000000) {
+			userTier = "GOLD";
+		} else if(userPurchase >= 1000000) {
+			userTier = "VIP";
+		}
+		
+		return orderStore.updatePurchaseInfoByUserId(userId, plusedMileage, userTier, userPurchase);
 	}
 
 }

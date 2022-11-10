@@ -35,6 +35,8 @@
 				<br><br>
 				<div>총 결제 금액</div>
 				<h5><fmt:formatNumber type="number" value="${principal.user.userPurchase }" pattern="#,###"/>원</h5>
+				<div>내 적립금</div>
+				<h5><fmt:formatNumber type="number" value="${principal.user.userReserves }" pattern="#,###"/>원</h5>
 			</div>
 			<table class="table table-hover">
 				<tr>

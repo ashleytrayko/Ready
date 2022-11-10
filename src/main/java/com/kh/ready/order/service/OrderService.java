@@ -2,6 +2,8 @@ package com.kh.ready.order.service;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
+
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.cart.domain.Cart;
 import com.kh.ready.order.domain.Order;
@@ -23,12 +25,10 @@ public interface OrderService {
 
 	Order getOrderInfoByOrderId(String orderId);
 
-	int updateUserPurchase(String userId, int totalPurchase, int usedMileage);
-
-	User getUserInfo(String userId);
+	int updateMileageByUserId(String userId, int usedMileage);
 
 	int updateStatusByOrderId(String orderId);
 
-	int updatePlusMileageByUserId(String userId, int plusedMileage);
-	
+	int updatePurchaseInfoByUserId(String userId, int plusedMileage, int userPurchase);
+
 }

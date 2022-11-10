@@ -39,5 +39,7 @@ public interface QuestionStore {
 	// 공지사항 등록
 	int insertAdmin(SqlSession session, Question que);
 
+	int updateQue(SqlSession session, Question que);
+
 
 }

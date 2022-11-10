@@ -23,13 +23,11 @@ public interface OrderStore {
 
 	Order getOrderInfoByOrderId(String orderId);
 
-	int updateUserPurchase(String userId, int totalPurchase, int usedMileage);
-
-	User getUserInfo(String userId);
+	int updateMileageByUserId(String userId, int usedMileage);
 
 	int updateStatusByOrderId(String orderId);
 
-	int updatePlusMileageByUserId(String userId, int plusedMileage);
+	int updatePurchaseInfoByUserId(String userId, int plusedMileage, String userTier, int userPurchase);
 
 
 }

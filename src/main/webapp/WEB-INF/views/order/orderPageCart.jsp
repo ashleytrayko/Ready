@@ -46,7 +46,7 @@
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
                 	<c:forEach items="${cartList }" var="cartList" varStatus="i">
-                    <c:set var="salePrice" value="${(cartList.book.priceSales * 0.99)-((cartList.book.priceSales *0.99)%10)}"/>
+                    <c:set var="salePrice" value="${(cartList.book.priceSales * discountRate)-((cartList.book.priceSales * discountRate)%10)}"/>
                 	<input type="hidden" name="bookNo" value="${cartList.book.bookNo }">
                 	<input type="hidden" name="productPrice" value="${salePrice }">
                     <tr>
@@ -77,14 +77,13 @@
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
-                    <c:if test="${priceSum ge 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))}"/>
-                    </c:if>
-                    <c:if test="${priceSum lt 10000}">
-                    	<c:set var="salePriceSum" value="${(salePriceSum + (salePrice * cartList.productCount))+2500}"/>
-                    </c:if>
+                    <c:set var="salePriceSum" value="${salePriceSum + (salePrice * cartList.productCount)}"/>
                     <c:set var="mileageSum" value="${mileageSum + (cartList.book.mileage * cartList.productCount) }"/>
                     </c:forEach>
+                    <c:set var="onlysalePriceSum" value="${salePriceSum}"/>
+                    <c:if test="${priceSum < 10000}">
+                    	<c:set var="salePriceSum" value="${salePriceSum + 2500}"/>
+                    </c:if>
                 </tbody>
             </table>
         </div>
@@ -245,7 +244,7 @@
             </table>
             <div style="text-align:right;">
             	<p>현재 보유한 마일리지 : <input type="text" value="${userInfo.userReserves }" id="currentMileage" style="border:0px; width:100px;" readonly>P</p>
-            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum });">사용</button>
+            	마일리지 : <input type="text" value="0" id="useMileage" style="width:100px;">P <button onclick="useMileage(${salePriceSum }, ${onlysalePriceSum });">사용</button>
         	</div>
         </div>
         
@@ -337,19 +336,32 @@
     	$("#reciverDetailAddr").attr('value',buyerDetailAddr);
     }
     
-    function useMileage(totalPrice){
+	function useMileage(salePriceSum, onlysalePriceSum){
     	
+		var inputMileage = $("#useMileage");
     	var currentMileage = +$("#currentMileage").val();
     	var useMileage = +$("#useMileage").val();
-    	
+    	var pacSalePriceSum = salePriceSum;
+    	var onlySalePriceSum = onlysalePriceSum;
+		var num_check= /^[0-9]+$/;
+		
     	if(currentMileage < useMileage) {
     		alert("현재 보유한 마일리지가 부족합니다!");
+    		inputMileage.focus();
     		return false;
+    	} else if(useMileage > onlySalePriceSum) {
+    		alert("사용 마일리지는 최소 결제 금액을 넘을 수 없습니다!");
+    		inputMileage.focus();
+    		return false;
+    	} else if(!num_check.test(useMileage)){
+    		alert ("숫자만 입력할 수 있습니다.");
+			inputMileage.focus();
+			return false;
     	} else {
-    		var calPrice = totalPrice - useMileage;
-    		var calPrice2 = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    		var calPrice = pacSalePriceSum - useMileage;
+    		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
-    		$("#id-total-price").attr("value", calPrice2);    		
+    		$("#id-total-price").attr("value", caledPrice);
     	}
     }
     
@@ -409,6 +421,7 @@
 					url :"/order/insertCartOrder",
 					type : "POST",
 					data : {
+						imp_uid: rsp.imp_uid,
 						bookNoArr : rsp.custom_data.bookNoArr,
 						productCountArr : rsp.custom_data.productCountArr,
 						productPriceArr : rsp.custom_data.productPriceArr,

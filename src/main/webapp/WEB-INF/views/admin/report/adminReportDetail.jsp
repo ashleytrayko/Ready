@@ -21,11 +21,13 @@
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar">
+						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
+		</div>
 		<div class="main-section">
-			<div class="list-div">
+			<div class="container col-lg-8">
 				<h2>게시판 상세글</h2>
-				<table align="center" border="1" width="500" class="table-style">
+				<table class="table">
 					<tr>
 						<td>제목</td>
 						<td>${comm.commTitle }</td>
@@ -42,26 +44,22 @@
 						<td colspan="4" align="left">${comm.commContents }</td>
 					</tr>
 					<tr>
-						<td colspan="2">추천수 : ${comm.cLike }</td>
+						<td colspan="4">추천수 : ${comm.cLike }</td>
 						<%-- <td>${comm.cLike }</td> --%>
-						<td><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button onclick="updateLike()">추천하기</button></td>
+						<!-- <td colspan="1"><i class="fa-regular fa-thumbs-up fa-lg"></i><button onclick="updateLike()">추천하기</button></td> -->
 					</tr>
-					<c:if test="${principal.user.userNickname eq comm.commWriter }">
+					<c:if test="${principal.user.userNickname eq comm.commWriter or principal.user.userRole eq 'ROLE_ADMIN'}">
 						<tr>
 							<td colspan="4" align="center">
-								<a href="/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}">글 수정</a>
-								<a href="#" onclick="commRemove(${page});">삭제하기</a>
+								<button class="btn btn-outline-dark" onclick="recovery(${comm.boardNo})">게시글 복구</button>
+								<button class="btn btn-outline-dark" onclick="terminate(${comm.boardNo})">삭제하기</button>
+							<button class="btn btn-outline-dark" onclick="location.href = '/admin/punishPage?commWriter=${comm.commWriter}'">유저처벌</button>
+							<button class="btn btn-outline-dark" onclick="history.back()">목록으로</button>
 							</td>
 						</tr>
 					</c:if>
-					<tr>
-						<td colspan="4" align="right">
-							<button onclick="location.href = '/comm/list.kh'">리스트</button>
-							<button onclick="location.href = '/admin/punishPage?commWriter=${comm.commWriter}'">판결</button>
-						</td>
-					</tr>
 				</table>
-					<!-- 	댓글 등록 -->
+					<%-- <!-- 	댓글 등록 -->
 					<table align="center" width="500" border="1">
 						<tr>
 							<td align="left" id="rWriter">${principal.user.userNickname }</td>	
@@ -75,7 +73,7 @@
 								<button width="100" id="rSubmit">등록</button>
 							</td>
 						</tr>
-					</table>
+					</table> --%>
 					<!-- 	댓글 목록 -->
 					<table align="center" width="500" border="1" id="rtb">
 							<thead>
@@ -89,7 +87,6 @@
 					</table>
 			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
     </div>
 	<footer>
 		
@@ -135,6 +132,42 @@
 				error : function() {
 					// console.log("서버 요청 실패");
 					alert("ajax 통신 실패! 관리자에게 문의하세요!!");
+				}
+			});
+		}
+		
+		function recovery(boardNo){
+			$.ajax({
+				url : "/admin/recoverComm",
+				data : {"boardNo" : boardNo},
+				type : "get",
+				success : function(result){
+					if(result == "success"){
+						location.href = '/admin/admin-report';
+					}else{
+						alert("복구 실패");
+					}
+				},
+				error : function(result){
+					alert("ajax 통신 오류!");
+				}
+			});
+		}
+		
+		function terminate(boardNo){
+			$.ajax({
+				url : "/admin/terminateComm",
+				data : {"boardNo" : boardNo},
+				type : "get",
+				success : function(result){
+					if(result == "success"){
+						location.href = '/admin/admin-report';
+					}else{
+						alert("삭제 실패!");
+					}
+				},
+				error : function(result){
+					alert("ajax 통신 오류!");
 				}
 			});
 		}

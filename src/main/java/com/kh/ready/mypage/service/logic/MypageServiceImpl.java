@@ -78,4 +78,10 @@ public class MypageServiceImpl implements MypageService{
 		return oList;
 	}
 
+	@Override
+	public int deleteUser(String userEmail, String textEmail) {
+		int result = mStore.deleteUser(session, userEmail, textEmail);
+		return result;
+	}
+
 }

@@ -54,6 +54,10 @@ public interface BookStore {
 
 	List<Review> selectMyReview(SqlSessionTemplate session, String userId, int currentPage, int reviewLimit);
 
-	List<Book> selectRecommendBook1(SqlSessionTemplate session, String userId);
+	List<Book> selectRecommendBook1(SqlSessionTemplate session, String userId, String answerGender);
+
+	int selectInsertCount(SqlSessionTemplate session, int bookNo, String userId);
+
+	List<Book> selectRecommendBook2(SqlSessionTemplate session, String userId, String answerLove);
 
 }

@@ -15,8 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.book.service.BookService;
@@ -45,8 +49,6 @@ public class AdminController {
 	// admin 메인 메뉴
 	@GetMapping("/admin")
 	public String adminTest(Model model) {
-		Notice notice = adminService.selectRecentNotice();
-		model.addAttribute("notice", notice);
 		return "/admin/adminMenu";
 	}
 	
@@ -233,6 +235,48 @@ public class AdminController {
 		return "/admin/product/adminProduct";
 	}
 	
+	//도서 검색
+	@GetMapping("/admin/searchProduct")
+	public ModelAndView searchBookList(ModelAndView mv, 
+								@RequestParam("searchCondition")String searchCondition,
+								@RequestParam("searchValue")String searchValue,
+								@RequestParam(value="page", required=false) Integer page) {
+		try {
+			//페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = bookService.getTotalCount(searchCondition, searchValue);
+			int bookLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int)((double)totalCount/bookLimit + 0.9);
+			startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1) * naviLimit +1;
+			endNavi = startNavi + naviLimit - 1;
+			if(maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			//검색
+			List<Book> bookList = bookService.printAllByValue(searchCondition, searchValue, currentPage, bookLimit);
+			if(!bookList.isEmpty()) {
+				mv.addObject("bookList", bookList);
+			} else {
+				mv.addObject("bookList", null);
+			}
+			mv.addObject("urlVal", "searchProduct");
+			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("searchValue", searchValue);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.setViewName("admin/product/adminProduct");
+		} catch(Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
+		}
+		return mv;
+	}
+	
 	// admin - 상품 등록 폼
 	@GetMapping("/admin/admin-productForm")
 	public String productForm() {
@@ -265,12 +309,11 @@ public class AdminController {
 
 
 	
-	// 삭제는 고민..
 	/**
 	 * 신고관리
 	 */
 	
-	// admin - 신고관리 -> 조치 했는지 표시 고민..
+	// admin - 신고관리
 	@GetMapping("/admin/admin-report")
 	public String reportList(@RequestParam(value="page", required=false) Integer page,
 							Model model) {
@@ -295,7 +338,7 @@ public class AdminController {
 		endNavi = maxPage;
 		}
 		
-		List<Comm> reportList = commService.printAllBoard(currentPage, boardLimit);
+		List<Comm> reportList = adminService.showAllReport(currentPage, boardLimit);
 		if (!reportList.isEmpty()) {
 			model.addAttribute("urlVal","admin-report");
 			model.addAttribute("maxPage",maxPage);
@@ -311,9 +354,28 @@ public class AdminController {
 	// 신고 내용 보기 
 	@GetMapping("/admin/reportDetail")
 	public String reportDetail(@RequestParam("boardNo") Integer boardNo, Model model) {
-		Comm comm = commService.printOneByNo(boardNo);
-		model.addAttribute("comm", comm);
-		return "/admin/report/adminReportDetail";
+		Comm reportedComm = adminService.showReportDetail(boardNo);
+		if(reportedComm != null) {
+			model.addAttribute("comm", reportedComm);
+			return "/admin/report/adminReportDetail";
+		}else {
+			return "/admin/report/adminReport";
+		}
+	}
+	
+	// 게시글 복구
+	@ResponseBody
+	@GetMapping("/admin/recoverComm")
+	public String recoverComm(@RequestParam("boardNo") Integer boardNo) {
+		String result = adminService.recoverComm(boardNo);
+		return result;
+	}
+	// 게시글 삭제
+	@ResponseBody
+	@GetMapping("/admin/terminateComm")
+	public String terminateComm(@RequestParam("boardNo") Integer boardNo) {
+		String result = adminService.terminateComm(boardNo);
+		return result;
 	}
 	
 	// 처벌페이지
@@ -327,6 +389,9 @@ public class AdminController {
 	@PostMapping("/admin/punish")
 	public String punishUser(@RequestParam("punishment") String punishment,
 							@RequestParam("userNickname") String userNickname) {
+		
+		System.out.println(punishment);
+		System.out.println(userNickname);
 		// 처벌의 내용(일단은 커뮤니티 접근금지or글쓰기금지//회원로그인금or탈퇴)이  -> 시큐리티 기능을 이용하면 좋을거같음 
 		// 컨트롤러로 넘어옴 
 		// 서비스로 보냄 

@@ -5,10 +5,15 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +34,7 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderController.class);
 
-	
 	@RequestMapping(value="/order/orderView", method=RequestMethod.GET)
 	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart, User user) {
 		
@@ -42,6 +44,7 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfo", userInfo);
 			mv.setViewName("/order/orderPageCart");
@@ -65,6 +68,7 @@ public class OrderController {
 			Book bookData = orderService.getbookDataByBookNo(bookNo);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("productCount" , productCount);
 			mv.addObject("bookData", bookData);
 			mv.addObject("userInfo", userInfo);
@@ -93,6 +97,7 @@ public class OrderController {
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
+												@RequestParam("imp_uid") String imp_uid,
 												@RequestParam("paymethod") String paymethod){
 				
 				Order order = new Order();
@@ -110,7 +115,7 @@ public class OrderController {
 				String orderId = ymd + "_" + subNum;
 				String userId = principal.getName();
 				
-				User user = orderService.getUserInfo(userId);
+				User user = orderService.getUserInfoByUserId(userId);
 				int result = 0;
 				
 				int usedMileage = user.getUserReserves() - useMileage;
@@ -128,17 +133,14 @@ public class OrderController {
 					order.setOrderId(orderId);
 					order.setUserId(userId);
 					order.setTotalPrice(totalPrice);
+					order.setUseMileage(useMileage);
+					order.setImpUid(imp_uid);
 					
 					result = orderService.insertOrder(order);
 					
 				}
-				for(int i=0; i<bookNoArr.size(); i++) {
-					int beforePurchase = user.getUserPurchase();
-					int totalPurchase = beforePurchase + (productPriceArr.get(i) * productCountArr.get(i));
-					user.setUserPurchase(totalPurchase);
-					orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
-				}
-				
+					orderService.updateMileageByUserId(userId, usedMileage);
+					
 				if(result > 0) {
 					orderService.deleteCart(userId);
 				}
@@ -161,6 +163,7 @@ public class OrderController {
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
 												@RequestParam("paymethod") String paymethod,
+												@RequestParam("imp_uid") String imp_uid,
 												@RequestParam("useMileage") int useMileage){
 			
 			Order order = new Order();
@@ -175,6 +178,7 @@ public class OrderController {
 				subNum += (int)(Math.random() * 10);
 			}
 			
+			System.out.println(productPrice);
 			
 			String orderId = ymd + "_" + subNum;
 			String userId = principal.getName();
@@ -190,16 +194,16 @@ public class OrderController {
 			order.setOrderId(orderId);
 			order.setUserId(userId);
 			order.setTotalPrice(totalPrice);
-			
+			order.setUseMileage(useMileage);
+			order.setImpUid(imp_uid);
 			orderService.insertOrder(order);
 			
-			User user = orderService.getUserInfo(userId);
-			int totalPurchase = user.getUserPurchase() + productPrice;
-			int usedMileage = user.getUserReserves() - useMileage;
-			orderService.updateUserPurchase(userId, totalPurchase, usedMileage);
+			User userInfo = orderService.getUserInfoByUserId(userId);
+			int usedMileage = userInfo.getUserReserves() - useMileage;
+			orderService.updateMileageByUserId(userId, usedMileage);
 			
 			String getOrderId = order.getOrderId();
-			
+
 			return getOrderId;
 	}
 	
@@ -223,19 +227,41 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value="/order/confirmPurchase", method=RequestMethod.POST)
 	public int confirmPurchase(Principal principal, @RequestParam("plusMileage") int plusMileage,
-													@RequestParam("orderId") String orderId) {
+													@RequestParam("orderId") String orderId,
+													@RequestParam("salePriceSum") int salePriceSum) {
 		
 		String userId = principal.getName();
 		
-		User user = orderService.getUserInfo(userId);
-		int plusedMileage = user.getUserReserves() + plusMileage;
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		int plusedMileage = userInfo.getUserReserves() + plusMileage;
+		int userPurchase = userInfo.getUserPurchase() + salePriceSum;
 		
+		int updateorderStatus = orderService.updateStatusByOrderId(orderId);
+		int updataUserInfo = orderService.updatePurchaseInfoByUserId(userId, plusedMileage, userPurchase);
 		
-		int data = orderService.updateStatusByOrderId(orderId);
-		int data2 = orderService.updatePlusMileageByUserId(userId, plusedMileage);
-		int result = data + data2;
+		int result = updateorderStatus + updataUserInfo;
 		
 		return result;
+	}
+	
+	public double discountRate(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		double discountRate = 0;
+		
+		if(userTier.equals("BRONZE")) {
+			discountRate = 0.99;
+		} else if(userTier.equals("SILVER")) {
+			discountRate = 0.97;
+		} else if(userTier.equals("GOLD")) {
+			discountRate = 0.95;
+		} else if(userTier.equals("VIP")) {
+			discountRate = 0.90;
+		}
+		
+		return discountRate;
 	}
 	
 }

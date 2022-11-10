@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
+	<sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -25,29 +30,8 @@
 		</div>
 	</div>
 	
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	   	 <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">${notice.noticeTitle }</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	${notice.noticeContents }
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>	
-	<footer> </footer>
+	<footer></footer>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		$("#exampleModal").modal('show');
-	});
-	</script>
+
 </body>
 </html>

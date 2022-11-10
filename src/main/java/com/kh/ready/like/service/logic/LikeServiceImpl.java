@@ -1,5 +1,6 @@
 package com.kh.ready.like.service.logic;
 
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,53 +15,41 @@ public class LikeServiceImpl implements LikeService{
 	@Autowired
 	private SqlSession session;
 	
-
 	@Override
-	public int likeCheck(int boardNo, String userId) {
-		int result = lStore.likeCheck(session, boardNo, userId);
+	public int likeCheck(int boardNo, String commId) {
+		int result = lStore.selectLikeCheck(session, boardNo, commId);
 		return result;
 	}
 
-
 	@Override
-	public int insertLike(int boardNo, String userId) {
-		int result = lStore.insertLike(session, boardNo, userId);
-		return result;
+	public void insertLike(int boardNo, String commId){
+		lStore.insertLike(session, boardNo, commId);
 	}
 
-
 	@Override
-	public int updateLike(int boardNo) {
-		int result = lStore.updateLike(session, boardNo);
-		return result;
+	public void updateLike(int boardNo) {
+		lStore.updateLike(session, boardNo);
 	}
 
-
 	@Override
-	public int updateLikeCheck(int boardNo, String userId) {
-		int result = lStore.updateLikeCheck(session, boardNo, userId);
-		return result;
+	public void updateLikeCheck(int boardNo, String commId) {
+		lStore.updateLikeCheck(session, boardNo, commId);
 	}
 
-
 	@Override
-	public int updateLikeCheckCancel(int boardNo, String userId) {
-		int result = lStore.updateLikeCheckCancel(session, boardNo, userId);
-		return result;
+	public void updateLikeCheckCancel(int boardNo, String commId) {
+		lStore.updateLikeCheckCancel(session, boardNo, commId);
 	}
 
-
 	@Override
-	public int updateLikeCancel(int boardNo) {
-		int result = lStore.updateLikeCancel(session, boardNo);
-		return result;
+	public void updateLikeCancel(int boardNo) {
+		lStore.updateLikeCancel(session, boardNo);
 	}
 
-
 	@Override
-	public int deleteLike(int boardNo, String userId) {
-		int result = lStore.deleteLike(session, boardNo, userId);
-		return result;
+	public void deleteLike(int boardNo, String commId) {
+		lStore.deleteLike(session, boardNo, commId);
 	}
-
+	
+		
 }
