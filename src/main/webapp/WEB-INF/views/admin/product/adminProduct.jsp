@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
@@ -42,7 +43,7 @@
 						</td>
 						<td>${bookList.bookWriter }</td>
 						<td>${bookList.publisher }</td>
-						<td><button type="button" onclick="modifyNotice(${noticeList.noticeNumber})">수정하기</button></td>
+						<td><button class="btn btn-outline-dark" type="button" onclick="modifyBook(${bookList.bookNo})">수정하기</button></td>
 					</tr>
 					</c:forEach>
 					<tr align="center">
@@ -98,9 +99,10 @@
 		        	</tr>
 				</tbody>
 			</table>
-			        
-			<button onclick="newBook();">상품 등록</button>
-			<button>상품 삭제</button>
+			<div style="text-align:center">
+				<button class="btn btn-outline-dark" onclick="newBook();">상품 등록</button>
+				<button class="btn btn-outline-dark">상품 삭제</button>
+			</div>
 
 
 			</div>
@@ -110,6 +112,10 @@
 	<script>
 	function newBook(){
 		location.href = "/admin/admin-productForm";
+	}
+	
+	function modifyBook(bookNo){
+		location.href = "/admin/admin-productModifyForm?bookNo="+bookNo;
 	}
 	</script>
 </body>

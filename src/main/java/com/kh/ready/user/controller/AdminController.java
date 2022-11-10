@@ -277,13 +277,21 @@ public class AdminController {
 		return mv;
 	}
 	
-	// admin - 상품 등록 폼
+	// 상품 등록 폼
 	@GetMapping("/admin/admin-productForm")
 	public String productForm() {
 		return "/admin/product/adminProductRegistForm";
 	}
 	
-	// 상품등록 -> 수정
+	// 상품 수정 폼
+	@GetMapping("/admin/admin-productModifyForm")
+	public String productModifyForm(@RequestParam("bookNo") Integer bookNo, Model model) {
+		Book book = bookService.printOneByNo(bookNo);
+		model.addAttribute("book", book);
+		return "/admin/product/adminProductModifyForm";
+	}
+	
+	// 상품등록
 	@PostMapping("/admin/registerProduct")
 	public String registerProduct(Book book) {
 		int result = bookService.registerBook(book);
@@ -294,6 +302,13 @@ public class AdminController {
 			return "/admin/product/adminProduct";
 		}
 		
+	}
+	
+	// 상품수정
+	@PostMapping("/admin/modifyProduct")
+	public String modifyProduct(@ModelAttribute Book book) {
+		String result = 
+		return "/admin/admin-product";
 	}
 
 	// 상품삭제
@@ -397,10 +412,12 @@ public class AdminController {
 		// 서비스로 보냄 
 		
 		String result = adminService.punishUser(punishment, userNickname);
-		
+		if(result.equals("fail") || result.equals("error")) {
+			return "/main/errorPage";
+		}
 		// 이후 상황은 추가하던가 함 
 	
-		return "redirect:/admin/reportDetail";
+		return "redirect:/admin/admin-report";
 	}
 	
 	 

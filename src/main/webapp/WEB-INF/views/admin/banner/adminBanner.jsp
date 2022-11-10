@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>관리자 페이지 - 배너</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->

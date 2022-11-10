@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Page Not Found - 404</title>
 </head>
 <body>
 	<div class="container">

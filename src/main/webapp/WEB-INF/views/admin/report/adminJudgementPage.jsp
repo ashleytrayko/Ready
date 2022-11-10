@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>공용jsp틀</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
@@ -37,11 +38,14 @@
 <!-- 							<option value="suspend">글쓰기 정지</option>
 							<option value="getout">강제탈퇴</option> -->
 					</div>
-						<label for="punishReason">처벌사유</label>
+						<label class="mt-3" for="punishReason">처벌사유</label>
 					<div class="form-group">
 						<textarea class="form-control" rows="10" cols="50" name="punishReason"></textarea>
 					</div>
-					<button class="btn btn-outline-dark" type="submit">판결</button>
+					<div class="mt-3" style="text-align: center">
+						<button class="btn btn-outline-dark" type="submit">판결</button>
+						<button class="btn btn-outline-dark" onclick="history.back()">돌아가기</button>
+					</div>
 				</form>
 			</div>
 		</div>
