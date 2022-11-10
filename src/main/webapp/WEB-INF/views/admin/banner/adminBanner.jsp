@@ -16,6 +16,7 @@
 			<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
+			<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>배너 관리</h1>
 			<div>
@@ -40,8 +41,10 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control" type="file" name="bannerImage"  onchange="readFile(this,1);">
 					<input type="hidden" name="bannerFrom" value="1">
-					<button class="btn btn-outline-dark type="submit">배너 등록</button>
-					<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+					<div class="mt-3" style="text-align:center">
+						<button class="btn btn-outline-dark type="submit">배너 등록</button>
+						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+					</div>
 				</form>
 				<br>
 				<br>
@@ -73,8 +76,10 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control"  type="file" name="bannerImage"  onchange="readFile(this,2);">
 					<input type="hidden" name="bannerFrom" value="2">
-					<button class="btn btn-outline-dark  type="submit">배너 등록</button>
-					<button class="btn btn-outline-dark  type="button" onclick="removeBanner(2);">배너 삭제</button>
+					<div class="mt-3" style="text-align:center">
+						<button class="btn btn-outline-dark type="submit">배너 등록</button>
+						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+					</div>
 				</form>
 				<br>
 				<br>
@@ -106,8 +111,10 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control"  type="file" name="bannerImage"  onchange="readFile(this,3);">
 					<input type="hidden" name="bannerFrom" value="3">
-					<button class="btn btn-outline-dark  type="submit">배너 등록</button>
-					<button class="btn btn-outline-dark  type="button" onclick="removeBanner(3);">배너 삭제</button>
+					<div class="mt-3" style="text-align:center">
+						<button class="btn btn-outline-dark type="submit">배너 등록</button>
+						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+					</div>
 				</form>
 				<br>
 				<br>
@@ -116,6 +123,7 @@
 				<br>
 				<br>
 				<br>
+			</div>
 			</div>
 		</div>
 	<footer> </footer>

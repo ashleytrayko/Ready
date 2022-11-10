@@ -46,7 +46,7 @@ span.error {
 				<input class="form-check-input" type="checkbox" name="remember-me" value="True"> Remember me
 				</label>
 			</div>
-			<button type="submit" class="btn btn-primary col-lg">로그인</button>
+			<button type="submit" class="btn btn-dark col-lg">로그인</button>
 		</form>
 		<hr>
 		<ul class="nav d-flex justify-content-center">

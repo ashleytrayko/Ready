@@ -29,19 +29,23 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
+		<div class="container col-lg-8">
 			<h1>공지사항 작성</h1>
 			<form method="post" action="/admin/postNotice">
-				<input class="form-control" type="text" name="noticeTitle">
-				<textarea class="summernote" name="noticeContents"></textarea>
+				<input class="form-control mb-3" type="text" name="noticeTitle" placeholder="제목을 입력하세요." required width="100%">
+				<textarea width="100%" class="summernote" name="noticeContents" required></textarea>
+			<div class="mt-5" style="text-align:center">
 				<button class="btn btn-outline-dark" type="submit">공지사항 등록</button>
-				<button class="btn btn-outline-dark" type="button">뒤로가기</button>
+				<button class="btn btn-outline-dark" type="button" onclick="history.back();">뒤로가기</button>
+			</div>
 			</form>
+			</div>
 		</div>
 	<footer> </footer>
 	<script>
 		$('.summernote').summernote({
+			placeholder: '공지사항 내용을 입력하세요.',
 			height : 300,
-			width : 900,
 			lang : "ko-KR",
 		/* 		  focus : true, */
 		});

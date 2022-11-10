@@ -18,6 +18,7 @@
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
+			<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
 			<table class="table table-hover">
@@ -45,9 +46,12 @@
 									<button class="btn btn-outline-dark">이전</button>
 								</a>
 							</c:if>
+							<c:if test="${currentPage == 1 }">
+									<button class="btn btn-outline-dark disabled">이전</button>
+							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
-									<button class="btn btn-outline-dark">${p}</button>
+									<button class="btn btn-dark">${p}</button>
 								</c:if>
 								<c:if test="${currentPage ne p }">
 									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
@@ -62,12 +66,17 @@
 			                	</button>
 								</a>
 							</c:if>
+							<c:if test="${maxPage == currentPage }">
+								<button class="btn btn-outline-dark disabled">
+			                		다음
+			                	</button>
+							</c:if>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		</div>
 	</div>
 	<footer> </footer>
 	<script>

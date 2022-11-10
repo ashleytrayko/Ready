@@ -19,8 +19,9 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
+			<div class="container col-lg-8">
 			<h1>공지사항 관리</h1>
-			<table class="table table-hover">
+			<table class="table table-hover text-center">
 				<thead>
 					<tr>
 						<th>글번호</th>
@@ -36,7 +37,6 @@
 						<td><a href="/admin/noticeDetail?noticeNumber=${noticeList.noticeNumber }">${noticeList.noticeTitle }</a></td>
 						<td>${noticeList.noticeWriter }</td>
 						<td><fmt:formatDate value="${noticeList.postDate }" pattern="yyyy-mm-dd hh:mm:ss"/></td>
-					
 					</tr>
 					</c:forEach>
 						<tr align="center" height="20">
@@ -46,9 +46,12 @@
 			                    	<button class="btn btn-outline-dark">이전</button>
 			                    </a>
 			                </c:if>
+			                <c:if test="${currentPage == 1}">
+			                    	<button class="btn btn-outline-dark disabled">이전</button>
+			                </c:if>
 			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
 			                    <c:if test="${currentPage eq p }">
-			                        <button class="btn btn-outline-dark">${p}</button> 
+			                        <button class="btn btn-dark">${p}</button> 
 			                    </c:if>
 			                    <c:if test="${currentPage ne p }">
 			                        <a href = "/admin/${urlVal }?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">
@@ -63,14 +66,20 @@
 			                	</button>
 			                	</a>
 			            	</c:if>
+			            	<c:if test = "${currentPage == maxPage }">
+			                	<button class="btn btn-outline-dark disabled">
+			                		다음
+			                	</button>
+			            	</c:if>
 			            </td>
 					</tr>
 				</tbody>
 			</table>
-			<button class="btn btn-primary" onclick="writeNotice()">공지사항 등록</button>
-
-
-
+			
+			<div style="text-align:center">
+			<button class="btn btn-outline-dark" onclick="writeNotice()" >공지사항 등록</button>
+			</div>
+		</div>
 		</div>
 	<footer> </footer>
 	<script>

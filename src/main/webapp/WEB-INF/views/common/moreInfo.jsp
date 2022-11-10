@@ -63,7 +63,7 @@ span.error {
 			<label for="userBirthday">생일 </label> 
 			<input type="date" class="form-control" placeholder="Enter Nickname" id="userBirthday" name="userBirthday">
 		</div>
-		<button type="submit" class="btn btn-primary col-md-12 mt-3" id="submit">회원가입</button>
+		<button type="submit" class="btn btn-dark col-md-12 mt-3" id="submit">회원가입</button>
 	</form>
 	</div>
 	

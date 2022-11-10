@@ -30,7 +30,7 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<div class="container">
+			<div class="container col-lg-8">
 				<table class="table">
 					<thead>
 					<tr>
@@ -56,8 +56,8 @@
 					<tr>
 						<td colspan=2" style="text-align:center">
 							<button class="btn btn-outline-dark" onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
-							<button class="btn btn-outline-dark" onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
 							<button class="btn btn-outline-dark" onclick="location.href='/admin/admin-notice'">목록으로</button>
+							<button class="btn btn-outline-dark" onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
 						</td>
 					</tr>
 					</tbody>

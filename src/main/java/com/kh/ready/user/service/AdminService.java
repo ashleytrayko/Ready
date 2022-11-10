@@ -40,10 +40,22 @@ public interface AdminService {
 	public String modifyNotice(Notice notice);
 	
 	// 신고글 전체 조회
-	public List<Comm> showAllReport();
+	public List<Comm> showAllReport(int currentPage, int boardLimit);
 	
+	// 신고글 상세 조회
+	public Comm showReportDetail(Integer boardNo);
+	
+	// 신고글 복구
+	public String recoverComm(Integer boardNo);
+	
+	// 신고글 삭제
+	public String terminateComm(Integer boardNo);
+
 	// 처벌등록 
 	public String punishUser(String punishment, String userNickname);
+
+
+
 
 
 }

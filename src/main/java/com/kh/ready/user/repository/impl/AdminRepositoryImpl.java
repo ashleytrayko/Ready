@@ -83,9 +83,29 @@ public class AdminRepositoryImpl implements AdminRepository{
 	}
 
 	@Override
-	public List<Comm> selectAllReport() {
-		List<Comm> reportList = session.selectList("AdminMapper.selectAllReport");
+	public List<Comm> selectAllReport(int currentPage, int boardLimit) {
+		int offset = (currentPage - 1) * boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		List<Comm> reportList = session.selectList("AdminMapper.selectAllReport", null, rowBounds);
 		return reportList;
+	}
+
+	@Override
+	public Comm selectOneReport(Integer boardNo) {
+		Comm reportedComm = session.selectOne("AdminMapper.selectOneReport", boardNo);
+		return reportedComm;
+	}
+
+	@Override
+	public int updateReportedComm(Integer boardNo) {
+		int result = session.update("AdminMapper.updateReportComm", boardNo);
+		return result;
+	}
+	
+	@Override
+	public int deleteReportedComm(Integer boardNo) {
+		int result = session.delete("AdminMapper.deleteReportedComm", boardNo);
+		return result;
 	}
 
 	@Override
@@ -99,6 +119,9 @@ public class AdminRepositoryImpl implements AdminRepository{
 		int result = session.update("UserMapper.kickOutUser", userNickname);
 		return result;
 	}
+
+
+
 
 
 
