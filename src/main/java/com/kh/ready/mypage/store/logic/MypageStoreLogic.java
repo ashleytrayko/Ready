@@ -72,4 +72,13 @@ public class MypageStoreLogic implements MypageStore{
 		return oList;
 	}
 
+	@Override
+	public int deleteUser(SqlSessionTemplate session, String userEmail, String textEmail) {
+		HashMap<String, String> paramMap= new HashMap<String, String>();
+		paramMap.put("userEmail", userEmail);
+		paramMap.put("textEmail", textEmail);
+		int result = session.update("MypageMapper.deleteUser", paramMap);
+		return result;
+	}
+
 }

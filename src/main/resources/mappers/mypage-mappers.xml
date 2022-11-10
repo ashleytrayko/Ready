@@ -109,6 +109,9 @@
 		WHERE USER_ID = #{userId}
 	</update>
 	
+	<update id="deleteUser">
+		UPDATE USER_TBL SET ENABLED = 'N' WHERE USER_EMAIL = #{userEmail } AND #{userEmail } = #{textEmail }
+	</update>
 	<select id="selectUserByNickname" parameterType="String" resultMap="userResultMap">
 		SELECT * FROM USER_TBL WHERE USER_NICKNAME = #{userNickname} AND USER_ID != #{userId }
 	</select>
@@ -121,7 +124,7 @@
 	</select>
 	
 	<select id="selectMyBoard" resultMap="commResultMap">
-		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' AND COMM_ID = #{userId }
+		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'Y' AND COMM_ID = #{userId } ORDER BY C_UPDATE_DATE DESC
 	</select>
 	
 	<select id="selectMyOrder" resultMap="OrderResultMap">
@@ -136,6 +139,7 @@ FROM (
            ROW_NUMBER() OVER(PARTITION BY ORDER_ID ORDER BY ORDER_NO DESC) AS A
            FROM ORDER_TBL
     ) JOIN BOOK_TBL USING(BOOK_NO)
-	WHERE A = 1 AND USER_ID = #{userId }
+	WHERE A = 1 AND USER_ID = #{userId } ORDER BY ORDER_DATE DESC
 	</select>
+	
   </mapper>

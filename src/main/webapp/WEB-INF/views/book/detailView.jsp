@@ -58,7 +58,6 @@
 	<input type="hidden" id="productPrice"  name="productPrice" value="${book.priceSales }">
     <div class="main-contents">
 		<div class="col-md-3">여기는 사이드바</div>
-		
 		<div class="main-section">
 			<div  id="product2">
 		      	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250" id="container1">
@@ -97,6 +96,8 @@
 			<form action="/book/addReview.kh" method="post">
 					<input type="hidden" id="bookNo" name="bookNo" value="${book.bookNo }">
 					<input type="hidden" id="userNickname" name="userNickname" value="${principal.user.userNickname }">
+					<input type="hidden" id="userId" name="userId" value="${principal.user.userId }">
+					<input type="hidden" id="insertCount" name="insertCount" value="${insertCount }">
 				<br>
 				<h3>독자서평 (${book.scoreAvg })</h3>
 				<div class="review-container">
@@ -114,7 +115,7 @@
 						<h5>한줄평</h5>
 						<div class="review-area">
 							<input type="text" name="reviewContents" class="review-text">
-							<button type="submit" class="btn btn-secondary" class="review-btn">등록하기</button>
+							<button type="submit" class="btn btn-secondary" class="review-btn" id="insertReview-btn">등록하기</button>
 						</div>
 						<br>
 					</c:if>
@@ -199,6 +200,18 @@
 			}
 		}
 		
+		$("#insertReview-btn").click(function() {
+			var count = $("#insertCount").val();
+			console.log(count);
+			if(count == 0) {
+				alert("후기가 등록되었습니다.");
+				return true;
+			} else {
+				alert("1개의 후기만 등록 할 수 있습니다.");
+				return false;
+			}
+		})
+		
 		$("#insertCart-btn").click(function(){
 	         
 	         var login = "${principal }";
@@ -210,6 +223,15 @@
 	         
 	         var bookNo = $("#bookNo").val();
 	         var productCount = $("#productCount").val();
+	         var num_check = /^[0-9]*$/;
+	         if(num_check.test(productCount)) {
+	        	 if(productCount > 99) {
+	        		 alert("99개 이상 주문할 수 없습니다.");
+	        		 return false;
+	        	 }
+	         } else {
+	        	 alert("숫자만 입력할 수 있습니다.");	 
+	         }
 	               
 	         $.ajax({
 	            url : "/cart/insert",
@@ -229,9 +251,6 @@
 	               } else if(result == 0) {
 	                  alert("장바구니에 이미 있는 상품입니다.");
 	               }
-	            },
-	            error : function() {
-	               alert("장바구니 담기 실패");
 	            }
 	         });
 	      })
@@ -240,6 +259,16 @@
 		
 		function order(bookNo) {
 	         var productCount = $("#productCount").val();
+	         var num_check = /^[0-9]*$/;
+	         if(num_check.test(productCount)) {
+	        	 if(productCount > 99) {
+	        		 alert("99개 이상 주문할 수 없습니다.");
+	        		 return false;
+	        	 }
+	         } else {
+	        	 alert("숫자만 입력할 수 있습니다.");	
+	        	 	return false;
+	         }
 	         location.href="/order/directOrderView?bookNo="+bookNo+"&productCount="+productCount;
 	      }
 

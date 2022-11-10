@@ -59,9 +59,12 @@ public class BookController {
 	@RequestMapping(value="/book/detailView.kh", method=RequestMethod.GET)
 	public ModelAndView bookDetailView(ModelAndView mv, @RequestParam("bookNo") Integer bookNo, HttpSession session, Principal principal) {
 		try {
+			String userId = principal.getName();
 			Book book = bService.printOneByNo(bookNo);
+			int insertCount = bService.getInsertCount(bookNo, userId);
 			List<Review> rList = bService.printAllReview(bookNo);
 			session.setAttribute("bookNo", book.getBookNo());
+			mv.addObject("insertCount", insertCount);
 			mv.addObject("rList", rList);
 			mv.addObject("book", book);
 			mv.addObject("principal", principal);
@@ -155,15 +158,16 @@ public class BookController {
 	//평점 등록
 	@RequestMapping(value="/book/addReview.kh", method=RequestMethod.POST)
 	public ModelAndView addBookReview(ModelAndView mv, @ModelAttribute Review review, Principal principal, @RequestParam("userNickname") String userNickname) {
-		String userId = principal.getName();
-		review.setUserId(userId);
-		review.setNickName(userNickname);
 		int bookNo = review.getBookNo();
-		int result = bService.registerReview(review);
-		if(result > 0) {
-			mv.setViewName("redirect:/book/detailView.kh?bookNo="+bookNo);
-		} 
-		return mv;
+			String userId = principal.getName();
+			review.setUserId(userId);
+			review.setNickName(userNickname);
+			int result = bService.registerReview(review);
+			if(result > 0) {
+				mv.setViewName("redirect:/book/detailView.kh?bookNo="+bookNo);
+			} 
+			return mv;	
+		
 	}
 	
 	//평점 수정

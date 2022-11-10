@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.mypage.domain.Survey;
@@ -123,6 +125,27 @@ public class MypageController {
 		} else {
 			mv.addObject("msg", "수정오류");
 			mv.setViewName("main/errorPage");
+		}
+		return mv;
+	}
+	//회원 탈퇴 페이지 이동
+	@RequestMapping(value="mypage/deleteForm.kh", method=RequestMethod.GET)
+	public String deleteView() {
+		return "mypage/deleteView";
+	}
+	
+	//회원 탈퇴
+	@RequestMapping(value="/mypage/deleteUser.kh", method=RequestMethod.POST)
+	public ModelAndView deleteUser(ModelAndView mv, @ModelAttribute User user, @RequestParam("textEmail") String textEmail) {
+		String userEmail = user.getUserEmail();
+		int result = mService.deleteUser(userEmail, textEmail);
+		if(!userEmail.equals(textEmail)) {
+			mv.addObject("msg","이메일이 일치하지 않습니다.");
+			mv.setViewName("mypage/deleteView");
+			return mv;
+		}
+		if (result > 0) {
+			mv.setViewName("redirect:/logout");
 		}
 		return mv;
 	}

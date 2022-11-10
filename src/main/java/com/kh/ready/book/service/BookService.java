@@ -51,5 +51,9 @@ public interface BookService {
 
 	public List<Review> printMyReview(String userId, int currentPage, int reviewLimit);
 
-	public List<Book> printRecommemdBook1(String userId);
+	public List<Book> printRecommemdBook1(String userId, String answerGender);
+
+	public int getInsertCount(int bookNo, String userId);
+
+	public List<Book> printRecommendBook2(String userId, String answerLove);
 }
