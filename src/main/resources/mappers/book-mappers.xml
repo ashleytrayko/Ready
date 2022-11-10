@@ -165,41 +165,16 @@
 	</select>
 	
 	<select id="selectRecommendBook1" resultMap="bookResultMap">
-		SELECT * FROM BOOK_TBL
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY 
 		<if test='answerGender.toString() == "남"'>
-			JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '액션' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		LIKE '%' || '액션' || '%' 
 		</if>
-		<if test='answerGender.toString() =="여"'>
-			JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '뷰티' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
+		<if test='answerGender.toString() == "여"'>
+		LIKE '%' || '뷰티' || '%'
 		</if>
-	</select>
-		
-	<select id="selectRecommendBook" resultMap="bookResultMap">
-		SELECT * FROM BOOK_TBL 
-		<if test='answerGender.toString() == "남"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '액션' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerGender.toString() =="여"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '뷰티' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerLove.toString() =="family"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '어린이' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerLove.toString() == "married"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '유아' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerHobby.toString() == "요리"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '요리' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerHobby.toString() == "여행"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '여행' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test='answerHobby.toString() == "음악"'>
-		JOIN SURVEY_TBL ON BOOK_CATEGORY LIKE '%' || '음악' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
-		<if test="answerWriter != null">
-		JOIN SURVEY_TBL ON BOOK_WRITER LIKE '%' || '#{answerWriter}' || '%' WHERE SURVEY_TBL.USER_ID = #{userId }
-		</if>
+		<where>
+		SURVEY_TBL.USER_ID = #{userId }
+		</where>
 	</select>
 	
 	<select id="selectNovel" resultMap="bookResultMap">	
@@ -217,6 +192,10 @@
 	<insert id="insertReview">
 		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{bookNo }, #{userId }, #{userNickname }, #{score }, #{reviewContents}, DEFAULT, DEFAULT)
 	</insert>
+	
+	<select id="selectInsertCount" resultType="_int">
+		SELECT COUNT(*) FROM REVIEW_TBL WHERE BOOK_NO = #{bookNo} AND USER_ID = #{userId }
+	</select>
 	
 	<update id="updateReview">
 		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, SCORE = #{score }, UPDATE_DATE = DEFAULT WHERE REVIEW_NO = #{reviewNo }
@@ -239,10 +218,10 @@
 	</update>
 	
 	<select id="selectMyReviewCount" resultType="_int">
-		SELECT COUNT(*) FROM REVIEW_TBL WHERE USER_ID = #{userId }
+		SELECT COUNT(*) FROM REVIEW_TBL WHERE USER_ID = #{userId } 
 	</select>
 	
 	<select id="selectMyReview" resultMap="reviewResultMap">
-		SELECT * FROM REVIEW_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId}
+		SELECT * FROM REVIEW_TBL JOIN BOOK_TBL USING (BOOK_NO) WHERE USER_ID = #{userId} ORDER BY UPDATE_DATE DESC
 	</select>
 </mapper>

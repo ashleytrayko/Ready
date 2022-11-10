@@ -27,4 +27,6 @@ public interface MypageService {
 
 	List<Order> printMyOrder(String userId);
 
+	int deleteUser(String userEmail, String textEmail);
+
 }

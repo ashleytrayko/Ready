@@ -29,4 +29,6 @@ public interface MypageStore {
 
 	List<Order> selectMyOrder(SqlSessionTemplate session, String userId);
 
+	int deleteUser(SqlSessionTemplate session, String userEmail, String textEmail);
+
 }
