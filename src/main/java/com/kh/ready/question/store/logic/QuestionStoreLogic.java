@@ -116,5 +116,11 @@ public class QuestionStoreLogic implements QuestionStore{
 		return result;
 	}
 
+	@Override
+	public int updateQue(SqlSession session, Question que) {
+		int result = session.update("QuestionMapper.updateQue", que);
+		return result;
+	}
+
 
 }

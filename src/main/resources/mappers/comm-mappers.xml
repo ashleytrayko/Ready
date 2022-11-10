@@ -77,4 +77,7 @@
 	<select id="selectOneByNo" resultMap="commResultMap">
 		SELECT * FROM COMMUNITY_TBL WHERE BOARD_NO = #{boardNo} AND C_STATUS = 'Y'
 	</select>
+	<update id="updateBoardReport">
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'R' WHERE BOARD_NO = #{boardNo}
+	</update>
 </mapper>

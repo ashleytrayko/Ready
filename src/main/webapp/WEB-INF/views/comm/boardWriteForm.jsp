@@ -32,7 +32,7 @@
 				<table align="center" border="none">
 					<tr>
 						<td>제목</td>
-						<td><input type="text" name="commTitle" class="qTitle"></td>
+						<td><input type="text" name="commTitle" class="qTitle" placeholder="제목을 입력해주세요." autofocus></td>
 					</tr>
 					<tr>
 						<td>작성자</td>
@@ -42,7 +42,7 @@
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea class="summernote" name="commContents"></textarea>
+							<textarea class="summernote" name="commContents" width="100%"></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -61,11 +61,10 @@
 	</footer>
 	<script>
 		$('.summernote').summernote({
-		  height: 150,
-		  width: 600,
-		  lang: "ko-KR"
-/* 		  focus : true, */
-		});
+		 	placeholder: '내용을 입력해주세요.',
+	        height: 300,
+	        lang: 'ko-KR',
+	 	});
 		function listMember() {
 			if(confirm("목록으로 돌아가시겠습니까?")) {
 				location.href = "/comm/list.kh";

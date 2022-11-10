@@ -44,9 +44,9 @@
 					<tr>
 						<td colspan="2">추천수 : ${comm.cLike }</td>
 						<%-- <td>${comm.cLike }</td> --%>
-						<td><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button onclick="updateLike()">추천하기</button></td>
+						<td><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button id="likeBtn">추천하기</button></td>
 					</tr>
-					<c:if test="${principal.user.userNickname eq comm.commWriter }">
+					<c:if test="${principal.user.userId eq comm.commId }">
 						<tr>
 							<td colspan="4" align="center">
 								<a href="/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}">글 수정</a>
@@ -57,7 +57,9 @@
 					<tr>
 						<td colspan="4" align="right">
 							<button onclick="location.href = '/comm/list.kh'">리스트</button>
-							<button>신고</button>
+							<%-- <button onclick="reportBoard();">신고</button>
+							<a href="#" onclick="commRemove(${page});">삭제하기</a> --%>
+							<a href="#" onclick="reportBoard(${page});">신고</a>
 						</td>
 					</tr>
 				</table>
@@ -214,17 +216,6 @@
 				location.href="/comm/remove.kh?page="+value;
 			}
 		}
-		/* function removeReply(commReplyNo) {
-			event.preventDefault();
-			if(confirm("정말 삭제하시겠습니까?")) {
-				var $delForm = $("<form>");
-				$delForm.attr("action", "/comm/removeReply.kh");
-				$delForm.attr("method", "POST");
-				$delForm.append("<input type='hidden' name='commReplyNo' value='"+commReplyNo+"'>");
-				$delForm.appendTo("body");
-				$delForm.submit();
-			}
-		} */
 		function modifyView(obj, rContents, cReplyNo) {
 			event.preventDefault();
 			var $tr = $("<tr>");
@@ -248,33 +239,40 @@
 			$form.submit();
 		}
 		
-		function updateLike() {
-		var boardNo = "${comm.boardNo}";
-		var userId = "${like.userId}";
+		function reportBoard(value) {
+			event.preventDefault(); // 하이퍼링크 이동 방지
+			if(confirm("게시물을 신고하시겠습니까?")) {
+				location.href="/comm/report.kh?page="+value;
+			}
+		}
+		
+		$("#likeBtn").on("click", function() {
+			var boardNo = "${comm.boardNo}";
+			var commId = "${principal.user.userId}";
 			$.ajax({
-				url : "/like/recomm.kh",
+				url : "/like/likeUp.kh",
 				datatype : "json",
+				type : "post",
 				data : {
 					"boardNo"	: boardNo,
-					"userId" 	: userId 
+					"commId" 	: commId 
 				},
-				type : "POST",
 				success : function(likeCheck) {
-					if(likeCheck == 1) {
-						alert("추천취소");
-						location.reload();
-					}
-					else if(likeCheck == 0) {
+					if(likeCheck == 0) {
 						alert("추천완료");
 						location.reload();
 					}
+					else if(likeCheck == 1) {
+						alert("추천취소");
+						location.reload();
+					}
 				},
-				error : function() {
+ 				error : function() {
 					alert("통신 에러");
-				}
+				} 
 					
 			});
-		}
+		}); 
 		
 	</script>
 </body>

@@ -88,10 +88,11 @@ public class CommServiceImpl implements CommService{
 		User user = cStore.selectUser(session, userId);
 		return user;
 	}
-//	@Override
-//	public int modifyReply(CommReply cReply, Integer boardNo, Integer page) {
-//		int result = cStore.updateReply(session, cReply, boardNo, page);
-//		return result;
-//	}
+
+	@Override
+	public int reportBoard(int boardNo) {
+		int result = cStore.updateBoardReport(session, boardNo);
+		return result;
+	}
 
 }

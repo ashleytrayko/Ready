@@ -151,7 +151,7 @@
 				<span class="center"> <i class="fa-solid fa-user fa-xl"></i>
 					<p class="main-p">마이페이지</p>
 			</span>
-			</a> <a href="/que/list.kh"
+			</a> <a href="/que/faq01.kh"
 				class="d-flex mb-3 mb-lg-0 me-lg-right text-dark text-decoration-none">
 				<span class="center"> <i class="fa-solid fa-tty fa-xl"></i>
 					<p class="main-p">고객센터</p>

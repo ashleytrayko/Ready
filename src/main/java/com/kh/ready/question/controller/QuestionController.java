@@ -42,7 +42,7 @@ public class QuestionController {
 			, HttpServletRequest request) {
 		try {
 			int result = qService.registerFAQ(que);
-			mv.setViewName("redirect:/que/list.kh");
+			mv.setViewName("redirect:/que/faq01.kh");
 		} catch (Exception e) {
 				e.printStackTrace();
 				mv.addObject("msg", e.getMessage());
@@ -280,7 +280,7 @@ public class QuestionController {
 			, HttpServletRequest request) {
 		try {
 			int result = qService.registerAdmin(que);
-			mv.setViewName("redirect:/que/list.kh");
+			mv.setViewName("redirect:/que/faq01.kh");
 		} catch (Exception e) {
 				e.printStackTrace();
 				mv.addObject("msg", e.getMessage());
@@ -288,4 +288,38 @@ public class QuestionController {
 		}
 		return mv;
 	} 
+	
+	@RequestMapping(value = "/que/answerView.kh", method = RequestMethod.GET)
+	public ModelAndView queAnswerView(
+			ModelAndView mv
+			, @RequestParam("queNo") Integer queNo
+			, @RequestParam("page") int page) {
+		try {
+			Question que = qService.printOneByNo(queNo);
+			mv.addObject("que", que);
+			mv.addObject("page", page);
+			mv.setViewName("que/enrollAnswer");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("main/errorPage");
+		}
+		return mv;
+	}
+	
+	// Q&A 답변등록
+	@RequestMapping(value = "/que/answer.kh", method = RequestMethod.POST)
+	public ModelAndView commModify(
+			@ModelAttribute Question que
+			, ModelAndView mv
+			, @RequestParam("page") Integer page
+			, HttpServletRequest request) {
+		try {
+			int result = qService.modifyQna(que);
+			mv.addObject("que", que);
+			mv.setViewName("redirect:/que/manageList.kh?page=" + page);
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
+		}
+		return mv;
+	}
 }

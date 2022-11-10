@@ -8,3 +8,6 @@ select option[value=""][disabled] {
 #select-td {
 	width:100px;
 }
+input {
+  outline: none;
+}
