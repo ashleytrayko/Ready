@@ -20,8 +20,8 @@
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
-     <c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
      <input type="hidden" name="bookNo" id="id-bookNo" value="${bookData.bookNo }">
+     <c:set var="salePrice" value="${(bookData.priceSales * discountRate)-((bookData.priceSales *discountRate)%10)}"/>
      <input type="hidden" name="productPrice" id="id-productPrice" value="${salePrice}">
      <div id="order-title">
          <h1 id="order-text">ORDER</h1>
@@ -48,7 +48,6 @@
                 <tbody class="cartbody">
                 	<c:set var="priceSum" value="0"/>
                 	<c:set var="productSum" value="0"/>
-                	<c:set var="salePrice" value="${(bookData.priceSales * 0.99)-((bookData.priceSales *0.99)%10)}"/>
                     <tr>
                         <td>
                             <img class="product-img" src="${bookData.imgPath }">
@@ -285,7 +284,6 @@
 <script>
 	window.onload = function(){
 		var bookPrice = ${priceSum};
-		console.log(bookPrice);
 		if(bookPrice < 10000) {
 			$("#id-delivery-fee").attr("value", "2,500");
 		}
@@ -334,22 +332,30 @@
     
 	function useMileage(salePriceSum, onlysalePriceSum){
     	
+		var inputMileage = $("#useMileage");
     	var currentMileage = +$("#currentMileage").val();
     	var useMileage = +$("#useMileage").val();
     	var pacSalePriceSum = salePriceSum;
     	var onlySalePriceSum = onlysalePriceSum;
-    	
+		var num_check= /^[0-9]+$/;
+		
     	if(currentMileage < useMileage) {
     		alert("현재 보유한 마일리지가 부족합니다!");
+    		inputMileage.focus();
     		return false;
     	} else if(useMileage > onlySalePriceSum) {
     		alert("사용 마일리지는 최소 결제 금액을 넘을 수 없습니다!");
+    		inputMileage.focus();
     		return false;
+    	} else if(!num_check.test(useMileage)){
+    		alert ("숫자만 입력할 수 있습니다.");
+			inputMileage.focus();
+			return false;
     	} else {
     		var calPrice = pacSalePriceSum - useMileage;
     		var caledPrice = calPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		
-    		$("#id-total-price").attr("value", caledPrice);    		
+    		$("#id-total-price").attr("value", caledPrice);
     	}
     }
     
@@ -370,7 +376,7 @@
     	
      	var useMileage = +$("#useMileage").val();
     	var calPrice = totalPrice - useMileage;
- 	    
+
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
@@ -401,6 +407,7 @@
 					url :"/order/insertDirectOrder",
 					type : "POST",
 					data : {
+						imp_uid: rsp.imp_uid,
 						bookNo : rsp.custom_data.bookNo,
 						productCount : rsp.custom_data.productCount,
 						productPrice : rsp.custom_data.productPrice,
@@ -416,13 +423,7 @@
 		            	useMileage : rsp.custom_data.useMileage,
 		            	totalPrice : rsp.custom_data.totalPrice
 					},
-					success : function(list){
-						var orderId = list.indexOf(0);
-						console.log("orderId : " + orderId);
-						
-						var useMileage = list.indexOf(1);
-						console.log("useMileage : " + useMileage);
-						
+					success : function(orderId){
 						location.href="/order/orderDetailView?orderId="+orderId;
 					},
 					error : function(){

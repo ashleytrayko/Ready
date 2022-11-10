@@ -21,7 +21,9 @@ public class Order {
 	private Date orderDate;
 	private String orderId;
 	private int productPrice;
-	private int totalPrice; 
+	private int totalPrice;
+	private int useMileage;
+	private String impUid;
 	
 	private Book book;
 	private Cart cart;
@@ -30,7 +32,7 @@ public class Order {
 
 	public Order(int orderNo, Integer bookNo, String userId, Integer productCount, String orderRName,
 			String orderRPhone, String orderAddress1, String orderAddress2, String orderAddress3, String paymentMethod,
-			String orderState, Date orderDate, String orderId, int productPrice, int totalPrice, Book book, Cart cart) {
+			String orderState, Date orderDate, String orderId, int productPrice, int totalPrice, int useMileage, String impUid, Book book, Cart cart) {
 		super();
 		this.orderNo = orderNo;
 		this.bookNo = bookNo;
@@ -47,6 +49,8 @@ public class Order {
 		this.orderId = orderId;
 		this.productPrice = productPrice;
 		this.totalPrice = totalPrice;
+		this.useMileage = useMileage;
+		this.impUid = impUid;
 		this.book = book;
 		this.cart = cart;
 	}
@@ -171,6 +175,22 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
+	public int getUseMileage() {
+		return useMileage;
+	}
+
+	public void setUseMileage(int useMileage) {
+		this.useMileage = useMileage;
+	}
+
+	public String getImpUid() {
+		return impUid;
+	}
+
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
+	}
+
 	public Book getBook() {
 		return book;
 	}
@@ -193,9 +213,9 @@ public class Order {
 				+ productCount + ", orderRName=" + orderRName + ", orderRPhone=" + orderRPhone + ", orderAddress1="
 				+ orderAddress1 + ", orderAddress2=" + orderAddress2 + ", orderAddress3=" + orderAddress3
 				+ ", paymentMethod=" + paymentMethod + ", orderState=" + orderState + ", orderDate=" + orderDate
-				+ ", orderId=" + orderId + ", productPrice=" + productPrice + ", totalPrice=" + totalPrice + ", book="
-				+ book + ", cart=" + cart + "]";
+				+ ", orderId=" + orderId + ", productPrice=" + productPrice + ", totalPrice=" + totalPrice
+				+ ", useMileage=" + useMileage + ", impUid=" + impUid + ", book=" + book + ", cart=" + cart + "]";
 	}
-
+	
 
 }

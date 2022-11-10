@@ -2,6 +2,7 @@ package com.kh.ready.order.service.logic;
 
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,14 +78,13 @@ public class OrderServiceImpl implements OrderService {
 		
 		String userTier = "BRONZE";
 		
-		if(userPurchase >= 200000) {
+		if(userPurchase >= 200000 && userPurchase < 500000) {
 			userTier = "SILVER";	
-		} else if(userPurchase >= 500000) {
+		} else if(userPurchase >= 500000 && userPurchase < 1000000) {
 			userTier = "GOLD";
 		} else if(userPurchase >= 1000000) {
 			userTier = "VIP";
 		}
-		System.out.println("service : " + userTier);
 		
 		return orderStore.updatePurchaseInfoByUserId(userId, plusedMileage, userTier, userPurchase);
 	}

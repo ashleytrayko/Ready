@@ -2,14 +2,18 @@ package com.kh.ready.order.controller;
 
 import java.security.Principal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,10 +34,7 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderController.class);
 
-	
 	@RequestMapping(value="/order/orderView", method=RequestMethod.GET)
 	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart, User user) {
 		
@@ -43,6 +44,7 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfo", userInfo);
 			mv.setViewName("/order/orderPageCart");
@@ -66,6 +68,7 @@ public class OrderController {
 			Book bookData = orderService.getbookDataByBookNo(bookNo);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("productCount" , productCount);
 			mv.addObject("bookData", bookData);
 			mv.addObject("userInfo", userInfo);
@@ -94,6 +97,7 @@ public class OrderController {
 												@RequestParam("reciverZoneCode") String reciverZoneCode,
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
+												@RequestParam("imp_uid") String imp_uid,
 												@RequestParam("paymethod") String paymethod){
 				
 				Order order = new Order();
@@ -129,6 +133,8 @@ public class OrderController {
 					order.setOrderId(orderId);
 					order.setUserId(userId);
 					order.setTotalPrice(totalPrice);
+					order.setUseMileage(useMileage);
+					order.setImpUid(imp_uid);
 					
 					result = orderService.insertOrder(order);
 					
@@ -146,7 +152,7 @@ public class OrderController {
 	
 	@ResponseBody
 	@RequestMapping(value="/order/insertDirectOrder", method=RequestMethod.POST)
-	public List<Object> insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
+	public String insertDirectOrder(Principal principal, @RequestParam("bookNo") int bookNo,
 												@RequestParam("productCount") int productCount,
 												@RequestParam("productPrice") int productPrice,
 												@RequestParam("totalPrice") int totalPrice,
@@ -157,6 +163,7 @@ public class OrderController {
 												@RequestParam("reciverRoadAddr") String reciverRoadAddr,
 												@RequestParam("reciverDetailAddr") String reciverDetailAddr,
 												@RequestParam("paymethod") String paymethod,
+												@RequestParam("imp_uid") String imp_uid,
 												@RequestParam("useMileage") int useMileage){
 			
 			Order order = new Order();
@@ -171,6 +178,7 @@ public class OrderController {
 				subNum += (int)(Math.random() * 10);
 			}
 			
+			System.out.println(productPrice);
 			
 			String orderId = ymd + "_" + subNum;
 			String userId = principal.getName();
@@ -186,7 +194,8 @@ public class OrderController {
 			order.setOrderId(orderId);
 			order.setUserId(userId);
 			order.setTotalPrice(totalPrice);
-			
+			order.setUseMileage(useMileage);
+			order.setImpUid(imp_uid);
 			orderService.insertOrder(order);
 			
 			User userInfo = orderService.getUserInfoByUserId(userId);
@@ -194,11 +203,8 @@ public class OrderController {
 			orderService.updateMileageByUserId(userId, usedMileage);
 			
 			String getOrderId = order.getOrderId();
-			List<Object> list = new ArrayList<>();
-			list.add(getOrderId);
-			list.add(useMileage);
-			System.out.println(list);
-			return list;
+
+			return getOrderId;
 	}
 	
 	
@@ -236,6 +242,26 @@ public class OrderController {
 		int result = updateorderStatus + updataUserInfo;
 		
 		return result;
+	}
+	
+	public double discountRate(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		double discountRate = 0;
+		
+		if(userTier.equals("BRONZE")) {
+			discountRate = 0.99;
+		} else if(userTier.equals("SILVER")) {
+			discountRate = 0.97;
+		} else if(userTier.equals("GOLD")) {
+			discountRate = 0.95;
+		} else if(userTier.equals("VIP")) {
+			discountRate = 0.90;
+		}
+		
+		return discountRate;
 	}
 	
 }

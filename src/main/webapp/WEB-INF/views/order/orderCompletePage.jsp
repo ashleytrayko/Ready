@@ -147,7 +147,8 @@
                         <th class="orderinfo-table-header">주문 금액 합계</th>
                         <th class="orderinfo-table-header">배송비</th>
                         <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th id="orderinfo-table-right">적립금</th>
+                        <th class="orderinfo-table-header">적립 마일리지</th>
+                        <th id="orderinfo-table-right">사용 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,15 +157,18 @@
                     	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원
                     </td>
                     <td class="orderinfo-table-body">
-                    	0원
+                    	<input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원
                     </td>
                     <td class="orderinfo-table-body">
                     	<p class="total-price">
-                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원
+                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.totalPrice - orderInfo.useMileage}"/>원
                     	</p>
                     </td>
-                    <td>
+                    <td class="orderinfo-table-body">
                     	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원
+                    </td>
+                    <td>
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.useMileage}"/>원
                     </td>
                 </tbody>
             </table>
@@ -173,10 +177,24 @@
 	        <div class="div-confirmPurchase">
 	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
 	       	</div>
+	       	<div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice});">환불하기</button>
+	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다');">구매 확정</button>
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
+	        </div>
+	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice});">환불하기</button>
+	       	</div>
+       	</c:if>
+       	<c:if test="${orderInfo.orderState eq 'R'}">
+	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 환불된 주문입니다!');">구매 확정</button>
+	        </div>
+	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 환불된 주문입니다!');">환불하기</button>
 	       	</div>
        	</c:if>
         <div id="order-btn">
@@ -185,7 +203,8 @@
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
-
+window.onload = function(){
+	var bookPrice = ${priceSum};
 	var paymethod = $("#payMethod").val();
 	
 	if(paymethod == "card"){
@@ -195,12 +214,16 @@
 	} else if(paymethod == "trans"){
 		$("#payMethod").val("실시간 계좌 이체");
 	}
+	if(bookPrice < 10000) {
+		$("#id-delivery-fee").attr("value", "2,500");
+	}
+}
+
 	
 	
 	function confirmPurchase(salePriceSum){
 		
 			const confirmPurchase = confirm("구매 확정하시겠습니까?");
-			const salePriceSum = salePriceSum;
 			
 			if(confirmPurchase == true){
 				
@@ -230,9 +253,31 @@
 				alert("취소하였습니다.");
 				return false;
 			}
-			
 	}
-
+	
+	
+	function cancelPay(orderId, payedPrice){
+		console.log(orderId);
+		console.log(payedPrice);
+		$.ajax({
+			url : "/refund/doRefund",
+			type : "post",
+/* 			contentType : "application/json", */
+			data : {
+		        orderId : orderId,	
+		        cancel_request_amount : payedPrice, // 환불금액
+		        reason: "테스트 결제 환불", // 환불사유
+		        refund_holder: "", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+		        refund_bank: "", // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+		        refund_account : "" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+		      },
+/* 		       dataType : "json" */
+		}).done(function(result){
+			console.log("result : " + result);
+		}).fail(function(error){
+			console.log("환불 실패 : " + error);
+		});
+	}
 </script>
 </body>
 </html>

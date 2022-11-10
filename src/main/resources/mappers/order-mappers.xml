@@ -20,6 +20,8 @@
 		<result property="orderId" 		column="ORDER_ID"/>
 		<result property="productPrice" column="PRODUCT_PRICE"/>
 		<result property="totalPrice" column="TOTAL_PRICE"/>
+		<result property="useMileage"	column="USE_MILEAGE"/>
+		<result property="impUid"			column="IMP_UID"/>
  		<collection property="book" resultMap="bookResultMap"></collection>
  		<collection property="cart" resultMap="CartResultMap"></collection>
 	</resultMap>
@@ -81,15 +83,11 @@
 	</delete>
 	
 	<insert id="insertOrder">
-		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId}, #{productPrice}, #{totalPrice})
+		INSERT INTO ORDER_TBL VALUES(SEQ_ORDER_NO.NEXTVAL, #{bookNo}, #{userId}, #{productCount}, #{orderRName}, #{orderRPhone}, #{orderAddress1}, #{orderAddress2}, #{orderAddress3}, #{paymentMethod}, DEFAULT, DEFAULT, #{orderId}, #{productPrice}, #{totalPrice}, #{useMileage}  ,#{impUid})
 	</insert>
 	
 	<select id="selectOneOrderByOrderId" resultMap="OrderResultMap">
 		SELECT * FROM ORDER_TBL WHERE ORDER_ID = #{orderId} AND ROWNUM = 1
-	</select>
-	
-	<select id="getUserInfo" resultMap="userResultMap">
-		SELECT * FROM USER_TBL WHERE USER_ID = #{userId}
 	</select>
 	
 	<update id="updateUserMileage">

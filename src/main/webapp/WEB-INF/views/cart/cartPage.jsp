@@ -176,6 +176,10 @@
 			alert ("숫자를 입력해주세요");
 			countControl.focus();
 			return false;
+		} else if(productCount == 0){
+			alert ("1개 이상의 숫자를 입력해주세요");
+			countControl.focus();
+			return false;
 		} else {
 			var num_check=/^[0-9]*$/;
 			if(num_check.test(productCount)){
