@@ -16,9 +16,14 @@
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 	<style>
 	
-	.listOne{
-		border-bottom : 1px solid #dcdcdc;
-	}
+		.tb-section {
+			width : 75%;
+			margin-left : 10%;
+		}
+		td > a {
+			color : black;
+			text-decoration : none;
+		}
 	</style>
 </head>
 <body>
@@ -27,33 +32,62 @@
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
-			<c:if test="${empty oList}">
-				주문한 내역이 없습니다.
-			</c:if>
-			<c:if test="${!empty oList}">
-				<c:forEach items="${oList }" var="order" varStatus="i">
-					<div class="listOne">
-					<a href="/order/orderDetailView?orderId=${order.orderId }">
-						<div>주문 번호 : ${order.orderId }</div>
-						<div>
-							<img src="${order.book.imgPath }" width="150" height="100">
-						</div>
-						<div>
-							결제 가격 : <fmt:formatNumber type="number" value="${order.totalPrice }" pattern="#,###"/>원
-						</div>
-						<div>
-							구매 일자 : ${order.orderDate }
-						</div>
-						<div>
-							구매 상태 : ${order.orderState }
-						</div>
-					</a>
-					</div>
-				</c:forEach>
-			</c:if>
+			<div class="tb-section">
+				<table class="table table-hover align-middle" >
+					<thead>
+						<tr align="center">
+							<th class="table-info">상품정보</th>
+							<th class="table-info">구매일자</th>
+							<th class="table-info">주문번호</th>
+							<th class="table-info">결제금액</th>
+							<th class="table-info">주문상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:if test="${empty oList}">
+							<h3>주문한 내역이 없습니다.</h3>
+						</c:if>
+						<c:if test="${!empty oList}">
+							<c:forEach items="${oList }" var="order" varStatus="i">
+								<tr align="center">
+										<td>
+											<a href="/order/orderDetailView?orderId=${order.orderId }">
+												<img src="${order.book.imgPath }" width="150" height="200">
+											</a>
+										</td>
+										<td>
+											<a href="/order/orderDetailView?orderId=${order.orderId }">
+												${order.orderDate }
+											</a>
+										</td>
+										<td>
+											<a href="/order/orderDetailView?orderId=${order.orderId }">
+												${order.orderId }
+											</a>
+										</td>
+										<td>
+											<a href="/order/orderDetailView?orderId=${order.orderId }">
+												<fmt:formatNumber type="number" value="${order.totalPrice }" pattern="#,###"/>원
+											</a>
+										</td>
+										<td>
+											<a href="/order/orderDetailView?orderId=${order.orderId }">
+												${order.orderState }
+											</a>
+										</td>
+									
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="main-sidebar">
 		</div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

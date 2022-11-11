@@ -11,12 +11,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<style>
+		.card > a {
+			color : black;
+			text-decoration : none;
+		}
+	</style>
+	
 	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
 <body>
 	<div class="main-contents">
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
 			<c:if test="${empty bList }">
 				<h3>검색조건에 맞는 도서가 없습니다.</h3>
@@ -24,20 +31,22 @@
 			<c:if test="${!empty bList }">
 				<c:forEach items="${bList }" var="book" varStatus="i">
 					<div class="card mb-3" style="width: 700px;">
-						<div class="row g-0"> 
-							<div class="col-md-4">
-								<img src=${book.imgPath } width="200" height="250">
-							</div>
-							<div class="col-md-8">
-								<div class="card-body">
-									<h5 class="card-title"><a href="/book/detailView.kh?bookNo=${book.bookNo }">${book.bookTitle }</a></h5>
-        							<p class="card-text"><small class="text-muted">${book.publisher }</small></p>
-       								<p class="card-text">판매가 : <fmt:formatNumber type="number" value="${book.priceSales }" pattern="#,###"/> 원</p>
-       								<p class="card-text">평점 : ${book.scoreAvg }</p>
-       								<p class="card-text"><small class="text-muted">적립금 : <fmt:formatNumber type="number" value="${book.mileage }" pattern="#,###"/>원</small></p>
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }">
+							<div class="row g-0"> 
+								<div class="col-md-4">
+									<img src=${book.imgPath } width="200" height="250">
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title">${book.bookTitle }</h5>
+		        						<p class="card-text"><small class="text-muted">${book.publisher }</small></p>
+		       							<p class="card-text">판매가 : <fmt:formatNumber type="number" value="${book.priceSales }" pattern="#,###"/> 원</p>
+		       							<p class="card-text">평점 : ${book.scoreAvg }</p>
+		       							<p class="card-text"><small class="text-muted">적립금 : <fmt:formatNumber type="number" value="${book.mileage }" pattern="#,###"/>원</small></p>
+									</div>
 								</div>
 							</div>
-						</div>
+       					</a>
 					</div>
 					<br>
 					<br>
@@ -65,6 +74,10 @@
 		        	</tr>
 			</table>
 		</div>
+		<div class="main-sidebar"></div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

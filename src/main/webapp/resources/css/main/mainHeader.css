@@ -1,6 +1,7 @@
 @charset "UTF-8";
 .main-contents {
 	display:flex;
+	height : 90%;
 }
 .main-sidebar {
 	width:15%;
@@ -13,6 +14,10 @@
 	 flex-direction:column;
 	justify-contents:center;
 	align-items:center; */
+}
+.main-footer {
+	float : bottom;
+	height : 10%;
 }
 .main-p {
 	font-size:12px;
