@@ -56,4 +56,10 @@ public interface BookService {
 	public int getInsertCount(int bookNo, String userId);
 
 	public List<Book> printRecommendBook2(String userId, String answerLove);
+
+	public List<Book> printRecommendBook3(String userId, String answerHobby);
+
+	public List<Book> printRecommendBook4(String userId, String answerReason);
+
+	public List<Book> printRecommendBook5(String userId, String answerWriter);
 }

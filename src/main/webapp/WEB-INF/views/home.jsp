@@ -53,10 +53,76 @@
 	<div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
-				<div class="cat-title">
-					READ'Y 베스트셀러
-					<a href = "/book/category.kh?category=Best" class="more text-decoration-none">더보기</a>
-				</div>
+			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:100%; height:300px">
+  				<div class="carousel-indicators">
+   					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  				</div>
+  				<div class="carousel-inner" style="width:100%; height:100%">
+    				<div class="carousel-item active" style="width:100%; height:100%">
+         				<c:choose>
+         					<c:when test="${bannerList[0].bannerFrom eq 1 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+					        <c:when test="${bannerList[1].bannerFrom eq 1 }">
+					           <img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+					        </c:when>
+					        <c:when test="${bannerList[2].bannerFrom eq 1 }">
+					           <img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+					        </c:when>
+         					<c:otherwise>
+            					<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+         					</c:otherwise>
+     					</c:choose>
+    				</div>
+    				<div class="carousel-item" style="width:100%; height:100%">
+         				<c:choose>
+         					<c:when test="${bannerList[0].bannerFrom eq 2 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+        					</c:when>
+         					<c:when test="${bannerList[1].bannerFrom eq 2 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+         					<c:when test="${bannerList[2].bannerFrom eq 2 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+         					<c:otherwise>
+            					<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+         					</c:otherwise>
+      					</c:choose>
+    				</div>
+    				<div class="carousel-item" style="width:100%; height:100%">
+      					<c:choose>
+         					<c:when test="${bannerList[0].bannerFrom eq 3 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+         					<c:when test="${bannerList[1].bannerFrom eq 3 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+         					<c:when test="${bannerList[2].bannerFrom eq 3 }">
+            					<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+         					</c:when>
+         					<c:otherwise>
+            					<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+         					</c:otherwise>
+      					</c:choose>
+   					</div>
+  				</div>
+  				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    				<span class="visually-hidden">Previous</span>
+  				</button>
+  				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="visually-hidden">Next</span>
+				  </button>
+			</div>
+			<br><br><br>
+			<div class="cat-title">
+				READ'Y 베스트셀러
+				<a href = "/book/category.kh?category=Best" class="more text-decoration-none">더보기</a>
+			</div>
 				<br>
 				<c:forEach items="${bList1 }" var="book" end="4">
 					<div class="card" id="book-area">
@@ -86,6 +152,86 @@
 				</div>
 				<br>
 				<c:forEach items="${rbook1 }" var="book" end="0">
+					<div class="card" id="book-area">
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail text-decoration-none">
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
+							<div class="card-body">
+								<c:choose>
+                            		<c:when test="${fn:length(book.bookTitle) gt 20 }">
+                            			<c:out value="${fn:substring(book.bookTitle, 0, 19) }...">
+                            			</c:out>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:out value="${book.bookTitle }">
+                            			</c:out>
+                            		</c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            	</c:choose>	
+							</div><br>
+						</a>
+					</div>
+				</c:forEach>
+				<c:forEach items="${rbook2 }" var="book" end="0">
+					<div class="card" id="book-area">
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail text-decoration-none">
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
+							<div class="card-body">
+								<c:choose>
+                            		<c:when test="${fn:length(book.bookTitle) gt 20 }">
+                            			<c:out value="${fn:substring(book.bookTitle, 0, 19) }...">
+                            			</c:out>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:out value="${book.bookTitle }">
+                            			</c:out>
+                            		</c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            	</c:choose>	
+							</div><br>
+						</a>
+					</div>
+				</c:forEach>
+				<c:forEach items="${rbook3 }" var="book" end="0">
+					<div class="card" id="book-area">
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail text-decoration-none">
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
+							<div class="card-body">
+								<c:choose>
+                            		<c:when test="${fn:length(book.bookTitle) gt 20 }">
+                            			<c:out value="${fn:substring(book.bookTitle, 0, 19) }...">
+                            			</c:out>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:out value="${book.bookTitle }">
+                            			</c:out>
+                            		</c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            	</c:choose>	
+							</div><br>
+						</a>
+					</div>
+				</c:forEach>
+				<c:forEach items="${rbook4 }" var="book" end="0">
+					<div class="card" id="book-area">
+						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail text-decoration-none">
+							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
+							<div class="card-body">
+								<c:choose>
+                            		<c:when test="${fn:length(book.bookTitle) gt 20 }">
+                            			<c:out value="${fn:substring(book.bookTitle, 0, 19) }...">
+                            			</c:out>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:out value="${book.bookTitle }">
+                            			</c:out>
+                            		</c:otherwise>
+<%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
+                            	</c:choose>	
+							</div><br>
+						</a>
+					</div>
+				</c:forEach>
+				<c:forEach items="${rbook5 }" var="book" end="0">
 					<div class="card" id="book-area">
 						<a href="/book/detailView.kh?bookNo=${book.bookNo }" class="book-detail text-decoration-none">
 							<img src=${book.imgPath } width="180" height="250" class="card-img-top"><br>
@@ -215,6 +361,9 @@
 					</div>
 				</c:forEach>
 		</div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../views/main/footer.jsp"></jsp:include>
 	</div>
 	
 	<!-- Modal -->

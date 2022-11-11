@@ -12,6 +12,13 @@
 <head>
 <meta charset="UTF-8">
 <title>설문조사 페이지</title>
+	<style>
+		.tb-section {
+			width : 50%;
+			margin-left : 8%;
+		}
+	</style>
+	
 	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
@@ -21,42 +28,50 @@
       		<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
-			<table class="table table-hover">
-				<tr>
-					<th>성별</th>
-					<th>연애여부</th>
-					<th>취미</th>
-					<th>목적</th>
-					<th>선호 작가</th>
-					<th>등록일</th>
-				</tr>
+			<h3>설문조사 현황</h3>
+			<br><br><br><br>
+			<div class="tb-section">
 				<c:if test = "${!empty survey}">
-					<tr>
-						<td>${survey.answerGender }</td>
-						<td>${survey.answerLove }</td>
-						<td>${survey.answerHobby }</td>
-						<td>${survey.answerReason }</td>
-						<td>${survey.answerWriter }</td>
-						<td>${survey.updateDate }</td>
-					</tr>
-					<tr>
-						<td colspan="6" align="center">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th class="table-info">성별</th>
+								<th class="table-info">연애여부</th>
+								<th class="table-info">취미</th>
+								<th class="table-info">목적</th>
+								<th class="table-info">선호 작가</th>
+								<th class="table-info">등록일</th>
+							</tr>
+						</thead>
+							<tbody>
+								<tr>
+									<td>${survey.answerGender }</td>
+									<td>${survey.answerLove }</td>
+									<td>${survey.answerHobby }</td>
+									<td>${survey.answerReason }</td>
+									<td>${survey.answerWriter }</td>
+									<td>${survey.updateDate }</td>
+								</tr>
+							</tbody>
+					</table>
+						<br><br><br>
+						<div>
 							<button type="button" class="btn btn-outline-secondary" onclick="modifySurvey()">수정하기</button>
-						</td>
-					</tr>
-				</c:if>
-				<c:if test= "${empty survey }">
-						<td colspan="6" align="center">등록된 설문지가 없습니다.</td>
-					<tr>
-						<td colspan="6" align="center">
+						</div>
+					</c:if>
+					<c:if test= "${empty survey }">
+						<h5>등록된 설문지가 없습니다.</h5>
+						<div align="center">
 							<button type="button" class="btn btn-outline-secondary" onclick="registSurvey()">등록하기</button>
-						</td>
-					</tr>
-				</c:if>
-			</table>
+						</div>
+					</c:if>
+			</div>
 		</div>
-		<div class="col-md=3">sideBar
+		<div class="col-md=3">
 		</div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 	
 	<script>
