@@ -175,27 +175,21 @@
         </div>
         <c:if test="${orderInfo.orderState eq 'N'}">
 	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
-	       	</div>
-	       	<div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice});">환불하기</button>
 	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
 	        <div class="div-confirmPurchase">
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay('이미 구매 확정된 주문입니다!');">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
 	        </div>
-	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice});">환불하기</button>
-	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'R'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 환불된 주문입니다!');">구매 확정</button>
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 전액 환불된 주문입니다!');">환불하기</button>
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 전액 환불된 주문입니다!');">구매 확정</button>
 	        </div>
-	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 환불된 주문입니다!');">환불하기</button>
-	       	</div>
        	</c:if>
         <div id="order-btn">
             <button class="btn btn-secondary btm-btn" onclick="location.href='/';">메인으로</button>
@@ -256,26 +250,26 @@ window.onload = function(){
 	}
 	
 	
-	function cancelPay(orderId, payedPrice){
-		console.log(orderId);
-		console.log(payedPrice);
+	function cancelPay(orderId, payedPrice, impUid){
+		
+		console.log(impUid);
+
 		$.ajax({
-			url : "/refund/doRefund",
+			url : "/order/refund",
 			type : "post",
 /* 			contentType : "application/json", */
 			data : {
 		        orderId : orderId,	
 		        cancel_request_amount : payedPrice, // 환불금액
-		        reason: "테스트 결제 환불", // 환불사유
-		        refund_holder: "", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-		        refund_bank: "", // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-		        refund_account : "" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+		        impUid : impUid
 		      },
 /* 		       dataType : "json" */
-		}).done(function(result){
-			console.log("result : " + result);
-		}).fail(function(error){
-			console.log("환불 실패 : " + error);
+			success : function(result){
+				console.log(result);
+			},
+			error : function(error){
+				console.log(error);
+			}
 		});
 	}
 </script>

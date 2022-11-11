@@ -89,5 +89,11 @@ public class OrderStoreLogic implements OrderStore{
 		
 		return session.update("OrderMapper.updatePlusMileageByUserId", paramMap);
 	}
+
+	@Override
+	public int updateOrderState(String orderId) {
+
+		return session.update("OrderMapper.updateOrderState", orderId);
+	}
 	
 }
