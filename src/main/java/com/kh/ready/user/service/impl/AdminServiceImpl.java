@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
@@ -147,10 +148,10 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public String punishUser(String punishment, String userNickname) {
+	public String punishUser(String punishment, String userId) {
 		if(punishment.equals("suspend")) {
 			//ROLE_BAD -> 해서 글쓰기라든지를 막음
-			int result = adminRepository.updateBadUser(userNickname);
+			int result = adminRepository.updateBadUser(userId);
 			if(result > 0) {
 				return "success";
 			}else {
@@ -158,7 +159,7 @@ public class AdminServiceImpl implements AdminService{
 			}
 		}else if(punishment.equals("getout")) {
 			// enabled -> n 해서 로그인을 막음
-			int result = adminRepository.kickOutUser(userNickname);
+			int result = adminRepository.kickOutUser(userId);
 			if(result > 0) {
 				return "success";
 			}else {
@@ -167,6 +168,22 @@ public class AdminServiceImpl implements AdminService{
 		}else {
 			return "error";
 		}
+	}
+
+	@Override
+	public String modifyProduct(Book book) {
+		int result = adminRepository.updateProduct(book);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+
+	@Override
+	public int removeBook(Integer bookNo) {
+		int result = adminRepository.deleteBook(bookNo);
+		return result;
 	}
 
 

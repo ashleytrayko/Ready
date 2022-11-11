@@ -91,7 +91,13 @@
 		UPDATE COMMUNITY_TBL SET C_STATUS = 'N' WHERE BOARD_NO = #{boardNo}
 	</update>
 	
-	<update id="updateBadUser">
-		UPDATE USER_TBL SET USER_ROLE = 'ROLE_BAD' WHERE USER_ID = #{userId}
-	</update>	
+	<update id="updateProduct">
+		UPDATE BOOK_TBL SET BOOK_TITLE = #{bookTitle}, BOOK_WRITER = #{bookWriter},
+			PUB_DATE = #{pubDate}, BOOK_CATEGORY = #{category}, BOOK_CONTENTS = #{bookContents},
+			BOOK_ISBN = #{ISBN}, BOOK_PRICE = #{priceSales}, BOOK_MILEAGE = #{mileage}, BOOK_ PUBLISHER = #{publisher} WHERE BOOK_NO = #{bookNo}
+	</update>
+	
+	<delete id="deleteBookByNo">
+		DELETE FROM BOOK_TBL WHERE BOOK_NO = #{bookNo} 
+	</delete>
 </mapper>

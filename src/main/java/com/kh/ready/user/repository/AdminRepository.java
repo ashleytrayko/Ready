@@ -3,6 +3,7 @@ package com.kh.ready.user.repository;
 import java.util.HashMap;
 import java.util.List;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
@@ -28,9 +29,9 @@ public interface AdminRepository {
 
 	public List<Comm> selectAllReport(int currentPage, int boardLimit);
 
-	public int updateBadUser(String userNickname);
+	public int updateBadUser(String userId);
 
-	public int kickOutUser(String userNickname);
+	public int kickOutUser(String userId);
 
 	public int selectTotalCount(HashMap<String, String> paramMap);
 
@@ -41,6 +42,10 @@ public interface AdminRepository {
 	public int deleteReportedComm(Integer boardNo);
 
 	public Comm selectOneReport(Integer boardNo);
+	
+	public int updateProduct(Book book);
+
+	public int deleteBook(Integer bookNo);
 
 
 

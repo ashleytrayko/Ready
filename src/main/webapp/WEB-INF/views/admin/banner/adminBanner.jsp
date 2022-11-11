@@ -34,7 +34,7 @@
 							<img class="img-fluid" id="preview1" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
 						</c:when>
 						<c:otherwise>
-							<img class="img-fluid" id="preview1">
+							<img class="img-fluid" id="preview1" style="width:100%; height:100%">
 						</c:otherwise>
 					</c:choose>
 					
@@ -70,7 +70,7 @@
 							<img class="img-fluid"  id="preview2" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
 						</c:when>
 						<c:otherwise>
-							<img class="img-fluid"  id="preview2">
+							<img class="img-fluid"  id="preview2" style="width:100%; height:100%">
 						</c:otherwise>
 					</c:choose>
 					</div>
@@ -79,7 +79,7 @@
 					<input type="hidden" name="bannerFrom" value="2">
 					<div class="mt-3" style="text-align:center">
 						<button class="btn btn-outline-dark type="submit">배너 등록</button>
-						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(2);">배너 삭제</button>
 					</div>
 				</form>
 				<br>
@@ -105,7 +105,7 @@
 							<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
 						</c:when>
 						<c:otherwise>
-							<img class="img-fluid"  id="preview3">
+							<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
 						</c:otherwise>
 					</c:choose>
 					</div>
@@ -114,7 +114,7 @@
 					<input type="hidden" name="bannerFrom" value="3">
 					<div class="mt-3" style="text-align:center">
 						<button class="btn btn-outline-dark type="submit">배너 등록</button>
-						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
+						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(3);">배너 삭제</button>
 					</div>
 				</form>
 				<br>
@@ -125,9 +125,81 @@
 				<br>
 				<br>
 			</div>
+			
+	<%-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:100%; height:300px">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner" style="width:100%; height:100%">
+    <div class="carousel-item active" style="width:100%; height:100%">
+         <c:choose>
+			<c:when test="${bannerList[0].bannerFrom eq 1 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[1].bannerFrom eq 1 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[2].bannerFrom eq 1 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:otherwise>
+				<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+			</c:otherwise>
+		</c:choose>
+    </div>
+    <div class="carousel-item" style="width:100%; height:100%">
+         <c:choose>
+			<c:when test="${bannerList[0].bannerFrom eq 2 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[1].bannerFrom eq 2 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[2].bannerFrom eq 2 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:otherwise>
+				<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+			</c:otherwise>
+		</c:choose>
+    </div>
+    <div class="carousel-item" style="width:100%; height:100%">
+      <c:choose>
+			<c:when test="${bannerList[0].bannerFrom eq 3 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[0].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[1].bannerFrom eq 3 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[1].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:when test="${bannerList[2].bannerFrom eq 3 }">
+				<img class="img-fluid"  id="preview3" src="/resources/images/banner/${bannerList[2].bannerRename}" style="width:100%; height:100%"/>
+			</c:when>
+			<c:otherwise>
+				<img class="img-fluid"  id="preview3" style="width:100%; height:100%"> 
+			</c:otherwise>
+		</c:choose>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> --%>
+			
+			
 			</div>
+		
 		</div>
-	<footer> </footer>
+		
+	<footer>
+
+	 </footer>
 	<script>
 	function readFile(input,from){
   		if(input.files && input.files[0]){

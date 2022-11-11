@@ -17,10 +17,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 서머노트를 위해 추가해야할 부분 -->
-<script src="/resources/js/summernote-lite.js"></script>
-<script src="/resources/js/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -33,7 +29,11 @@
 			<div class="container col-lg-8">
 			
 			<h1>상품 수정</h1>
+				<div>
+					<img class="img-thumbnail" id="preview" src="${book.imgPath }"/>
+				</div>
 			<form method="post" action="/admin/modifyProduct">
+				<input type="hidden" value="${book.bookNo }" name="bookNo">
 				<div class="form-group">
 					<label for="bookTitle">도서명</label> 
 					<input type="text"
@@ -86,13 +86,6 @@
 						class="form-control" placeholder="출판사를 입력하세요."
 						id="publisher" name="publisher" value="${book.publisher }">
 				</div>
-				<div class="form-group">
-					<label for="userNickname">도서 이미지 </label> <input type="file"
-						class="form-control" id="bookImage" name="bookImage" onchange="readFile(this);">
-				</div>
-				<div>
-					<img id="preview"/>
-				</div>
 				<div style="text-align:center">
 					<button class="btn btn-outline-dark" type="submit">도서 수정</button>
 					<button class="btn btn-outline-dark" type="button" onclick="history.back();">뒤로가기</button>
@@ -103,12 +96,7 @@
 	</div>
 	<footer> </footer>
 	<script>
-		$('.summernote').summernote({
-			height : 150,
-			width : 600,
-			lang : "ko-KR",
-		/* 		  focus : true, */
-		});
+		
 	</script>
 </body>
 </html>

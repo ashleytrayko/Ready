@@ -27,7 +27,7 @@
 				<form action="/admin/punish" method="post">
 					<div class="form-group">
 						<label for="userNickname">닉네임</label> 
-						<input type="text" class="form-control mt-2 mb-3" id="userNickname" name="userNickname" value="${commWriter }">
+						<input type="text" class="form-control mt-2 mb-3" id="userNickname" name="userNickname" value="${userId }">
 					</div>
 					<div class="form-group">
 						<label for="punishment">처벌내용</label><br>

@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
-<title>공용jsp틀</title>
+<title>상품 관리</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -20,10 +23,11 @@
 			<div class="container col-lg-8"> 
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>상품 관리</h1>
+			<h2>${msg }</h2>
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th></th>
+						<th><input type="checkbox" id="cbx_chkAll"></th>
 						<th>상품번호</th>
 						<th>책 제목</th>
 						<th>저자</th>
@@ -34,14 +38,30 @@
 				<tbody>
 					<c:forEach items="${bookList }" var="bookList" varStatus="i">
 					<tr>
-						<td><input type="checkbox"></td>
+						<td><input type="checkbox" name="chBox"></td>
 						<td>${bookList.bookNo }</td>
 						<td>
-						<a href="/book/detailView.kh?bookNo=${bookList.bookNo }">
-						${bookList.bookTitle }
-						</a>
+							<a href="/book/detailView.kh?bookNo=${bookList.bookNo }">
+								<c:choose>
+									<c:when test="${fn:length(bookList.bookTitle) gt 25 }">
+										<c:out value="${fn:substring(bookList.bookTitle, 0, 22) }...">
+										</c:out></c:when>
+								<c:otherwise>
+									<c:out value="${bookList.bookTitle }">
+								</c:out></c:otherwise>
+								</c:choose>
+							</a>
 						</td>
-						<td>${bookList.bookWriter }</td>
+						<td>
+							<c:choose>
+								<c:when test="${fn:length(bookList.bookWriter) gt 15 }">
+									<c:out value="${fn:substring(bookList.bookWriter, 0, 12) }...">
+								</c:out></c:when>
+								<c:otherwise>
+									<c:out value="${bookList.bookWriter }">
+								</c:out></c:otherwise>
+							</c:choose>
+						</td>
 						<td>${bookList.publisher }</td>
 						<td><button class="btn btn-outline-dark" type="button" onclick="modifyBook(${bookList.bookNo})">수정하기</button></td>
 					</tr>
@@ -100,8 +120,7 @@
 				</tbody>
 			</table>
 			<div style="text-align:center">
-				<button class="btn btn-outline-dark" onclick="newBook();">상품 등록</button>
-				<button class="btn btn-outline-dark">상품 삭제</button>
+				<button id="delBtn" class="btn btn-outline-dark">상품 삭제</button>
 			</div>
 
 
@@ -110,6 +129,41 @@
 		
 	<footer> </footer>
 	<script>
+	$(document).ready(function() {
+		$("#cbx_chkAll").click(function() {
+			if($("#cbx_chkAll").is(":checked")) $("input[name=chBox]").prop("checked", true);
+			else $("input[name=chBox]").prop("checked", false);
+		});
+		
+		$("input[name=chBox]").click(function() {
+			var total = $("input[name=chBox]").length;
+			var checked = $("input[name=chBox]:checked").length;
+			
+			if(total != checked) $("#cbx_chkAll").prop("checked", false);
+			else $("#cbx_chkAll").prop("checked", true); 
+		});
+	});
+	
+	$("#delBtn").click(function(){
+		var bookNoArray = [];
+		$("input[name=chBox]:checked").each(function(){
+			bookNoArray.push($(this).parent().next().html());
+		})
+		$.ajax({
+			url : "/admin/deleteProduct",
+			data : {"bookNoArray" : bookNoArray},
+			type : "post",
+			success : function(result){
+				alert("총 " + result + " 권이 삭제되었습니다.");
+			},
+			error : function(result){
+				alert("에러 발생");
+			}
+		});
+	});
+	
+	let msg = "${msg}";
+	
 	function newBook(){
 		location.href = "/admin/admin-productForm";
 	}
@@ -117,6 +171,13 @@
 	function modifyBook(bookNo){
 		location.href = "/admin/admin-productModifyForm?bookNo="+bookNo;
 	}
+	
+	if(msg != ''){
+		alert(msg);
+		location.href='/admin/admin-product';
+	}
+	
+
 	</script>
 </body>
 </html>
