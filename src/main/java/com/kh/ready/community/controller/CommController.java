@@ -98,6 +98,7 @@ public class CommController {
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
 			mv.addObject("cList", cList);
+			mv.addObject("totalCount", totalCount);
 		}
 		mv.setViewName("/comm/listView");
 		return mv;
@@ -296,6 +297,11 @@ public class CommController {
 		return null;
 	}
 	
+	/**
+	 * 댓글삭제
+	 * @param cReplyNo
+	 * @return
+	 */
 	@ResponseBody		// @ResponseBody 안써주면 404에러가 뜸 /WEB-INF/views/success.jsp 찾을 수 없다 에러나옴
 	@RequestMapping(value="/comm/replyDelete.kh", method=RequestMethod.GET)
 	public String boardReplyDelete(
@@ -308,22 +314,34 @@ public class CommController {
 		}
 	}
 	
+	/**
+	 * 댓글수정
+	 * @param cReply
+	 * @return
+	 */
 	@RequestMapping(value="/comm/replyModify.kh", method=RequestMethod.POST)
 	public String boardReplyModify(
 			// @RequestParam("replyNo") Integer replyNo
 			// , @RequestParam("replyContents") String replyContents
 			@ModelAttribute CommReply cReply
-//			, @RequestParam("boardNo") Integer boardNo
-//			, @RequestParam("page") Integer page
+			, @RequestParam("page") Integer page
+			, HttpSession session
 			) {
 		int result = cService.modifyReply(cReply);
 		if(result > 0) {
-			return "redirect:/comm/list.kh";
+			return "redirect:/comm/detail.kh?boardNo="+ cReply.getBoardNo() +"&page=" + page;
 		} else {
-			return "fail";
+			return "false";
 		}
 	}
 
+	/**
+	 * 게시글 신고
+	 * @param session
+	 * @param model
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/comm/report.kh", method=RequestMethod.GET)
 	public String boardReport(
 			HttpSession session
@@ -338,6 +356,19 @@ public class CommController {
 			return "main/errorPage";
 		}
 	}
+	
+//	@ResponseBody 애증의 대댓글
+//	@RequestMapping(value="/comm/reCommentAdd.kh", method=RequestMethod.POST)
+//	public String replyCommentAdd(
+//			@ModelAttribute CommReply cReply
+//			, Principal principal) {	
+//		int result = cService.registerReComment(cReply);
+//		if(result > 0) {
+//			return "success";
+//		}else {
+//			return "fail";
+//		}
+//	}
 	
 	
 }

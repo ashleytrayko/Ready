@@ -34,7 +34,7 @@
 					<c:if test="${!empty cList }">
 						<c:forEach items="${cList }" var="comm" varStatus="i">
 							<tr>
-								<td><%-- ${comm.boardNo } --%>${fn:length(cList) - i.index}<!--${i.count } 얘는 게시글 ASC로 출력--></td>
+								<td><%-- ${comm.boardNo } --%>${totalCount - ((currentPage-1) * 10 +i.index)}<!--${i.count } 얘는 게시글 ASC로 출력--></td>
 								<td colspan="2"><a href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
 								<!--  -->
 								<td>${comm.commWriter }</td>
