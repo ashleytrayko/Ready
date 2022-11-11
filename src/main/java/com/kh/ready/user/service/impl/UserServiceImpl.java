@@ -93,6 +93,17 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	
+	// 유저 닉네임로 유저 ID 찾기
+	@Override
+	public User findUserByNicknameForPunish(String userNickname) {
+		User user = userRepository.getUserByNickname(userNickname);
+		if(user != null) {
+			return user;
+		}else {
+			return null;
+		}
+	}
+	
 	// 유저 아이디 찾기 from 아이디 찾기
 	@Override
 	public String findUserId(String userName, String userEmail) {
