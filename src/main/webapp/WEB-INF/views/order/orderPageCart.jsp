@@ -368,6 +368,7 @@
     
     function requestPay(priceSum, firstTitle, totalCount, mileageSum) {
     	
+    	const orderId = (new Date().getFullYear())+""+(new Date().getMonth()+1) +(new Date().getDate())+new Date().getTime();
     	const totalPrice = Math.floor(priceSum);
     	const buyerName = $("#buyerPhone").val();
     	const buyerPhone = $("#buyerPhone").val();
@@ -394,7 +395,7 @@
         IMP.request_pay({ // param
             pg: "html5_inicis",
             pay_method: paymethod,
-            merchant_uid: "",
+            merchant_uid: orderId,
             name: firstTitle + " 등  총  "+ totalCount + "권",
             amount: calPrice,
             buyer_email: buyerEmail,
@@ -407,6 +408,7 @@
             	mileageSum : mileageSum,
             	useMileage : useMileage,
             	totalPrice : totalPrice,
+            	orderId : orderId,
             	reciverName : $("#reciverName").val(),
             	reciverPhone : $("#reciverPhone").val(),
             	reciverEmail : $("#reciverEmail").val(),
@@ -422,6 +424,7 @@
 					type : "POST",
 					data : {
 						imp_uid: rsp.imp_uid,
+						orderId : rsp.custom_data.orderId,
 						bookNoArr : rsp.custom_data.bookNoArr,
 						productCountArr : rsp.custom_data.productCountArr,
 						productPriceArr : rsp.custom_data.productPriceArr,

@@ -89,4 +89,10 @@ public class OrderServiceImpl implements OrderService {
 		return orderStore.updatePurchaseInfoByUserId(userId, plusedMileage, userTier, userPurchase);
 	}
 
+	@Override
+	public int updateOrderState(String orderId) {
+
+		return orderStore.updateOrderState(orderId);
+	}
+
 }

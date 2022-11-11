@@ -29,5 +29,7 @@ public interface OrderStore {
 
 	int updatePurchaseInfoByUserId(String userId, int plusedMileage, String userTier, int userPurchase);
 
+	int updateOrderState(String orderId);
+
 
 }

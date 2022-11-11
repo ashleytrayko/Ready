@@ -31,4 +31,6 @@ public interface OrderService {
 
 	int updatePurchaseInfoByUserId(String userId, int plusedMileage, int userPurchase);
 
+	int updateOrderState(String orderId);
+
 }
