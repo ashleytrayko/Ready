@@ -229,17 +229,26 @@
                     <tr>
                         <th id="orderinfo-table-left">주문 수량</th>
                         <th class="orderinfo-table-header">주문 금액 합계</th>
-                        <th class="orderinfo-table-header">배송비</th>
+                        <th class="orderinfo-table-header">
+                            <div id="div-delivery" style="text-align : center;">
+                        		<p class="arrow_box" style="margin-bottom:0px;">
+                        			배송비 <img src="../resources/images/cart_order/guide_icon.png" style="width:20px; height:20px; margin-bottom:4px;" >
+                        		<span class="deliveryGuide-span">
+                        			상품 총 가격이 만원 이상일 시 배송비가 무료입니다!
+                        		</span>
+                        		</p>
+                        	</div>
+                        </th>
                         <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
                         <th id="orderinfo-table-right">예상 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td id="productSum">총 <c:out value="${productSum }"/>권</td>
-                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td id="productSum">총 <c:out value="${productSum }"/> 권</td>
+                    <td class="orderinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원</td>
                     <td class="orderinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
 					<td class="orderinfo-table-body"><input readonly type="text" class="total-price" id="id-total-price" style="border:0px; width:100px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>">원</td>
-					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>P</td>
+					<td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/> P</td>
                 </tbody>
             </table>
             <div style="text-align:right;">

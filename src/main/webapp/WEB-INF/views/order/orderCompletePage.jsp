@@ -15,6 +15,91 @@
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
+.main-contents {
+	display:flex;
+	height : 90%;
+}
+.main-sidebar {
+	width:15%;
+	border:solid 1px black;
+}
+.main-section {
+	width:70%;
+	margin : 0;
+	/*display:flex;
+	 flex-direction:column;
+	justify-contents:center;
+	align-items:center; */
+}
+.main-footer {
+	float : bottom;
+	height : 10%;
+}
+.main-p {
+	font-size:12px;
+	margin:0px 0px;
+	text-weight:bolder;
+}
+.fa-solid {
+	margin-bottom:20px;
+	padding-top:20px;
+}
+.center {
+	text-align:center;	
+}
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.b-example-divider {
+	height: 3rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: solid rgba(0, 0, 0, 0.15);
+	border-width: 1px 0;
+	box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em
+		0.5em rgba(0, 0, 0, 0.15);
+}
+
+.b-example-vr {
+	flex-shrink: 0;
+	width: 1.5rem;
+	height: 100vh;
+}
+
+.bi {
+	vertical-align: -0.125em;
+	fill: currentColor;
+}
+
+.nav-scroller {
+	position: relative;
+	z-index: 2;
+	height: 2.75rem;
+	overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+	display: flex;
+	flex-wrap: nowrap;
+	padding-bottom: 1rem;
+	margin-top: -1px;
+	overflow-x: auto;
+	text-align: center;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+}
+
+.center {
+	margin: auto;
+}
+
+.search {
+	width: 700px;
+}
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
@@ -145,30 +230,39 @@
                     <tr>
                         <th id="orderinfo-table-left">주문 수량</th>
                         <th class="orderinfo-table-header">주문 금액 합계</th>
-                        <th class="orderinfo-table-header">배송비</th>
+                        <th class="orderinfo-table-header">
+                           <div id="div-delivery" style="text-align : center;">
+                        		<p class="arrow_box" style="margin-bottom:0px;">
+                        			배송비 <img src="../resources/images/cart_order/guide_icon.png" style="width:20px; height:20px; margin-bottom:4px;" >
+                        		<span class="deliveryGuide-span">
+                        			상품 총 가격이 만원 이상일 시 배송비가 무료입니다!
+                        		</span>
+                        		</p>
+                        	</div>
+                        </th>
+                        <th class="orderinfo-table-header">사용 마일리지</th>
                         <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th class="orderinfo-table-header">적립 마일리지</th>
-                        <th id="orderinfo-table-right">사용 마일리지</th>
+                        <th id="orderinfo-table-right">적립 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td>총 <c:out value="${productSum }"/>권</td>
+                    <td>총 <c:out value="${productSum }"/> 권</td>
                     <td class="orderinfo-table-body">
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원
                     </td>
                     <td class="orderinfo-table-body">
                     	<input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원
                     </td>
                     <td class="orderinfo-table-body">
-                    	<p class="total-price">
-                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.totalPrice - orderInfo.useMileage}"/>원
-                    	</p>
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.useMileage}"/> P
                     </td>
                     <td class="orderinfo-table-body">
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원
+                    	<p class="total-price">
+                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.totalPrice - orderInfo.useMileage}"/> 원
+                    	</p>
                     </td>
                     <td>
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.useMileage}"/>원
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/> P
                     </td>
                 </tbody>
             </table>

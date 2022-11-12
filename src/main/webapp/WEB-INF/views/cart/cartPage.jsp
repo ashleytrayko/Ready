@@ -17,7 +17,7 @@
     <script src="../resources/js/checkbox.js"></script>
 </head>
 <body>
-      <jsp:include page="../main/header.jsp"></jsp:include>
+<jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">
             <h1 id="cart-text">SHOPPING CART</h1>
             <img src="../resources/images/cart_order/c-step01.png" >
@@ -93,19 +93,29 @@
                 </tbody>
             </c:if>
             <c:if test="${empty cartList }">
-               <tr>
-                  <td>장바구니에 상품이 없습니다.</td>
-               </tr>
+            <div id="cart-title">
+            	<img src="../resources/images/cart_order/empty_cart.png" >
+            </div>
             </c:if>
             </table>
         </div>
+        <c:if test="${!empty cartList }">
         <div class="cart-data-list">
             <table id="order-Info"> 
                 <thead>
                     <tr id="">
                         <th id="cartinfo-table-left">주문 수량</th>
                         <th class="cartinfo-table-header">주문 금액 합계</th>
-                        <th class="cartinfo-table-header">배송비</th>
+                        <th class="cartinfo-table-header">
+                        	<div id="div-delivery" style="text-align : center;">
+                        		<p class="arrow_box" style="margin-bottom:0px;">
+                        			배송비 <img src="../resources/images/cart_order/guide_icon.png" style="width:20px; height:20px; margin-bottom:4px;" >
+                        		<span class="deliveryGuide-span">
+                        			상품 총 가격이 만원 이상일 시 배송비가 무료입니다!
+                        		</span>
+                        		</p>
+                        	</div>
+                        </th>
                         <th class="cartinfo-table-header"><p class="total-price">총 금액 합계</p></th>
                         <th id="cartinfo-table-right">예상 마일리지</th>
                     </tr>
@@ -123,6 +133,12 @@
             <button class="btn btn-secondary">쇼핑 계속하기</button>
             <button class="btn btn-primary" onclick="location.href='/order/orderView';">상품 주문하기</button>
         </div>
+        </c:if>
+        <c:if test="${empty cartList }">
+        	<div id="cart-btn1">
+            	<button class="btn btn-secondary">쇼핑하러가기</button>
+        	</div>
+        </c:if>
     <footer>
 		
 	</footer>

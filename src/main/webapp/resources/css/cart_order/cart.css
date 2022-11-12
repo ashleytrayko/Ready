@@ -102,6 +102,41 @@
     #id-delivery-fee{
     	text-align : center;
     }
-	
+    
+    .arrow_box{
+    	position: relative;
+		display: inline-block;
+    }
+    
+    .arrow_box .deliveryGuide-span{
+	    visibility: hidden;
+		width: 200px;
+		background-color: black;
+		color: white;
+		text-align: center;
+		border-radius: 10px;
+		padding: 10px 5px;
+		position: absolute;
+		z-index: 1;
+		bottom: 200%;
+		left: 50%;
+		margin-left: -105px;
+    }
+    .arrow_box:hover .deliveryGuide-span{
+    	visibility: visible;
+    	
+    }
+    
+    .arrow_box .deliveryGuide-span::after{
+    	content: "";
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -10px;
+		border-width: 10px;
+		border-style: solid;
+		border-color: black transparent transparent transparent;
+    }
+    
 	
 }
