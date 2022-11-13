@@ -22,6 +22,7 @@
 			<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
+			<h4>신고된 글</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -82,6 +83,7 @@
 		<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
+			<h4>처리된 글</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -139,9 +141,11 @@
 				</tbody>
 			</table>
 		</div>
+		<footer>
+							<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+		</footer>
 		</div>
 	</div>
-	<footer> </footer>
 	<script>
 	</script>
 </body>

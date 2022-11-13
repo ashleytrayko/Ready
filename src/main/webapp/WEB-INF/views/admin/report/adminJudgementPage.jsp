@@ -49,9 +49,11 @@
 				</form>
 			</div>
 		</div>
+			<footer>
+								<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+			</footer>
 	</div>
 		</div>
-	<footer> </footer>
 	<script>
 	</script>
 </body>

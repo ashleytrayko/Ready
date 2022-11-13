@@ -53,7 +53,22 @@ public class AdminController {
 	 */
 	// admin 메인 메뉴
 	@GetMapping("/admin")
-	public String adminTest(Model model) {
+	public String adminMenu(Model model) {
+		
+		// 문의글 갯수
+		int questionCount = adminService.questionTotalCount();
+		
+		// 처리 갯수
+		int answeredCount = adminService.answeredTotalCount();
+		
+		// 신고글 갯수
+		int reportCount = adminService.reportTotalCount();
+		
+		// 신고글 처리 갯수
+		// int completeCount = adminService.completeTotalCount();
+		
+		model.addAttribute("reportCount", reportCount);
+	//	model.addAttribute("completeCount", completeCount);
 		return "/admin/adminMenu";
 	}
 	
@@ -356,6 +371,7 @@ public class AdminController {
 		endNavi = maxPage;
 		}
 		
+		// 신고 처리 된 글 목록
 		List<Comm> reportList = adminService.showAllReport(currentPage, boardLimit);
 		if (!reportList.isEmpty()) {
 			model.addAttribute("urlVal","admin-report");
@@ -365,6 +381,9 @@ public class AdminController {
 			model.addAttribute("endNavi", endNavi);
 			model.addAttribute("reportList", reportList);
 		}
+		
+		// 처리 완료 리스트 -> 페이징 때문에 일단은 그냥 메소드만 만듬
+		//List<Comm> completeList = adminService.showAllCompleteList();
 		
 		return "/admin/report/adminReport";
 	}
@@ -407,18 +426,17 @@ public class AdminController {
 	// 유저에게 처벌 내리기 -> 처벌 페이지 만들기
 	@PostMapping("/admin/punish")
 	public String punishUser(@RequestParam("punishment") String punishment,
-							@RequestParam("userId") String userId) {
+							@RequestParam("userId") String userId,
+							@RequestParam("boardNo") Integer boardNo) {
 		
 		// 처벌의 내용(일단은 커뮤니티 접근금지or글쓰기금지//회원로그인금or탈퇴)이  -> 시큐리티 기능을 이용하면 좋을거같음 
 		// 컨트롤러로 넘어옴 
 		// 서비스로 보냄 
 		
-		String result = adminService.punishUser(punishment, userId);
+		String result = adminService.punishUser(punishment, userId, boardNo);
 		if(result.equals("fail") || result.equals("error")) {
 			return "/main/errorPage";
 		}
-		// 이후 상황은 추가하던가 함 
-	
 		return "redirect:/admin/admin-report";
 	}
 	

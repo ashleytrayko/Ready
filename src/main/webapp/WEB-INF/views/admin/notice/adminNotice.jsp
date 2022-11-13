@@ -81,8 +81,10 @@
 			<button class="btn btn-outline-dark" onclick="writeNotice()" >공지사항 등록</button>
 			</div>
 		</div>
+			<footer>
+								<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+			</footer>
 		</div>
-	<footer> </footer>
 	<script>
 
 	function writeNotice(){

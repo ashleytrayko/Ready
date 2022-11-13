@@ -54,7 +54,7 @@
 							<td colspan="4" align="center">
 								<button class="btn btn-outline-dark" onclick="recovery(${comm.boardNo})">게시글 복구</button>
 								<button class="btn btn-outline-dark" onclick="terminate(${comm.boardNo})">삭제하기</button>
-							<button class="btn btn-outline-dark" onclick="location.href = '/admin/punishPage?commWriter=${comm.commWriter}'">유저처벌</button>
+							<button class="btn btn-outline-dark" onclick="location.href = '/admin/punishPage?commWriter=${comm.commWriter}&boardNo=${comm.boardNo }'">유저처벌</button>
 							<button class="btn btn-outline-dark" onclick="history.back()">목록으로</button>
 							</td>
 						</tr>
@@ -87,11 +87,11 @@
 							</tbody>
 					</table>
 			</div>
+	<footer>
+						<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+	</footer>
 		</div>
     </div>
-	<footer>
-		
-	</footer>
 	<script>
 		getReplyList();		// 함수 바로 실행하도록 호출
 		function getReplyList() {
