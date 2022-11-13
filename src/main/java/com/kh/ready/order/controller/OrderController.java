@@ -227,7 +227,7 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/order/refund")
+	@PostMapping(value="/refund/doRefund")
 	public String refund(@RequestParam(value="orderId") String orderId, @RequestParam(value="impUid") String impUid) {
 		
 		
@@ -239,10 +239,10 @@ public class OrderController {
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObjectParam = new JSONObject();
 		JSONObject jsonObjectResult;
-		
 		String accUrl="https://api.iamport.kr/payments/cancel";
 		
 		String access_token = getToken();
+		
 		try {
 			URL url = new URL(accUrl);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -250,9 +250,6 @@ public class OrderController {
 			con.setDoOutput(true);
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setRequestProperty("Authorization","Bearer "+ access_token);
-			
-			Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
-			int updatestate = orderService.updateOrderState(orderId);
 			
 			jsonObjectParam.put("merchant_uid", orderId);
 			jsonObjectParam.put("imp_uid", impUid);
@@ -278,8 +275,6 @@ public class OrderController {
 				if(Integer.parseInt(jsonObjectResult.get("code").toString())!=0) {
 					//환불 실패
 					return "fail";
-				}else if(updatestate>0){
-					return "success";
 				}
 			}
 			
@@ -290,7 +285,7 @@ public class OrderController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return orderId;
 	}
 
 	
@@ -352,6 +347,22 @@ public class OrderController {
 			return "";
 		}
 	
+	@ResponseBody
+	@PostMapping(value="/refund/refundState")
+	public String refundStateChange(@RequestParam String orderId) {
+		
+		try {
+			System.out.println(orderId);
+			int result = orderService.updateOrderState(orderId);
+
+			if(result > 0) {
+				return orderId;			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "error";
+	}
 	
 	
 	public double discountRate(String userId) {

@@ -54,6 +54,7 @@
                             <img class="product-img" src="${cartList.book.imgPath }">
                         </td>
                         <td>
+                        	<div title ="${cartList.book.bookTitle }">
                             <c:choose>
                             	<c:when test="${fn:length(cartList.book.bookTitle) gt 20 }">
                             	<c:out value="${fn:substring(cartList.book.bookTitle, 0, 19) }...">
@@ -63,6 +64,7 @@
                             	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
+                            </div>
                         </td>
                         <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
@@ -73,7 +75,7 @@
                         <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
                         <!-- 마일리지*수량 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>P</td>
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>

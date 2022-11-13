@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
     <script src="../resources/js/checkbox.js"></script>
+	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 </head>
+<style>
+* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+</style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">
@@ -55,6 +59,7 @@
                             <input class="form-check-input" type="checkbox" value="${cartList.cartNo }" id="flexCheckDefault" name="chBox" data-cartNo="${cartList.cartNo}">
                         </td>
                         <td>
+                        	<div title ="${cartList.book.bookTitle }">
                             <img class="product-img" src="${cartList.book.imgPath }">
                             <br>
                             <c:choose>
@@ -66,6 +71,7 @@
                             	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
+                            </div>
                         </td>
                         <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
@@ -80,7 +86,7 @@
                         <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
                         <!-- 마일리지*수량 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>P</td>
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
@@ -121,11 +127,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>총 <c:out value="${productSum }"/>권</td>
-                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td>총 <c:out value="${productSum }"/> 권</td>
+                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원</td>
                     <td class="cartinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
                     <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
-                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/>P</td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/> P</td>
                 </tbody>
             </table>
         </div>
@@ -136,7 +142,7 @@
         </c:if>
         <c:if test="${empty cartList }">
         	<div id="cart-btn1">
-            	<button class="btn btn-secondary">쇼핑하러가기</button>
+            	<button class="btn btn-secondary" onclick="history:go(-1);">쇼핑하러가기</button>
         	</div>
         </c:if>
     <footer>

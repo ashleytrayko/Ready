@@ -180,7 +180,7 @@
                                     <td>할인가</td>
                                     <td>수량</td>
                                     <td>합계</td>
-                                    <td>적립금</td>
+                                    <td>적립 마일리지</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -192,6 +192,7 @@
                                   </td>
                                   <!-- 제목 -->
                                   <td>
+                                  	<div title="${orderList.book.bookTitle }">
                                       <c:choose>
                             		  	<c:when test="${fn:length(orderList.book.bookTitle) gt 20 }">
                             				<c:out value="${fn:substring(orderList.book.bookTitle, 0, 19) }..."/>
@@ -201,6 +202,7 @@
 										</c:otherwise>
 <%--                             		<p id="bookTitle" style="margin-bottom: 10%;">${orderList.book.bookTitle }</p> --%>
                             		  </c:choose>
+                            		 </div>
                                   </td>
                                   <!-- 정가 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.priceSales}"/>원</td>
@@ -210,8 +212,8 @@
                                   <td>${orderList.productCount }</td>
                                   <!-- 할인가*수량 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice * orderList.productCount}"/>원</td>
-                                  <!-- 적립금*수량 -->
-                        		  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.mileage * orderList.productCount }"/>원</td>
+                                  <!-- 마일리지*수량 -->
+                        		  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.mileage * orderList.productCount }"/>P</td>
                               </tr>
                             <c:set var="priceSum" value="${priceSum + (orderList.book.priceSales * orderList.productCount) }"/>
                     		<c:set var="productSum" value="${productSum + orderList.productCount }"/>
@@ -275,7 +277,7 @@
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay('이미 구매 확정된 주문입니다!');">환불하기</button>
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
 	        </div>
        	</c:if>
@@ -346,25 +348,42 @@ window.onload = function(){
 	
 	function cancelPay(orderId, payedPrice, impUid){
 		
-		console.log(impUid);
+		const confirmCancelPay = confirm("정말 환불을 진행하시겠습니까? \n마일리지를 되돌려 받을 수 없습니다.");
+		
+		if(confirmCancelPay){
+			$.ajax({
+				url : "/refund/doRefund",
+				type : "post",
+				data : {
+			        orderId : orderId,	
+			        cancel_request_amount : payedPrice,
+			        impUid : impUid
+			      },
+				success : function(orderId){
+					console.log("ajax : " + orderId);
+					$.ajax({
+						url : "/refund/refundState",
+						type : "POST",
+						data : {
+							orderId : orderId
+						},
+						success : function(orderId){
+							alert("주문번호 : "+orderId+ "\n환불이 완료되었습니다.");
+						},
+						error : function(error){
+							console.log(error);
+						}
+					})
+				},
+				error : function(error){
+					console.log("error : " + error);
+				}
+			});
+		} else {
+			alert("취소하였습니다.");
+			return false;
+		}
 
-		$.ajax({
-			url : "/order/refund",
-			type : "post",
-/* 			contentType : "application/json", */
-			data : {
-		        orderId : orderId,	
-		        cancel_request_amount : payedPrice, // 환불금액
-		        impUid : impUid
-		      },
-/* 		       dataType : "json" */
-			success : function(result){
-				console.log(result);
-			},
-			error : function(error){
-				console.log(error);
-			}
-		});
 	}
 </script>
 </body>
