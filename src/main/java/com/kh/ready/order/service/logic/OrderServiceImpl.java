@@ -91,8 +91,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int updateOrderState(String orderId) {
-
-		return orderStore.updateOrderState(orderId);
+		int result = orderStore.updateOrderState(orderId);
+		System.out.println("Service : " + result);
+		System.out.println("Store orderID : " + orderId);
+		return result;
 	}
 
 }

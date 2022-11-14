@@ -92,18 +92,23 @@ public class CartContorller {
 			User userInfo = cartService.getUserInfoByUserId(userId);
 			String userTier = userInfo.getUserTier();
 			double discountRate = 0;
+			String discountPercent = "";
 			
 			if(userTier.equals("BRONZE")) {
 				discountRate = 0.99;
+				discountPercent = "1%";
 			} else if(userTier.equals("SILVER")) {
 				discountRate = 0.97;
+				discountPercent = "3%";
 			} else if(userTier.equals("GOLD")) {
 				discountRate = 0.95;
+				discountPercent = "5%";
 			} else if(userTier.equals("VIP")) {
 				discountRate = 0.90;
+				discountPercent = "10%";
 			}
+			mv.addObject("discountPercent", discountPercent);
 			mv.addObject("discountRate",discountRate);
-			
 			mv.addObject("userInfo", userInfo);
 			mv.addObject("cartList", cartList);
 			mv.setViewName("cart/cartPage");
@@ -114,4 +119,5 @@ public class CartContorller {
 		}
 		return mv;
 	}
+	
 }

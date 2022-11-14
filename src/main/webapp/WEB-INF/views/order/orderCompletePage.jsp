@@ -15,6 +15,91 @@
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <style>
+.main-contents {
+	display:flex;
+	height : 90%;
+}
+.main-sidebar {
+	width:15%;
+	border:solid 1px black;
+}
+.main-section {
+	width:70%;
+	margin : 0;
+	/*display:flex;
+	 flex-direction:column;
+	justify-contents:center;
+	align-items:center; */
+}
+.main-footer {
+	float : bottom;
+	height : 10%;
+}
+.main-p {
+	font-size:12px;
+	margin:0px 0px;
+	text-weight:bolder;
+}
+.fa-solid {
+	margin-bottom:20px;
+	padding-top:20px;
+}
+.center {
+	text-align:center;	
+}
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+.b-example-divider {
+	height: 3rem;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: solid rgba(0, 0, 0, 0.15);
+	border-width: 1px 0;
+	box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, 0.1), inset 0 0.125em
+		0.5em rgba(0, 0, 0, 0.15);
+}
+
+.b-example-vr {
+	flex-shrink: 0;
+	width: 1.5rem;
+	height: 100vh;
+}
+
+.bi {
+	vertical-align: -0.125em;
+	fill: currentColor;
+}
+
+.nav-scroller {
+	position: relative;
+	z-index: 2;
+	height: 2.75rem;
+	overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+	display: flex;
+	flex-wrap: nowrap;
+	padding-bottom: 1rem;
+	margin-top: -1px;
+	overflow-x: auto;
+	text-align: center;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+}
+
+.center {
+	margin: auto;
+}
+
+.search {
+	width: 700px;
+}
 </style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
@@ -95,7 +180,7 @@
                                     <td>할인가</td>
                                     <td>수량</td>
                                     <td>합계</td>
-                                    <td>적립금</td>
+                                    <td>적립 마일리지</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -107,6 +192,7 @@
                                   </td>
                                   <!-- 제목 -->
                                   <td>
+                                  	<div title="${orderList.book.bookTitle }">
                                       <c:choose>
                             		  	<c:when test="${fn:length(orderList.book.bookTitle) gt 20 }">
                             				<c:out value="${fn:substring(orderList.book.bookTitle, 0, 19) }..."/>
@@ -116,6 +202,7 @@
 										</c:otherwise>
 <%--                             		<p id="bookTitle" style="margin-bottom: 10%;">${orderList.book.bookTitle }</p> --%>
                             		  </c:choose>
+                            		 </div>
                                   </td>
                                   <!-- 정가 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.priceSales}"/>원</td>
@@ -125,8 +212,8 @@
                                   <td>${orderList.productCount }</td>
                                   <!-- 할인가*수량 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice * orderList.productCount}"/>원</td>
-                                  <!-- 적립금*수량 -->
-                        		  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.mileage * orderList.productCount }"/>원</td>
+                                  <!-- 마일리지*수량 -->
+                        		  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.mileage * orderList.productCount }"/>P</td>
                               </tr>
                             <c:set var="priceSum" value="${priceSum + (orderList.book.priceSales * orderList.productCount) }"/>
                     		<c:set var="productSum" value="${productSum + orderList.productCount }"/>
@@ -145,43 +232,52 @@
                     <tr>
                         <th id="orderinfo-table-left">주문 수량</th>
                         <th class="orderinfo-table-header">주문 금액 합계</th>
-                        <th class="orderinfo-table-header">배송비</th>
+                        <th class="orderinfo-table-header">
+                           <div id="div-delivery" style="text-align : center;">
+                        		<p class="arrow_box" style="margin-bottom:0px;">
+                        			배송비 <img src="../resources/images/cart_order/guide_icon.png" style="width:20px; height:20px; margin-bottom:4px;" >
+                        		<span class="deliveryGuide-span">
+                        			상품 총 가격이 만원 이상일 시 배송비가 무료입니다!
+                        		</span>
+                        		</p>
+                        	</div>
+                        </th>
+                        <th class="orderinfo-table-header">사용 마일리지</th>
                         <th class="orderinfo-table-header"><p class="total-price">총 금액 합계</p></th>
-                        <th class="orderinfo-table-header">적립 마일리지</th>
-                        <th id="orderinfo-table-right">사용 마일리지</th>
+                        <th id="orderinfo-table-right">적립 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td>총 <c:out value="${productSum }"/>권</td>
+                    <td>총 <c:out value="${productSum }"/> 권</td>
                     <td class="orderinfo-table-body">
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원
                     </td>
                     <td class="orderinfo-table-body">
                     	<input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원
                     </td>
                     <td class="orderinfo-table-body">
-                    	<p class="total-price">
-                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.totalPrice - orderInfo.useMileage}"/>원
-                    	</p>
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.useMileage}"/> P
                     </td>
                     <td class="orderinfo-table-body">
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/>원
+                    	<p class="total-price">
+                    		<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.totalPrice - orderInfo.useMileage}"/> 원
+                    	</p>
                     </td>
                     <td>
-                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${orderInfo.useMileage}"/>원
+                    	<fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum}"/> P
                     </td>
                 </tbody>
             </table>
         </div>
         <c:if test="${orderInfo.orderState eq 'N'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay(`${orderInfo.orderId }`, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
 	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay('이미 구매 확정된 주문입니다!');">환불하기</button>
+	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
 	        </div>
        	</c:if>
@@ -252,25 +348,45 @@ window.onload = function(){
 	
 	function cancelPay(orderId, payedPrice, impUid){
 		
-		console.log(impUid);
+		const confirmCancelPay = confirm("정말 환불을 진행하시겠습니까? \n마일리지를 되돌려 받을 수 없습니다.");
+		const orderId2 = ${orderInfo.orderId };
+		console.log(orderId2);
+		console.log(orderId);
+		if(confirmCancelPay){
+			$.ajax({
+				url : "/refund/doRefund",
+				type : "post",
+				data : {
+			        orderId : orderId,	
+			        cancel_request_amount : payedPrice,
+			        impUid : impUid
+			      },
+				success : function(orderId){
+					console.log("ajax : " + orderId);
+					$.ajax({
+						url : "/refund/refundState",
+						type : "POST",
+						data : {
+							orderId : orderId
+						},
+						success : function(orderId){
+							alert("주문번호 : "+orderId+ "\n환불이 완료되었습니다.");
+							location.href="/order/orderDetailView?orderId="+orderId;
+						},
+						error : function(error){
+							console.log(error);
+						}
+					})
+				},
+				error : function(error){
+					console.log("error : " + error);
+				}
+			});
+		} else {
+			alert("취소하였습니다.");
+			return false;
+		}
 
-		$.ajax({
-			url : "/order/refund",
-			type : "post",
-/* 			contentType : "application/json", */
-			data : {
-		        orderId : orderId,	
-		        cancel_request_amount : payedPrice, // 환불금액
-		        impUid : impUid
-		      },
-/* 		       dataType : "json" */
-			success : function(result){
-				console.log(result);
-			},
-			error : function(error){
-				console.log(error);
-			}
-		});
 	}
 </script>
 </body>

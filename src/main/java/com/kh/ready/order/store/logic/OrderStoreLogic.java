@@ -92,8 +92,10 @@ public class OrderStoreLogic implements OrderStore{
 
 	@Override
 	public int updateOrderState(String orderId) {
-
-		return session.update("OrderMapper.updateOrderState", orderId);
+		int result = session.update("OrderMapper.updateOrderState", orderId);
+		System.out.println("Store : " + result);
+		System.out.println("Store orderID : " + orderId);
+		return result;
 	}
 	
 }

@@ -47,6 +47,7 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountPercent", discountPercent(userId));
 			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfo", userInfo);
@@ -71,6 +72,7 @@ public class OrderController {
 			Book bookData = orderService.getbookDataByBookNo(bookNo);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountPercent", discountPercent(userId));
 			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("productCount" , productCount);
 			mv.addObject("bookData", bookData);
@@ -199,10 +201,12 @@ public class OrderController {
 		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
 		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
 		
+		mv.addObject("discountPercent", discountPercent(userId));
 		mv.addObject("userInfo",userInfo);
 		mv.addObject("orderInfo",orderInfo);
 		mv.addObject("orderList", orderList);
 		mv.setViewName("/order/orderCompletePage");
+		
 		return mv;
 	}
 	
@@ -227,7 +231,7 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/order/refund")
+	@PostMapping(value="/refund/doRefund")
 	public String refund(@RequestParam(value="orderId") String orderId, @RequestParam(value="impUid") String impUid) {
 		
 		
@@ -239,10 +243,10 @@ public class OrderController {
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObjectParam = new JSONObject();
 		JSONObject jsonObjectResult;
-		
 		String accUrl="https://api.iamport.kr/payments/cancel";
 		
 		String access_token = getToken();
+		
 		try {
 			URL url = new URL(accUrl);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -250,9 +254,6 @@ public class OrderController {
 			con.setDoOutput(true);
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setRequestProperty("Authorization","Bearer "+ access_token);
-			
-			Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
-			int updatestate = orderService.updateOrderState(orderId);
 			
 			jsonObjectParam.put("merchant_uid", orderId);
 			jsonObjectParam.put("imp_uid", impUid);
@@ -278,8 +279,6 @@ public class OrderController {
 				if(Integer.parseInt(jsonObjectResult.get("code").toString())!=0) {
 					//환불 실패
 					return "fail";
-				}else if(updatestate>0){
-					return "success";
 				}
 			}
 			
@@ -290,7 +289,7 @@ public class OrderController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return orderId;
 	}
 
 	
@@ -352,6 +351,22 @@ public class OrderController {
 			return "";
 		}
 	
+	@ResponseBody
+	@PostMapping(value="/refund/refundState")
+	public String refundStateChange(@RequestParam String orderId) {
+		
+		try {
+			System.out.println(orderId);
+			int result = orderService.updateOrderState(orderId);
+
+			if(result > 0) {
+				return orderId;			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "error";
+	}
 	
 	
 	public double discountRate(String userId) {
@@ -372,6 +387,26 @@ public class OrderController {
 		}
 		
 		return discountRate;
+	}
+	
+	public String discountPercent(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		String discountPercent = "";
+		
+		if(userTier.equals("BRONZE")) {
+			discountPercent = "1%";
+		} else if(userTier.equals("SILVER")) {
+			discountPercent = "3%";
+		} else if(userTier.equals("GOLD")) {
+			discountPercent = "5%";
+		} else if(userTier.equals("VIP")) {
+			discountPercent = "10%";
+		}
+		
+		return discountPercent;
 	}
 	
 }

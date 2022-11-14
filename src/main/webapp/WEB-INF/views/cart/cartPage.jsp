@@ -17,7 +17,7 @@
     <script src="../resources/js/checkbox.js"></script>
 </head>
 <body>
-      <jsp:include page="../main/header.jsp"></jsp:include>
+<jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">
             <h1 id="cart-text">SHOPPING CART</h1>
             <img src="../resources/images/cart_order/c-step01.png" >
@@ -55,6 +55,7 @@
                             <input class="form-check-input" type="checkbox" value="${cartList.cartNo }" id="flexCheckDefault" name="chBox" data-cartNo="${cartList.cartNo}">
                         </td>
                         <td>
+                        	<div title ="${cartList.book.bookTitle }">
                             <img class="product-img" src="${cartList.book.imgPath }">
                             <br>
                             <c:choose>
@@ -66,11 +67,17 @@
                             	</c:out></c:otherwise>
 <%--                             <p id="bookTitle" style="margin-bottom: 10%;">${cartList.book.bookTitle }</p> --%>
                             </c:choose>
+                            </div>
                         </td>
                         <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
                         <!-- 할인가 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <td>
+                        	<div style="margin-top:42%;">
+                        	<fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원
+                        	<p>(${discountPercent } <img src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" alt="down" style="width:10px; height:11px;">)</p>
+                        	</div>
+                        </td>
                         <!-- 수량 -->
                         <td>
                             <input class="form-control form-control-sm countControl" id="countControl" type="text" placeholder="수량"
@@ -80,7 +87,7 @@
                         <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
                         <!-- 마일리지*수량 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>원</td>
+                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.mileage * cartList.productCount }"/>P</td>
                     </tr>
                     <c:set var="priceSum" value="${priceSum + (cartList.book.priceSales * cartList.productCount) }"/>
                     <c:set var="productSum" value="${productSum + cartList.productCount }"/>
@@ -93,29 +100,39 @@
                 </tbody>
             </c:if>
             <c:if test="${empty cartList }">
-               <tr>
-                  <td>장바구니에 상품이 없습니다.</td>
-               </tr>
+            <div id="cart-title">
+            	<img src="../resources/images/cart_order/empty_cart.png" >
+            </div>
             </c:if>
             </table>
         </div>
+        <c:if test="${!empty cartList }">
         <div class="cart-data-list">
             <table id="order-Info"> 
                 <thead>
                     <tr id="">
                         <th id="cartinfo-table-left">주문 수량</th>
                         <th class="cartinfo-table-header">주문 금액 합계</th>
-                        <th class="cartinfo-table-header">배송비</th>
+                        <th class="cartinfo-table-header">
+                        	<div id="div-delivery" style="text-align : center;">
+                        		<p class="arrow_box" style="margin-bottom:0px;">
+                        			배송비 <img src="../resources/images/cart_order/guide_icon.png" style="width:20px; height:20px; margin-bottom:4px;" >
+                        		<span class="deliveryGuide-span">
+                        			상품 총 가격이 만원 이상일 시 배송비가 무료입니다!
+                        		</span>
+                        		</p>
+                        	</div>
+                        </th>
                         <th class="cartinfo-table-header"><p class="total-price">총 금액 합계</p></th>
                         <th id="cartinfo-table-right">예상 마일리지</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <td>총 <c:out value="${productSum }"/>권</td>
-                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/>원</td>
+                    <td>총 <c:out value="${productSum }"/> 권</td>
+                    <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원</td>
                     <td class="cartinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
-                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
-                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/>P</td>
+                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/> 원</p></td>
+                    <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/> P</td>
                 </tbody>
             </table>
         </div>
@@ -123,6 +140,12 @@
             <button class="btn btn-secondary">쇼핑 계속하기</button>
             <button class="btn btn-primary" onclick="location.href='/order/orderView';">상품 주문하기</button>
         </div>
+        </c:if>
+        <c:if test="${empty cartList }">
+        	<div id="cart-btn1">
+            	<button class="btn btn-secondary" onclick="history:go(-1);">쇼핑하러가기</button>
+        	</div>
+        </c:if>
     <footer>
 		
 	</footer>
