@@ -67,7 +67,7 @@
 	</resultMap>
 	
 	<insert id="insertBook">
-		INSERT INTO BOOK_TBL VALUES(SEQ_BOOK_NO.NEXTVAL, #{bookTitle }, #{bookWriter }, DEFAULT, #{pubDate }, #{category }, #{bookContents}, #{ISBN }, #{priceSales }, #{mileage }, #{imgPath }, #{publisher }, DEFAULT)
+		INSERT INTO BOOK_TBL VALUES(SEQ_BOOK_NO.NEXTVAL, #{bookTitle }, #{bookWriter }, DEFAULT, #{pubDate }, #{category }, #{bookContents}, #{ISBN }, #{priceSales }, #{mileage }, #{imgPath }, #{publisher }, DEFAULT, NULL)
 	</insert>
 	
 	<select id="selectAllBook" resultMap="bookResultMap">
@@ -170,11 +170,83 @@
 		LIKE '%' || '액션' || '%' 
 		</if>
 		<if test='answerGender.toString() == "여"'>
-		LIKE '%' || '뷰티' || '%'
+		LIKE '%' || '패션' || '%'
 		</if>
 		<where>
-		SURVEY_TBL.USER_ID = #{userId }
+		SURVEY_TBL.USER_ID = #{userId } ORDER BY ROUND(SYS.DBMS_RANDOM.VALUE(0,15))
 		</where>
+	</select>
+	<select id="selectRecommendBook2" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY 
+		<if test='answerLove.toString() == "solo"'>
+		LIKE '%' || '취미' || '%' 
+		</if>
+		<if test='answerLove.toString() == "couple"'>
+		LIKE '%' || '국내 여행' || '%'
+		</if>
+		<if test='answerLove.toString() == "married"'>
+		LIKE '%' || '건강' || '%'
+		</if>
+		<if test='answerLove.toString() == "family"'>
+		LIKE '%' || '어린이' || '%'
+		</if>
+		<where>
+		SURVEY_TBL.USER_ID = #{userId } ORDER BY ROUND(SYS.DBMS_RANDOM.VALUE(0,15))
+		</where>
+	</select>
+	<select id="selectRecommendBook3" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY 
+		<if test='answerHobby.toString() == "미술"'>
+		LIKE '%' || '미술' || '%' 
+		</if>
+		<if test='answerHobby.toString() == "뷰티"'>
+		LIKE '%' || '패션' || '%'
+		</if>
+		<if test='answerHobby.toString() == "캠핑"'>
+		LIKE '%' || '여행' || '%'
+		</if>
+		<if test='answerHobby.toString() == "요리"'>
+		LIKE '%' || '요리' || '%'
+		</if>
+		<if test='answerHobby.toString() == "운전"'>
+		LIKE '%' || '여행' || '%' 
+		</if>
+		<if test='answerHobby.toString() == "게임"'>
+		LIKE '%' || '게임' || '%'
+		</if>
+		<if test='answerHobby.toString() == "영화"'>
+		LIKE '%' || '영화' || '%'
+		</if>
+		<if test='answerHobby.toString() == "음악"'>
+		LIKE '%' || '음악' || '%'
+		</if>
+		<if test='answerHobby.toString() == "사진"'>
+		LIKE '%' || '사진' || '%'
+		</if>
+		<if test='answerHobby.toString() == "쇼핑"'>
+		LIKE '%' || '액션' || '%'
+		</if>
+		<where>
+		SURVEY_TBL.USER_ID = #{userId } ORDER BY ROUND(SYS.DBMS_RANDOM.VALUE(0,15))
+		</where>
+	</select>
+	<select id="selectRecommendBook4" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_CATEGORY 
+		<if test='answerReason.toString() == "자기계발"'>
+		LIKE '%' || '자기계발' || '%' 
+		</if>
+		<if test='answerReason.toString() == "정보수집"'>
+		LIKE '%' || '경제경영' || '%'
+		</if>
+		<if test='answerReason.toString() == "여가생활"'>
+		LIKE '%' || '소설' || '%'
+		</if>
+		<where>
+		SURVEY_TBL.USER_ID = #{userId } ORDER BY ROUND(SYS.DBMS_RANDOM.VALUE(0,15))
+		</where>
+	</select>
+	<select id="selectRecommendBook5" resultMap="bookResultMap">
+		SELECT * FROM BOOK_TBL JOIN SURVEY_TBL ON BOOK_WRITER LIKE '%' || #{answerWriter} || '%' WHERE SURVEY_TBL.USER_ID = #{userId } ORDER BY ROUND(SYS.DBMS_RANDOM.VALUE(0,15))
 	</select>
 	
 	<select id="selectNovel" resultMap="bookResultMap">	

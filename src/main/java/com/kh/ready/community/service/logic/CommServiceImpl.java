@@ -94,5 +94,11 @@ public class CommServiceImpl implements CommService{
 		int result = cStore.updateBoardReport(session, boardNo);
 		return result;
 	}
+//	// 대댓글 등록
+//	@Override
+//	public int registerReComment(CommReply cReply) {
+//		int result = cStore.insertReComment(session, cReply);
+//		return result;
+//	}
 
 }

@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +23,7 @@ public class CartContorller {
 	private CartService cartService;
 	
 	@ResponseBody
-	@RequestMapping(value="/cart/insert", method=RequestMethod.POST)
+	@PostMapping(value="/cart/insert")
 	public int insertCart(Cart cart, Principal principal){
 		
 		try {
@@ -40,7 +40,7 @@ public class CartContorller {
 
 	
 	@ResponseBody
-	@RequestMapping(value="/cart/delete", method=RequestMethod.POST)
+	@PostMapping(value="/cart/delete")
 	public void deleteCart(Cart cart, Principal principal, @RequestParam(value="checkArr[]") List<String> chArr) {
 		
 		try {
@@ -62,7 +62,7 @@ public class CartContorller {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/cart/modifyCount", method=RequestMethod.POST)
+	@PostMapping(value="/cart/modifyCount")
 	public void modifyCart(Cart cart, Principal principal,
 			@RequestParam("cartNo") int cartNo, @RequestParam("productCount") int productCount) {
 		
@@ -81,7 +81,7 @@ public class CartContorller {
 	}
 	
 
-	@RequestMapping(value="/cart/cartView", method=RequestMethod.GET)
+	@GetMapping(value="/cart/cartView")
 	public ModelAndView showCartView(ModelAndView mv, Principal principal) {
 		
 		try {

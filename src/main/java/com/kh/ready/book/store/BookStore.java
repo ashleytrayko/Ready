@@ -60,4 +60,10 @@ public interface BookStore {
 
 	List<Book> selectRecommendBook2(SqlSessionTemplate session, String userId, String answerLove);
 
+	List<Book> selectRecommendBook3(SqlSessionTemplate session, String userId, String answerHobby);
+
+	List<Book> selectRecommendBook4(SqlSessionTemplate session, String userId, String answerReason);
+
+	List<Book> selectRecommendBook5(SqlSessionTemplate session, String userId, String answerWriter);
+
 }

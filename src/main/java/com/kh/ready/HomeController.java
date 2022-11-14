@@ -48,19 +48,19 @@ public class HomeController {
 				String answerGender = survey.getAnswerGender();
 				String answerLove = survey.getAnswerLove();
 				String answerHobby = survey.getAnswerHobby();
-				String answerReasion = survey.getAnswerReason();
+				String answerReason = survey.getAnswerReason();
 				String answerWriter = survey.getAnswerWriter();
 				//추천 도서 조회 (설문조사 기반)
 				List<Book> rbook1 = bService.printRecommemdBook1(userId, answerGender);
 				mv.addObject("rbook1", rbook1);
-//				List<Book> rbook2 = bService.printRecommendBook2(userId, answerLove);
-//				mv.addObject("rbook2", rbook2);
-//				List<Book> rbook3 = bService.printRecommendBook3(userId, answerHobby);
-//				mv.addObject("rbook3", rbook3);
-//				List<Book> rbook4 = bService.printRecommendBook4(userId, answerHobby);
-//				mv.addObject("rbook4", rbook4);
-//				List<Book> rbook5 = bService.printRecommendBook5(userId, answerHobby);
-//				mv.addObject("rbook5", rbook5);
+				List<Book> rbook2 = bService.printRecommendBook2(userId, answerLove);
+				mv.addObject("rbook2", rbook2);
+				List<Book> rbook3 = bService.printRecommendBook3(userId, answerHobby);
+				mv.addObject("rbook3", rbook3);
+				List<Book> rbook4 = bService.printRecommendBook4(userId, answerReason);
+				mv.addObject("rbook4", rbook4);
+				List<Book> rbook5 = bService.printRecommendBook5(userId, answerWriter);
+				mv.addObject("rbook5", rbook5);
 			}
 		}
 		//베스트셀러 조회(메인페이지)

@@ -29,10 +29,15 @@ import com.kh.ready.community.service.CommService;
 import com.kh.ready.question.domain.Question;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
+import com.kh.ready.user.domain.User;
 import com.kh.ready.user.service.AdminService;
+import com.kh.ready.user.service.UserService;
 
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private AdminService adminService;
@@ -277,30 +282,43 @@ public class AdminController {
 		return mv;
 	}
 	
-	// admin - 상품 등록 폼
+	// 상품 등록 폼
 	@GetMapping("/admin/admin-productForm")
 	public String productForm() {
 		return "/admin/product/adminProductRegistForm";
 	}
 	
-	// 상품등록 -> 수정
-	@PostMapping("/admin/registerProduct")
-	public String registerProduct(Book book) {
-		int result = bookService.registerBook(book);
-		// 파일 관련 코드 추후 추가
-		if(result > 0) {
-			return "/admin/product/adminProduct";
-		}else {
-			return "/admin/product/adminProduct";
-		}
+	// 상품 수정 폼
+	@GetMapping("/admin/admin-productModifyForm")
+	public String productModifyForm(@RequestParam("bookNo") Integer bookNo, Model model) {
+		Book book = bookService.printOneByNo(bookNo);
+		model.addAttribute("book", book);
+		return "/admin/product/adminProductModifyForm";
+	}
 		
+	// 상품수정
+	@PostMapping("/admin/modifyProduct")
+	public String modifyProduct(@ModelAttribute Book book, Model model) {
+		String result = adminService.modifyProduct(book);
+		if(result.equals("success")) {
+			model.addAttribute("msg", "상품 수정 성공!");
+		}else {
+			model.addAttribute("msg", "상품 수정 실패!");
+		}
+		return "/admin/product/adminProduct";
 	}
 
 	// 상품삭제
+	@ResponseBody
 	@PostMapping("/admin/deleteProduct")
-	public String removeProduct(@RequestParam("bookNo") Integer bookNo) {
-		int result = bookService.removeBook(bookNo);
-		return "/admin/product/adminProduct";
+	public int removeProduct(@RequestParam(value="bookNoArray[]") int [] bookNoArray) {
+		int totalResult = 0;
+		for(int i = 0; i < bookNoArray.length; i++) {
+			Integer bookNo = bookNoArray[i];
+			int result = adminService.removeBook(bookNo);
+			totalResult += result;
+		}
+		return totalResult;
 	}
 	
 	/**
@@ -381,26 +399,27 @@ public class AdminController {
 	// 처벌페이지
 	@GetMapping("/admin/punishPage")
 	public String punishPage(Model model, @RequestParam("commWriter") String commWriter) {
-		model.addAttribute("commWriter", commWriter);
+		User BadUser = userService.findUserByNicknameForPunish(commWriter);
+		model.addAttribute("userId", BadUser.getUserId());
 		return "/admin/report/adminJudgementPage";
 	}
 	
 	// 유저에게 처벌 내리기 -> 처벌 페이지 만들기
 	@PostMapping("/admin/punish")
 	public String punishUser(@RequestParam("punishment") String punishment,
-							@RequestParam("userNickname") String userNickname) {
+							@RequestParam("userId") String userId) {
 		
-		System.out.println(punishment);
-		System.out.println(userNickname);
 		// 처벌의 내용(일단은 커뮤니티 접근금지or글쓰기금지//회원로그인금or탈퇴)이  -> 시큐리티 기능을 이용하면 좋을거같음 
 		// 컨트롤러로 넘어옴 
 		// 서비스로 보냄 
 		
-		String result = adminService.punishUser(punishment, userNickname);
-		
+		String result = adminService.punishUser(punishment, userId);
+		if(result.equals("fail") || result.equals("error")) {
+			return "/main/errorPage";
+		}
 		// 이후 상황은 추가하던가 함 
 	
-		return "redirect:/admin/reportDetail";
+		return "redirect:/admin/admin-report";
 	}
 	
 	 

@@ -102,6 +102,7 @@
 			// detailView가 동작하면 바로 동작하게끔 ajax 바로 써줌
 			var boardNo = "${comm.boardNo }";
 			var userId = "${principal.user.userNickname}"
+			var page;
 			$.ajax({
 				url : "/comm/replyList.kh",
 				data : {"boardNo" : boardNo},	// 어느 게시판 댓글인지 알아야 하기 때문에 boardNo를 받아옴
@@ -117,11 +118,14 @@
 							var $rWriter = $("<td width='100'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
 							var $rContents = $("<td>").text(cRList[i].rContents);
 							var $rCreateDate = $("<td width='100'>").text(cRList[i].rCreateDate);
+/* 							var $btnArea = $("<td width='80'>").append("<button href='javascript:void(0);' id='rCo1' onclick='commentView1(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button>"); */
 							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
 								$btnArea = $("<td width='80'>")
-											 	.append("<button href='javascript:void(0);' id='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>수정</button> ")
+											 	.append("<button href='javascript:void(0);' id='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+",1,"+boardNo+")'>수정</button> ")
 												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
+												/* .append("<button href='javascript:void(0);' id='rCo' onclick='commentView(this,\""+cRList[i].cReplyNo+")'>답글</button>"); */
+											 	/* 대댓글 .append("<button href='javascript:void(0);' id='rCo2' onclick='commentView2(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button> "); */
 							}
 							$tr.append($rWriter); // <tr><td width='100'>khuser01</td></tr>
 							$tr.append($rContents); // <tr><td width='100'>khuser01</td><td>댓글내용</td></tr>
@@ -216,16 +220,16 @@
 				location.href="/comm/remove.kh?page="+value;
 			}
 		}
-		function modifyView(obj, rContents, cReplyNo) {
+		function modifyView(obj, rContents, cReplyNo, page, boardNo) {
 			event.preventDefault();
 			var $tr = $("<tr>");
 			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
+			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+", "+page+", "+boardNo+");'>수정</button></td>");
 			$(obj).parent().parent().after($tr);
 			const target = document.getElementById('btn-click');
 	        target.disabled = true;
 		}
-		function modifyReply(obj, cReplyNo) {
+		function modifyReply(obj, cReplyNo, page, boardNo) {
 			var inputTag = $(obj).parent().prev().children();
 			console.log(inputTag.val());
 			var rContents = inputTag.val();
@@ -234,6 +238,8 @@
 			$form.attr("method", "post");
 			$form.append("<input type='hidden' value='"+rContents+"' name='rContents'>");
 			$form.append("<input type='hidden' value='"+cReplyNo+"' name='cReplyNo'>");
+			$form.append("<input type='hidden' value='"+page+"' name='page'>");
+			$form.append("<input type='hidden' value='"+boardNo+"' name='boardNo'>");
 			console.log($form[0]);
 			$form.appendTo("body");
 			$form.submit();
@@ -274,6 +280,39 @@
 			});
 		}); 
 		
+		/* function addReComment(cReplyNo) {
+			event.preventDefault();
+			var $tr = $("<tr>");
+			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
+			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
+			$(obj).parent().parent().after($tr);
+			const target = document.getElementById('btn-click');
+	        target.disabled = true;
+		}
+		function modifyReply(obj, cReplyNo) {
+			var inputTag = $(obj).parent().prev().children();
+			console.log(inputTag.val());
+			var rContents = inputTag.val();
+			var $form =$("<form>");
+			$form.attr("action", "/comm/replyModify.kh");
+			$form.attr("method", "post");
+			$form.append("<input type='hidden' value='"+rContents+"' name='rContents'>");
+			$form.append("<input type='hidden' value='"+cReplyNo+"' name='cReplyNo'>");
+			console.log($form[0]);
+			$form.appendTo("body");
+			$form.submit();
+		} */
+		
+		/* function commentView(obj, cReplyNo) {
+			event.preventDefault();
+			var $tr = $("<tr>");
+			$tr.append("<td colspan='3'><input type='text' size='50'></td>");
+			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>등록</button></td>");
+			$(obj).parent().parent().after($tr);
+			const target = document.getElementById('rCo2');
+	        target.disabled = true;
+		} 대댓글
+		 */
 	</script>
 </body>
 </html>

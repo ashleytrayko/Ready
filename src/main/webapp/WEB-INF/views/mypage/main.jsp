@@ -12,10 +12,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-		table {
-		width : 70%;
-		top padding : 100px;
+		.table {
+		width : 30%;
 		margin : 0;
+		}
+		h3 {
+			margin-left : 32%;
+		}
+		h5 {
+		margin-left : 60%;
+		}
+		.text {
+			margin-left : 28%;
+		}
+		.tb-section {
+			width : 50%;
+			margin-left : 25%;
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -24,51 +36,63 @@
 
 <body>
 	<div class="main-contents">
-		<div class="col-md-3">
+		<div class="main-sidebar">
       		<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
 		<br><br>
 			<h3>${principal.user.userName}(${principal.user.userNickname })님의 마이페이지</h3><br><br>
 			<div>
-				<div>현재 회원님의 등급은 '${principal.user.userTier }' 입니다.</div>
+				<div class="text">회원님의 등급</div>
+				<h5> ${principal.user.userTier }</h5>
 				<br><br>
-				<div>총 결제 금액</div>
+				<div class="text">총 결제 금액</div>
 				<h5><fmt:formatNumber type="number" value="${principal.user.userPurchase }" pattern="#,###"/>원</h5>
-				<div>내 적립금</div>
+				<br><br>
+				<div class="text">내 적립금</div>
 				<h5><fmt:formatNumber type="number" value="${principal.user.userReserves }" pattern="#,###"/>원</h5>
 			</div>
-			<table class="table table-hover">
-				<tr>
-					<th>등급</th>
-					<th>조건</th>
-					<th>혜택</th>
-				<tr>
-				<tr>
-					<td>브론즈</td>
-					<td>가입시 자동등급</td>
-					<td>구매시 3% 할인</td>
-				</tr>
-				<tr>
-					<td>실버</td>
-					<td>총 200,000원 구매시 승급</td>
-					<td>구매시 5% 할인</td>
-				</tr>
-				<tr>
-					<td>골드</td>
-					<td>총 500,000원 구매시 승급</td>
-					<td>구매시 7% 할인</td>
-				</tr>
-				<tr>
-					<td>VIP</td>
-					<td>총 1,000,000원 구매시 승급</td>
-					<td>구매시 10% 할인</td>
-				</tr>
-			</table>
+				<br><br><br><br>
+			<div class="tb-section">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="table-info">등급</th>
+							<th class="table-info">조건</th>
+							<th class="table-info">혜택</th>
+						</tr>
+					</thead>
+					 <tbody>
+						<tr>
+							<td>브론즈</td>
+							<td>가입시 자동등급</td>
+							<td>구매시 3% 할인</td>
+						</tr>
+						<tr>
+							<td>실버</td>
+							<td>총 200,000원 구매시 승급</td>
+							<td>구매시 5% 할인</td>
+						</tr>
+						<tr>
+							<td>골드</td>
+							<td>총 500,000원 구매시 승급</td>
+							<td>구매시 7% 할인</td>
+						</tr>
+						<tr>
+							<td>VIP</td>
+							<td>총 1,000,000원 구매시 승급</td>
+							<td>구매시 10% 할인</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		
-		<div class="col-md=3">sideBar
+		<div class="main-sidebar">
 		</div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

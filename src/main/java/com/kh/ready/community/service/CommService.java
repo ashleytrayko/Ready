@@ -34,4 +34,6 @@ public interface CommService {
 
 	int reportBoard(int boardNo);
 
+//	int registerReComment(CommReply cReply);
+
 }

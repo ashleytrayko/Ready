@@ -3,6 +3,7 @@ package com.kh.ready.user.service;
 import java.security.Principal;
 import java.util.List;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
@@ -52,7 +53,13 @@ public interface AdminService {
 	public String terminateComm(Integer boardNo);
 
 	// 처벌등록 
-	public String punishUser(String punishment, String userNickname);
+	public String punishUser(String punishment, String userId);
+	
+	// 상품 변경
+	public String modifyProduct(Book book);
+	
+	// 상품 삭제
+	public int removeBook(Integer bookNo);
 
 
 

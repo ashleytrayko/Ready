@@ -38,6 +38,8 @@ public interface CommStore {
 	User selectUser(SqlSession session, String userId);
 	
 	int updateBoardReport(SqlSession session, int boardNo);
+	// 대댓글 등록
+//	int insertReComment(SqlSession session, CommReply cReply);
 	
 
 }

@@ -192,9 +192,36 @@ public class BookStoreLogic implements BookStore{
 	public List<Book> selectRecommendBook2(SqlSessionTemplate session, String userId, String answerLove) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("userId", userId);
-		paramMap.put("answerGender", answerLove);
+		paramMap.put("answerLove", answerLove);
 		List<Book> rbook2 = session.selectList("BookMapper.selectRecommendBook2", paramMap);
 		return rbook2;
+	}
+	
+	@Override
+	public List<Book> selectRecommendBook3(SqlSessionTemplate session, String userId, String answerHobby) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("answerHobby", answerHobby);
+		List<Book> rbook3 = session.selectList("BookMapper.selectRecommendBook3", paramMap);
+		return rbook3;
+	}
+	
+	@Override
+	public List<Book> selectRecommendBook4(SqlSessionTemplate session, String userId, String answerReason) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("answerReason", answerReason);
+		List<Book> rbook4 = session.selectList("BookMapper.selectRecommendBook4", paramMap);
+		return rbook4;
+	}
+	
+	@Override
+	public List<Book> selectRecommendBook5(SqlSessionTemplate session, String userId, String answerWriter) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userId", userId);
+		paramMap.put("answerWriter", answerWriter);
+		List<Book> rbook5 = session.selectList("BookMapper.selectRecommendBook5", paramMap);
+		return rbook5;
 	}
 	
 	@Override
@@ -205,7 +232,4 @@ public class BookStoreLogic implements BookStore{
 		int insertCount = session.selectOne("BookMapper.selectInsertCount", paramMap);
 		return insertCount;
 	}
-
-
-
 }

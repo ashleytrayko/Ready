@@ -102,4 +102,8 @@
 		UPDATE USER_TBL SET USER_RESERVES = #{plusedMileage} , USER_TIER = #{userTier} , USER_PURCHASE = #{userPurchase} WHERE USER_ID = #{userId}
 	</update>
 	
+	<update id="updateOrderState">
+		UPDATE ORDER_TBL SET ORDER_STATE = 'R' WHERE ORDER_ID = #{orderId}
+	</update>
+	
 </mapper>

@@ -139,7 +139,7 @@
           </span>
         </a>
         <a
-          href="/"
+          href="/user/mypage.kh"
           class="d-flex mb-3 mb-lg-0 me-lg-3 text-dark text-decoration-none"
         >
           <span class="center">

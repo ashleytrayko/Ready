@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ready.book.domain.Book;
 import com.kh.ready.community.domain.Comm;
 import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
@@ -109,14 +110,26 @@ public class AdminRepositoryImpl implements AdminRepository{
 	}
 
 	@Override
-	public int updateBadUser(String userNickname) {
-		int result = session.update("UserMapper.updateBadUser", userNickname);
+	public int updateBadUser(String userId) {
+		int result = session.update("UserMapper.updateBadUser", userId);
 		return result;
 	}
 
 	@Override
-	public int kickOutUser(String userNickname) {
-		int result = session.update("UserMapper.kickOutUser", userNickname);
+	public int kickOutUser(String userId) {
+		int result = session.update("UserMapper.kickOutUser", userId);
+		return result;
+	}
+
+	@Override
+	public int updateProduct(Book book) {
+		int result = session.update("AdminMapper.updateProduct",book);
+		return result;
+	}
+
+	@Override
+	public int deleteBook(Integer bookNo) {
+		int result = session.delete("AdminMapper.deleteBookByNo", bookNo);
 		return result;
 	}
 

@@ -110,10 +110,12 @@ public class CommStoreLogic implements CommStore{
 		return result;
 	}
 
+//	// 대댓글 등록
 //	@Override
-//	public int updateReply(SqlSession session, CommReply cReply, Integer boardNo, Integer page) {
-//		int result = session.update("CommReplyMapper.updateReply", cReply, boardNo, page);
+//	public int insertReComment(SqlSession session, CommReply cReply) {
+//		int result = session.insert("CommReplyMapper.insertReComment", cReply);
 //		return result;
 //	}
+
 
 }

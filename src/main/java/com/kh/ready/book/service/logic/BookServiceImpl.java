@@ -167,5 +167,23 @@ public class BookServiceImpl implements BookService{
 		return rbook2;
 	}
 
+	@Override
+	public List<Book> printRecommendBook3(String userId, String answerHobby) {
+		List<Book> rbook3 = bStore.selectRecommendBook3(session, userId, answerHobby);
+		return rbook3;
+	}
+
+	@Override
+	public List<Book> printRecommendBook4(String userId, String answerReason) {
+		List<Book> rbook4 = bStore.selectRecommendBook4(session, userId, answerReason);
+		return rbook4;
+	}
+
+	@Override
+	public List<Book> printRecommendBook5(String userId, String answerWriter) {
+		List<Book> rbook5 = bStore.selectRecommendBook5(session, userId, answerWriter);
+		return rbook5;
+	}
+
 
 }
