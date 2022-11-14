@@ -6,6 +6,7 @@
 <html>
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
 <meta charset="UTF-8">
 <title>상품 관리</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
@@ -63,7 +64,11 @@
 							</c:choose>
 						</td>
 						<td>${bookList.publisher }</td>
-						<td><button class="btn btn-outline-dark" type="button" onclick="modifyBook(${bookList.bookNo})">수정하기</button></td>
+						<td>
+							<span class="btn-section2">
+								<button class="btn" type="button" onclick="modifyBook(${bookList.bookNo})">수정하기</button>
+							</span>
+						</td>
 					</tr>
 					</c:forEach>
 					<tr align="center">
@@ -119,8 +124,8 @@
 		        	</tr>
 				</tbody>
 			</table>
-			<div style="text-align:center">
-				<button id="delBtn" class="btn btn-outline-dark">상품 삭제</button>
+			<div class="btn-section2" style="text-align:center">
+				<button id="delBtn" class="btn">상품 삭제</button>
 			</div>
 
 

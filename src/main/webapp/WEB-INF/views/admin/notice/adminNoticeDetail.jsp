@@ -22,6 +22,7 @@
 <script src="/resources/js/summernote-lite.js"></script>
 <script src="/resources/js/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/resources/css/summernote-lite.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -56,9 +57,11 @@
 					</tr>
 					<tr>
 						<td colspan=2" style="text-align:center">
-							<button class="btn btn-outline-dark" onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
-							<button class="btn btn-outline-dark" onclick="location.href='/admin/admin-notice'">목록으로</button>
-							<button class="btn btn-outline-dark" onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
+						<div class="btn-section2">
+							<button class="btn" onclick="modifyNotice(${notice.noticeNumber})">수정하기</button>
+							<button class="btn" onclick="location.href='/admin/admin-notice'">목록으로</button>
+							<button class="btn" onclick="removeNotice(${notice.noticeNumber})">삭제하기</button>
+						</div>
 						</td>
 					</tr>
 					</tbody>

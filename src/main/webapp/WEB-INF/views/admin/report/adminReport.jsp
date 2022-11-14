@@ -82,7 +82,6 @@
 		</div>
 		<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
-			<h1>신고 관리</h1>
 			<h4>처리된 글</h4>
 			<table class="table table-hover">
 				<thead>

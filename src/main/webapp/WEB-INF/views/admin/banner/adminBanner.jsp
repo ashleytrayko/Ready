@@ -9,6 +9,7 @@
 <title>배너 관리</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -42,7 +43,7 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control" type="file" name="bannerImage"  onchange="readFile(this,1);">
 					<input type="hidden" name="bannerFrom" value="1">
-					<div class="mt-3" style="text-align:center">
+					<div class="mt-3 btn-section2" style="text-align:center">
 						<button class="btn btn-outline-dark type="submit">배너 등록</button>
 						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(1);">배너 삭제</button>
 					</div>
@@ -77,7 +78,7 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control"  type="file" name="bannerImage"  onchange="readFile(this,2);">
 					<input type="hidden" name="bannerFrom" value="2">
-					<div class="mt-3" style="text-align:center">
+					<div class="mt-3 btn-section2" style="text-align:center">
 						<button class="btn btn-outline-dark type="submit">배너 등록</button>
 						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(2);">배너 삭제</button>
 					</div>
@@ -112,7 +113,7 @@
 				<form method="post" action="/admin/registerBanner" encType="multipart/form-data">
 					<input class="form-control"  type="file" name="bannerImage"  onchange="readFile(this,3);">
 					<input type="hidden" name="bannerFrom" value="3">
-					<div class="mt-3" style="text-align:center">
+					<div class="mt-3 btn-section2" style="text-align:center">
 						<button class="btn btn-outline-dark type="submit">배너 등록</button>
 						<button class="btn btn-outline-dark" type="button" onclick="removeBanner(3);">배너 삭제</button>
 					</div>

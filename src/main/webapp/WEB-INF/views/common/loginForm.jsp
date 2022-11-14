@@ -5,10 +5,16 @@
 <meta charset="UTF-8">
 <title>Login</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 <style>
+* { 
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
 span.guide {
 	display: none;
 	font-size: 12px;
@@ -34,6 +40,7 @@ span.error {
 	<div class="card container col-lg-5 mt-5 p-5">
 		<form method="post" action="/login">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<img src="../resources/images/READY-LOGO1.png" height="80px" style="margin: auto; display: block;">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="아이디" id="userId" name="userId">
 			</div>
@@ -46,7 +53,9 @@ span.error {
 				<input class="form-check-input" type="checkbox" name="remember-me" value="True"> Remember me
 				</label>
 			</div>
-			<button type="submit" class="btn btn-dark col-lg">로그인</button>
+			<div class="btn-section1">
+				<button type="submit" class="btn col-lg">로그인</button>
+			</div>
 		</form>
 		<hr>
 		<ul class="nav d-flex justify-content-center">
@@ -56,9 +65,27 @@ span.error {
 		</ul>
 		<hr>
 		<ul class="nav d-flex justify-content-center">
-			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/google">구글</a></li>
-			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/naver">네이버</a></li>
-			<li class="nav-item"><a class="nav-link" href="/oauth2/authorization/kakao">카카오</a></li>
+			<li class="nav-item" >
+				<a class="nav-link" href="/oauth2/authorization/google">
+					<div style="width:60px; height:60px;">
+						<img class="img-fluid" src="../resources/images/social/google.png" style="width:100%; height:100%; border-radius: 50%">
+					</div>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/oauth2/authorization/naver">
+					<div style="width:60px; height:60px;">
+						<img class="img-fluid" src="../resources/images/social/naver.png" style="width:100%; height:100%; border-radius: 50%">
+					</div>
+				</a>
+			</li>
+			<li class="nav-item">
+				<div style="width:92px; height:92px;">
+					<a class="nav-link" href="/oauth2/authorization/kakao">
+						<img class="img-fluid" src="../resources/images/social/Kakao.jpg" style="width:100%; height:100%;  border-radius: 50%">
+					</a>
+				</div>
+			</li>
 		</ul>
 	</div>
 	</div>

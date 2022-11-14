@@ -2,8 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
-<%@ include file="../main/header.jsp" %>
-
+<!DOCTYPE html>
+<head>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
+<meta charset="UTF-8">
+<title>Read'y 관리자 메뉴</title>
+<!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
+<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
 <style>
 span.guide {
 	display: none;
@@ -20,6 +26,9 @@ span.error {
 	color: red;
 }
 </style>
+</head>
+<body>
+	<jsp:include page="../../views/main/header.jsp"></jsp:include>
 <div class="container">
 	<div style="margin-left:300px">
 		<h2>Read'y 회원가입  </h2>
@@ -95,7 +104,9 @@ span.error {
 			<label for="userBirthday">생일 </label> 
 			<input type="date" class="form-control" placeholder="Enter Nickname" id="userBirthday" name="userBirthday">
 		</div>
-		<button type="submit" class="btn btn-dark col-md-12 mt-3" id="submit">회원가입</button>
+		<div class="mb-3 btn-section1">
+			<button type="submit" class="btn col-md-12 mt-3" id="submit">회원가입</button>
+		</div>
 	</form>
 	</div>
 	
@@ -110,31 +121,17 @@ span.error {
 	      <div class="modal-body">
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      <div class="mb-3 btn-section2">
+		        <button type="button" class="btn" data-bs-dismiss="modal">닫기</button>
+		      </div>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
-	<!-- Loading Modal -->
-	<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	   	 <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">잠시만 기다려주세요.</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<img class="img-fluid" src="../resources/images/loading-image.gif" style="width:100%; height:100%" >
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>	
-	
-	
+	<footer>
+		<jsp:include page="../../views/main/footer.jsp"></jsp:include>
+	</footer>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script>

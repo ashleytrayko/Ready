@@ -5,6 +5,7 @@
 <html>
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
 <meta charset="UTF-8">
 <title>상품 수정</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
@@ -86,7 +87,7 @@
 						class="form-control" placeholder="출판사를 입력하세요."
 						id="publisher" name="publisher" value="${book.publisher }">
 				</div>
-				<div style="text-align:center">
+				<div class="btn-section2" style="text-align:center">
 					<button class="btn btn-outline-dark" type="submit">도서 수정</button>
 					<button class="btn btn-outline-dark" type="button" onclick="history.back();">뒤로가기</button>
 				</div>

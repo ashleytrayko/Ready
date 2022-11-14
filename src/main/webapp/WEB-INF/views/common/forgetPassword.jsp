@@ -7,11 +7,18 @@
 <title>Login</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+* { 
+	font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+</style>
 </head>
 <body>
 <div class="container" style="margin-top: 10%">
@@ -28,8 +35,12 @@
 			<div class="form-group">
 				<input type="email" class="form-control" placeholder="가입시 등록하신 이메일을 입력해주세요." id="userEmail"name="userEmail">
 			</div>
-			<button type="button" class="btn btn-dark col-lg" id="requestButton">비밀번호 찾기</button>
-			<button type="button" class="btn btn-outline-dark col-lg mt-3" id="redirectButton" onclick="getBack();">돌아가기</button>
+			<div class="btn-section1">
+				<button type="button" class="btn col-lg" id="requestButton">비밀번호 찾기</button>
+			</div>
+			<div class="btn-section2">
+				<button type="button" class="btn col-lg mt-3" id="redirectButton" onclick="getBack();">돌아가기</button>
+			</div>
 		</form>
 	</div>
 	</div>

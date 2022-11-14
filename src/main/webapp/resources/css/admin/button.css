@@ -1,0 +1,20 @@
+
+      .btn-section1 > button {
+         background-color:#AA7139;
+         color : white;
+      }
+      .btn-section1 > button:hover{
+         background-color:#804A15;
+         color : white;
+         border-color : #804A15;
+      }
+      .btn-section2 > button {
+         background-color:white;
+         color : #804A15;
+         border-color : #804A15;
+      }
+      .btn-section2 > button:hover {
+         background-color:#E4DDD3;
+         color : #804A15;
+         border-color : #E4DDD3;
+      }

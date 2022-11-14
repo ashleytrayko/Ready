@@ -35,10 +35,10 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>문의</td><td>${questionCount } 건</td><th>처리</th><td>${answeredCount } 건</td>
+						<th>문의 등록</td><td>현재 ${questionCount } 건 남음</td><th>처리</th><td>현재 ${answeredCount } 건 완료</td>
 					</tr>
 					<tr>
-						<th>신고</td><td>${reportCount } 건</td><th>처리</th><td>${completeCount } 건</td>
+						<th>신고 등록</td><td>현재 ${reportCount } 건 남음</td><th>처리</th><td>현재 ${completeCount } 건 완료</td>
 					</tr>
 				</tbody>
 			</table>

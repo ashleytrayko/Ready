@@ -11,6 +11,17 @@
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/admin/admin.css">
+<link rel="stylesheet" href="../resources/css/admin/button.css"/>
+<style>
+      a > button {
+         background-color:#AA7139;
+         color : white;
+      }
+      a > button:hover {
+         background-color:#804A15;
+         color : white;
+      }
+</style>
 </head>
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
@@ -37,7 +48,7 @@
 						<td>${noticeList.noticeNumber }</td>
 						<td><a href="/admin/noticeDetail?noticeNumber=${noticeList.noticeNumber }">${noticeList.noticeTitle }</a></td>
 						<td>${noticeList.noticeWriter }</td>
-						<td><fmt:formatDate value="${noticeList.postDate }" pattern="yyyy-mm-dd hh:mm:ss"/></td>
+						<td><fmt:formatDate value="${noticeList.postDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					</tr>
 					</c:forEach>
 						<tr align="center" height="20">
@@ -77,8 +88,8 @@
 				</tbody>
 			</table>
 			
-			<div style="text-align:center">
-			<button class="btn btn-outline-dark" onclick="writeNotice()" >공지사항 등록</button>
+			<div class="btn-section2" style="text-align:center">
+				<button class="btn" onclick="writeNotice()" >공지사항 등록</button>
 			</div>
 		</div>
 			<footer>
