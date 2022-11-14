@@ -96,16 +96,18 @@ public class AdminRepositoryImpl implements AdminRepository{
 	}
 	
 	@Override
-	public List<Comm> selectAllReport(int currentPage, int boardLimit) {
-		int offset = (currentPage - 1) * boardLimit;
-		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+	public List<Comm> selectAllReport(int reportCurrentPage, int reportBoardLimit) {
+		int offset = (reportCurrentPage - 1) * reportBoardLimit;
+		RowBounds rowBounds = new RowBounds(offset, reportBoardLimit);
 		List<Comm> reportList = session.selectList("AdminMapper.selectAllReport", null, rowBounds);
 		return reportList;
 	}
 	
 	@Override
-	public List<Comm> selectAllComplete() {
-		List<Comm> completeList = session.selectList("AdminMapper.selectAllComplete");
+	public List<Comm> selectAllComplete(int completeCurrentPage, int completeBoardLimit) {
+		int offset = (completeCurrentPage - 1) * completeBoardLimit;
+		RowBounds rowBounds = new RowBounds(offset, completeBoardLimit);
+		List<Comm> completeList = session.selectList("AdminMapper.selectAllComplete", null, rowBounds);
 		return completeList;
 	}
 

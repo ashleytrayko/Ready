@@ -35,7 +35,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>문의</td><td>n건</td><th>처리</th><td>m건</td>
+						<th>문의</td><td>${questionCount } 건</td><th>처리</th><td>${answeredCount } 건</td>
 					</tr>
 					<tr>
 						<th>신고</td><td>${reportCount } 건</td><th>처리</th><td>${completeCount } 건</td>

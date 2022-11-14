@@ -42,9 +42,16 @@
 	        			</a>
 	      			</li>
 	      			<li class="mb-1">
-	      			<a href="/admin/admin-qna">
+	      			<a href="/admin/manageList.kh">
 	        			<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
 	          				Q&A관리
+	        			</button>
+	        			</a>
+	      			</li>
+	      			<li class="mb-1">
+	      			<a href="/admin/viewWriteAdmin.kh">
+	        			<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+	          				FAQ관리
 	        			</button>
 	        			</a>
 	      			</li>

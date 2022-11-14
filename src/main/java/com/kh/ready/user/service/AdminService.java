@@ -47,10 +47,10 @@ public interface AdminService {
 	public int completeTotalCount();
 	
 	// 신고글 전체 조회
-	public List<Comm> showAllReport(int currentPage, int boardLimit);
+	public List<Comm> showAllReport(int reportCurrentPage, int reportBoardLimit);
 	
 	// 처리완료 목록 전체 조회
-	public List<Comm> showAllCompleteList();
+	public List<Comm> showAllCompleteList(int completeCurrentPage, int completeBoardLimit);
 
 	// 신고글 상세 조회
 	public Comm showReportDetail(Integer boardNo);
@@ -73,7 +73,7 @@ public interface AdminService {
 	// 문의 갯수
 	public int questionTotalCount();
 	
-	// 답변 갯수ㅜ
+	// 답변 갯수
 	public int answeredTotalCount();
 	
 	

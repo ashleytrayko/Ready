@@ -111,15 +111,15 @@ public class AdminServiceImpl implements AdminService{
 	
 	// 신고된 게시글 전체 보기
 	@Override
-	public List<Comm> showAllReport(int currentPage, int boardLimit) {
-		List<Comm> reportList = adminRepository.selectAllReport(currentPage, boardLimit);
+	public List<Comm> showAllReport(int reportCurrentPage, int reportBoardLimit) {
+		List<Comm> reportList = adminRepository.selectAllReport(reportCurrentPage, reportBoardLimit);
 		return reportList;
 	}
 	
 	// 처리 완료 게시글 전체 보기
 	@Override
-	public List<Comm> showAllCompleteList() {
-		List<Comm> completeList = adminRepository.selectAllComplete();
+	public List<Comm> showAllCompleteList(int completeCurrentPage, int completeBoardLimit) {
+		List<Comm> completeList = adminRepository.selectAllComplete(completeCurrentPage, completeBoardLimit);
 		return completeList;
 	}
 	
@@ -160,9 +160,9 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public String punishUser(String punishment, String userId, Integer boardNo) {
 		if(punishment.equals("suspend")) {
-			//ROLE_BAD -> 해서 글쓰기라든지를 막음
-			int result = adminRepository.updateBadUser(userId);
+			//ROLE_USER -> ROLE_BAD 해서 글쓰기라든지를 막음
 			int commResult = adminRepository.updateSuspendResultInComm(boardNo);
+			int result = adminRepository.updateBadUser(userId);
 			if(result > 0 && commResult > 0) {
 				return "success";
 			}else {
@@ -170,8 +170,8 @@ public class AdminServiceImpl implements AdminService{
 			}
 		}else if(punishment.equals("getout")) {
 			// enabled -> n 해서 로그인을 막음
-			int result = adminRepository.kickOutUser(userId);
 			int commResult = adminRepository.updateKickoutResultInComm(boardNo);
+			int result = adminRepository.kickOutUser(userId);
 			if(result > 0 && commResult > 0) {
 				return "success";
 			}else {

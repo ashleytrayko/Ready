@@ -99,8 +99,8 @@ span.error {
 	</form>
 	</div>
 	
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- Alert Modal -->
+	<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	   	 <div class="modal-content">
 	      <div class="modal-header">
@@ -108,6 +108,24 @@ span.error {
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Loading Modal -->
+	<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	   	 <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">잠시만 기다려주세요.</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<img class="img-fluid" src="../resources/images/loading-image.gif" style="width:100%; height:100%" >
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -137,83 +155,83 @@ span.error {
 		
 		if(userId === ''){
 			$(".modal-body").html("아이디를 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userPassword === ''){
 			$(".modal-body").html("비밀번호를 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userPasswordCheck === ''){
 			$(".modal-body").html("비밀번호를 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userName === ''){
 			$(".modal-body").html("성함을 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userEmail === ''){
 			$(".modal-body").html("이메일을 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userEmailCheck === ''){
 			$(".modal-body").html("확인 인증번호를 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userPostcode === '' || userAddress === '' || userDetailAddress === ''){
 			$(".modal-body").html("주소를 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userPhone === ''){
 			$(".modal-body").html("전화번호를 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userNickname === ''){
 			$(".modal-body").html("닉네임을 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if(userBirthday === ''){
 			$(".modal-body").html("생일을 입력해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#idCheck").css("display") == "block"){
 			$(".modal-body").html("이미 사용중인 아이디입니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#regIdCheck").css("display") == "block"){
 			$(".modal-body").html("사용불가한 아이디입니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#pwdCheck").css("display") == "block"){
 			$(".modal-body").html("사용불가한 비밀번호입니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#pwdCheckCheck").css("display") == "block"){
 			$(".modal-body").html("비밀번호 확인이 일치하지 않습니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#nameCheck").css("display") == "block"){
 			$(".modal-body").html("사용할 수 없는 문자가 포함되어 있습니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#mailFail").css("display") == "block"){
 			$(".modal-body").html("이미 사용중인 메일주소입니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#mailCheck").css("display") == "block"){
 			$(".modal-body").html("메일 인증 번호가 틀립니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#phoneCheck").css("display") == "block"){
 			$(".modal-body").html("휴대폰 번호를 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#nicknameCheck").css("display") == "block"){
 			$(".modal-body").html("이미 사용중인 닉네임입니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}else if($("#regNickname").css("display") == "block"){
 			$(".modal-body").html("사용할 수 없는 문자가 포함되어 있습니다. 다시 확인해주세요.")
-			$("#exampleModal").modal('show');
+			$("#alertModal").modal('show');
 			return false;
 		}
 		return true;
@@ -245,7 +263,7 @@ span.error {
 			alert("이메일을 입력해주세요.");
 			return false;
 		}
-		
+		 $('#email_auth').prop('disabled', true);
 		$.ajax({
 			type : "POST",
 			url : "/emailCheck",
@@ -253,14 +271,17 @@ span.error {
 			success : function(data){
 				if(data == 'exist'){
 					$(".error.mail").css("display","block");
+					$('#email_auth').prop('disabled', false);
 					return false;
 				}else{
 					$(".ok.mail").css("display","block");
 					$(".error.mail").css("display","none");
+					$('#email_auth').prop('disabled', false);
 					userEmailAuth = data;
 				}
 			},
 			error : function(data){
+				$('#email_auth').prop('disabled', false);
 				alert('메일 발송에 실패했습니다.')
 			}
 		});

@@ -32,6 +32,7 @@
 		<result property="cStatus"			column="C_STATUS"/>
 		<result property="cLike"			column="C_LIKE"/>
 		<result property="cCount"			column="C_COUNT"/>
+		<result property="reportResult"		column="REPORT_RESULT"/>
 	</resultMap>
 	
 	
@@ -76,41 +77,39 @@
 	</select>
 	
 	<select id="selectReportCount" resultType="_int">
-		SELECT COUNT(*) FROM COMMUNITY_TBL WHERE C_STATUS = 'R'
+		SELECT NVL(COUNT(*),0) FROM COMMUNITY_TBL WHERE C_STATUS = 'R'
 	</select>
 	
-<!-- 	<select id="selectCompleteCount" resultType="_int">
-		SELECT COUNT(*) FROM COMMUNITY_TBL WHERE REPORT_RESULT IS NOT NULL
-	</select> -->
+ 	<select id="selectCompleteCount" resultType="_int">
+		SELECT NVL(COUNT(*),0) FROM COMMUNITY_TBL WHERE REPORT_RESULT IS NOT NULL
+	</select>
 	
 	<select id="selectAllReport" resultMap="commResultMap">
 		SELECT * FROM COMMUNITY_TBL WHERE C_STATUS = 'R' ORDER BY BOARD_NO
 	</select>
 	
-<!-- 	<select id="selectAllComplete" resultMap="commResultMap">
+    <select id="selectAllComplete" resultMap="commResultMap">
 		SELECT * FROM COMMUNITY_TBL WHERE REPORT_RESULT IS NOT NULL
-	</select> -->
+	</select>
 	
 	<select id="selectOneReport" resultMap="commResultMap">
 		SELECT * FROM COMMUNITY_TBL WHERE BOARD_NO = #{boardNo} AND C_STATUS = 'R'
 	</select>
 	
 	<update id="updateReportComm">
-		UPDATE COMMUNITY_TBL SET C_STATUS = 'Y' WHERE BOARD_NO = #{boardNo} 
-												<!-- , reportResult = '게시글 복구'  -->
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'Y', REPORT_RESULT = '게시글 복구' WHERE BOARD_NO = #{boardNo} 
 	</update>
 	
 	<update id="deleteReportedComm">
-		UPDATE COMMUNITY_TBL SET C_STATUS = 'N' WHERE BOARD_NO = #{boardNo}
-												<!-- , reportResult = '게시글 영구 삭제' -->
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'N', REPORT_RESULT = '게시글 영구 삭제' WHERE BOARD_NO = #{boardNo}
 	</update>
 	
 	<update id="updateSuspendResultInComm">
-		UPDATE COMMUNITY_TBL SET REPORT_RESULT = '글쓰지 정지' WHERE BOARD_NO = #{boardNo}
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'N', REPORT_RESULT = '글쓰지 정지' WHERE BOARD_NO = #{boardNo}
 	</update>
 	
 	<update id="updateKickoutResultInComm">
-		UPDATE COMMUNITY_TBL SET REPORT_RESULT = '강제 회원 탈퇴' WHERE BOARD_NO = #{boardNo}
+		UPDATE COMMUNITY_TBL SET C_STATUS = 'N', REPORT_RESULT = '강제 회원 탈퇴' WHERE BOARD_NO = #{boardNo}
 	</update>
 	
 	<update id="updateProduct">
@@ -122,6 +121,14 @@
 	<delete id="deleteBookByNo">
 		DELETE FROM BOOK_TBL WHERE BOOK_NO = #{bookNo} 
 	</delete>
+	
+	<select id="selectQuestionCount" resultType="_int">
+		SELECT NVL(COUNT(*),0) FROM QUESTION_TBL WHERE Q_STATUS = 'N'
+	</select>
+	
+	<select id="selectAnsweredCount" resultType="_int">
+		SELECT NVL(COUNT(*),0) FROM QUESTION_TBL WHERE Q_STATUS = 'Y'
+	</select>
 	
 	
 </mapper>

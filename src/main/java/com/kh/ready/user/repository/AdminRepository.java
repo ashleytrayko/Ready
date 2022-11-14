@@ -31,9 +31,9 @@ public interface AdminRepository {
 
 	public int selectCompleteCount();
 
-	public List<Comm> selectAllReport(int currentPage, int boardLimit);
+	public List<Comm> selectAllReport(int reportCurrentPage, int reportBoardLimit);
 
-	public List<Comm> selectAllComplete();
+	public List<Comm> selectAllComplete(int completeCurrentPage, int completeBoardLimit);
 
 	public int updateBadUser(String userId);
 

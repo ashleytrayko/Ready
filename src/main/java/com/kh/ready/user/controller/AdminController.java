@@ -65,10 +65,12 @@ public class AdminController {
 		int reportCount = adminService.reportTotalCount();
 		
 		// 신고글 처리 갯수
-		// int completeCount = adminService.completeTotalCount();
+		int completeCount = adminService.completeTotalCount();
 		
+		model.addAttribute("questionCount", questionCount);
+		model.addAttribute("answeredCount", answeredCount);
 		model.addAttribute("reportCount", reportCount);
-	//	model.addAttribute("completeCount", completeCount);
+		model.addAttribute("completeCount", completeCount);
 		return "/admin/adminMenu";
 	}
 	
@@ -336,11 +338,6 @@ public class AdminController {
 		return totalResult;
 	}
 	
-	/**
-	 * QnA 관리
-	 */
-
-
 	
 	/**
 	 * 신고관리
@@ -355,35 +352,59 @@ public class AdminController {
 		// 일단은 충돌우려로 adminService에씀
 		
 		///////////////////////////////////////////////////////////////////////// -> 일단은 전체 불러오기했음 나중에 쿼리 변경해서 연결
-		int currentPage = (page != null) ? page : 1;
-		int totalCount = commService.getTotalCount("", "");
-		int boardLimit = 10;
-		int naviLimit = 5;
-		int maxPage;
-		int startNavi;
-		int endNavi;
+		int reportCurrentPage = (page != null) ? page : 1;
+		int reportTotalCount = adminService.reportTotalCount();
+		int reportBoardLimit = 10;
+		int reportNaviLimit = 5;
+		int reportMaxPage;
+		int reportStartNavi;
+		int reportEndNavi;
 		
 		// 23/5 = 4.8 + 0.9 = 5(.7)
-		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
-		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
-		endNavi = startNavi + naviLimit - 1;
-		if (maxPage < endNavi) {
-		endNavi = maxPage;
+		reportMaxPage = (int) ((double) reportTotalCount / reportBoardLimit + 0.9);
+		reportStartNavi = ((int) ((double) reportCurrentPage / reportNaviLimit + 0.9) - 1) * reportNaviLimit + 1;
+		reportEndNavi = reportStartNavi + reportNaviLimit - 1;
+		if (reportMaxPage < reportEndNavi) {
+			reportEndNavi = reportMaxPage;
 		}
 		
 		// 신고 처리 된 글 목록
-		List<Comm> reportList = adminService.showAllReport(currentPage, boardLimit);
+		List<Comm> reportList = adminService.showAllReport(reportCurrentPage, reportBoardLimit);
 		if (!reportList.isEmpty()) {
 			model.addAttribute("urlVal","admin-report");
-			model.addAttribute("maxPage",maxPage);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("startNavi", startNavi);
-			model.addAttribute("endNavi", endNavi);
+			model.addAttribute("reportMaxPage",reportMaxPage);
+			model.addAttribute("reportCurrentPage", reportCurrentPage);
+			model.addAttribute("reportStartNavi", reportStartNavi);
+			model.addAttribute("reportEndNavi", reportEndNavi);
 			model.addAttribute("reportList", reportList);
 		}
+		///////////////////////////////////////////////////////////////////////// -> 일단은 전체 불러오기했음 나중에 쿼리 변경해서 연결
+		int completeCurrentPage = (page != null) ? page : 1;
+		int completeTotalCount = adminService.completeTotalCount();
+		int completeBoardLimit = 10;
+		int completeNaviLimit = 5;
+		int completeMaxPage;
+		int completeStartNavi;
+		int completeEndNavi;
 		
-		// 처리 완료 리스트 -> 페이징 때문에 일단은 그냥 메소드만 만듬
-		//List<Comm> completeList = adminService.showAllCompleteList();
+		// 23/5 = 4.8 + 0.9 = 5(.7)
+		completeMaxPage = (int) ((double) completeTotalCount / completeBoardLimit + 0.9);
+		completeStartNavi = ((int) ((double) completeCurrentPage / completeNaviLimit + 0.9) - 1) * completeNaviLimit + 1;
+		completeEndNavi = completeStartNavi + completeNaviLimit - 1;
+		if (completeMaxPage < completeEndNavi) {
+			completeEndNavi = completeMaxPage;
+		}
+		
+		// 신고 처리 된 글 목록
+		List<Comm> completeList = adminService.showAllCompleteList(completeCurrentPage, completeBoardLimit);
+		if (!completeList.isEmpty()) {
+			model.addAttribute("urlVal","admin-report");
+			model.addAttribute("completeMaxPage",completeMaxPage);
+			model.addAttribute("completeCurrentPage", completeCurrentPage);
+			model.addAttribute("completeStartNavi", completeStartNavi);
+			model.addAttribute("completeEndNavi", completeEndNavi);
+			model.addAttribute("completeList", completeList);
+		}
 		
 		return "/admin/report/adminReport";
 	}
@@ -417,8 +438,11 @@ public class AdminController {
 	
 	// 처벌페이지
 	@GetMapping("/admin/punishPage")
-	public String punishPage(Model model, @RequestParam("commWriter") String commWriter) {
+	public String punishPage(Model model, 
+							@RequestParam("commWriter") String commWriter,
+							@RequestParam("boardNo") Integer boardNo) {
 		User BadUser = userService.findUserByNicknameForPunish(commWriter);
+		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("userId", BadUser.getUserId());
 		return "/admin/report/adminJudgementPage";
 	}
@@ -434,9 +458,9 @@ public class AdminController {
 		// 서비스로 보냄 
 		
 		String result = adminService.punishUser(punishment, userId, boardNo);
-		if(result.equals("fail") || result.equals("error")) {
-			return "/main/errorPage";
-		}
+	//		if(result.equals("fail") || result.equals("error")) {
+	//			return "/main/errorPage";
+	//		}
 		return "redirect:/admin/admin-report";
 	}
 	
