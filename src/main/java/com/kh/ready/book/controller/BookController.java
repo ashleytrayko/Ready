@@ -59,12 +59,14 @@ public class BookController {
 	@RequestMapping(value="/book/detailView.kh", method=RequestMethod.GET)
 	public ModelAndView bookDetailView(ModelAndView mv, @RequestParam("bookNo") Integer bookNo, HttpSession session, Principal principal) {
 		try {
-			String userId = principal.getName();
 			Book book = bService.printOneByNo(bookNo);
-			int insertCount = bService.getInsertCount(bookNo, userId);
+			if(principal != null) {
+				String userId = principal.getName();
+				int insertCount = bService.getInsertCount(bookNo, userId);
+				mv.addObject("insertCount", insertCount);			
+			}
 			List<Review> rList = bService.printAllReview(bookNo);
 			session.setAttribute("bookNo", book.getBookNo());
-			mv.addObject("insertCount", insertCount);
 			mv.addObject("rList", rList);
 			mv.addObject("book", book);
 			mv.addObject("principal", principal);
@@ -209,6 +211,7 @@ public class BookController {
 			}
 			List<Review> rList = bService.printMyReview(userId, currentPage, reviewLimit);
 			if(!rList.isEmpty()) {
+				mv.addObject("urlVal", "myReview");
 				mv.addObject("userId", userId);
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);

@@ -25,8 +25,10 @@ public interface MypageService {
 
 	List<Comm> printMyBoard(int currentPage, int boardLimit, String userId);
 
-	List<Order> printMyOrder(String userId);
+	List<Order> printMyOrder(int currentPage, int orderLimit, String userId);
 
 	int deleteUser(String userEmail, String textEmail);
+
+	int getTotalOCount(String userId);
 
 }

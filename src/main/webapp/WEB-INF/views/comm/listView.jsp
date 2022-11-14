@@ -96,7 +96,9 @@
 		<div class="main-sidebar">여기는 사이드바</div>
     </div>
 	<footer>
-		
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	</footer>
 </body>
 </html>

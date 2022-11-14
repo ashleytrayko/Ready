@@ -196,11 +196,30 @@ public class MypageController {
 		
 		//내 주문내역 리스트
 		@RequestMapping(value="mypage/myOrder.kh", method=RequestMethod.GET)
-		public ModelAndView printMyOrder(ModelAndView mv, Principal principal) {
+		public ModelAndView printMyOrder(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, Principal principal) {
 			try {				
 				String userId = principal.getName();
-				List<Order> oList = mService.printMyOrder(userId);
+				int currentPage = (page != null)? page : 1;
+				//주문내역 페이징
+				int totalOCount = mService.getTotalOCount(userId);
+				int orderLimit = 10;
+				int naviLimit = 5;
+				int maxPage;
+				int startNavi;
+				int endNavi;
+				maxPage = (int) ((double) totalOCount / orderLimit + 0.9);
+				startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+				endNavi = startNavi + naviLimit - 1;
+				if (maxPage < endNavi) {
+					endNavi = maxPage;
+				}
+				List<Order> oList = mService.printMyOrder(currentPage, orderLimit, userId);
 				if(!oList.isEmpty()) {
+					mv.addObject("urlVal", "myOrder");
+					mv.addObject("maxPage", maxPage);
+					mv.addObject("currentPage", currentPage);
+					mv.addObject("startNavi", startNavi);
+					mv.addObject("endNavi", endNavi);
 					mv.addObject("oList", oList);
 				}
 				mv.setViewName("mypage/myOrder");

@@ -26,6 +26,14 @@
 			width : 33%;
 			float : left;
 		}
+		
+		.btn-section > button {
+			background-color:#E4DDD3;
+		}
+		.btn-section > button:hover {
+			background-color:#D8BB9C;
+			color : white;
+		}
 	</style>
 
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -176,11 +184,16 @@
 				<input type="text" name="answerWriter" placeholder="저자 이름을 입력해주세요.">
 			</div>
 			<br><br><br>
-			<input type="submit" class="btn btn-outline-secondary" value="등록">
+			<div class="btn-section">
+				<button type="submit" class="btn">등록</button>
+			</div>
 			</form>
 		</div>
 		
 		<div class="col-md-3">여기는 사이드바</div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

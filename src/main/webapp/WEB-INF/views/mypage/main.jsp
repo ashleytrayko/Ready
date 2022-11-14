@@ -56,27 +56,27 @@
 			<div class="tb-section">
 				<table class="table table-hover">
 					<thead>
-						<tr>
-							<th class="table-info">등급</th>
-							<th class="table-info">조건</th>
-							<th class="table-info">혜택</th>
+						<tr bgcolor="#E4DDD3">
+							<th>등급</th>
+							<th>조건</th>
+							<th>혜택</th>
 						</tr>
 					</thead>
 					 <tbody>
 						<tr>
 							<td>브론즈</td>
 							<td>가입시 자동등급</td>
-							<td>구매시 3% 할인</td>
+							<td>구매시 1% 할인</td>
 						</tr>
 						<tr>
 							<td>실버</td>
 							<td>총 200,000원 구매시 승급</td>
-							<td>구매시 5% 할인</td>
+							<td>구매시 3% 할인</td>
 						</tr>
 						<tr>
 							<td>골드</td>
 							<td>총 500,000원 구매시 승급</td>
-							<td>구매시 7% 할인</td>
+							<td>구매시 5% 할인</td>
 						</tr>
 						<tr>
 							<td>VIP</td>
