@@ -69,7 +69,12 @@
                         <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
                         <!-- 할인가 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <td>
+                        	<div style="margin-top:44%;">
+                        	<fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원
+                        	<p>(${discountPercent } <img src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" id="discountArrow" alt="down">)</p>
+                        	</div>
+                        </td>
                         <!-- 수량 -->
                         <td><input type="text" name='productCount' value="${cartList.productCount }"  style="border:0 solid black; width:30px;" readonly></td>
                         <!-- 할인가*수량 -->
@@ -131,8 +136,8 @@
                     	<div class="div-floatLeft">
                         	<input class="form-control form-control-sm Addr1" id="buyerZoneCode" type="text" value="${userInfo.userPostcode }" placeholder="우편번호" style="width:90px;">
                         </div>
-                        <div class="div-floatLeft">
-                        	<button class="btn btn-secondary searchAddr-btn" onclick="byuerAddrSearch();" style="font-size :12px;">우편번호 검색</button>
+                        <div class="div-floatLeft btn-section2">
+                        	<button class="btn searchAddr-btn" onclick="byuerAddrSearch();" style="font-size :12px;">우편번호 검색</button>
                         </div>
                     </td>
                 </tr>

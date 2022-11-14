@@ -16,6 +16,27 @@
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
     <script src="../resources/js/checkbox.js"></script>
 </head>
+<style>
+      .btn-section1 > button {
+         background-color:#AA7139;
+         color : white;
+      }
+      .btn-section1 > button:hover {
+         background-color: #804A15;
+         color : white;
+         border-color : #804A15;
+      }
+      .btn-section2 > button {
+         background-color:white;
+         color : #804A15;
+         border-color : #804A15;
+      }
+      .btn-section2 > button:hover {
+         background-color:#E4DDD3;
+         color : #804A15;
+         border-color : #E4DDD3;
+      }
+</style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">
@@ -28,7 +49,7 @@
 		 	<c:if test="${!empty cartList }">
                 <thead>
                     <tr>
-                        <th colspan="6"><h5 id="cart-h5">장바구니 상품</h5></th>
+                        <th colspan="6"><h5 id="cart-h5" >장바구니 상품</h5></th>
                         <th class="product-delbtn"><button id="del-btn" class="btn btn-secondary">선택상품 삭제</button></th>
                     </tr>
                 </thead>
@@ -75,14 +96,16 @@
                         <td>
                         	<div style="margin-top:42%;">
                         	<fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원
-                        	<p>(${discountPercent } <img src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" alt="down" style="width:10px; height:11px;">)</p>
+                        	<p>(${discountPercent } <img id="discountArrow" src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" alt="down">)</p>
                         	</div>
                         </td>
                         <!-- 수량 -->
                         <td>
+                        <div>
                             <input class="form-control form-control-sm countControl" id="countControl" type="text" placeholder="수량"
                             aria-label=".form-control-sm example" value="${cartList.productCount }">
                             <button id="quantity-btn" class="btn btn-secondary quantity-btn" data-cartNo="${cartList.cartNo }">변경</button>
+                        </div>
                         </td>
                         <!-- 할인가*수량 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice * cartList.productCount}"/>원</td>
@@ -137,8 +160,12 @@
             </table>
         </div>
         <div id="cart-btn1">
-            <button class="btn btn-secondary">쇼핑 계속하기</button>
-            <button class="btn btn-primary" onclick="location.href='/order/orderView';">상품 주문하기</button>
+        	<span class="btn-section2">
+            	<button class="btn" onclick="history.back();">쇼핑 계속하기</button>
+            </span>
+            <span class="btn-section1">
+            	<button class="btn" onclick="location.href='/order/orderView';">상품 주문하기</button>
+        	</span>
         </div>
         </c:if>
         <c:if test="${empty cartList }">
