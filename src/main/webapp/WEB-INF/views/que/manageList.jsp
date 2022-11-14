@@ -12,9 +12,11 @@
 <head>
 <meta charset="UTF-8">
 <title>문의글 확인 페이지-관리자</title>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -24,27 +26,17 @@
 		<div class="main-section">
 		<div class="faq-div">
 				<h1>문의글 관리 페이지</h1>
-				<table align="center" border="1" width="700">
-				<colgroup>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				</colgroup>
+				<table border="1" class="list-table center">
 					<tr class="faq-header">
-						<th>유형</th>
-						<th colspan="4" align="left">제목</th>
-						<th>등록일</th>
-						<th>작성자</th>
-						<th>답변여부</th>
+						<th width="15%">유형</th>
+						<th colspan="4" width="52%">제목</th>
+						<th class="th-left" width="13%">작성자</th>
+						<th width="10%">작성일</th>
+						<th width="10%">답변여부</th>
 					</tr>
 					<c:if test="${!empty qList }">
 						<c:forEach items="${qList }" var="question" varStatus="i">
-							<tr>
+							<tr class="tr-line">
 								<td>
 									<c:if test="${question.qCategory eq 'user'}">회원정보</c:if>
 									<c:if test="${question.qCategory eq 'order'}">주문정보</c:if>
@@ -52,16 +44,16 @@
 									<c:if test="${question.qCategory eq 'delivery'}">배송관련</c:if>
 									<c:if test="${question.qCategory eq 'etc'}">기타문의</c:if>
 								</td>
-								<td colspan="4" align="left"><a href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
+								<td colspan="4" class="th-left"><a class="td-title" href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
+								<td class="th-left">${question.queWriter }</td>
 								<td>${question.qEnrollDate }</td>
-								<td>${question.queWriter }</td>
 								<td>
 									<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
 									<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
 								</td>
 							</tr>
 						</c:forEach>
-						<tr align="center" height="20">
+						<tr class="faq-div" height="20">
 						<td colspan="8">
 							<c:if test="${currentPage != 1 }">
 								<a href="/que/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
@@ -82,11 +74,11 @@
 					</c:if>
 					<c:if test="${empty qList }">
 						<tr>
-							<td colspan="8" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+							<td colspan="8" class="faq-div"><b>데이터가 존재하지 않습니다.</b></td>
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="8" align="center">
+						<td colspan="8" class="faq-div">
 							<form action="/question/search.kh" method="get">
 								<select name="searchCondition">
 									<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>

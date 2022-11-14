@@ -41,5 +41,7 @@ public interface QuestionStore {
 
 	int updateQue(SqlSession session, Question que);
 
+	int deleteQue(SqlSession session, int queNo);
+
 
 }

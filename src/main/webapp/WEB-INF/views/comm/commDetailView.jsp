@@ -12,10 +12,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 상세보기</title>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
+<title>게시글 상세 페이지</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
@@ -24,27 +26,29 @@
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
 			<div class="list-div">
-				<h2>게시판 상세글</h2>
-				<table align="center" border="1" width="500" class="table-style">
+				<h2 class="list-title">게시판 상세글</h2>
+				<table align="center" border="1" class="table-style">
 					<tr>
-						<td>제목</td>
-						<td>${comm.commTitle }</td>
-						<td>조회수</td>
-						<td>${comm.cCount }</td>
+						<!-- <td>제목</td> -->
+						<td colspan="4" class="th-left detail-title">${comm.commTitle }</td>
+						<!-- <td>작성일</td> -->
+						<%-- <td>${comm.cCreateDate }</td> --%>
 					</tr>
 					<tr>
-						<td>작성자</td>
-						<td>${comm.commWriter }</td>
-						<td>작성일</td>
-						<td>${comm.cCreateDate }</td>
+						<!-- <td>작성자</td> -->
+						<td colspan="3" class="th-left detail-writer" width="80%">${comm.commWriter }</td>
+						<!-- <td>조회</td> -->
+						<td width="20%">${comm.cCreateDate }&nbsp;&nbsp;&nbsp;조회&nbsp;&nbsp;${comm.cCount }</td>
+					</tr>
+					<tr class="detail-contents">
+						<td class="detail-content" colspan="4" align="left">${comm.commContents }</td>
 					</tr>
 					<tr>
-						<td colspan="4" align="left">${comm.commContents }</td>
-					</tr>
-					<tr>
-						<td colspan="2">추천수 : ${comm.cLike }</td>
+						<td colspan="4">추천수 : ${comm.cLike }</td>
 						<%-- <td>${comm.cLike }</td> --%>
-						<td><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button id="likeBtn">추천하기</button></td>
+					</tr>
+					<tr>
+						<td colspan="4"><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button id="likeBtn">추천하기</button></td>
 					</tr>
 					<c:if test="${principal.user.userId eq comm.commId }">
 						<tr>
@@ -55,8 +59,8 @@
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="4" align="right">
-							<button onclick="location.href = '/comm/list.kh'">리스트</button>
+						<td colspan="4" align="right" class="detail-content-bot">
+							<button onclick="location.href = '/comm/list.kh?page=${page}'">리스트</button>
 							<%-- <button onclick="reportBoard();">신고</button>
 							<a href="#" onclick="commRemove(${page});">삭제하기</a> --%>
 							<a href="#" onclick="reportBoard(${page});">신고</a>
@@ -64,14 +68,20 @@
 					</tr>
 				</table>
 					<!-- 	댓글 등록 -->
-					<table align="center" width="500" border="1">
+					<table align="center" class="detail-repl">
 						<tr>
 							<td align="left" id="rWriter">${principal.user.userNickname }</td>	
 							<!-- 댓글등록을 닉네임으로 하기 위해 id에 rWriter 부여 -->
 						</tr>
+							<thead>
+								<tr>
+									<!-- 댓글 갯수 -->
+									<td colspan="4"><b id="rCount"></b></td>
+								</tr>
+							</thead>
 						<tr>
 							<td>
-								<textarea rows="3" cols="55" name="rContents" id="rContents"></textarea>
+								<textarea rows="3" cols="100" name="rContents" id="rContents"></textarea>
 							</td>
 							<td align="center">
 								<button width="100" id="rSubmit">등록</button>
@@ -79,13 +89,8 @@
 						</tr>
 					</table>
 					<!-- 	댓글 목록 -->
-					<table align="center" width="500" border="1" id="rtb">
-							<thead>
-								<tr>
-									<!-- 댓글 갯수 -->
-									<td colspan="4"><b id="rCount"></b></td>
-								</tr>
-							</thead>
+					<table align="center" class="detail-repl" id="rtb">
+						
 							<tbody>
 							</tbody>
 					</table>
@@ -114,15 +119,15 @@
 					if(cRList != null) {
 						console.log(cRList);
 						for(var i in cRList) {
-							var $tr = $("<tr>");
-							var $rWriter = $("<td width='100'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
-							var $rContents = $("<td>").text(cRList[i].rContents);
-							var $rCreateDate = $("<td width='100'>").text(cRList[i].rCreateDate);
+							var $tr = $("<tr class='tr-line th-left'>");
+							var $rWriter = $("<td width='15%'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
+							var $rContents = $("<td width='55%'>").text(cRList[i].rContents);
+							var $rCreateDate = $("<td width='15%' align='center'>").text(cRList[i].rCreateDate);
 /* 							var $btnArea = $("<td width='80'>").append("<button href='javascript:void(0);' id='rCo1' onclick='commentView1(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button>"); */
 							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
-								$btnArea = $("<td width='80'>")
-											 	.append("<button href='javascript:void(0);' id='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+",1,"+boardNo+")'>수정</button> ")
+								$btnArea = $("<td width='15%' align='center'>")
+											 	.append("<button href='javascript:void(0);' class='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+",1,"+boardNo+"); this.onclick = null;'>수정</button> ")
 												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
 												/* .append("<button href='javascript:void(0);' id='rCo' onclick='commentView(this,\""+cRList[i].cReplyNo+")'>답글</button>"); */
 											 	/* 대댓글 .append("<button href='javascript:void(0);' id='rCo2' onclick='commentView2(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button> "); */
@@ -164,26 +169,6 @@
 			}
 		}
 		
-		/* function modifyReplyAjax(cReplyNo) {
-			var boardNo = "${comm.boardNo}";
-			var replyContents = ${"#commReplyContents"}.val();
-			$.ajax({
-				url : "/comm/replyModify.kh",
-				data : {
-					"boardNo"	: boardNo,
-					"rContents" : replyContents
-				},
-				type : "post",
-				success : function(result) {
-					if(result == "success") {
-						alert("댓글 수정 성공!");
-						$("#commReply")
-					}
-				}
-			})
-		} */
-		
-		
 	
 		$("#rSubmit").on("click", function() {
 			var boardNo = "${comm.boardNo}";		// 자바 스크립트에서 사용하는 el 아래는 html에서 사용하는 el.
@@ -222,12 +207,12 @@
 		}
 		function modifyView(obj, rContents, cReplyNo, page, boardNo) {
 			event.preventDefault();
-			var $tr = $("<tr>");
-			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+", "+page+", "+boardNo+");'>수정</button></td>");
+			var $tr = $("<tr class='tr-line tr-left'>");
+			$tr.append("<td width='15%'></td>");
+			$tr.append("<td width='55%'><input type='text' size='50' value='"+rContents+"'></td>");
+			$tr.append("<td colspan='2' width='15%' align='left' class='th-left'><button onclick='modifyReply(this, "+cReplyNo+", "+page+", "+boardNo+");'>수정</button></td>");
 			$(obj).parent().parent().after($tr);
-			const target = document.getElementById('btn-click');
-	        target.disabled = true;
+			$('.btn-click').off('click');
 		}
 		function modifyReply(obj, cReplyNo, page, boardNo) {
 			var inputTag = $(obj).parent().prev().children();
@@ -280,28 +265,6 @@
 			});
 		}); 
 		
-		/* function addReComment(cReplyNo) {
-			event.preventDefault();
-			var $tr = $("<tr>");
-			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td><button onclick='modifyReply(this, "+cReplyNo+");'>수정</button></td>");
-			$(obj).parent().parent().after($tr);
-			const target = document.getElementById('btn-click');
-	        target.disabled = true;
-		}
-		function modifyReply(obj, cReplyNo) {
-			var inputTag = $(obj).parent().prev().children();
-			console.log(inputTag.val());
-			var rContents = inputTag.val();
-			var $form =$("<form>");
-			$form.attr("action", "/comm/replyModify.kh");
-			$form.attr("method", "post");
-			$form.append("<input type='hidden' value='"+rContents+"' name='rContents'>");
-			$form.append("<input type='hidden' value='"+cReplyNo+"' name='cReplyNo'>");
-			console.log($form[0]);
-			$form.appendTo("body");
-			$form.submit();
-		} */
 		
 		/* function commentView(obj, cReplyNo) {
 			event.preventDefault();

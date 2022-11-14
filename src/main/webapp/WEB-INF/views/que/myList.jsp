@@ -12,9 +12,12 @@
 <head>
 <meta charset="UTF-8">
 <title>내 문의글</title>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
+<link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -28,27 +31,32 @@
 				</c:if>
 				<c:if test="${principal.user.userRole ne 'ROLE_USER' }">
 				</c:if>
-				<table align="center" border="1" width="700">
-				<colgroup>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				    <col width="12%"/>
-				    <col width="13%"/>
-				</colgroup>
+				<table border="1" class="list-table center">
 					<tr class="faq-header">
-						<th>유형</th>
-						<th colspan="4" align="left">제목</th>
-						<th>작성자</th>
-						<th>등록일</th>
-						<th>답변여부</th>
+						<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+							<th width="15%">공지유형</th>
+						</c:if>
+						<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
+							<th width="15%">유형</th>
+						</c:if>
+						<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
+							<th width="40%" colspan="4" align="left">제목</th>
+						</c:if>
+						<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+							<th width="55%" colspan="4" align="left">제목</th>
+						</c:if>
+						<th width="15%">작성자</th>
+						<th width="15%">작성일</th>
+						<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
+							<th width="15%">답변여부</th>
+						</c:if>
+						<c:if test="${principal.user.userRole ne 'ROLE_USER' }">
+							<!-- <th width="15%">공지</th> -->
+						</c:if>
 					</tr>
 					<c:if test="${!empty qList }">
 						<c:forEach items="${qList }" var="question" varStatus="i">
-							<tr>
+							<tr class="tr-line">
 								<td>
 									<c:if test="${question.qCategory eq 'user'}">회원정보</c:if>
 									<c:if test="${question.qCategory eq 'order'}">주문정보</c:if>
@@ -65,7 +73,7 @@
 										<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
 										<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
 									</c:if>
-									<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">공지사항</c:if>
+									
 								</td>
 							</tr>
 						</c:forEach>

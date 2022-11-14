@@ -109,5 +109,11 @@ public class QuestionServiceImpl implements QuestionService{
 		return result;
 	}
 
+	@Override
+	public int removeOneByNo(int queNo) {
+		int result = qStore.deleteQue(session, queNo);
+		return result;
+	}
+
 
 }

@@ -158,32 +158,15 @@ public class CommController {
 	 * @return
 	 */
 	@RequestMapping(value = "/comm/modify.kh", method = RequestMethod.POST)
-	public ModelAndView commModify(@ModelAttribute Comm comm, ModelAndView mv,
-			@RequestParam(value = "reloadFile", required = false) MultipartFile reloadFile,
+	public ModelAndView commModify(
+			@ModelAttribute Comm comm
+			, ModelAndView mv,
 			@RequestParam("page") Integer page, HttpServletRequest request) {
 		try {
-			if (reloadFile != null) {
-				String commFilename = reloadFile.getOriginalFilename();
-				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
-				// 파일삭제
-				String root = request.getSession().getServletContext().getRealPath("resources");
-				String savedPath = root + "\\buploadFiles";
-				File file = new File(savedPath + "\\" + comm.getCommFileRename());
-				if (file.exists()) {
-					file.delete();
-				}
-				// 파일 다시 저장
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String commFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
-						+ commFilename.substring(commFilename.lastIndexOf(".") + 1);
-				String commFilepath = savedPath + "\\" + commFileRename;
-				reloadFile.transferTo(new File(commFilepath));
-				comm.setCommFilename(commFilename);
-				comm.setCommFileRename(commFileRename);
-			}
+			int boardNo = comm.getBoardNo();
 			int result = cService.modifyBoard(comm);
 			mv.addObject("comm", comm);
-			mv.setViewName("redirect:/comm/list.kh?page=" + page);
+			mv.setViewName("redirect:/comm/detail.kh?boardNo="+boardNo+"&page=" + page);
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
 		}
@@ -229,6 +212,7 @@ public class CommController {
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
+			mv.addObject("totalCount", totalCount);
 			mv.setViewName("comm/listView");
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("common/errorPage");

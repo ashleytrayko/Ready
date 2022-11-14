@@ -122,5 +122,11 @@ public class QuestionStoreLogic implements QuestionStore{
 		return result;
 	}
 
+	@Override
+	public int deleteQue(SqlSession session, int queNo) {
+		int result = session.delete("QuestionMapper.deleteQue", queNo);
+		return result;
+	}
+
 
 }

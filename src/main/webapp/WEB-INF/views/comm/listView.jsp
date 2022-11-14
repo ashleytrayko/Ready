@@ -8,10 +8,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 목록</title>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
+<title>리디 커뮤니티</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 </head>
 <body>
 	<jsp:include page="../main/commHeader.jsp"></jsp:include>
@@ -21,23 +23,23 @@
 		<!-- 이 안에서 작업! 여기가 본문-->
 			<div class="list-div">
 				<h1 class="list-title">리디 커뮤니티</h1>
-				<table align="center" border="1">
-					<tr>
-						<th>번호</th>
-						<th colspan="2">제목</th>
-						<th>작성자</th>
-						<th>날짜</th>
-						<th>조회수</th>
-						<th>추천수</th>
+				<table border="1" class="list-table center">
+					<tr class="list-nav" height="50px">
+						<th width="10%">번호</th>
+						<th colspan="2" width="40%">제목</th>
+						<th class="th-left" width="15%">작성자</th>
+						<th width="15%">작성일</th>
+						<th width="10%">조회수</th>
+						<th width="10%">추천수</th>
 					</tr>
 					
 					<c:if test="${!empty cList }">
 						<c:forEach items="${cList }" var="comm" varStatus="i">
-							<tr>
+							<tr class="tr-line">
 								<td><%-- ${comm.boardNo } --%>${totalCount - ((currentPage-1) * 10 +i.index)}<!--${i.count } 얘는 게시글 ASC로 출력--></td>
-								<td colspan="2"><a href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
+								<td colspan="2" class="th-left"><a class="td-title" href="#" onclick="location.href='/comm/detail.kh?boardNo=${comm.boardNo }&page=${currentPage }'" >${comm.commTitle  }</a></td>
 								<!--  -->
-								<td>${comm.commWriter }</td>
+								<td class="th-left">${comm.commWriter }</td>
  	<%-- 							<td>${comm.cCreateDate }</td> --%>
  								<td>
 								<fmt:formatDate value="${comm.cCreateDate}" pattern="YY/MM/dd" />
@@ -47,7 +49,7 @@
 								<td>${comm.cLike }</td>
 							</tr>
 						</c:forEach>
-						<tr align="center" height="20">
+						<tr class="center" height="20">
 						<td colspan="7">
 							<c:if test="${currentPage != 1 }">
 								<a href="/comm/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
@@ -68,11 +70,11 @@
 					</c:if>
 					<c:if test="${empty cList }">
 						<tr>
-							<td colspan="7" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+							<td colspan="7" class="center"><b>데이터가 존재하지 않습니다.</b></td>
 						</tr>
 					</c:if>
 					<tr>
-						<td colspan="7" align="center">
+						<td colspan="7" class="center">
 							<form action="/comm/search.kh" method="get">
 								<select name="searchCondition">
 									<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>

@@ -98,4 +98,7 @@
 	<update id="updateQue">
 		UPDATE QUESTION_TBL SET Q_ANSWER = #{qAnswer}, Q_STATUS = 'Y' WHERE QUE_NO = #{queNo}
 	</update>
+	<delete id="deleteQue">
+		UPDATE QUESTION_TBL SET Q_STATUS = 'D' WHERE QUE_NO = #{queNo}
+	</delete>
 </mapper>

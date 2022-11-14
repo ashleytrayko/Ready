@@ -108,7 +108,7 @@
 		</c:choose>
       </div>
     </nav>
-    <header class="py-3 mb-4 border-bottom">
+    <header class="py-3 border-bottom header-nav">
       <div class="container d-flex flex-wrap justify-content-center">
         <a
           href="/comm/list.kh"
