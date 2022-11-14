@@ -17,6 +17,13 @@
 			width : 50%;
 			margin-left : 8%;
 		}
+		.btn-section > button {
+			background-color:#E4DDD3;
+		}
+		.btn-section > button:hover {
+			background-color:#D8BB9C;
+			color : white;
+		}
 	</style>
 	
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -34,13 +41,13 @@
 				<c:if test = "${!empty survey}">
 					<table class="table table-bordered">
 						<thead>
-							<tr>
-								<th class="table-info">성별</th>
-								<th class="table-info">연애여부</th>
-								<th class="table-info">취미</th>
-								<th class="table-info">목적</th>
-								<th class="table-info">선호 작가</th>
-								<th class="table-info">등록일</th>
+							<tr bgcolor="#E4DDD3">
+								<th>성별</th>
+								<th>연애여부</th>
+								<th>취미</th>
+								<th>목적</th>
+								<th>선호 작가</th>
+								<th>등록일</th>
 							</tr>
 						</thead>
 							<tbody>
@@ -55,13 +62,13 @@
 							</tbody>
 					</table>
 						<br><br><br>
-						<div>
-							<button type="button" class="btn btn-outline-secondary" onclick="modifySurvey()">수정하기</button>
+						<div class="btn-section">
+							<button type="button" class="btn" onclick="modifySurvey()">수정하기</button>
 						</div>
 					</c:if>
 					<c:if test= "${empty survey }">
 						<h5>등록된 설문지가 없습니다.</h5>
-						<div align="center">
+						<div align="center" class="btn-section">
 							<button type="button" class="btn btn-outline-secondary" onclick="registSurvey()">등록하기</button>
 						</div>
 					</c:if>

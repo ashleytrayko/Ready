@@ -73,8 +73,8 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public List<Order> printMyOrder(String userId) {
-		List<Order> oList = mStore.selectMyOrder(session, userId);
+	public List<Order> printMyOrder(int currentPage, int orderLimit, String userId) {
+		List<Order> oList = mStore.selectMyOrder(session,currentPage, orderLimit, userId);
 		return oList;
 	}
 
@@ -82,6 +82,12 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteUser(String userEmail, String textEmail) {
 		int result = mStore.deleteUser(session, userEmail, textEmail);
 		return result;
+	}
+
+	@Override
+	public int getTotalOCount(String userId) {
+		int totalOCount = mStore.selectTotalOCount(session, userId);
+		return totalOCount;
 	}
 
 }

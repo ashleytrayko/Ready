@@ -67,8 +67,10 @@ public class MypageStoreLogic implements MypageStore{
 	}
 
 	@Override
-	public List<Order> selectMyOrder(SqlSessionTemplate session, String userId) {
-		List<Order> oList = session.selectList("MypageMapper.selectMyOrder", userId);
+	public List<Order> selectMyOrder(SqlSessionTemplate session, int currentPage, int orderLimit, String userId) {
+		int offset = (currentPage - 1) * orderLimit;
+		RowBounds rowBounds = new RowBounds(offset, orderLimit);
+		List<Order> oList = session.selectList("MypageMapper.selectMyOrder", userId, rowBounds);
 		return oList;
 	}
 
@@ -79,6 +81,12 @@ public class MypageStoreLogic implements MypageStore{
 		paramMap.put("textEmail", textEmail);
 		int result = session.update("MypageMapper.deleteUser", paramMap);
 		return result;
+	}
+
+	@Override
+	public int selectTotalOCount(SqlSessionTemplate session, String userId) {
+		int totalOCount = session.selectOne("MypageMapper.selectTotalOCount", userId);
+		return totalOCount;
 	}
 
 }

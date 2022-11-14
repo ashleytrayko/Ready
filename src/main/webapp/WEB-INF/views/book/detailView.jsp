@@ -37,17 +37,29 @@
 			display : flex;
 		}
 		.review-area{
+			width : 100%;
 			display : flex;
 			background-color : #E4DDD3;
 		}
 		.review-text {
-			width : 80%;
+			width : 100%;
 		}
 		.review-btn {
 			width : 20%;
 		}
 		select {
 			color : orange;
+		}
+		.rtext-area {
+			width: 80%;
+		}
+		.rbtn-area {
+			width : 20%;
+			float : left;
+		}
+		#insertReview-btn {
+			margin-left : 25%;
+			width : 122px;
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -74,7 +86,7 @@
 				<div id="container2">
 					<div>주문수량</div>
 					<input type="text" id="productCount" value="1">
-					<br>
+					<br><br>
 					<button type="button" class="btn btn-outline-secondary" onclick="order(${book.bookNo});">구매하기</button>
 					<br>
 					<br>
@@ -114,8 +126,12 @@
 						<br><br>
 						<h5>한줄평</h5>
 						<div class="review-area">
-							<input type="text" name="reviewContents" class="review-text">
-							<button type="submit" class="btn btn-secondary" class="review-btn" id="insertReview-btn">등록하기</button>
+							<div class="rtext-area">
+								<input type="text" name="reviewContents" class="review-text">
+							</div>
+							<div class="rbtn-area">
+								<button type="submit" class="btn btn-secondary" class="review-btn" id="insertReview-btn">등록하기</button>
+							</div>
 						</div>
 						<br>
 					</c:if>
@@ -143,9 +159,9 @@
 		</div>
 		<div class="col-md-3">여기는 사이드바</div>
     </div>
-	<footer>
-		
-	</footer>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 
 	<script>
 	

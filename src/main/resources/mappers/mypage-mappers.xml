@@ -142,4 +142,10 @@ FROM (
 	WHERE A = 1 AND USER_ID = #{userId } ORDER BY ORDER_DATE DESC
 	</select>
 	
+	<select id="selectTotalOCount" resultType="_int">
+		SELECT COUNT(*) FROM ORDER_TBL
+		<where>
+			USER_ID = #{userId }
+		</where>
+	</select>
   </mapper>

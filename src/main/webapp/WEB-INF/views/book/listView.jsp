@@ -12,9 +12,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
+		.page-title {
+			margin-left : 10%;
+		}
+		.view-section {
+			margin-left : 20%;
+		}
 		.card > a {
 			color : black;
 			text-decoration : none;
+		}
+		.page-section > a {
+			text-decoration : none;
+		}
+		.btn-section > button {
+			
+			background-color:#E4DDD3;
+		}
+		.btn-section > button:hover {
+			background-color:#D8BB9C;
+			color : white;
+		}
+		#btn-b {
+			background-color:#D8BB9C;
+			color : white;
 		}
 	</style>
 	
@@ -25,6 +46,11 @@
 	<div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
+			<div class="page-title">
+				<h3>'${searchValue }'의 검색 결과</h3>
+			</div>
+			<br><br><br>
+			<div class="view-section">
 			<c:if test="${empty bList }">
 				<h3>검색조건에 맞는 도서가 없습니다.</h3>
 			</c:if>
@@ -53,26 +79,31 @@
 					<br>
 				</c:forEach>		
 			</c:if>
-			<table>
-			        <tr align="center" height="20">
-			            <td colspan="6">
+			</div>
+			        <div align="center">
+			            <div class="page-section">
 			                <c:if test="${currentPage != 1}">
-			                    <a href="/book/${urlVal }.kh?page=${currentPage - 1 }">[이전]</a>
+			                    <a href="/book/${urlVal }.kh?page=${currentPage - 1 }" class="btn-section">
+			                    	<button class="btn">이전</button>
+			                    </a>
 			                </c:if>
 			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
 			                    <c:if test="${currentPage eq p }">
-			                        <b>${p}</b> 
+			                        <button class="btn" id="btn-b">${p}</button> 
 			                    </c:if>
 			                    <c:if test="${currentPage ne p }">
-			                        <a href = "/book/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p}</a>
+			                        <a href = "/book/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }" class="btn-section">
+			                        	<button class="btn">${p}</button>
+			                        </a>
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/book/${urlVal}.kh?page=${currentPage + 1}&searchCondition=${searchCondition }&searchValue=${searchValue }">[다음]</a>
+			                	<a href = "/book/${urlVal}.kh?page=${currentPage + 1}&searchCondition=${searchCondition }&searchValue=${searchValue }" class="btn-section">
+			                		<button class="btn">다음</button>
+			                	</a>
 			            	</c:if>
-			            </td>
-		        	</tr>
-			</table>
+			            </div>
+		        	</div>
 		</div>
 		<div class="main-sidebar"></div>
 	</div>

@@ -23,13 +23,28 @@
 			color : black;
 			text-decoration : none;
 		}
+		.page-section > a {
+			text-decoration : none;
+		}
+		.btn-section > button {
+			
+			background-color:#E4DDD3;
+		}
+		.btn-section > button:hover {
+			background-color:#D8BB9C;
+			color : white;
+		}
+		#btn-b {
+			background-color:#D8BB9C;
+			color : white;
+		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
 <body>
 <div class="main-contents">
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
 		<c:if test="${category eq 'Best'}">
 			<h3>Read'y 베스트셀러</h3>
@@ -71,27 +86,35 @@
 					<br>
 				</c:forEach>		
 			</c:if>
-			<table>
-			        <tr align="center" height="20">
-			            <td colspan="6">
+			        <div align="center">
+			            <div class="page-section">
 			                <c:if test="${currentPage != 1}">
-			                    <a href="/book/category.kh?page=${currentPage - 1 }">[이전]</a>
+			                    <a href="/book/category.kh?page=${currentPage - 1 }" class="btn-section">
+			                    	<button class="btn">이전</button>
+			                   </a>
 			                </c:if>
 			                <c:forEach var="p" begin = "${startNavi }" end="${endNavi }">
 			                    <c:if test="${currentPage eq p }">
-			                        <b>${p}</b> 
+			                        <button class="btn" id="btn-b">${p}</button> 
 			                    </c:if>
 			                    <c:if test="${currentPage ne p }">
-			                        <a href = "/book/category.kh?page=${p }&category=${category }">${p}</a>
+			                        <a href = "/book/category.kh?page=${p }&category=${category }" class="btn-section">
+			                        	<button class="btn">${p}</button>
+			                        </a>
 			                    </c:if>
 			                </c:forEach>
 			            	<c:if test = "${currentPage < maxPage }">
-			                	<a href = "/book/category.kh?page=${currentPage + 1}&category=${category }">[다음]</a>
+			                	<a href = "/book/category.kh?page=${currentPage + 1}&category=${category }" class="btn-section">
+			                		<button class="btn">다음</button>
+			                	</a>
 			            	</c:if>
-			            </td>
-		        	</tr>
-			</table>
+			            </div>
+		        	</div>
 		</div>
+		<div class="main-sidebar"></div>
+	</div>
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

@@ -14,12 +14,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
+		.page-title {
+			margin-left : 10%;
+		}
 		.card-body > a {
 			color : black;
 			text-decoration : none;
 		}
 		.review-section {
 			margin-left : 22%;
+		}
+		td > a {
+			color : black;
+			text-decoration : none;
+		}
+		a > button {
+			background-color:#E4DDD3;
+		}
+		a > button:hover {
+			background-color:#D8BB9C;
+			color : white;
+		}
+		#btn-b {
+			background-color:#D8BB9C;
+			color : white;
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -32,7 +50,12 @@
 		</div>
 		
 		 <div class="main-section">
+			<br>
+		 	<div class="page-title">
+				<h3>${principal.user.userName}님의 후기</h3>
+			</div>
 		 	<div class="review-section">
+		 	<br><br><br>
 				<c:if test="${!empty rList }">
 					<c:forEach items="${rList }" var="review" varStatus="i">
 						<div class="card mb-3" style="width: 700px;">
@@ -74,9 +97,36 @@
 					</div>
 				</c:if>
 			</div>
+			<br>
+			<div align="center">
+				<div>
+					<c:if test="${currentPage != 1 }">
+						<a href="/mypage/${urlVal }.kh?page=${currentPage - 1 }">
+							<button class="btn">이전</button>
+						</a>
+					</c:if>
+					<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
+						<c:if test="${currentPage eq p }">
+							<button class="btn" id="btn-b">${p }</button>
+						</c:if>
+						<c:if test="${currentPage ne p }">
+							<a href="/mypage/${urlVal }.kh?page=${p }">
+								<button class="btn">${p }</button>
+							</a>
+						</c:if>
+					</c:forEach>
+					<c:if test="${maxPage > currentPage }">
+						<a href="/mypage/${urlVal }.kh?page=${currentPage + 1 }">
+							<button class="btn">다음</button>
+						</a>
+					</c:if>
+				</div>
+			</div>
 		</div>
 		<div class="main-sidebar">side Bar</div>
 	</div>
-		
+	<div class="main-footer">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>	
 </body>
 </html>

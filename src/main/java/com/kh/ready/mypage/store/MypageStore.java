@@ -27,8 +27,10 @@ public interface MypageStore {
 
 	List<Comm> selectMyBoard(SqlSessionTemplate session, int currentPage, int boardLimit, String userId);
 
-	List<Order> selectMyOrder(SqlSessionTemplate session, String userId);
+	List<Order> selectMyOrder(SqlSessionTemplate session, int currentPage, int orderLimit, String userId);
 
 	int deleteUser(SqlSessionTemplate session, String userEmail, String textEmail);
+
+	int selectTotalOCount(SqlSessionTemplate session, String userId);
 
 }

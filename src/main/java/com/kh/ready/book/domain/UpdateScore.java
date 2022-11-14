@@ -16,7 +16,6 @@ public class UpdateScore {
 	public void setScoreAvg(double scoreAvg) {
 		this.scoreAvg = scoreAvg;
 	}
-	
 	@Override
 	public String toString() {
 		return "UpdateScore [bookNo=" + bookNo + ", scoreAvg=" + scoreAvg + "]";
