@@ -17,7 +17,8 @@ public class Comm {
 	private int cLike;				// 추천수
 	private int cCount;				// 조회수
 	private String commId;			// 아이디
-	private String reportResult;	// 신고처리 결과
+	private String reportResult;	// 신고결과 
+
 	
 	
 	public Comm() {
@@ -28,7 +29,7 @@ public class Comm {
 
 	public Comm(int boardNo, String commWriter, String commTitle, String commContents, String commFilename,
 			String commFileRename, String commFilePath, Date cCreateDate, Date cUpdateDate, String cStatus, int cLike,
-			int cCount, String commId) {
+			int cCount, String commId, String reportResult) {
 		super();
 		this.boardNo = boardNo;
 		this.commWriter = commWriter;
@@ -43,6 +44,7 @@ public class Comm {
 		this.cLike = cLike;
 		this.cCount = cCount;
 		this.commId = commId;
+		this.reportResult = reportResult;
 	}
 
 
@@ -174,8 +176,7 @@ public class Comm {
 	public void setCommId(String commId) {
 		this.commId = commId;
 	}
-	
-	
+
 
 	public String getReportResult() {
 		return reportResult;

@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>나의 문의글</title>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
@@ -63,6 +64,7 @@
 							<tr>
 								<td colspan="4" align="center">
 									<a href="/que/answerView.kh?queNo=${que.queNo }&page=${page}">답변등록</a>
+									<a href="#" onclick="deleteQue(${page});">삭제</a>
 								</td>
 							</tr>
 						</c:if>
@@ -82,5 +84,13 @@
 	<footer>
 		
 	</footer>
+	<script>
+		function deleteQue(value){
+			event.preventDefault(); // 하이퍼링크 이동 방지
+			if(confirm("게시물을 삭제하시겠습니까?")) {
+				location.href="/que/remove.kh?page="+value;
+			}
+		}
+	</script>
 </body>
 </html>

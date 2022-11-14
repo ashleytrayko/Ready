@@ -4,10 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <title>게시글 수정 페이지</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/queWriteForm.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -42,11 +44,9 @@
 							<textarea class="summernote" name="commContents" value="${comm.commContents }"></textarea>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<button type="button" onclick="listMember();">취소</button>
-						</td>
-						<td>
+					<tr align="right">
+						<td colspan="2">
+							<button type="button" align="right" onclick="listMember();">취소</button>
 							<input type="submit" value="등록">
 						</td>
 					</tr>
@@ -62,9 +62,10 @@
 		
 	</footer>
 	<script>
+		var page = "${page}";
 		function listMember() {
-			if(confirm("목록으로 돌아가시겠습니까?")) {
-				location.href = "/comm/list.kh";
+			if(confirm("수정을 취소하시겠습니까?")) {
+				location.href = "/comm/list.kh?page="+page+"";
 			}
 		}
 		// 서머노트 초기화

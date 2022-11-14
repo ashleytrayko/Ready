@@ -42,6 +42,8 @@ public interface QuestionService {
 	// que 답변등록
 	int modifyQna(Question que);
 
+	int removeOneByNo(int queNo);
+
 
 
 }

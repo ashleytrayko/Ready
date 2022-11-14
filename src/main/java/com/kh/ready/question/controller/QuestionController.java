@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -321,5 +322,20 @@ public class QuestionController {
 			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value = "/que/remove.kh", method = RequestMethod.GET)
+	public String queRemove(HttpSession session, Model model, @RequestParam("page") Integer page) {
+		try {
+			int queNo = (int) session.getAttribute("queNo");
+			int result = qService.removeOneByNo(queNo);
+			if (result > 0) {
+				session.removeAttribute("queNo");
+			}
+			return "redirect:/que/manageList.kh?page=" + page;
+		} catch (Exception e) {
+			model.addAttribute("msg", e.toString());
+			return "main/errorPage";
+		}
 	}
 }
