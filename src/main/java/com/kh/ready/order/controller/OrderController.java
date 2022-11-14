@@ -47,6 +47,7 @@ public class OrderController {
 			List<Cart> cartList = orderService.getCartdataByUserId(userId);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountPercent", discountPercent(userId));
 			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("cartList", cartList);
 			mv.addObject("userInfo", userInfo);
@@ -71,6 +72,7 @@ public class OrderController {
 			Book bookData = orderService.getbookDataByBookNo(bookNo);
 			User userInfo = orderService.getUserInfoByUserId(userId);
 			
+			mv.addObject("discountPercent", discountPercent(userId));
 			mv.addObject("discountRate", discountRate(userId));
 			mv.addObject("productCount" , productCount);
 			mv.addObject("bookData", bookData);
@@ -199,10 +201,12 @@ public class OrderController {
 		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
 		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
 		
+		mv.addObject("discountPercent", discountPercent(userId));
 		mv.addObject("userInfo",userInfo);
 		mv.addObject("orderInfo",orderInfo);
 		mv.addObject("orderList", orderList);
 		mv.setViewName("/order/orderCompletePage");
+		
 		return mv;
 	}
 	
@@ -383,6 +387,26 @@ public class OrderController {
 		}
 		
 		return discountRate;
+	}
+	
+	public String discountPercent(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		String discountPercent = "";
+		
+		if(userTier.equals("BRONZE")) {
+			discountPercent = "1%";
+		} else if(userTier.equals("SILVER")) {
+			discountPercent = "3%";
+		} else if(userTier.equals("GOLD")) {
+			discountPercent = "5%";
+		} else if(userTier.equals("VIP")) {
+			discountPercent = "10%";
+		}
+		
+		return discountPercent;
 	}
 	
 }

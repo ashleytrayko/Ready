@@ -271,7 +271,7 @@
         </div>
         <c:if test="${orderInfo.orderState eq 'N'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay(${orderInfo.orderId }, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
+	            <button class="btn btn-primary btm-btn" onclick="cancelPay(`${orderInfo.orderId }`, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
 	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
 	       	</div>
        	</c:if>
@@ -349,7 +349,9 @@ window.onload = function(){
 	function cancelPay(orderId, payedPrice, impUid){
 		
 		const confirmCancelPay = confirm("정말 환불을 진행하시겠습니까? \n마일리지를 되돌려 받을 수 없습니다.");
-		
+		const orderId2 = ${orderInfo.orderId };
+		console.log(orderId2);
+		console.log(orderId);
 		if(confirmCancelPay){
 			$.ajax({
 				url : "/refund/doRefund",
@@ -369,6 +371,7 @@ window.onload = function(){
 						},
 						success : function(orderId){
 							alert("주문번호 : "+orderId+ "\n환불이 완료되었습니다.");
+							location.href="/order/orderDetailView?orderId="+orderId;
 						},
 						error : function(error){
 							console.log(error);

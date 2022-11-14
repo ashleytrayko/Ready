@@ -15,11 +15,7 @@
     <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
     <script src="../resources/js/checkbox.js"></script>
-	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 </head>
-<style>
-* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-</style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">
@@ -76,7 +72,12 @@
                         <!-- 정가 -->
                         <td><fmt:formatNumber type="number" pattern="###,###,###" value="${cartList.book.priceSales}"/>원</td>
                         <!-- 할인가 -->
-                        <td><fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원</td>
+                        <td>
+                        	<div style="margin-top:42%;">
+                        	<fmt:formatNumber type="number" pattern="###,###,###" value="${salePrice}"/>원
+                        	<p>(${discountPercent } <img src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" alt="down" style="width:10px; height:11px;">)</p>
+                        	</div>
+                        </td>
                         <!-- 수량 -->
                         <td>
                             <input class="form-control form-control-sm countControl" id="countControl" type="text" placeholder="수량"
@@ -130,7 +131,7 @@
                     <td>총 <c:out value="${productSum }"/> 권</td>
                     <td class="cartinfo-table-body"><fmt:formatNumber type="number" pattern="###,###,###" value="${priceSum }"/> 원</td>
                     <td class="cartinfo-table-body"><input readonly type="text" id="id-delivery-fee" style="border:0px; width:50px;" value="<fmt:formatNumber type="number" pattern="###,###,###" value="0"/>">원</td>
-                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/>원</p></td>
+                    <td class="cartinfo-table-body"><p class="total-price"><fmt:formatNumber type="number" pattern="###,###,###" value="${salePriceSum}"/> 원</p></td>
                     <td><fmt:formatNumber type="number" pattern="###,###,###" value="${mileageSum }"/> P</td>
                 </tbody>
             </table>
