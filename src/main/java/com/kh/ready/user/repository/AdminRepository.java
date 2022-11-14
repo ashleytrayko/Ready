@@ -27,7 +27,13 @@ public interface AdminRepository {
 
 	public int updateNotice(Notice notice);
 
-	public List<Comm> selectAllReport(int currentPage, int boardLimit);
+	public int selectReportCount();
+
+	public int selectCompleteCount();
+
+	public List<Comm> selectAllReport(int reportCurrentPage, int reportBoardLimit);
+
+	public List<Comm> selectAllComplete(int completeCurrentPage, int completeBoardLimit);
 
 	public int updateBadUser(String userId);
 
@@ -46,6 +52,17 @@ public interface AdminRepository {
 	public int updateProduct(Book book);
 
 	public int deleteBook(Integer bookNo);
+
+	public int updateSuspendResultInComm(Integer boardNo);
+
+	public int updateKickoutResultInComm(Integer boardNo);
+
+	public int selectQuestionCount();
+
+	public int selectAnsweredCount();
+
+
+
 
 
 

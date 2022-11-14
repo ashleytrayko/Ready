@@ -37,6 +37,7 @@
 	$("#requestButton").on("click",function(){
 		const inputId = $("#userId").val();
 		const inputEmail = $("#userEmail").val();
+		$("#requestButton").prop('disabled', true);
 		$.ajax({
 			url : "/forget-password",
 			data :{
@@ -47,15 +48,17 @@
 			success : function(result){
 				JSON.stringify(result);
 				if(result == "fail"){
+					$("#requestButton").prop('disabled', true);
 					alert("비밀번호가 존재하지 않습니다. 다시 확인해 주세요.");
 				}else if(result == "success"){
+					$("#requestButton").prop('disabled', true);
 					alert("등록된 이메일로 변경된 비밀번호가 전송되었습니다.");
-					location.href = "/";
+					location.href = "/login";
 				}
 			},
 			error : function(result){
 				JSON.stringify(result);
-				console.log(result)
+				$("#requestButton").prop('disabled', true);
 				alert("서버 통신 오류!");
 			}
 		});

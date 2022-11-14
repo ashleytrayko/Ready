@@ -111,9 +111,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	// 신고된 게시글 전체 보기
 	@Override
-	public List<Comm> showAllReport(int currentPage, int boardLimit) {
-		List<Comm> reportList = adminRepository.selectAllReport(currentPage, boardLimit);
+	public List<Comm> showAllReport(int reportCurrentPage, int reportBoardLimit) {
+		List<Comm> reportList = adminRepository.selectAllReport(reportCurrentPage, reportBoardLimit);
 		return reportList;
+	}
+	
+	// 처리 완료 게시글 전체 보기
+	@Override
+	public List<Comm> showAllCompleteList(int completeCurrentPage, int completeBoardLimit) {
+		List<Comm> completeList = adminRepository.selectAllComplete(completeCurrentPage, completeBoardLimit);
+		return completeList;
 	}
 	
 	// 신고 게시글 상세 보기
@@ -127,6 +134,7 @@ public class AdminServiceImpl implements AdminService{
 		}
 	}
 	
+	// 신고글 복구
 	@Override
 	public String recoverComm(Integer boardNo) {
 		int result = adminRepository.updateReportedComm(boardNo);
@@ -136,7 +144,8 @@ public class AdminServiceImpl implements AdminService{
 			return "fail";
 		}
 	}
-
+	
+	// 신고글 삭제처리
 	@Override
 	public String terminateComm(Integer boardNo) {
 		int result = adminRepository.deleteReportedComm(boardNo);
@@ -146,21 +155,24 @@ public class AdminServiceImpl implements AdminService{
 			return "fail";
 		}
 	}
-
+	
+	// 유저 처벌
 	@Override
-	public String punishUser(String punishment, String userId) {
+	public String punishUser(String punishment, String userId, Integer boardNo) {
 		if(punishment.equals("suspend")) {
-			//ROLE_BAD -> 해서 글쓰기라든지를 막음
+			//ROLE_USER -> ROLE_BAD 해서 글쓰기라든지를 막음
+			int commResult = adminRepository.updateSuspendResultInComm(boardNo);
 			int result = adminRepository.updateBadUser(userId);
-			if(result > 0) {
+			if(result > 0 && commResult > 0) {
 				return "success";
 			}else {
 				return "fail";
 			}
 		}else if(punishment.equals("getout")) {
 			// enabled -> n 해서 로그인을 막음
+			int commResult = adminRepository.updateKickoutResultInComm(boardNo);
 			int result = adminRepository.kickOutUser(userId);
-			if(result > 0) {
+			if(result > 0 && commResult > 0) {
 				return "success";
 			}else {
 				return "fail";
@@ -169,7 +181,8 @@ public class AdminServiceImpl implements AdminService{
 			return "error";
 		}
 	}
-
+	
+	// 상품 수정
 	@Override
 	public String modifyProduct(Book book) {
 		int result = adminRepository.updateProduct(book);
@@ -179,12 +192,42 @@ public class AdminServiceImpl implements AdminService{
 			return "fail";
 		}
 	}
-
+	
+	// 상품 삭제
 	@Override
 	public int removeBook(Integer bookNo) {
 		int result = adminRepository.deleteBook(bookNo);
 		return result;
 	}
+
+	// 신고글 갯수
+	@Override
+	public int reportTotalCount() {
+		int reportCount = adminRepository.selectReportCount();
+		return reportCount;
+	}
+	
+	// 신고글 처리 갯수
+	@Override
+	public int completeTotalCount() {
+		int completeCount = adminRepository.selectCompleteCount();
+		return completeCount;
+	}
+	
+	// 문의글 갯수
+	@Override
+	public int questionTotalCount() {
+		int questionCount = adminRepository.selectQuestionCount();
+		return questionCount;
+	}
+	
+	// 답변글 갯수
+	@Override
+	public int answeredTotalCount() {
+		int answeredCount = adminRepository.selectAnsweredCount();
+		return answeredCount;
+	}
+
 
 
 

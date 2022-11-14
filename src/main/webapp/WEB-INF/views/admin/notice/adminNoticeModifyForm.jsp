@@ -42,8 +42,10 @@
 			</div>
 			</form>
 			</div>
+	<footer> 
+					<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+	</footer>
 		</div>
-	<footer> </footer>
 	<script>
 		$('.summernote').summernote({
 			placeholder: '공지사항 내용을 입력하세요.',

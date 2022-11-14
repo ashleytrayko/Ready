@@ -72,7 +72,11 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 		collection.add(new GrantedAuthority(){
 			@Override
 			public String getAuthority() {
-				return user.getUserRole().toString();
+				if(user.getUserRole()!= null) {
+					return user.getUserRole().toString();
+				}
+				// 소셜 로그인시 일단은 권한 부여
+				return "ROLE_USER";
 			}
 		});
 		

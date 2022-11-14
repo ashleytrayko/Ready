@@ -125,9 +125,11 @@
 
 
 			</div>
+		<footer> 
+							<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+		</footer>
 		</div>
 		
-	<footer> </footer>
 	<script>
 	$(document).ready(function() {
 		$("#cbx_chkAll").click(function() {

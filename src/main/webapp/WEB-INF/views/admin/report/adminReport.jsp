@@ -7,7 +7,7 @@
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
-<title>공용jsp틀</title>
+<title>신고 관리</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 
@@ -22,6 +22,7 @@
 			<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
+			<h4>신고된 글</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -44,32 +45,32 @@
 					</c:forEach>
 					<tr align="center" height="20">
 						<td colspan="7">
-							<c:if test="${currentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+							<c:if test="${reportCurrentPage != 1 }">
+								<a href="/admin/${urlVal }?page=${reportCurrentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 									<button class="btn btn-outline-dark">이전</button>
 								</a>
 							</c:if>
-							<c:if test="${currentPage == 1 }">
+							<c:if test="${reportCurrentPage == 1 }">
 									<button class="btn btn-outline-dark disabled">이전</button>
 							</c:if>
-							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
-								<c:if test="${currentPage eq p }">
+							<c:forEach var="p" begin="${reportStartNavi }" end="${reportEndNavi }">
+								<c:if test="${reportCurrentPage eq p }">
 									<button class="btn btn-dark">${p}</button>
 								</c:if>
-								<c:if test="${currentPage ne p }">
+								<c:if test="${reportCurrentPage ne p }">
 									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 									<button class="btn btn-outline-dark">${p}</button>
 									</a>
 								</c:if>
 							</c:forEach>
-							<c:if test="${maxPage > currentPage }">
-								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+							<c:if test="${reportMaxPage > reportCurrentPage }">
+								<a href="/admin/${urlVal }?page=${reportCurrentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 								<button class="btn btn-outline-dark">
 			                		다음
 			                	</button>
 								</a>
 							</c:if>
-							<c:if test="${maxPage == currentPage }">
+							<c:if test="${reportMaxPage == reportCurrentPage }">
 								<button class="btn btn-outline-dark disabled">
 			                		다음
 			                	</button>
@@ -82,6 +83,7 @@
 		<div class="container col-lg-8">
 			<!-- 이 안에서 작업! 여기가 본문-->
 			<h1>신고 관리</h1>
+			<h4>처리된 글</h4>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -93,43 +95,43 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${reportList }" var="reportList" varStatus="i">
+					<c:forEach items="${completeList }" var="completeList" varStatus="i">
 					<tr>
-						<td>${reportList.boardNo}</td>
-						<td><a href="/admin/reportDetail?boardNo=${reportList.boardNo}">${reportList.commTitle }</a></td>
-						<td>${reportList.commWriter }</td>
-						<td>${reportList.cUpdateDate }</td>
-						<td></td>
+						<td>${completeList.boardNo}</td>
+						<td><a href="/admin/reportDetail?boardNo=${completeList.boardNo}">${completeList.commTitle }</a></td>
+						<td>${completeList.commWriter }</td>
+						<td>${completeList.cUpdateDate }</td>
+						<td>${completeList.reportResult }</td>
 					</tr>
 					</c:forEach>
 					<tr align="center" height="20">
 						<td colspan="7">
-							<c:if test="${currentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+							<c:if test="${completeCurrentPage != 1 }">
+								<a href="/admin/${urlVal }?page=${completeCurrentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 									<button class="btn btn-outline-dark">이전</button>
 								</a>
 							</c:if>
-							<c:if test="${currentPage == 1 }">
+							<c:if test="${completeCurrentPage == 1 }">
 									<button class="btn btn-outline-dark disabled">이전</button>
 							</c:if>
-							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
-								<c:if test="${currentPage eq p }">
+							<c:forEach var="p" begin="${completeStartNavi }" end="${completeEndNavi }">
+								<c:if test="${completeCurrentPage eq p }">
 									<button class="btn btn-dark">${p}</button>
 								</c:if>
-								<c:if test="${currentPage ne p }">
+								<c:if test="${completeCurrentPage ne p }">
 									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 									<button class="btn btn-outline-dark">${p}</button>
 									</a>
 								</c:if>
 							</c:forEach>
-							<c:if test="${maxPage > currentPage }">
-								<a href="/admin/${urlVal }?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+							<c:if test="${completeMaxPage > completeCurrentPage }">
+								<a href="/admin/${urlVal }?page=${completeCurrentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
 								<button class="btn btn-outline-dark">
 			                		다음
 			                	</button>
 								</a>
 							</c:if>
-							<c:if test="${maxPage == currentPage }">
+							<c:if test="${completeMaxPage == completeCurrentPage }">
 								<button class="btn btn-outline-dark disabled">
 			                		다음
 			                	</button>
@@ -139,9 +141,11 @@
 				</tbody>
 			</table>
 		</div>
+		<footer>
+							<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+		</footer>
 		</div>
 	</div>
-	<footer> </footer>
 	<script>
 	</script>
 </body>

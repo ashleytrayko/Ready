@@ -53,7 +53,7 @@
 	<div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
-			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:100%; height:300px">
+			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:100%; height:400px">
   				<div class="carousel-indicators">
    					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>

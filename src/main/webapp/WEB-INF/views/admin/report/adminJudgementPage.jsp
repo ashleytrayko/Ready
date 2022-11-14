@@ -7,7 +7,7 @@
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
-<title>공용jsp틀</title>
+<title>처분 페이지</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 </head>
@@ -25,9 +25,10 @@
 			<h1>판결 페이지</h1>
 			<div class="container">
 				<form action="/admin/punish" method="post">
+					<input type="hidden" id="boardNo" name="boardNo" value="${boardNo }">
 					<div class="form-group">
-						<label for="userNickname">닉네임</label> 
-						<input type="text" class="form-control mt-2 mb-3" id="userNickname" name="userNickname" value="${userId }">
+						<label for="userId">닉네임</label> 
+						<input type="text" class="form-control mt-2 mb-3" id="userId" name="userId" value="${userId }">
 					</div>
 					<div class="form-group">
 						<label for="punishment">처벌내용</label><br>
@@ -49,9 +50,11 @@
 				</form>
 			</div>
 		</div>
+			<footer>
+								<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+			</footer>
 	</div>
 		</div>
-	<footer> </footer>
 	<script>
 	</script>
 </body>

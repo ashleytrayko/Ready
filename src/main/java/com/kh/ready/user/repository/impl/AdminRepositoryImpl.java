@@ -82,13 +82,33 @@ public class AdminRepositoryImpl implements AdminRepository{
 		int result = session.update("AdminMapper.updateNotice", notice);
 		return result;
 	}
-
+	
 	@Override
-	public List<Comm> selectAllReport(int currentPage, int boardLimit) {
-		int offset = (currentPage - 1) * boardLimit;
-		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+	public int selectReportCount() {
+		int reportCount = session.selectOne("AdminMapper.selectReportCount");
+		return reportCount;
+	}
+	
+	@Override
+	public int selectCompleteCount() {
+		int completeCount = session.selectOne("AdminMapper.selectCompleteCount");
+		return completeCount;
+	}
+	
+	@Override
+	public List<Comm> selectAllReport(int reportCurrentPage, int reportBoardLimit) {
+		int offset = (reportCurrentPage - 1) * reportBoardLimit;
+		RowBounds rowBounds = new RowBounds(offset, reportBoardLimit);
 		List<Comm> reportList = session.selectList("AdminMapper.selectAllReport", null, rowBounds);
 		return reportList;
+	}
+	
+	@Override
+	public List<Comm> selectAllComplete(int completeCurrentPage, int completeBoardLimit) {
+		int offset = (completeCurrentPage - 1) * completeBoardLimit;
+		RowBounds rowBounds = new RowBounds(offset, completeBoardLimit);
+		List<Comm> completeList = session.selectList("AdminMapper.selectAllComplete", null, rowBounds);
+		return completeList;
 	}
 
 	@Override
@@ -132,6 +152,34 @@ public class AdminRepositoryImpl implements AdminRepository{
 		int result = session.delete("AdminMapper.deleteBookByNo", bookNo);
 		return result;
 	}
+
+	@Override
+	public int updateSuspendResultInComm(Integer boardNo) {
+		int commResult = session.update("AdminMapper.updateSuspendResultInComm", boardNo);
+		return commResult;
+	}
+
+	@Override
+	public int updateKickoutResultInComm(Integer boardNo) {
+		int commResult = session.update("AdminMapper.updateKickoutResultInComm", boardNo);
+		return commResult;
+	}
+
+	@Override
+	public int selectQuestionCount() {
+		int questionCount = session.selectOne("AdminMapper.selectQuestionCount");
+		return questionCount;
+	}
+
+	@Override
+	public int selectAnsweredCount() {
+		int answeredCount = session.selectOne("AdminMapper.selectAnsweredCount");
+		return answeredCount;
+	}
+
+
+
+
 
 
 

@@ -22,16 +22,34 @@
 		</div>
 		<div class="main-section">
 			<!-- 이 안에서 작업! 여기가 본문-->
+			<div class="container col-lg-8">
 			<h2>관리자님 안녕하세요.</h2>
 			<h5>관리자 메뉴입니다.</h5>
 			<h5>원하는 메뉴를 왼쪽에서 선택해주세요.</h5>
-			<p>오늘의 주요 업무</p>
-			<p>문의 n건, 처리 n-m건</p>
+			
+			<table class="table mt-5">
+				<thead>
+					<tr class="table-secondary border-bottom border-dark border-3">
+						<th colspan="4">오늘의 주요 업무</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>문의</td><td>${questionCount } 건</td><th>처리</th><td>${answeredCount } 건</td>
+					</tr>
+					<tr>
+						<th>신고</td><td>${reportCount } 건</td><th>처리</th><td>${completeCount } 건</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			</div>
 			</div>
 		</div>
-	</div>
 	
-	<footer></footer>
+	<footer>
+		<jsp:include page="../../views/main/footer.jsp"></jsp:include>
+	</footer>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 </body>

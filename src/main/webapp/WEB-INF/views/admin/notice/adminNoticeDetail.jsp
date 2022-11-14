@@ -7,7 +7,7 @@
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
-<title>공지사항 보기</title>
+<title>공지사항 상세보기</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet"
@@ -64,9 +64,11 @@
 					</tbody>
 				</table>
 			</div>
+		<footer> 
+							<jsp:include page="../../../views/main/footer.jsp"></jsp:include>
+		</footer>
 		</div>
 	</div>
-	<footer> </footer>
 	<script>
 		$('.summernote').summernote({
 			height : 150,

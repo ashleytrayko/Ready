@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 
@@ -18,10 +19,10 @@ public class CustomControllerAdvice {
 		return "exception/notFoundPage";
 	}
 	
-//	@ExceptionHandler({Throwable.class, Exception.class})
-//	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//	public String except() {
-//		return "exception/something";
-//	}
+	@ExceptionHandler(InternalServerError.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public String except() {
+		return "exception/something";
+	}
 	
 }

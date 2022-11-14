@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ready.book.domain.Book;
 import com.kh.ready.book.service.BookService;
-
+import com.kh.ready.user.domain.Banner;
 import com.kh.ready.user.domain.Notice;
 import com.kh.ready.user.service.AdminService;
 
@@ -35,7 +35,6 @@ public class HomeController {
 	private BookService bService;
 	@Autowired
 	private MypageService mService;
-	
 	@Autowired
 	private AdminService adminService;
 	
@@ -84,6 +83,9 @@ public class HomeController {
 		
 		Notice notice = adminService.selectRecentNotice();
 		mv.addObject("notice", notice);
+		
+		List<Banner> bannerList = adminService.showAllBanner();
+		mv.addObject("bannerList", bannerList);
 		
 		return mv;
 	}
