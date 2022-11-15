@@ -14,29 +14,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-		.page-title {
-			margin-left : 10%;
-		}
 		.card-body > a {
 			color : black;
 			text-decoration : none;
 		}
 		.review-section {
-			margin-left : 22%;
+			margin-left : 10%;
 		}
 		td > a {
 			color : black;
 			text-decoration : none;
 		}
 		a > button {
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+			color : white;
 		}
 		a > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 		#btn-b {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 	</style>
@@ -45,7 +43,7 @@
 </head>
 <body>
 	<div class="main-contents">
-		<div class="main-sidebar">
+		<div class="col-md-3">
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		
@@ -98,32 +96,34 @@
 				</c:if>
 			</div>
 			<br>
-			<div align="center">
-				<div>
-					<c:if test="${currentPage != 1 }">
-						<a href="/mypage/${urlVal }.kh?page=${currentPage - 1 }">
-							<button class="btn">이전</button>
-						</a>
-					</c:if>
-					<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
-						<c:if test="${currentPage eq p }">
-							<button class="btn" id="btn-b">${p }</button>
-						</c:if>
-						<c:if test="${currentPage ne p }">
-							<a href="/mypage/${urlVal }.kh?page=${p }">
-								<button class="btn">${p }</button>
+			<c:if test="${!empty rList }">
+				<div align="center">
+					<div>
+						<c:if test="${currentPage != 1 }">
+							<a href="/mypage/${urlVal }.kh?page=${currentPage - 1 }">
+								<button class="btn">이전</button>
 							</a>
 						</c:if>
-					</c:forEach>
-					<c:if test="${maxPage > currentPage }">
-						<a href="/mypage/${urlVal }.kh?page=${currentPage + 1 }">
-							<button class="btn">다음</button>
-						</a>
-					</c:if>
+						<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
+							<c:if test="${currentPage eq p }">
+								<button class="btn" id="btn-b">${p }</button>
+							</c:if>
+							<c:if test="${currentPage ne p }">
+								<a href="/mypage/${urlVal }.kh?page=${p }">
+									<button class="btn">${p }</button>
+								</a>
+							</c:if>
+						</c:forEach>
+						<c:if test="${maxPage > currentPage }">
+							<a href="/mypage/${urlVal }.kh?page=${currentPage + 1 }">
+								<button class="btn">다음</button>
+							</a>
+						</c:if>
+					</div>
 				</div>
-			</div>
+			</c:if>
 		</div>
-		<div class="main-sidebar">side Bar</div>
+		<div class="col-md-3"></div>
 	</div>
 	<div class="main-footer">
 		<jsp:include page="../main/footer.jsp"></jsp:include>

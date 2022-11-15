@@ -26,15 +26,15 @@
 			text-decoration : none;
 		}
 		.btn-section > button {
-			
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+			color : white;
 		}
 		.btn-section > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 		#btn-b {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 	</style>

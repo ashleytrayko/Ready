@@ -15,33 +15,29 @@
 	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 	<style>
-		.page-title {
-			margin-left : 10%;
-		}
-		.tb-section {
-			width : 75%;
-			margin-left : 10%;
-		}
 		td > a {
 			color : black;
 			text-decoration : none;
 		}
 		a > button {
-			background-color:#E4DDD3;
+			background-color:#AA7139;
 		}
 		a > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 		#btn-b {
-			background-color:#D8BB9C;
+			background-color:#804A15;
+			color : white;
+		}
+		th {
 			color : white;
 		}
 	</style>
 </head>
 <body>
 	<div class="main-contents">
-		<div class="main-sidebar">
+		<div class="col-md-3">
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
@@ -53,7 +49,7 @@
 			<div class="tb-section">
 				<table class="table table-hover align-middle" >
 					<thead>
-						<tr align="center" bgcolor="#E4DDD3">
+						<tr align="center" bgcolor="#AA7139">
 							<th>상품정보</th>
 							<th>구매일자</th>
 							<th>주문번호</th>
@@ -63,7 +59,7 @@
 					</thead>
 					<tbody>
 						<c:if test="${empty oList}">
-							<h3>주문한 내역이 없습니다.</h3>
+							<td colspan="5" align="center">주문한 내역이 없습니다.</td>
 						</c:if>
 						<c:if test="${!empty oList}">
 							<c:forEach items="${oList }" var="order" varStatus="i">
@@ -111,30 +107,32 @@
 			<br>
 			<div align="center">
 				<div>
-					<c:if test="${currentPage != 1 }">
-						<a href="/mypage/${urlVal }.kh?page=${currentPage - 1 }">
-							<button class="btn">이전</button>
-						</a>
-					</c:if>
-					<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
-						<c:if test="${currentPage eq p }">
-							<button class="btn" id="btn-b">${p }</button>
-						</c:if>
-						<c:if test="${currentPage ne p }">
-							<a href="/mypage/${urlVal }.kh?page=${p }">
-								<button class="btn">${p }</button>
+					<c:if test="${!empty oList }">
+						<c:if test="${currentPage != 1 }">
+							<a href="/mypage/${urlVal }.kh?page=${currentPage - 1 }">
+								<button class="btn">이전</button>
 							</a>
 						</c:if>
-					</c:forEach>
-					<c:if test="${maxPage > currentPage }">
-						<a href="/mypage/${urlVal }.kh?page=${currentPage + 1 }">
-							<button class="btn">다음</button>
-						</a>
+						<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
+							<c:if test="${currentPage eq p }">
+								<button class="btn" id="btn-b">${p }</button>
+							</c:if>
+							<c:if test="${currentPage ne p }">
+								<a href="/mypage/${urlVal }.kh?page=${p }">
+									<button class="btn">${p }</button>
+								</a>
+							</c:if>
+						</c:forEach>
+						<c:if test="${maxPage > currentPage }">
+							<a href="/mypage/${urlVal }.kh?page=${currentPage + 1 }">
+								<button class="btn">다음</button>
+							</a>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
 		</div>
-		<div class="main-sidebar">
+		<div class="col-md-3">
 		</div>
 	</div>
 	<div class="main-footer">

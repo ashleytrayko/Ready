@@ -27,11 +27,13 @@
 			float : left;
 		}
 		.btn-section > button {
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+         	color : white;
 		}
 		.btn-section > button:hover {
-			background-color:#D8BB9C;
-			color : white;
+			background-color:#804A15;
+         	color : white;
+         	border-color : #804A15;
 		}
 	</style>
 

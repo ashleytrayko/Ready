@@ -15,25 +15,27 @@
 <title>Insert title here</title>
 	<style>
 		.page-title {
-			margin-left : 10%;
 		}
 		.tb-section {
 			width : 75%;
-			margin-left : 10%;
 		}
 		td > a {
 			color : black;
 			text-decoration : none;
 		}
 		a > button {
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+			color : white;
 		}
 		a > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 		#btn-b {
-			background-color:#D8BB9C;
+			background-color:#804A15;
+			color : white;
+		}
+		th {
 			color : white;
 		}
 	</style>
@@ -42,7 +44,7 @@
 </head>
 <body>
 	<div class="main-contents">
-		<div class="main-sidebar">
+		<div class="col-md-3">
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
@@ -54,7 +56,7 @@
 			<div class="tb-section">
 				<table class="table table-hover align-middle">
 					<thead>
-						<tr align="center" bgcolor="#E4DDD3">
+						<tr align="center" bgcolor="#AA7139">
 							<th>번호</th>
 							<th colspan="2">제목</th>
 							<th>날짜</th>
@@ -77,12 +79,13 @@
 						</c:if>
 						<c:if test="${empty cList }">
 							<tr>
-								<td colspan="7" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+								<td colspan="6" align="center"><b>데이터가 존재하지 않습니다.</b></td>
 							</tr>
 						</c:if>
 					</tbody>
 				</table>
 				<br>
+				<c:if test="${!empty cList }">
 						<div align="center">
 							<div>
 								<c:if test="${currentPage != 1 }">
@@ -107,9 +110,10 @@
 								</c:if>
 							</div>
 						</div>
-						
-
+					</c:if>
 			</div>
+		</div>
+		<div class="col-md=3">
 		</div>
 	</div>
 	<div class="main-footer">

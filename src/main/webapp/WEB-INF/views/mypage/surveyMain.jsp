@@ -18,10 +18,15 @@
 			margin-left : 8%;
 		}
 		.btn-section > button {
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+         	color : white;
 		}
 		.btn-section > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
+         	color : white;
+        	border-color : #804A15;
+		}
+		th {
 			color : white;
 		}
 	</style>
@@ -41,7 +46,7 @@
 				<c:if test = "${!empty survey}">
 					<table class="table table-bordered">
 						<thead>
-							<tr bgcolor="#E4DDD3">
+							<tr bgcolor="#AA7139">
 								<th>성별</th>
 								<th>연애여부</th>
 								<th>취미</th>
@@ -69,7 +74,7 @@
 					<c:if test= "${empty survey }">
 						<h5>등록된 설문지가 없습니다.</h5>
 						<div align="center" class="btn-section">
-							<button type="button" class="btn btn-outline-secondary" onclick="registSurvey()">등록하기</button>
+							<button type="button" class="btn" onclick="registSurvey()">등록하기</button>
 						</div>
 					</c:if>
 			</div>
