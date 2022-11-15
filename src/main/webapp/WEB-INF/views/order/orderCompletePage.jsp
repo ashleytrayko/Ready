@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -271,25 +272,25 @@
         </div>
         <c:if test="${orderInfo.orderState eq 'N'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="cancelPay(`${orderInfo.orderId }`, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
-	            <button class="btn btn-primary btm-btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
+	            <button class="btn" onclick="cancelPay(`${orderInfo.orderId }`, ${orderInfo.totalPrice},`${orderInfo.impUid}`);">환불하기</button>
+	            <button class="btn" onclick="confirmPurchase(${salePriceSum});">구매 확정</button>
 	       	</div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'Y'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">환불하기</button>
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
+	            <button class="btn" onclick="alert('이미 구매 확정된 주문입니다!');">환불하기</button>
+	            <button class="btn" onclick="alert('이미 구매 확정된 주문입니다!');">구매 확정</button>
 	        </div>
        	</c:if>
        	<c:if test="${orderInfo.orderState eq 'R'}">
 	        <div class="div-confirmPurchase">
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 전액 환불된 주문입니다!');">환불하기</button>
-	            <button class="btn btn-primary btm-btn" onclick="alert('이미 전액 환불된 주문입니다!');">구매 확정</button>
+	            <button class="btn" onclick="alert('이미 전액 환불된 주문입니다!');">환불하기</button>
+	            <button class="btn" onclick="alert('이미 전액 환불된 주문입니다!');">구매 확정</button>
 	        </div>
        	</c:if>
-        <div id="order-btn">
-            <button class="btn btn-secondary btm-btn" onclick="location.href='/';">메인으로</button>
-            <button class="btn btn-primary btm-btn" onclick="history.go(-2);">계속 쇼핑하기</button>
+        <div id="div-order-btn">
+            <button class="btn" id="goback-btn" onclick="location.href='/';">메인으로</button>
+            <button class="btn" id="order-btn-complete" onclick="location.href='/book/category.kh?category=Best';">쇼핑 하러가기</button>
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
@@ -299,7 +300,7 @@ window.onload = function(){
 	
 	if(paymethod == "card"){
 		$("#payMethod").val("신용카드");
-	} else if(paymethod == "kakaopay"){
+	} else if(paymethod == "kakaopay" || paymethod == "point"){
 		$("#payMethod").val("카카오 페이");
 	} else if(paymethod == "trans"){
 		$("#payMethod").val("실시간 계좌 이체");
@@ -350,8 +351,7 @@ window.onload = function(){
 		
 		const confirmCancelPay = confirm("정말 환불을 진행하시겠습니까? \n마일리지를 되돌려 받을 수 없습니다.");
 		const orderId2 = ${orderInfo.orderId };
-		console.log(orderId2);
-		console.log(orderId);
+
 		if(confirmCancelPay){
 			$.ajax({
 				url : "/refund/doRefund",
