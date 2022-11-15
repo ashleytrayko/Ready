@@ -27,9 +27,10 @@
 		<div class="main-section">
 		<div class="faq-div">
 				<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
-					<h1>내 문의글</h1>
+					<h2 class="list-title">내 문의글</h2>
 				</c:if>
 				<c:if test="${principal.user.userRole ne 'ROLE_USER' }">
+					<h2 class="list-title">FAQ 관리</h2>
 				</c:if>
 				<table border="1" class="list-table center">
 					<tr class="faq-header">
@@ -59,7 +60,7 @@
 							<tr class="tr-line">
 								<td>
 									<c:if test="${question.qCategory eq 'user'}">회원정보</c:if>
-									<c:if test="${question.qCategory eq 'order'}">주문정보</c:if>
+									<c:if test="${question.qCategory eq 'order'}">교환/환불</c:if>
 									<c:if test="${question.qCategory eq 'item'}">상품관련</c:if>
 									<c:if test="${question.qCategory eq 'delivery'}">배송관련</c:if>
 									<c:if test="${question.qCategory eq 'etc'}">기타문의</c:if>
@@ -78,20 +79,20 @@
 							</tr>
 						</c:forEach>
 						<tr align="center" height="20">
-						<td colspan="8">
+						<td colspan="8" class="paging-td">
 							<c:if test="${currentPage != 1 }">
-								<a href="/que/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a class="a-button" href="/que/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
 									<b>${p }</b>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/que/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a class="a-button" href="/que/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/que/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a class="a-button" href="/que/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 							</c:if>
 						</td>
 					</tr>
@@ -109,18 +110,18 @@
 									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
 								</select>
 								<input type="text" name="searchValue" value="${searchValue }">
-								<input type="submit" value="검색">
+								<input class="rvs-sig-btn" type="submit" value="검색">
 							</form>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="8" align="right">
-								<button onclick="location.href='/que/faq01.kh'">FAQ 리스트</button>
+								<button class="rvs-sig-btn rvs-sig-btn-lg" onclick="location.href='/que/faq01.kh'">FAQ 목록</button>
 								<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
-									<button onclick="location.href='/que/viewWrite.kh'">1:1문의하기</button>
+									<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWrite.kh'">문의글작성</button>
 								</c:if>
 								<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
-									<button onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
+									<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
 								</c:if>
 						</td>
 					</tr>	

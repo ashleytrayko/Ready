@@ -34,7 +34,7 @@
 	</resultMap>
 	
 	<insert id="insertBoard">
-		INSERT INTO COMMUNITY_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{commWriter}, #{commTitle}, #{commContents}, #{commFilename}, #{commFileRename}, #{commFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{commId})
+		INSERT INTO COMMUNITY_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{commWriter}, #{commTitle}, #{commContents}, #{commFilename}, #{commFileRename}, #{commFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{commId}, #{reportResult})
 	</insert>
 	<update id="updateCount">
 		UPDATE COMMUNITY_TBL SET C_COUNT = C_COUNT + 1 WHERE BOARD_NO = #{boardNo}

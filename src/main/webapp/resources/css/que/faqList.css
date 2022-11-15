@@ -3,6 +3,7 @@
 	border-top:1px solid black;
 	border-bottom:1px solid black;
 	height:50px;
+	background-color:#D8BB9C;
 }
 .faq-div {
 	text-align:center;
@@ -10,10 +11,11 @@
 .faq-category {
 	background-color:#E4DDD3;
 	width:100%;
-	height:40px;
+	height:50px;
 	text-align:center;
-	line-height:40px;
+	line-height:50px;
 	font-weight:bold;
+	font-size:18px;
 }
 .faq-category:hover {
 	cursor:pointer;
@@ -36,4 +38,14 @@
 }
 button + button {
 	margin-left:10px;
+}
+.qStatus-n{
+	line-height:65px;
+	color:red;
+	margin-bottom:0px;
+}
+.qStatus-y{
+	line-height:65px;
+	color:blue;
+	margin-bottom:0px;
 }

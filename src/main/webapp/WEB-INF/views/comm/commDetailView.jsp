@@ -18,52 +18,53 @@
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
+<link rel="stylesheet" href="/resources/css/que/faqList.css">
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../main/commHeader.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 			<div class="list-div">
-				<h2 class="list-title">게시판 상세글</h2>
+				<h2 class="list-title">게시글 상세</h2>
 				<table align="center" border="1" class="table-style">
-					<tr>
+					<tr class="detail-comm">
 						<!-- <td>제목</td> -->
 						<td colspan="4" class="th-left detail-title">${comm.commTitle }</td>
 						<!-- <td>작성일</td> -->
 						<%-- <td>${comm.cCreateDate }</td> --%>
 					</tr>
-					<tr>
+					<tr class="detail-comm">
 						<!-- <td>작성자</td> -->
 						<td colspan="3" class="th-left detail-writer" width="80%">${comm.commWriter }</td>
 						<!-- <td>조회</td> -->
 						<td width="20%">${comm.cCreateDate }&nbsp;&nbsp;&nbsp;조회&nbsp;&nbsp;${comm.cCount }</td>
 					</tr>
-					<tr class="detail-contents">
+					<tr>
 						<td class="detail-content" colspan="4" align="left">${comm.commContents }</td>
 					</tr>
 					<tr>
-						<td colspan="4">추천수 : ${comm.cLike }</td>
+						<td colspan="4">추천수 : ${comm.cLike }&nbsp;&nbsp;<img id="likeBtn" class="thumbs-img" src="../resources/images/thumbs-up.png"></td>
 						<%-- <td>${comm.cLike }</td> --%>
 					</tr>
-					<tr>
-						<td colspan="4"><!-- <i class="fa-regular fa-thumbs-up fa-lg"></i> --><button id="likeBtn">추천하기</button></td>
-					</tr>
+					<!-- <tr>
+						<td colspan="4"><img id="likeBtn" class="thumbs-img" src="../resources/images/thumbs-up.png"></td>
+					</tr> -->
 					<c:if test="${principal.user.userId eq comm.commId }">
 						<tr>
 							<td colspan="4" align="center">
-								<a href="/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}">글 수정</a>
-								<a href="#" onclick="commRemove(${page});">삭제하기</a>
+								<button class="rvs-sig-btn" onclick="commRemove(${page});">삭제</button>
+								<button class="sig-btn" onclick="location.href='/comm/modifyView.kh?boardNo=${comm.boardNo }&page=${page}'">수정</button>
 							</td>
 						</tr>
 					</c:if>
 					<tr>
 						<td colspan="4" align="right" class="detail-content-bot">
-							<button onclick="location.href = '/comm/list.kh?page=${page}'">리스트</button>
+							<a class="a-button" href="/comm/list.kh?page=${page}">리스트</a>
 							<%-- <button onclick="reportBoard();">신고</button>
 							<a href="#" onclick="commRemove(${page});">삭제하기</a> --%>
-							<a href="#" onclick="reportBoard(${page});">신고</a>
+							<a class="a-button report-btn" href="#" onclick="reportBoard(${page});">신고</a>
 						</td>
 					</tr>
 				</table>
@@ -81,10 +82,10 @@
 							</thead>
 						<tr>
 							<td>
-								<textarea rows="3" cols="100" name="rContents" id="rContents"></textarea>
+								<textarea align="left" rows="3" cols="100" name="rContents" id="rContents"></textarea>
 							</td>
 							<td align="center">
-								<button width="100" id="rSubmit">등록</button>
+								<button id="rSubmit" class="sig-btn">등록</button>
 							</td>
 						</tr>
 					</table>
@@ -96,7 +97,7 @@
 					</table>
 			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
 	<footer>
 		
@@ -119,16 +120,16 @@
 					if(cRList != null) {
 						console.log(cRList);
 						for(var i in cRList) {
-							var $tr = $("<tr class='tr-line th-left'>");
-							var $rWriter = $("<td width='15%'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
+							var $tr = $("<tr class='th-line th-left'>");
+							var $rWriter = $("<td width='13%'>").text(cRList[i].rWriter);	// text로 하면 태그작동x, html로 하면 태그작동o
 							var $rContents = $("<td width='55%'>").text(cRList[i].rContents);
-							var $rCreateDate = $("<td width='15%' align='center'>").text(cRList[i].rCreateDate);
+							var $rCreateDate = $("<td width='13%' align='center'>").text(cRList[i].rCreateDate);
 /* 							var $btnArea = $("<td width='80'>").append("<button href='javascript:void(0);' id='rCo1' onclick='commentView1(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button>"); */
 							var $btnArea = "";
 							if(userId == cRList[i].rWriter) {
-								$btnArea = $("<td width='15%' align='center'>")
-											 	.append("<button href='javascript:void(0);' class='btn-click' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+",1,"+boardNo+"); this.onclick = null;'>수정</button> ")
-												.append("<a href='javascript:void(0);' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</a>");
+								$btnArea = $("<td width='19%' align='center'>")
+												.append("<button href='javascript:void(0);' class='rvs-sig-btn' onclick='removeReplyAjax("+cRList[i].cReplyNo+")'>삭제</button>")
+											 	.append("<button href='javascript:void(0);' class='btn-click sig-btn' onclick='modifyView(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+",1,"+boardNo+"); this.onclick = null;'>수정</button> ");
 												/* .append("<button href='javascript:void(0);' id='rCo' onclick='commentView(this,\""+cRList[i].cReplyNo+")'>답글</button>"); */
 											 	/* 대댓글 .append("<button href='javascript:void(0);' id='rCo2' onclick='commentView2(this,\""+cRList[i].rContents+"\","+cRList[i].cReplyNo+")'>답글</button> "); */
 							}
@@ -208,9 +209,10 @@
 		function modifyView(obj, rContents, cReplyNo, page, boardNo) {
 			event.preventDefault();
 			var $tr = $("<tr class='tr-line tr-left'>");
-			$tr.append("<td width='15%'></td>");
+			$tr.append("<td width='13%'></td>");
 			$tr.append("<td width='55%'><input type='text' size='50' value='"+rContents+"'></td>");
-			$tr.append("<td colspan='2' width='15%' align='left' class='th-left'><button onclick='modifyReply(this, "+cReplyNo+", "+page+", "+boardNo+");'>수정</button></td>");
+			$tr.append("<td width='13%' align='left' class='th-left'><button class='sig-btn' onclick='modifyReply(this, "+cReplyNo+", "+page+", "+boardNo+");'>수정</button></td>");
+			$tr.append("<td width='19%' align='left' class='th-left'></td>");
 			$(obj).parent().parent().after($tr);
 			$('.btn-click').off('click');
 		}

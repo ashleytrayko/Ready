@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +17,7 @@
 <body>
 	<jsp:include page="../main/commHeader.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 		<!-- 이 안에서 작업! 여기가 본문-->
 			<div class="list-div">
@@ -50,20 +49,26 @@
 							</tr>
 						</c:forEach>
 						<tr class="center" height="20">
-						<td colspan="7">
+						<td colspan="7" class="paging-td">
 							<c:if test="${currentPage != 1 }">
-								<a href="/comm/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a class="a-button" href="/comm/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									[이전]
+								</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
 									<b>${p }</b>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a href="/comm/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a class="a-button" href="/comm/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+										${p }
+									</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a href="/comm/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a class="a-button" href="/comm/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									[다음]
+								</a>
 							</c:if>
 						</td>
 					</tr>
@@ -83,19 +88,19 @@
 									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
 								</select>
 								<input type="text" name="searchValue" value="${searchValue }">
-								<input type="submit" value="검색">
+								<input class="rvs-sig-btn" type="submit" value="검색">
 							</form>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="7" align="right">
-							<button onclick="location.href='/comm/viewWrite.kh'">글쓰기</button>
+							<button class="sig-btn" onclick="location.href='/comm/viewWrite.kh'">글쓰기</button>
 						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
 	<footer>
 	<div class="main-footer">

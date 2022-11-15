@@ -16,28 +16,30 @@
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
+<link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바
+		<div class="main-sidebar">
 		
 		</div>
 		<div class="main-section">
 			<div class="faq-div">
-				<h2>1:1문의글</h2>
-				<table align="center" border="1" width="500">
-					<tr>
+				<h2 class="list-title">1:1문의글</h2>
+				<table align="center" class="table-style">
+					<tr class="detail-comm">
 						<th>유형</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>등록일</th>
 					</tr>
-					<tr>
+					<tr class="detail-comm">
 						<td>
 							<c:if test="${que.qCategory eq 'user'}">회원정보</c:if>
-							<c:if test="${que.qCategory eq 'order'}">주문정보</c:if>
+							<c:if test="${que.qCategory eq 'order'}">교환/환불</c:if>
 							<c:if test="${que.qCategory eq 'item'}">상품관련</c:if>
 							<c:if test="${que.qCategory eq 'delivery'}">배송관련</c:if>
 							<c:if test="${que.qCategory eq 'etc'}">기타문의</c:if>
@@ -47,12 +49,12 @@
 						<td>${que.qEnrollDate }</td>
 					</tr>
 					<tr>
-						<td colspan="4" align="left">${que.queContents }</td>
+						<td class="detail-content" colspan="4" align="left">${que.queContents }</td>
 					</tr>
 					<c:if test="${!empty que.qAnswer }">
-						<tr>
-							<td colspan="4">
-								<h2>답변</h2>
+						<tr class="border-top">
+							<td colspan="4" class="border-top">
+								<h2 class="list-title">답변</h2>
 							</td>
 						</tr>
 						<tr>
@@ -60,18 +62,33 @@
 						</tr>
 					</c:if>
 					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
-						<c:if test="${que.qStatus ne 'F' }">
-							<tr>
-								<td colspan="4" align="center">
-									<a href="/que/answerView.kh?queNo=${que.queNo }&page=${page}">답변등록</a>
-									<a href="#" onclick="deleteQue(${page});">삭제</a>
-								</td>
-							</tr>
-						</c:if>
+						<tr>
+							<td colspan="4" align="center">
+								<button class="rvs-sig-btn rvs-sig-btn-lg" onclick="deleteQue(${page});">삭제</button>
+								<c:if test="${que.qStatus ne 'F' }">
+									<c:if test="${que.qStatus eq 'N' }">
+										<button class="sig-btn sig-btn-lg" onclick="location.href='/que/answerView.kh?queNo=${que.queNo }&page=${page}'">답변등록</button>
+									</c:if>
+									<c:if test="${que.qStatus eq 'Y' }">
+										<button class="sig-btn sig-btn-lg" onclick="location.href='/que/answerView.kh?queNo=${que.queNo }&page=${page}'">답변수정</button>
+									</c:if>
+								</c:if>
+							</td>
+						</tr>
 					</c:if>
 					<tr>
-						<td colspan="4" align="right">
-							<button onclick="location.href = '/que/myList.kh'">리스트</button>
+						<td colspan="4" align="right" class="detail-content-bot">
+							<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
+								<a class="a-button" href="/que/myList.kh">리스트</a>
+							</c:if>
+							<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+								<c:if test="${que.qStatus eq 'F'}">
+									<a class="a-button" href="/que/myList.kh">리스트</a>
+								</c:if>
+								<c:if test="${que.qStatus ne 'F'}">
+									<a class="a-button" href="/que/manageList.kh">리스트</a>
+								</c:if>
+							</c:if>
 						</td>
 					</tr>
 				</table>
@@ -79,7 +96,7 @@
 		
 		
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
 	<footer>
 		

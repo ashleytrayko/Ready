@@ -43,7 +43,7 @@ public class QuestionController {
 			, HttpServletRequest request) {
 		try {
 			int result = qService.registerFAQ(que);
-			mv.setViewName("redirect:/que/faq01.kh");
+			mv.setViewName("redirect:/que/myList.kh");
 		} catch (Exception e) {
 				e.printStackTrace();
 				mv.addObject("msg", e.getMessage());
