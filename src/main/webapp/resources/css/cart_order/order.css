@@ -1,5 +1,29 @@
 @charset "UTF-8";
 
+.addr-info-td > .btn-section2 > button {
+    background-color: #E4DDD3;
+    color : #804A15;
+    border-color : #E4DDD3;
+    
+}
+.addr-info-td> .btn-section2 > button:hover {
+     background-color:#E4DDD3;
+     color : #804A15;
+     border-color : #804A15;
+}
+
+td > .div-floatLeft > button {
+    background-color: #E4DDD3;
+    color : #804A15;
+    border-color : #E4DDD3;
+    
+}
+td> .div-floatLeft > button:hover {
+     background-color:#E4DDD3;
+     color : #804A15;
+     border-color : #804A15;
+}
+
 #order-title{
     text-align : center;
 }
@@ -20,6 +44,11 @@ td{
     padding-left : 250px;
     padding-right : 250px;
     margin : 0 auto;
+}
+#discountArrow{
+		width:10px;
+		height:11px;
+		margin-bottom:2px;
 }
 .buyer-data-list{
     width : 1400px;
@@ -76,7 +105,7 @@ td{
     text-align : center;
 }
 .orderinfo-table-header{
-    background-color: lightgray;
+    background-color: #E4DDD3;
     height : 60px;
     border: 1px solid #e2c9a6;
 }
@@ -85,18 +114,18 @@ td{
     border: 1px solid #e2c9a6;
 }
 #orderinfo-table-left{
-    background-color: lightgray;
+    background-color: #E4DDD3;
     border-bottom: 1px solid #e2c9a6;
 }
 #orderinfo-table-right{
-    background-color: lightgray;
+    background-color: #E4DDD3;
     border-bottom: 1px solid #e2c9a6;
 }
 #infocopy-btn{
 	margin-left : 10px;
     width: 100px;
     height: 30px;
-    font-size :10px;
+    font-size :11px;
 }
 .searchAddr-btn{
     margin-left: 5px;

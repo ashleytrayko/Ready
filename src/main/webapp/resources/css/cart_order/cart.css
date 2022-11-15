@@ -1,6 +1,29 @@
 @charset "UTF-8";
 
-
+    #cart-btn1 > .btn-section1 > button {
+       background-color:#AA7139;
+       color : white;
+    }
+    #cart-btn1 > .btn-section1 > button:hover {
+       background-color: #804A15;
+       color : white;
+       border-color : #804A15;
+    }
+    #cart-btn1 > .btn-section2 > button {
+       background-color:white;
+       color : #804A15;
+       border-color : #804A15;
+    }
+    #cart-btn1 > .btn-section2 > button:hover {
+       background-color:#E4DDD3;
+       color : #804A15;
+       border-color : #E4DDD3;
+    }
+	#discountArrow{
+		width:10px;
+		height:11px;
+		margin-bottom:2px;
+	}
     #cart-title{
         text-align : center;
     }
@@ -47,7 +70,7 @@
     }
     .cartinfo-table-header{
         height : 60px;
-        background-color: lightgray;
+        background-color: #E4DDD3;
         border: 1px solid #e2c9a6;
     }
     .cartinfo-table-body{
@@ -55,11 +78,11 @@
         border: 1px solid #e2c9a6;
     }
     #cartinfo-table-left{
-        background-color: lightgray;
+        background-color: #E4DDD3;
         border-bottom: 1px solid #e2c9a6;
     }
     #cartinfo-table-right{
-        background-color: lightgray;
+        background-color: #E4DDD3;
         border-bottom: 1px solid #e2c9a6;
     }
     .product-delbtn{
@@ -74,6 +97,13 @@
       	text-align : center;
       	justify-content: center;
       	white-space : nowrap;
+      	background-color: white;
+        color : black;
+        border : lightgray solid 0.3px;
+    }
+    #quantity-btn:hover {
+    	background-color: #E4DDD3;
+    	color : #804A15;
     }
     #del-btn{
         width: 85px;
@@ -84,6 +114,13 @@
       	align-items: center;
      	justify-content: center;
       	white-space : nowrap;
+      	background-color: white;
+        color : black;
+        border : lightgray solid 0.3px;
+    }
+    #del-btn:hover {
+    	background-color: #E4DDD3;
+    	color : #804A15;
     }
     .product-img{
         margin-top: 5%;
@@ -110,7 +147,7 @@
     
     .arrow_box .deliveryGuide-span{
 	    visibility: hidden;
-		width: 200px;
+		width: 210px;
 		background-color: black;
 		color: white;
 		text-align: center;
@@ -124,7 +161,6 @@
     }
     .arrow_box:hover .deliveryGuide-span{
     	visibility: visible;
-    	
     }
     
     .arrow_box .deliveryGuide-span::after{
