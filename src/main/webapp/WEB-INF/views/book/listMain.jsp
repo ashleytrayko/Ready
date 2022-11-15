@@ -12,6 +12,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
+		.page-title {
+			margin-left : 10%;
+		}
+		.view-section {
+			margin-left : 20%;
+		}
 		#book-area {
 			float : left;
 			margin-right : 6px;
@@ -27,15 +33,15 @@
 			text-decoration : none;
 		}
 		.btn-section > button {
-			
-			background-color:#E4DDD3;
+			background-color:#AA7139;
+			color : white;
 		}
 		.btn-section > button:hover {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 		#btn-b {
-			background-color:#D8BB9C;
+			background-color:#804A15;
 			color : white;
 		}
 	</style>
@@ -44,23 +50,35 @@
 </head>
 <body>
 <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 		<c:if test="${category eq 'Best'}">
-			<h3>Read'y 베스트셀러</h3>
+			<div class="page-title">
+				<h3>Read'y 베스트셀러</h3>
+			</div>
 		</c:if>
 		<c:if test="${category eq 'New'}">
-			<h3>Read'y 신작도서</h3>
+			<div class="page-title">
+				<h3>Read'y 신작도서</h3>
+			</div>
 		</c:if>
 		<c:if test="${category eq '소설'}">
-			<h3>Read'y 소설</h3>
+			<div class="page-title">
+				<h3>Read'y 소설</h3>
+			</div>
 		</c:if>
 		<c:if test="${category eq '만화'}">
-			<h3>Read'y 만화</h3>
+			<div class="page-title">
+				<h3>Read'y 만화</h3>
+			</div>
 		</c:if>
 		<c:if test="${category eq 'Study'}">
-			<h3>Read'y 공부도서</h3>
+			<div class="page-title">
+				<h3>Read'y 공부도서</h3>
+			</div>
 		</c:if>
+		<br><br><br>
+		<div class="view-section">
 			<c:if test="${!empty bList }">
 				<c:forEach items="${bList }" var="book" varStatus="i">
 					<div class="card mb-3" style="width: 700px;">
@@ -86,10 +104,11 @@
 					<br>
 				</c:forEach>		
 			</c:if>
+		</div>
 			        <div align="center">
 			            <div class="page-section">
 			                <c:if test="${currentPage != 1}">
-			                    <a href="/book/category.kh?page=${currentPage - 1 }" class="btn-section">
+			                    <a href="/book/category.kh?page=${currentPage - 1 }&category=${category }" class="btn-section">
 			                    	<button class="btn">이전</button>
 			                   </a>
 			                </c:if>

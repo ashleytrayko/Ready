@@ -19,7 +19,7 @@
 			border-bottom : 1px solid #dcdcdc;
 		}
 		.review-container {
-			background-color : #E4DDD3;
+			background-color : #FFFAEA;
 		}
 		.product {
 			border-top : 1px solid white;
@@ -30,7 +30,8 @@
 			float : left;
 		}
 		#container2 {
-			margin : auto;
+			margin-left : 10%;
+			padding-top : 5%;
 			width : 30%;
 		}
 		#product2 {
@@ -39,7 +40,7 @@
 		.review-area{
 			width : 100%;
 			display : flex;
-			background-color : #E4DDD3;
+			background-color : #FFFAEA;
 		}
 		.review-text {
 			width : 100%;
@@ -60,6 +61,59 @@
 		#insertReview-btn {
 			margin-left : 25%;
 			width : 122px;
+			background-color:#AA7139;
+			color : white;
+		}
+		#insertReview-btn:hover {
+			background-color:#804A15;
+			color : white;
+		}
+		#pur-btn {
+			background-color:#AA7139;
+			color : white;
+			width : 177px;
+		}
+		#pur-btn:hover {
+			background-color:#804A15;
+			color : white;
+		}
+		#insertCart-btn {
+			background-color:white;
+         	color : #804A15;
+         	border-color : #804A15;
+         	width : 177px;
+		}
+		#insertCart-btn:hover {
+			background-color:#E4DDD3;
+         	color : #804A15;
+         	border-color : #E4DDD3;	
+		}
+		#btn-mr {
+			background-color:#AA7139;
+			color : white;
+		}
+		#btn-mr:hover {
+			background-color:#804A15;
+			color : white;
+		}
+		#rev-del {
+			background-color:white;
+         	color : #804A15;
+         	border-color : #804A15;
+		}
+		#rev-del:hover {
+			background-color:#E4DDD3;
+         	color : #804A15;
+         	border-color : #E4DDD3;
+		}
+		#rev-mod {
+			background-color:#AA7139;
+			color : white;
+			margin-left : 20px;
+		}
+		#rev-mod:hover {
+			background-color:#804A15;
+			color : white;
 		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -69,7 +123,7 @@
 	<input type="hidden" id="bookNo" name="bookNo" value="${book.bookNo }">
 	<input type="hidden" id="productPrice"  name="productPrice" value="${book.priceSales }">
     <div class="main-contents">
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="col-md-3"></div>
 		<div class="main-section">
 			<div  id="product2">
 		      	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250" id="container1">
@@ -87,10 +141,10 @@
 					<div>주문수량</div>
 					<input type="text" id="productCount" value="1">
 					<br><br>
-					<button type="button" class="btn btn-outline-secondary" onclick="order(${book.bookNo});">구매하기</button>
+					<button type="button" class="btn" onclick="order(${book.bookNo});" id="pur-btn">구매하기</button>
 					<br>
 					<br>
-					<button type="button" class="btn btn-secondary" id="insertCart-btn">장바구니</button>
+					<button type="button" class="btn" id="insertCart-btn">장바구니</button>
 				</div>
 				<br>
 		    </div>
@@ -116,7 +170,7 @@
 					<c:if test="${!empty principal }">
 					<br>
 						<label>평점  : </label>
-						<select name="score">
+						<select name="score" id="score">
 							<option value="1">★☆☆☆☆</option>
 							<option value="2">★★☆☆☆</option>
 							<option value="3">★★★☆☆</option>
@@ -127,10 +181,10 @@
 						<h5>한줄평</h5>
 						<div class="review-area">
 							<div class="rtext-area">
-								<input type="text" name="reviewContents" class="review-text">
+								<input type="text" name="reviewContents" class="review-text" id="reviewContents">
 							</div>
 							<div class="rbtn-area">
-								<button type="submit" class="btn btn-secondary" class="review-btn" id="insertReview-btn">등록하기</button>
+								<button type="submit" class="btn" class="review-btn" id="insertReview-btn">등록하기</button>
 							</div>
 						</div>
 						<br>
@@ -149,15 +203,15 @@
 					<div class="product review-btn" align="center">
 						<c:if test="${principal.username eq review.userId }">
 							<br>
-							<button onclick="modifyView(this,'${review.score }', '${review.reviewContents}', '${review.reviewNo }', '${review.bookNo }');" class="btn btn-secondary" id="btn-mr">수정</button>
-							<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn btn-secondary">삭제</button>
+							<button onclick="modifyView(this,'${review.score }', '${review.reviewContents}', '${review.reviewNo }', '${review.bookNo }');" class="btn" id="btn-mr">수정</button>
+							<button onclick="removeReview(${review.reviewNo},${review.bookNo });" class="btn" id="rev-del">삭제</button>
 						</c:if>
 						<br>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
-		<div class="col-md-3">여기는 사이드바</div>
+		<div class="col-md-3"></div>
     </div>
 	<div class="main-footer">
 		<jsp:include page="../main/footer.jsp"></jsp:include>
@@ -178,7 +232,7 @@
 			sel += "</select>"
 			$div.html(sel);
 			$div.append("<input type='text' size='50' value='"+reviewContents+"'>");
-			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");' class='btn btn-secondary'>수정</button>");
+			$div.append("<button onclick='modifyReview(this,"+reviewNo+", "+bookNo+");' class='btn' id='rev-mod'>수정</button>");
 			console.log($(obj).parent().parent().after($div));
 			const target = document.getElementById('btn-mr');
 	         target.disabled = true;
@@ -218,7 +272,13 @@
 		
 		$("#insertReview-btn").click(function() {
 			var count = $("#insertCount").val();
-			console.log(count);
+			var score = $("#score").val();
+			var reviewContents = $("#reviewContents").val();
+			console.log(reviewContents);
+			if(!reviewContents) {
+				alert("내용을 입력해 주세요.");
+				return false;
+			}
 			if(count == 0) {
 				alert("후기가 등록되었습니다.");
 				return true;
@@ -244,9 +304,13 @@
 	        	 if(productCount > 99) {
 	        		 alert("99개 이상 주문할 수 없습니다.");
 	        		 return false;
-	        	 }
-	         } else {
+	        	 } else if(productCount == 0) {
+		     			alert ("1개 이상의 숫자를 입력해주세요");
+		    			countControl.focus();
+		    			return false;
+	         	} else {
 	        	 alert("숫자만 입력할 수 있습니다.");	 
+	         	}
 	         }
 	               
 	         $.ajax({
@@ -280,13 +344,17 @@
 	        	 if(productCount > 99) {
 	        		 alert("99개 이상 주문할 수 없습니다.");
 	        		 return false;
-	        	 }
-	         } else {
+	        	 } else if(productCount == 0) {
+	     			alert ("1개 이상의 숫자를 입력해주세요");
+	    			countControl.focus();
+	    			return false;
+	         	} else {
 	        	 alert("숫자만 입력할 수 있습니다.");	
 	        	 	return false;
-	         }
+	         	}
 	         location.href="/order/directOrderView?bookNo="+bookNo+"&productCount="+productCount;
-	      }
+	      	}
+		}
 
 	</script>
 	

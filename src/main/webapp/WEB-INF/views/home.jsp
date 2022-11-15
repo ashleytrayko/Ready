@@ -44,6 +44,9 @@
 		.card > a {
 			color : black;
 		}
+		.main-side {
+			width : 15%;
+		}
 	</style>
 	<jsp:include page="../views/main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
@@ -51,7 +54,7 @@
 </head>
 <body>
 	<div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-side"></div>
 		<div class="main-section">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:100%; height:400px">
   				<div class="carousel-indicators">

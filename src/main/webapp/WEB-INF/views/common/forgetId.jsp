@@ -5,6 +5,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+
+	<style>
+		.btn-section1 > button {
+			background-color:#AA7139;
+			color : white;
+		}
+		.btn-section1 > button:hover{
+			background-color:#804A15;
+			color : white;
+			border-color : #804A15;
+		}
+		.btn-section2 > button {
+			background-color:white;
+			color : #804A15;
+			border-color : #804A15;
+		}
+		.btn-section2 > button:hover {
+			background-color:#E4DDD3;
+			color : #804A15;
+			border-color : #E4DDD3;
+		}
+	</style>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -28,8 +50,12 @@
 			<div class="form-group">
 				<input type="email" class="form-control" placeholder="가입시 등록하신 이메일을 입력해주세요." id="userEmail"name="userEmail">
 			</div>
-			<button type="button" class="btn btn-dark col-lg" id="findId">아이디 찾기</button>
-			<button type="button" class="btn btn-outline-dark col-lg mt-3" id="redirectButton" onclick="getBack();">돌아가기</button>
+			<div class="btn-section1">
+				<button type="button" class="btn col-lg" id="findId">아이디 찾기</button>
+			</div>
+			<div class="btn-section2">
+				<button type="button" class="btn col-lg mt-3" id="redirectButton" onclick="getBack();">돌아가기</button>
+			</div>
 		</form>
 	</div>
 	</div>

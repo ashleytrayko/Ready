@@ -29,6 +29,9 @@
 			width : 50%;
 			margin-left : 25%;
 		}
+		th {
+			color : white;
+		}
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
@@ -56,7 +59,7 @@
 			<div class="tb-section">
 				<table class="table table-hover">
 					<thead>
-						<tr bgcolor="#E4DDD3">
+						<tr bgcolor="#AA7139" >
 							<th>등급</th>
 							<th>조건</th>
 							<th>혜택</th>
