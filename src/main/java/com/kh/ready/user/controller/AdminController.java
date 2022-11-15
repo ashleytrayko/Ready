@@ -342,16 +342,13 @@ public class AdminController {
 	/**
 	 * 신고관리
 	 */
-	
 	// admin - 신고관리
 	@GetMapping("/admin/admin-report")
 	public String reportList(@RequestParam(value="page", required=false) Integer page,
 							Model model) {
 		
 		// admin- 신고관리 - 커뮤니티 - 신고게시글 리스트 불러오기
-		// 일단은 충돌우려로 adminService에씀
-		
-		///////////////////////////////////////////////////////////////////////// -> 일단은 전체 불러오기했음 나중에 쿼리 변경해서 연결
+		/////////////////////////////////////////////////////////////////////////
 		int reportCurrentPage = (page != null) ? page : 1;
 		int reportTotalCount = adminService.reportTotalCount();
 		int reportBoardLimit = 10;
@@ -371,13 +368,14 @@ public class AdminController {
 		// 신고 처리 된 글 목록
 		List<Comm> reportList = adminService.showAllReport(reportCurrentPage, reportBoardLimit);
 		if (!reportList.isEmpty()) {
-			model.addAttribute("urlVal","admin-report");
+			model.addAttribute("reportUrlVal","admin-report");
 			model.addAttribute("reportMaxPage",reportMaxPage);
 			model.addAttribute("reportCurrentPage", reportCurrentPage);
 			model.addAttribute("reportStartNavi", reportStartNavi);
 			model.addAttribute("reportEndNavi", reportEndNavi);
 			model.addAttribute("reportList", reportList);
 		}
+		
 		///////////////////////////////////////////////////////////////////////// -> 일단은 전체 불러오기했음 나중에 쿼리 변경해서 연결
 		int completeCurrentPage = (page != null) ? page : 1;
 		int completeTotalCount = adminService.completeTotalCount();
@@ -392,20 +390,19 @@ public class AdminController {
 		completeStartNavi = ((int) ((double) completeCurrentPage / completeNaviLimit + 0.9) - 1) * completeNaviLimit + 1;
 		completeEndNavi = completeStartNavi + completeNaviLimit - 1;
 		if (completeMaxPage < completeEndNavi) {
-			completeEndNavi = completeMaxPage;
+		completeEndNavi = completeMaxPage;
 		}
 		
 		// 신고 처리 된 글 목록
 		List<Comm> completeList = adminService.showAllCompleteList(completeCurrentPage, completeBoardLimit);
 		if (!completeList.isEmpty()) {
-			model.addAttribute("urlVal","admin-report");
-			model.addAttribute("completeMaxPage",completeMaxPage);
-			model.addAttribute("completeCurrentPage", completeCurrentPage);
-			model.addAttribute("completeStartNavi", completeStartNavi);
-			model.addAttribute("completeEndNavi", completeEndNavi);
-			model.addAttribute("completeList", completeList);
-		}
-		
+		model.addAttribute("completeUrlVal","admin-report");
+		model.addAttribute("completeMaxPage",completeMaxPage);
+		model.addAttribute("completeCurrentPage", completeCurrentPage);
+		model.addAttribute("completeStartNavi", completeStartNavi);
+		model.addAttribute("completeEndNavi", completeEndNavi);
+		model.addAttribute("completeList", completeList);
+		}	
 		return "/admin/report/adminReport";
 	}
 	

@@ -199,13 +199,6 @@ public class UserController {
 	 *  유저 정보 화면 관련 메소드
 	 */
 	
-	// user 화면 -> 지울듯
-	@GetMapping("/user")
-	public String userTest(Model model, Principal principal) {
-		model.addAttribute("principal",principal);
-		return "/user/userTest";
-	}
-	
 	
 	//설문조사 페이지 이동
 	@RequestMapping(value="/mypage/survey.kh", method=RequestMethod.GET)

@@ -26,7 +26,7 @@
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
-		<div class="main-sidebar">
+		<div>
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">

@@ -15,7 +15,7 @@
 <body>
 	<jsp:include page="../../admin/adminHeader.jsp"></jsp:include>
 	<div class="main-contents">
-		<div class="main-sidebar">
+		<div>
 						<jsp:include page="../../admin/adminSideBar.jsp"></jsp:include>
 		</div>
 		<div class="main-section">
@@ -46,7 +46,7 @@
 					<tr align="center" height="20">
 						<td colspan="7">
 							<c:if test="${reportCurrentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${reportCurrentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<a href="/admin/${reportUrlVal }?page=${reportCurrentPage - 1 }">
 									<button class="btn btn-outline-dark">이전</button>
 								</a>
 							</c:if>
@@ -58,13 +58,13 @@
 									<button class="btn btn-dark">${p}</button>
 								</c:if>
 								<c:if test="${reportCurrentPage ne p }">
-									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<a href="/admin/${reportUrlVal }?page=${p }">
 									<button class="btn btn-outline-dark">${p}</button>
 									</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${reportMaxPage > reportCurrentPage }">
-								<a href="/admin/${urlVal }?page=${reportCurrentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<a href="/admin/${reportUrlVal }?page=${reportCurrentPage + 1 }">
 								<button class="btn btn-outline-dark">
 			                		다음
 			                	</button>
@@ -106,7 +106,7 @@
 					<tr align="center" height="20">
 						<td colspan="7">
 							<c:if test="${completeCurrentPage != 1 }">
-								<a href="/admin/${urlVal }?page=${completeCurrentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<a href="/admin/${completeUrlVal }?page=${completeCurrentPage - 1 }">
 									<button class="btn btn-outline-dark">이전</button>
 								</a>
 							</c:if>
@@ -118,13 +118,13 @@
 									<button class="btn btn-dark">${p}</button>
 								</c:if>
 								<c:if test="${completeCurrentPage ne p }">
-									<a href="/admin/${urlVal }?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+									<a href="/admin/${completeUrlVal }?page=${p }">
 									<button class="btn btn-outline-dark">${p}</button>
 									</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${completeMaxPage > completeCurrentPage }">
-								<a href="/admin/${urlVal }?page=${completeCurrentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">
+								<a href="/admin/${completeUrlVal }?page=${completeCurrentPage + 1 }">
 								<button class="btn btn-outline-dark">
 			                		다음
 			                	</button>
