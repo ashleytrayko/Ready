@@ -27,7 +27,7 @@
 		UPDATE C_REPLY_TBL SET R_CONTENTS = #{rContents}, R_UPDATE_DATE = DEFAULT WHERE C_REPLY_NO = #{cReplyNo}
 	</update>
 	<select id="selectAllReply" resultMap="commReplyResultMap">
-		SELECT * FROM C_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND R_STATUS = 'Y'
+		SELECT * FROM C_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND R_STATUS = 'Y' ORDER BY C_REPLY_NO
 	</select>
 	<!-- <insert id="insertReComment">
 		대댓글 

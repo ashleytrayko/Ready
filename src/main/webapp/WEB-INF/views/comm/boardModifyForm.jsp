@@ -6,10 +6,11 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <title>게시글 수정 페이지</title>
-<!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/queWriteForm.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
+<link rel="stylesheet" href="/resources/css/comm/listView.css">
+  <link rel="stylesheet" href="/resources/css/que/faqList.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -24,37 +25,34 @@
     <div class="main-contents">
 		<div class="main-sidebar">여기는 사이드바</div>
 		<div class="main-section">
-		<!-- 이 안에서 작업! 여기가 본문-->
-			<h2 align="center">게시글 수정</h1>
-			<form action="/comm/modify.kh" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="page" value="${page }">
-				<input type="hidden" name="boardNo" value="${comm.boardNo }">
-				<table align="center" border="none">
-					<tr>
-						<td>제목</td>
-						<td><input type="text" name="commTitle" value="${comm.commTitle}" class="qTitle" placeholder="제목을 입력해주세요." autofocus></td>
-					</tr>
-					<tr>
-						<td>작성자</td>
-						<td><input type="text" name="commWriter" value="${comm.commWriter }" readonly class="qTitle"></td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td>
-							<textarea class="summernote" name="commContents" value="${comm.commContents }"></textarea>
-						</td>
-					</tr>
-					<tr align="right">
-						<td colspan="2">
-							<button type="button" align="right" onclick="listMember();">취소</button>
-							<input type="submit" value="등록">
-						</td>
-					</tr>
-				</table>
-			</form>
-		
-		
-		
+				<h2 class="list-title list-div">게시글 수정</h2>
+				<form action="/comm/modify.kh" method="post" enctype="multipart/form-data" class="main-form">
+					<input type="hidden" name="page" value="${page }">
+					<input type="hidden" name="boardNo" value="${comm.boardNo }">
+					<table class="table-style list-table">
+						<tr>
+							<td class="center">제목</td>
+							<td><input type="text" name="commTitle" value="${comm.commTitle}" class="qTitle write-title write-input border-top" placeholder="제목을 입력해주세요." autofocus></td>
+						</tr>
+						<tr>
+							<td class="center">작성자</td>
+							<td><input type="text" name="commWriter" value="${comm.commWriter }" readonly class="qTitle write-title write-input input-readonly"></td>
+						</tr>
+						<tr>
+							<td class="center">내용</td>
+							<td>
+								<textarea class="summernote" name="commContents" value="${comm.commContents }"></textarea>
+							</td>
+						</tr>
+						<tr align="right">
+							<td colspan="2">
+								<button class="rvs-sig-btn" type="button" align="right" onclick="listMember();">취소</button>
+								<button class="sig-btn">등록</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			
 		</div>
 		<div class="main-sidebar">여기는 사이드바</div>
     </div>
@@ -72,7 +70,6 @@
 		$('.summernote').val("${comm.commContents}");
 		$('.summernote').summernote({
 		        height: 300,
-		        width: 600,
 		        lang: 'ko-KR',
 		        placeholder: '내용을 입력해주세요.'
 		 });

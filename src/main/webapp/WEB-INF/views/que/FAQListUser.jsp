@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
 <link rel="stylesheet" href="/resources/css/que/faqTest.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -28,7 +29,7 @@
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 		<!-- 이 안에서 작업! 여기가 본문-->
 			
@@ -55,19 +56,19 @@
 			   </ul>
 			   <div class="btn-right">
 					<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
-						<button onclick="location.href='/que/myList.kh'">내 문의글</button>
-						<button onclick="location.href='/que/viewWrite.kh'">1:1문의하기</button>
+						<button class="rvs-sig-btn rvs-sig-btn-lg" onclick="location.href='/que/myList.kh'">내 문의글</button>
+						<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWrite.kh'">문의글작성</button>
 					</c:if>
 					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
-						<button onclick="location.href='/que/myList.kh'">FAQ 관리</button>
-						<button onclick="location.href='/que/manageList.kh'">1:1문의글 관리</button>
-						<button onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
+						<button class="rvs-sig-btn rvs-sig-btn-lg"  onclick="location.href='/que/myList.kh'">FAQ 관리</button>
+						<button class="rvs-sig-btn rvs-sig-btn-lg" onclick="location.href='/que/manageList.kh'">문의글관리</button>
+						<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
 					</c:if>
 			   </div>
 			</div>
 			</section>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
 	<footer>
 		

@@ -89,8 +89,8 @@
 </style>
 </head>
 <body>
-	<nav class="py-2 bg-light border-bottom">
-		<div class="container d-flex flex-wrap">
+	<nav class="py-2 border-bottom header-color">
+		<div class="container d-flex flex-wrap ">
 			<ul class="nav me-auto"></ul>
 			<c:choose>
 				<c:when test="${empty principal }">

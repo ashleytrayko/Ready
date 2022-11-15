@@ -10,7 +10,9 @@
 	height:50px;
 	border-top:solid 1px gray;
 	border-bottom:solid 1px gray;
-	background-color:#F2F4F5;
+	background-color:#AA7139;
+	color:white;
+	/* 연함 #AA7139;  진함 #804A15; */
 }
 .fa-thumbs-up:hover {
 	cursor:pointer;
@@ -24,4 +26,18 @@
 	display:flex;
 	align-items:center;
 	justify-content:center;
+}
+.summerArea {
+	width:100%;
+	text-align:left;
+}
+.a-button {
+	text-decoration:none;
+	color:#AA7139;
+}
+.a-button:hover {
+	color:#804A15;
+}
+.select-box{
+	object-fit:cover;
 }

@@ -10,11 +10,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공용jsp틀</title>
+<title>1:1 문의</title>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/queWriteForm.css">
+<link rel="stylesheet" href="/resources/css/que/faqList.css">
+<link rel="stylesheet" href="/resources/css/comm/listView.css">
+<link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -29,23 +32,23 @@
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바
+		<div class="main-sidebar">
 		
 		</div>
 		<div class="main-section">
-		<h1 align="center">1:1 문의</h1>
-		<form action="/que/register.kh" method="post" enctype="multipart/form-data">
-			<table align="center" border="1">
+		<h2 class="list-title list-div">1:1 문의</h2>
+		<form action="/que/register.kh" method="post" enctype="multipart/form-data" class="main-form">
+			<table class="table-style list-table">
 				<tr>
-					<td class="td">제목</td>
-					<td colspan="2"><input type="text" class="qTitle" name="queTitle" placeholder="제목을 입력해주세요." autofocus></td>
+					<td class="td center">제목</td>
+					<td colspan="2"><input type="text" class="qTitle write-title write-input border-top" name="queTitle" placeholder="제목을 입력해주세요." autofocus></td>
 				</tr>
 				<tr>
-					<td>작성자</td>
-					<td><input type="text" name="queWriter" value="${principal.user.userNickname }" readonly class="qTitle"></td>
+					<td class="center">작성자</td>
+					<td><input type="text" name="queWriter" value="${principal.user.userNickname }" readonly class="qTitle write-title write-input input-readonly"></td>
 					<input type="hidden" name="queId" value="${principal.user.userId }" readonly class="qTitle">
-					<td align="right" id="select-td">
-						<div class="input-group">
+					<td align="right" id="select-td" class="select-box input-readonly">
+						<div class="input-group" >
 							<select name="qCategory" class="input-group-text" id="inputGroup-sizing-sm" required>
 								<option disabled value="" selected>문의유형</option>
 								<option value="user" <c:if test="${searchCondition eq 'user' }">selected</c:if>>회원정보</option>
@@ -57,16 +60,16 @@
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<td>내용</td>
+				<tr class="border-bot">
+					<td class="center">내용</td>
 					<td colspan="2">
 						<textarea class="summernote" name="queContents"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3" align="right">
-						<button type="button" onclick="goList();">취소</button>
-						<button>등록</button>
+						<button class="rvs-sig-btn" type="button" onclick="goList();">취소</button>
+						<button class="sig-btn">등록</button>
 					</td>
 				</tr>
 			</table>
@@ -84,8 +87,7 @@
 	$('.summernote').summernote({
 	 	placeholder: '내용을 입력해주세요.',
         height: 300,
-        width: 600,
-        lang: 'ko-KR',
+        lang: 'ko-KR'
  	});
 		function goList() {
 			location.href="/que/faq01.kh";

@@ -29,7 +29,7 @@
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바
+		<div class="main-sidebar">
 		
 		</div>
 		<div class="main-section">
@@ -75,7 +75,7 @@
 		
 		
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
 	<footer>
 		
