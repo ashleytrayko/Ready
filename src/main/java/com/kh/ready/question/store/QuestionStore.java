@@ -43,5 +43,10 @@ public interface QuestionStore {
 
 	int deleteQue(SqlSession session, int queNo);
 
+	List<Question> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage,
+			int boardLimit);
+
+	int selectTotalUserCount(SqlSession session, String searchCondition, String searchValue);
+
 
 }

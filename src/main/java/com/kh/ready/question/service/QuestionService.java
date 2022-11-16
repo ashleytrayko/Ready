@@ -44,6 +44,9 @@ public interface QuestionService {
 
 	int removeOneByNo(int queNo);
 
+	List<Question> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit);
+
+	int getTotalUserCount(String searchCondition, String searchValue);
 
 
 }

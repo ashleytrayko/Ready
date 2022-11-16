@@ -60,9 +60,9 @@
 						</div>
 					</td>
 				</tr>
-				<tr class="border-bot">
+				<tr>
 					<td class="center">내용</td>
-					<td colspan="2">
+					<td colspan="2" class="detail-content-bot">
 						<textarea class="summernote" name="queContents"></textarea>
 					</td>
 				</tr>
@@ -78,8 +78,11 @@
 		
 		
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>

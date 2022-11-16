@@ -91,7 +91,7 @@
     </style>
   </head>
   <body>
-    <nav class="py-2 bg-light border-bottom">
+    <nav class="py-2 border-bottom header-color">
       <div class="container d-flex flex-wrap">
         <ul class="nav me-auto"></ul>
         <c:choose>
@@ -105,6 +105,14 @@
 	          		</li>
         		</ul>
         	</c:when>
+        	<c:when test="${principal.user.userRole eq 'ROLE_ADMIN' }">
+				<ul class="nav">
+					<li class="nav-item"><a href="/admin"
+						class="nav-link link-dark px-2">관리자페이지</a></li>
+					<li class="nav-item"><a href="/logout"
+						class="nav-link link-dark px-2">로그아웃</a></li>
+				</ul>
+			</c:when>
 			<c:otherwise>
 				<ul class="nav">
 					<li class="nav-item"><a href="/logout"

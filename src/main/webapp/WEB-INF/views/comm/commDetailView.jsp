@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
+<link rel="stylesheet" href="/resources/css/comm/btn-eff.css">
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
@@ -41,16 +42,17 @@
 						<!-- <td>조회</td> -->
 						<td width="20%">${comm.cCreateDate }&nbsp;&nbsp;&nbsp;조회&nbsp;&nbsp;${comm.cCount }</td>
 					</tr>
-					<tr>
+					<tr class="detail-contents">
 						<td class="detail-content" colspan="4" align="left">${comm.commContents }</td>
 					</tr>
 					<tr>
-						<td colspan="4">추천수 : ${comm.cLike }&nbsp;&nbsp;<img id="likeBtn" class="thumbs-img" src="../resources/images/thumbs-up.png"></td>
-						<%-- <td>${comm.cLike }</td> --%>
+						<td colspan="4">추천수 : ${comm.cLike }&nbsp;&nbsp;
+								<div class="btn-contain">
+						<img id="likeBtn" class="thumbs-img" src="../resources/images/thumbs-up.png"></td>
+								  <div class="btn-particles">
+								  </div>
+								</div>
 					</tr>
-					<!-- <tr>
-						<td colspan="4"><img id="likeBtn" class="thumbs-img" src="../resources/images/thumbs-up.png"></td>
-					</tr> -->
 					<c:if test="${principal.user.userId eq comm.commId }">
 						<tr>
 							<td colspan="4" align="center">
@@ -62,8 +64,6 @@
 					<tr>
 						<td colspan="4" align="right" class="detail-content-bot">
 							<a class="a-button" href="/comm/list.kh?page=${page}">리스트</a>
-							<%-- <button onclick="reportBoard();">신고</button>
-							<a href="#" onclick="commRemove(${page});">삭제하기</a> --%>
 							<a class="a-button report-btn" href="#" onclick="reportBoard(${page});">신고</a>
 						</td>
 					</tr>
@@ -99,6 +99,9 @@
 		</div>
 		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>
@@ -278,6 +281,8 @@
 	        target.disabled = true;
 		} 대댓글
 		 */
+		 
+		 
 	</script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
-<title>게시글 수정 페이지</title>
+<title>게시글 수정</title>
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/queWriteForm.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
@@ -23,7 +23,7 @@
 <body>
 	<jsp:include page="../main/commHeader.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 				<h2 class="list-title list-div">게시글 수정</h2>
 				<form action="/comm/modify.kh" method="post" enctype="multipart/form-data" class="main-form">
@@ -40,13 +40,13 @@
 						</tr>
 						<tr>
 							<td class="center">내용</td>
-							<td>
-								<textarea class="summernote" name="commContents" value="${comm.commContents }"></textarea>
+							<td class="detail-content-bot">
+								<textarea class="summernote" name="commContents" >${comm.commContents }</textarea>
 							</td>
 						</tr>
-						<tr align="right">
-							<td colspan="2">
-								<button class="rvs-sig-btn" type="button" align="right" onclick="listMember();">취소</button>
+						<tr class="border-bot-none">
+							<td colspan="2" align="right" class="border-bot-none">
+								<button class="rvs-sig-btn" type="button" onclick="listMember();">취소</button>
 								<button class="sig-btn">등록</button>
 							</td>
 						</tr>
@@ -54,8 +54,11 @@
 				</form>
 			
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>
@@ -67,11 +70,10 @@
 			}
 		}
 		// 서머노트 초기화
-		$('.summernote').val("${comm.commContents}");
+/* 		$('.summernote').val("${comm.commContents}"); */
 		$('.summernote').summernote({
 		        height: 300,
 		        lang: 'ko-KR',
-		        placeholder: '내용을 입력해주세요.'
 		 });
 	</script>
 </body>

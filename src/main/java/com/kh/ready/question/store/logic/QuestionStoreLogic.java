@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ready.community.domain.Comm;
 import com.kh.ready.question.domain.Question;
 import com.kh.ready.question.store.QuestionStore;
 
@@ -127,6 +128,28 @@ public class QuestionStoreLogic implements QuestionStore{
 		int result = session.delete("QuestionMapper.deleteQue", queNo);
 		return result;
 	}
+
+	@Override
+	public int selectTotalUserCount(SqlSession session, String searchCondition, String searchValue) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		int totalUserCount = session.selectOne("QuestionMapper.selectTotalUserCount", paramMap);
+		return totalUserCount;
+	}
+
+	@Override
+	public List<Question> selectAllByValue(SqlSession session, String searchCondition, String searchValue,
+			int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		List<Question> qList = session.selectList("QuestionMapper.selectAllByValue", paramMap, rowBounds);
+		return qList;
+	}
+
 
 
 }

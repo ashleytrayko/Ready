@@ -48,7 +48,7 @@
 						<td>${que.queWriter }</td>
 						<td>${que.qEnrollDate }</td>
 					</tr>
-					<tr>
+					<tr class="detail-contents">
 						<td class="detail-content" colspan="4" align="left">${que.queContents }</td>
 					</tr>
 					<c:if test="${!empty que.qAnswer }">
@@ -57,8 +57,8 @@
 								<h2 class="list-title">답변</h2>
 							</td>
 						</tr>
-						<tr>
-							<td colspan="4" align="left">${que.qAnswer }</td>
+						<tr class="detail-contents">
+							<td colspan="4" align="left" class="detail-content-bot">${que.qAnswer }</td>
 						</tr>
 					</c:if>
 					<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
@@ -83,10 +83,10 @@
 							</c:if>
 							<c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }">
 								<c:if test="${que.qStatus eq 'F'}">
-									<a class="a-button" href="/que/myList.kh">리스트</a>
+									<a class="a-button" href="/que/myList.kh?page=${page}">리스트</a>
 								</c:if>
 								<c:if test="${que.qStatus ne 'F'}">
-									<a class="a-button" href="/que/manageList.kh">리스트</a>
+									<a class="a-button" href="/que/manageList.kh?page=${page }">리스트</a>
 								</c:if>
 							</c:if>
 						</td>
@@ -98,6 +98,9 @@
 		</div>
 		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>
