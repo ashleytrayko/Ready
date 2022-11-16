@@ -103,7 +103,7 @@ public class CartContorller {
 	 * 장바구니 뷰
 	 * @param mv
 	 * @param principal
-	 * @return
+	 * @return mv
 	 */
 	@GetMapping(value="/cart/cartView")
 	public ModelAndView showCartView(ModelAndView mv, Principal principal) {
@@ -145,4 +145,18 @@ public class CartContorller {
 		return mv;
 	}
 	
+	/**
+	 * 장바구니 카운트
+	 * @param principal
+	 * @return result
+	 */
+	@ResponseBody	// header.jsp
+	@GetMapping(value="/cart/existedCart")
+	public int existedCart(Principal principal) {
+		
+		String userId = principal.getName();
+		int result = cartService.countingCartByUserId(userId);
+
+		return result;
+	}
 }

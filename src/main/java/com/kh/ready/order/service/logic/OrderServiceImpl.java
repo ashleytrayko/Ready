@@ -38,6 +38,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<Order> getOrderDataByOrderId(String orderId) {
+	
+		return orderStore.getOrderDataByOrderId(orderId);
+	}
+
+	@Override
+	public Order getOrderInfoByOrderId(String orderId) {
+	
+		return orderStore.getOrderInfoByOrderId(orderId);
+	}
+
+	@Override
 	public int insertOrder(Order order) {
 
 		return orderStore.insertOrder(order);
@@ -47,18 +59,6 @@ public class OrderServiceImpl implements OrderService {
 	public int deleteCart(String userId) {
 
 		return orderStore.deleteCart(userId);
-	}
-
-	@Override
-	public List<Order> getOrderDataByOrderId(String orderId) {
-
-		return orderStore.getOrderDataByOrderId(orderId);
-	}
-
-	@Override
-	public Order getOrderInfoByOrderId(String orderId) {
-
-		return orderStore.getOrderInfoByOrderId(orderId);
 	}
 
 	@Override

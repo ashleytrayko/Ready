@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>책메이트 : 주문 완료</title>
+    <title>리디 주문 완료</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../resources/css/cart_order/order.css" rel="stylesheet">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
@@ -160,6 +160,14 @@
                         
                     </td>
                 </tr>
+                                <tr>
+                    <td class="addr-info-td">
+                        <p class="order-info-p">주문 상태</p>
+                    </td>
+                    <td>
+                        <p class="order-info-p"><input type="text" id="orderState" value="${orderInfo.orderState }" readonly style="border : 0px; text-align:left;"></p>
+                    </td>
+                </tr>
             </table>
         </div>
 
@@ -295,8 +303,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 window.onload = function(){
-	var bookPrice = ${priceSum};
-	var paymethod = $("#payMethod").val();
+	const price = ${priceSum};
+	let paymethod = $("#payMethod").val();
+	let orderState = $("#orderState").val();
 	
 	if(paymethod == "card"){
 		$("#payMethod").val("신용카드");
@@ -305,7 +314,16 @@ window.onload = function(){
 	} else if(paymethod == "trans"){
 		$("#payMethod").val("실시간 계좌 이체");
 	}
-	if(bookPrice < 10000) {
+	
+	if(orderState == "N"){
+		$("#orderState").val("결제 완료");
+	} else if(orderState == "R") {
+		$("#orderState").val("환불 완료");
+	} else if(orderState == "Y"){
+		$("#orderState").val("구매 확정");
+	}
+	
+	if(price < 10000) {
 		$("#id-delivery-fee").attr("value", "2,500");
 	}
 }
@@ -332,7 +350,7 @@ window.onload = function(){
 					success : function(result){
 						if(result > 2) {
 							alert("구매 확정 되었습니다.");
-							location.href="/mypage/myOrder.kh";
+							window.location.reload(true);
 						}
 					},
 					error : function(result){
@@ -350,7 +368,6 @@ window.onload = function(){
 	function cancelPay(orderId, payedPrice, impUid){
 		
 		const confirmCancelPay = confirm("정말 환불을 진행하시겠습니까? \n마일리지를 되돌려 받을 수 없습니다.");
-		const orderId2 = ${orderInfo.orderId };
 
 		if(confirmCancelPay){
 			$.ajax({
@@ -371,7 +388,7 @@ window.onload = function(){
 						},
 						success : function(orderId){
 							alert("주문번호 : "+orderId+ "\n환불이 완료되었습니다.");
-							location.href="/order/orderDetailView?orderId="+orderId;
+							window.location.reload(true);
 						},
 						error : function(error){
 							console.log(error);

@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>책메이트 : 주문하기</title>
+    <title>리디 주문하기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <link href="../resources/css/cart_order/order.css" rel="stylesheet">
@@ -402,71 +402,83 @@
     	const buyerEmail = $("#buyerEmail").val();
     	const paymethod = $('input:radio[name=paymentmethod]:checked').val();
     	
-    	const bookNo = $("#id-bookNo").val();
-    	const productCount = $("#id-productCount").val();
-    	const productPrice = Math.floor($("#id-productPrice").val());
-    	
-     	var useMileage = +$("#useMileage").val();
-    	var calPrice = totalPrice - useMileage;	// 마일리지 사용한만큼 계산
-
-        IMP.request_pay({ // param
-            pg: "html5_inicis",
-            pay_method: paymethod,
-            merchant_uid: orderId,
-            name: title + " 총 " + totalCount + "권",
-            amount: calPrice,
-            buyer_email: buyerEmail,
-            buyer_name: buyerName,
-            buyer_tel: buyerPhone,
-            custom_data: {
-            	bookNo : bookNo,
-            	productCount : productCount,
-            	productPrice : productPrice,
-            	mileageSum : mileageSum,
-            	useMileage : useMileage,
-            	totalPrice : totalPrice,
-            	orderId : orderId,
-            	reciverName : $("#reciverName").val(),
-            	reciverPhone : $("#reciverPhone").val(),
-            	reciverEmail : $("#reciverEmail").val(),
-            	reciverZoneCode : $("#reciverZoneCode").val(),
-            	reciverRoadAddr : $("#reciverRoadAddr").val(),
-            	reciverDetailAddr : $("#reciverDetailAddr").val()
-            }
-        }, function (rsp) { // callback
-            if (rsp.success) {
-				$.ajax({	// 성공 시 DB에 인서트
-					url :"/order/insertDirectOrder",
-					type : "POST",
-					data : {
-						imp_uid: rsp.imp_uid,
-						orderId : rsp.custom_data.orderId,
-						bookNo : rsp.custom_data.bookNo,
-						productCount : rsp.custom_data.productCount,
-						productPrice : rsp.custom_data.productPrice,
-						mileageSum : rsp.custom_data.mileageSum,
-						totalPrice : rsp.paid_amount,
-						paymethod : rsp.pay_method,
-						reciverName : rsp.custom_data.reciverName,
-						reciverPhone : rsp.custom_data.reciverPhone,
-						reciverEmail : rsp.custom_data.reciverEmail,
-		            	reciverZoneCode : rsp.custom_data.reciverZoneCode,
-		            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
-		            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr,
-		            	useMileage : rsp.custom_data.useMileage,
-		            	totalPrice : rsp.custom_data.totalPrice
-					},
-					success : function(orderId){	// 주문완료시 해당 주문번호의 주문완료 페이지로 이동
-						location.href="/order/orderDetailView?orderId="+orderId;
-					},
-					error : function(){
-						alert("fail");
-					}
-				})
-            } else {
-				alert("결제가 실패하였습니다. 에러내용 : " + rsp.error_msg);
-            }
-        });
+    	const reciverName = $("#reciverName").val();
+   		const reciverPhone = $("#reciverPhone").val();
+   		const reciverEmail = $("#reciverEmail").val();
+   		const reciverZoneCode = $("#reciverZoneCode").val();
+   		const reciverRoadAddr = $("#reciverRoadAddr").val();
+   		const reciverDetailAddr = $("#reciverDetailAddr").val();
+   		
+   		if(reciverName == "" && reciverPhone == "" && reciverEmail == "" && reciverZoneCode == "" && reciverRoadAddr == "" && reciverDetailAddr == ""){
+   			alert("배송 정보를 확인해주세요");
+   			return false;
+   		} else {
+	    	const bookNo = $("#id-bookNo").val();
+	    	const productCount = $("#id-productCount").val();
+	    	const productPrice = Math.floor($("#id-productPrice").val());
+	    	
+	     	var useMileage = +$("#useMileage").val();
+	    	var calPrice = totalPrice - useMileage;	// 마일리지 사용한만큼 계산
+		
+	        IMP.request_pay({ // param
+	            pg: "html5_inicis",
+	            pay_method: paymethod,
+	            merchant_uid: orderId,
+	            name: title + " 총 " + totalCount + "권",
+	            amount: calPrice,
+	            buyer_email: buyerEmail,
+	            buyer_name: buyerName,
+	            buyer_tel: buyerPhone,
+	            custom_data: {
+	            	bookNo : bookNo,
+	            	productCount : productCount,
+	            	productPrice : productPrice,
+	            	mileageSum : mileageSum,
+	            	useMileage : useMileage,
+	            	totalPrice : totalPrice,
+	            	orderId : orderId,
+	            	reciverName : $("#reciverName").val(),
+	            	reciverPhone : $("#reciverPhone").val(),
+	            	reciverEmail : $("#reciverEmail").val(),
+	            	reciverZoneCode : $("#reciverZoneCode").val(),
+	            	reciverRoadAddr : $("#reciverRoadAddr").val(),
+	            	reciverDetailAddr : $("#reciverDetailAddr").val()
+	            }
+	        }, function (rsp) { // callback
+	            if (rsp.success) {
+					$.ajax({	// 성공 시 DB에 인서트
+						url :"/order/insertDirectOrder",
+						type : "POST",
+						data : {
+							imp_uid: rsp.imp_uid,
+							orderId : rsp.custom_data.orderId,
+							bookNo : rsp.custom_data.bookNo,
+							productCount : rsp.custom_data.productCount,
+							productPrice : rsp.custom_data.productPrice,
+							mileageSum : rsp.custom_data.mileageSum,
+							totalPrice : rsp.paid_amount,
+							paymethod : rsp.pay_method,
+							reciverName : rsp.custom_data.reciverName,
+							reciverPhone : rsp.custom_data.reciverPhone,
+							reciverEmail : rsp.custom_data.reciverEmail,
+			            	reciverZoneCode : rsp.custom_data.reciverZoneCode,
+			            	reciverRoadAddr : rsp.custom_data.reciverRoadAddr,
+			            	reciverDetailAddr : rsp.custom_data.reciverDetailAddr,
+			            	useMileage : rsp.custom_data.useMileage,
+			            	totalPrice : rsp.custom_data.totalPrice
+						},
+						success : function(orderId){	// 주문완료시 해당 주문번호의 주문완료 페이지로 이동
+							location.href="/order/orderDetailView?orderId="+orderId;
+						},
+						error : function(){
+							alert("fail");
+						}
+					})
+	            } else {
+					alert("결제가 실패하였습니다. 에러내용 : " + rsp.error_msg);
+	            }
+	        });
+   		}
     }
 </script>
 </body>

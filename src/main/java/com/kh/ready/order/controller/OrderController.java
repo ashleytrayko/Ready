@@ -38,6 +38,43 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
+
+	/**
+	 * 책 상세페이지 통한 주문페이지 뷰 
+	 * @param mv
+	 * @param principal
+	 * @param user
+	 * @param bookNo
+	 * @param productCount
+	 * @return ModelAndView
+	 */
+	@GetMapping(value="/order/directOrderView")
+	public ModelAndView showOrderView(ModelAndView mv, Principal principal, User user,
+								@RequestParam("bookNo") int bookNo,
+								@RequestParam("productCount") int productCount) {
+		
+		try {
+			
+			String userId = principal.getName();
+	
+			Book bookData = orderService.getbookDataByBookNo(bookNo);
+			User userInfo = orderService.getUserInfoByUserId(userId);
+			
+			mv.addObject("discountPercent", discountPercent(userId));	// 할인율 표시용 데이터
+			mv.addObject("discountRate", discountRate(userId));	// 할인율 표시용 데이터
+			mv.addObject("productCount" , productCount);
+			mv.addObject("bookData", bookData);
+			mv.addObject("userInfo", userInfo);
+			mv.setViewName("/order/orderPageDirect");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("/main/errorPage");
+		}
+	
+		return mv;
+	}
+
 	/**
 	 * 장바구니 통한 주문페이지 뷰
 	 * @param mv
@@ -47,7 +84,7 @@ public class OrderController {
 	 * @return ModelAndView
 	 */
 	@GetMapping(value="/order/cartOrderView")
-	public ModelAndView showOrderView(ModelAndView mv, Principal principal, Cart cart, User user) {
+	public ModelAndView showOrderViewByCart(ModelAndView mv, Principal principal, Cart cart, User user) {
 		
 		try {
 			String userId = principal.getName();
@@ -69,42 +106,30 @@ public class OrderController {
 	}
 	
 	/**
-	 * 책 상세페이지 통한 주문페이지 뷰 
+	 * 주문완료 상세 페이지 뷰
 	 * @param mv
+	 * @param orderId
 	 * @param principal
-	 * @param user
-	 * @param bookNo
-	 * @param productCount
 	 * @return ModelAndView
 	 */
-	@GetMapping(value="/order/directOrderView")
-	public ModelAndView getDirectOrderData(ModelAndView mv, Principal principal, User user,
-								@RequestParam("bookNo") int bookNo,
-								@RequestParam("productCount") int productCount) {
+	@GetMapping(value="/order/orderDetailView")
+	public ModelAndView orderDetailView(ModelAndView mv, String orderId, Principal principal) {
 		
-		try {
-			
-			String userId = principal.getName();
-
-			Book bookData = orderService.getbookDataByBookNo(bookNo);
-			User userInfo = orderService.getUserInfoByUserId(userId);
-			
-			mv.addObject("discountPercent", discountPercent(userId));	// 할인율 표시용 데이터
-			mv.addObject("discountRate", discountRate(userId));
-			mv.addObject("productCount" , productCount);
-			mv.addObject("bookData", bookData);
-			mv.addObject("userInfo", userInfo);
-			mv.setViewName("/order/orderPageDirect");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			mv.setViewName("/main/errorPage");
-		}
-
+		String userId = principal.getName();
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		
+		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
+		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
+		
+		mv.addObject("discountPercent", discountPercent(userId));
+		mv.addObject("userInfo",userInfo);
+		mv.addObject("orderInfo",orderInfo);
+		mv.addObject("orderList", orderList);
+		mv.setViewName("/order/orderCompletePage");
+		
 		return mv;
 	}
-	
-	
+
 	/**
 	 * 장바구니 통한 주문 DB 인서트 함수
 	 * @param principal
@@ -251,32 +276,6 @@ public class OrderController {
 	
 	
 	/**
-	 * 주문완료 상세 페이지 뷰
-	 * @param mv
-	 * @param orderId
-	 * @param principal
-	 * @return ModelAndView
-	 */
-	@GetMapping(value="/order/orderDetailView")
-	public ModelAndView orderDetailView(ModelAndView mv, String orderId, Principal principal) {
-		
-		String userId = principal.getName();
-		User userInfo = orderService.getUserInfoByUserId(userId);
-		
-		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
-		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
-		
-		mv.addObject("discountPercent", discountPercent(userId));
-		mv.addObject("userInfo",userInfo);
-		mv.addObject("orderInfo",orderInfo);
-		mv.addObject("orderList", orderList);
-		mv.setViewName("/order/orderCompletePage");
-		
-		return mv;
-	}
-	
-	
-	/**
 	 * 구매 확정 ( 주문상태 , 유저정보 업데이트 )
 	 * @param principal
 	 * @param plusMileage
@@ -305,6 +304,139 @@ public class OrderController {
 	}
 	
 	
+	/**
+	 * 환불하기 진행 시 주문상태 변경
+	 * @param orderId
+	 * @return String
+	 */
+	@ResponseBody
+	@PostMapping(value="/refund/refundState")
+	public String refundStateChange(@RequestParam String orderId) {
+		
+		try {
+			int result = orderService.updateOrderState(orderId);
+
+			if(result > 0) {
+				return orderId;			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "error";
+	}
+	
+	/**
+	 * 할인율 구하는 함수
+	 * @param userId
+	 * @return double
+	 */
+	public double discountRate(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		double discountRate = 0;
+		
+		if(userTier.equals("BRONZE")) {
+			discountRate = 0.99;
+		} else if(userTier.equals("SILVER")) {
+			discountRate = 0.97;
+		} else if(userTier.equals("GOLD")) {
+			discountRate = 0.95;
+		} else if(userTier.equals("VIP")) {
+			discountRate = 0.90;
+		}
+		
+		return discountRate;
+	}
+
+	/**
+	 * 할인율(퍼센트) 구하는 함수
+	 * @param userId
+	 * @return
+	 */
+	public String discountPercent(String userId) {
+		
+		User userInfo = orderService.getUserInfoByUserId(userId);
+		String userTier = userInfo.getUserTier();
+		
+		String discountPercent = "";
+		
+		if(userTier.equals("BRONZE")) {
+			discountPercent = "1%";
+		} else if(userTier.equals("SILVER")) {
+			discountPercent = "3%";
+		} else if(userTier.equals("GOLD")) {
+			discountPercent = "5%";
+		} else if(userTier.equals("VIP")) {
+			discountPercent = "10%";
+		}
+		
+		return discountPercent;
+	}
+
+	/**
+	 * 아임포트를 통한 토큰 발급
+	 * @return String
+	 */
+	public String getToken() {
+		 OutputStreamWriter osw;
+		 BufferedWriter bw;
+		 InputStreamReader isr;
+		 BufferedReader br;
+		 StringBuffer sb = new StringBuffer();
+		 JSONParser jsonParser = new JSONParser();
+		 JSONObject jsonObjectParam = new JSONObject();
+		 JSONObject jsonObjectResult;
+		
+		String accUrl = "https://api.iamport.kr/users/getToken";
+		
+		try {
+			//url객체를 생성 후 주소 입력
+			URL url = new URL(accUrl);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("POST");
+			con.setDoOutput(true);
+			con.setRequestProperty("Content-Type", "application/json");
+			
+			//환불요청 시 필요한 값인 imp_key, imp_secret을  json객체에 put
+			jsonObjectParam.put("imp_key", "2668574740488838");
+			jsonObjectParam.put("imp_secret","Q44VoZAfwC9pWRV8qaC83RwB2wZgC1rrjd7OVECCDMvwMeilYD3n4KIw1hR5nmsE9PeESLEMh0Be2M1j");
+			
+			//출력스트림 요청
+			osw = new OutputStreamWriter(con.getOutputStream());
+			bw = new BufferedWriter(osw);
+			bw.write(jsonObjectParam.toString());
+			bw.flush();
+			
+			//입력스트림 응답
+			isr = new InputStreamReader(con.getInputStream());
+			br = new BufferedReader(isr);
+			if(con.getResponseCode() == 200) {
+				String line = "";
+				sb = new StringBuffer();
+				while((line = br.readLine()) != null) {
+					sb.append(line);
+				}
+				//응답받은 문자열을 json객체로 만들고 필요한 값을 뽑기
+				jsonObjectResult = (JSONObject)jsonParser.parse(sb.toString());
+				JSONObject responseJson = (JSONObject)jsonObjectResult.get("response");
+				String access_token = responseJson.get("access_token").toString();
+				return access_token;		// 토큰키 리턴
+				
+			}else {
+				return "";
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	/**
 	 * 환불하기
 	 * @param orderId
@@ -369,139 +501,6 @@ public class OrderController {
 			e.printStackTrace();
 		}
 		return orderId;
-	}
-
-		/**
-		 * 아임포트를 통한 토큰 발급
-		 * @return String
-		 */
-		public String getToken() {
-			 OutputStreamWriter osw;
-			 BufferedWriter bw;
-			 InputStreamReader isr;
-			 BufferedReader br;
-			 StringBuffer sb = new StringBuffer();
-			 JSONParser jsonParser = new JSONParser();
-			 JSONObject jsonObjectParam = new JSONObject();
-			 JSONObject jsonObjectResult;
-			
-			String accUrl = "https://api.iamport.kr/users/getToken";
-			
-			try {
-				//url객체를 생성 후 주소 입력
-				URL url = new URL(accUrl);
-				HttpURLConnection con = (HttpURLConnection)url.openConnection();
-				con.setRequestMethod("POST");
-				con.setDoOutput(true);
-				con.setRequestProperty("Content-Type", "application/json");
-				
-				//환불요청 시 필요한 값인 imp_key, imp_secret을  json객체에 put
-				jsonObjectParam.put("imp_key", "2668574740488838");
-				jsonObjectParam.put("imp_secret","Q44VoZAfwC9pWRV8qaC83RwB2wZgC1rrjd7OVECCDMvwMeilYD3n4KIw1hR5nmsE9PeESLEMh0Be2M1j");
-				
-				//문자출력스트림 요청
-				osw = new OutputStreamWriter(con.getOutputStream());
-				bw = new BufferedWriter(osw);
-				bw.write(jsonObjectParam.toString());
-				bw.flush();
-				
-				//문자입력스트림 응답
-				isr = new InputStreamReader(con.getInputStream());
-				br = new BufferedReader(isr);
-				if(con.getResponseCode() == 200) {
-					String line = "";
-					sb = new StringBuffer();
-					while((line = br.readLine()) != null) {
-						sb.append(line);
-					}
-					//응답받은 문자열을 json객체로 만들고 필요한 값을 뽑기
-					jsonObjectResult = (JSONObject)jsonParser.parse(sb.toString());
-					JSONObject responseJson = (JSONObject)jsonObjectResult.get("response");
-					String access_token = responseJson.get("access_token").toString();
-					return access_token;		// 토큰키 리턴
-					
-				}else {
-					return "";
-				}
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			return "";
-		}
-	
-	/**
-	 * 환불하기 진행 시 주문상태 변경
-	 * @param orderId
-	 * @return String
-	 */
-	@ResponseBody
-	@PostMapping(value="/refund/refundState")
-	public String refundStateChange(@RequestParam String orderId) {
-		
-		try {
-			int result = orderService.updateOrderState(orderId);
-
-			if(result > 0) {
-				return orderId;			
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "error";
-	}
-	
-	/**
-	 * 할인율 구하는 함수
-	 * @param userId
-	 * @return double
-	 */
-	public double discountRate(String userId) {
-		
-		User userInfo = orderService.getUserInfoByUserId(userId);
-		String userTier = userInfo.getUserTier();
-		
-		double discountRate = 0;
-		
-		if(userTier.equals("BRONZE")) {
-			discountRate = 0.99;
-		} else if(userTier.equals("SILVER")) {
-			discountRate = 0.97;
-		} else if(userTier.equals("GOLD")) {
-			discountRate = 0.95;
-		} else if(userTier.equals("VIP")) {
-			discountRate = 0.90;
-		}
-		
-		return discountRate;
-	}
-	
-	/**
-	 * 할인율(퍼센트) 구하는 함수
-	 * @param userId
-	 * @return
-	 */
-	public String discountPercent(String userId) {
-		
-		User userInfo = orderService.getUserInfoByUserId(userId);
-		String userTier = userInfo.getUserTier();
-		
-		String discountPercent = "";
-		
-		if(userTier.equals("BRONZE")) {
-			discountPercent = "1%";
-		} else if(userTier.equals("SILVER")) {
-			discountPercent = "3%";
-		} else if(userTier.equals("GOLD")) {
-			discountPercent = "5%";
-		} else if(userTier.equals("VIP")) {
-			discountPercent = "10%";
-		}
-		
-		return discountPercent;
 	}
 	
 }
