@@ -17,27 +17,6 @@
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
     <script src="../resources/js/checkbox.js"></script>
 </head>
-<style>
-      .btn-section1 > button {
-         background-color:#AA7139;
-         color : white;
-      }
-      .btn-section1 > button:hover {
-         background-color: #804A15;
-         color : white;
-         border-color : #804A15;
-      }
-      .btn-section2 > button {
-         background-color:white;
-         color : #804A15;
-         border-color : #804A15;
-      }
-      .btn-section2 > button:hover {
-         background-color:#E4DDD3;
-         color : #804A15;
-         border-color : #E4DDD3;
-      }
-</style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
         <div id="cart-title">

@@ -160,7 +160,7 @@
                         
                     </td>
                 </tr>
-                                <tr>
+                <tr>
                     <td class="addr-info-td">
                         <p class="order-info-p">주문 상태</p>
                     </td>
@@ -216,7 +216,12 @@
                                   <!-- 정가 -->
                                   <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.book.priceSales}"/>원</td>
                                   <!-- 할인가 -->
-                                  <td><fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice}"/>원</td>
+                                  <td>
+			                        <div style="margin-top:47%;">
+			                        <fmt:formatNumber type="number" pattern="###,###,###" value="${orderList.productPrice}"/>원
+			                        <p>(${discountRate } <img src="https://img.ypbooks.co.kr/ypbooks/images/icon_down.gif" alt="down" id="discountArrow">)</p>
+			                        </div>
+			                       </td>
                                   <!-- 수량 -->
                                   <td>${orderList.productCount }</td>
                                   <!-- 할인가*수량 -->
@@ -306,6 +311,7 @@ window.onload = function(){
 	const price = ${priceSum};
 	let paymethod = $("#payMethod").val();
 	let orderState = $("#orderState").val();
+	let discountRate = $("#discountRate").val();
 	
 	if(paymethod == "card"){
 		$("#payMethod").val("신용카드");

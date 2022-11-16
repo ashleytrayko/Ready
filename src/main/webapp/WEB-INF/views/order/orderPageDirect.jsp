@@ -17,8 +17,6 @@
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
 </head>
-<style>
-</style>
 <body>
 <jsp:include page="../main/header.jsp"></jsp:include>
      <input type="hidden" name="bookNo" id="id-bookNo" value="${bookData.bookNo }">
@@ -91,7 +89,7 @@
                     <c:set var="productSum" value="${productSum + productCount }"/>
                     <!-- 할인된 상품 총 가격 합계 구하기 -->
                     <c:set var="salePriceSum" value="${salePriceSum + (salePrice * productCount)}"/>
-                    <!-- 상품 총 가격이 만원 이상일 경우를 위한 cset 설정 -->
+                    <!-- 상품 총 가격이 만원 이상일 경우를 위한 c:set 설정 -->
                     <c:set var="onlysalePriceSum" value="${salePriceSum}"/>
                     <!-- 예상 적립 마일리지 누적 합계 구하기 -->
                     <c:set var="mileageSum" value="${mileageSum + (bookData.mileage * productCount) }"/>

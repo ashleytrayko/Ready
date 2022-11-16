@@ -117,10 +117,23 @@ public class OrderController {
 		
 		String userId = principal.getName();
 		User userInfo = orderService.getUserInfoByUserId(userId);
-		
+		String discountRate = "";
 		Order orderInfo = orderService.getOrderInfoByOrderId(orderId);
 		List<Order> orderList = orderService.getOrderDataByOrderId(orderId);
+		double salePrice = orderList.get(0).getProductPrice();	// 할인된 금액
+		double price = orderList.get(0).getBook().getPriceSales();	// 책 정가
+		double percent =  salePrice / price;	// 할인율 ex)0.95
 		
+		if(percent == 0.99) {	// 퍼센트(string) 으로 바꿈
+			discountRate = "1%";
+		} else if(percent == 0.97) {
+			discountRate = "3%";
+		} else if(percent == 0.95) {
+			discountRate = "5%";
+		} else if(percent == 0.90) {
+			discountRate = "10%";
+		}
+		mv.addObject("discountRate",discountRate);
 		mv.addObject("discountPercent", discountPercent(userId));
 		mv.addObject("userInfo",userInfo);
 		mv.addObject("orderInfo",orderInfo);
