@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>Login</title>
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>

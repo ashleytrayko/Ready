@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="../resources/js/jquery-3.6.1.min.js"></script>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>도서 목록</title>
@@ -45,7 +46,7 @@
 </head>
 <body>
 	<div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
 		<div class="main-section">
 			<div class="page-title">
 				<h3>'${searchValue }'의 검색 결과</h3>

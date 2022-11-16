@@ -6,10 +6,12 @@
 <head>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
-<title>Read'y 관리자 메뉴</title>
+<title>회원가입</title>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
+
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="../resources/css/admin/button.css"/>
+<script src="/resources/js/jquery-3.6.1.min.js"></script>
 <style>
 span.guide {
 	display: none;

@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -113,7 +114,7 @@
 									<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWrite.kh'">문의글작성</button>
 								</c:if>
 								<c:if test="${principal.user.userRole eq 'ROLE_ADMIN'}">
-									<button class="sig-btn sig-btn-lg" onclick="location.href='/que/viewWriteAdmin.kh'">FAQ 등록</button>
+									<button class="sig-btn sig-btn-lg" onclick="location.href='/admin/viewWriteAdmin.kh'">FAQ 등록</button>
 								</c:if>
 						</td>
 					</tr>	

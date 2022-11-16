@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
 <link rel="stylesheet" href="/resources/css/comm/listView.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
@@ -57,18 +58,18 @@
 						<tr class="faq-div" height="20">
 						<td colspan="8" class="paging-td">
 							<c:if test="${currentPage != 1 }">
-								<a class="a-button" href="/que/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+								<a class="a-button" href="/admin/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 							</c:if>
 							<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 								<c:if test="${currentPage eq p }">
 									<b>${p }</b>
 								</c:if>
 								<c:if test="${currentPage ne p }">
-									<a class="a-button" href="/que/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+									<a class="a-button" href="/admin/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
 								</c:if>
 							</c:forEach>
 							<c:if test="${maxPage > currentPage }">
-								<a class="a-button" href="/que/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+								<a class="a-button" href="/admin/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 							</c:if>
 						</td>
 					</tr>

@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리디 주문하기</title>
+    <title>주문하기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
     <link href="../resources/css/cart_order/order.css" rel="stylesheet">
@@ -303,7 +303,9 @@
             <button class="btn" id="goback-btn" onclick="history.back();">이전 페이지</button>
             <button class="btn" id="order-btn"  onclick="requestPay(`${salePriceSum}` , `${bookData.bookTitle}` , `${productSum}`, `${mileageSum }`);">결제하기</button>								
         </div>
-        
+	<footer>
+		<jsp:include page="../../views/main/footer.jsp"></jsp:include>
+	</footer>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 //상품 총가격이 만원 이하 일시 화면단에 배송비 표시

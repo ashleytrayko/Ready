@@ -34,11 +34,12 @@
 			color : white;
 		}
 	</style>
-	<jsp:include page="../main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
+		<script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 
 <body>
+	<jsp:include page="../main/header.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-sidebar">
       		<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>

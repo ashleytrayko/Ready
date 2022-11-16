@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리디 주문 완료</title>
+    <title>주문 완료</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../resources/css/cart_order/order.css" rel="stylesheet">
     <script src="../resources/js/jquery-3.6.1.min.js"></script>
@@ -305,6 +305,9 @@
             <button class="btn" id="goback-btn" onclick="location.href='/';">메인으로</button>
             <button class="btn" id="order-btn-complete" onclick="location.href='/book/category.kh?category=Best';">쇼핑 하러가기</button>
         </div>
+        	<footer>
+		<jsp:include page="../../views/main/footer.jsp"></jsp:include>
+	</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
 window.onload = function(){

@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <meta charset="UTF-8">
 <title>내 주문내역</title>
-	<jsp:include page="../main/header.jsp"></jsp:include>
+
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 	<style>
 		td > a {
@@ -35,8 +35,10 @@
 			color : white;
 		}
 	</style>
+		<script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
+	<jsp:include page="../main/header.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="col-md-3">
 			<jsp:include page="../main/mypageSideBar.jsp"></jsp:include>

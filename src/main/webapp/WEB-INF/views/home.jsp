@@ -48,11 +48,11 @@
 			width : 15%;
 		}
 	</style>
-	<jsp:include page="../views/main/header.jsp"></jsp:include>
 	<link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 	<script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
+	<jsp:include page="../views/main/header.jsp"></jsp:include>
 	<div class="main-contents">
 		<div class="main-side"></div>
 		<div class="main-section">

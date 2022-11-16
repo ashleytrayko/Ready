@@ -6,6 +6,7 @@
 <sec:authorize access="isAuthenticated()">
    <sec:authentication property="principal" var="principal" />
 </sec:authorize>
+
 <link rel="stylesheet" href="../resources/css/admin/button.css"/>
 <style>
 span.guide {
