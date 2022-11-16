@@ -92,6 +92,9 @@
 }
 .thumbs-img:hover {
 	cursor:pointer;
+	width:45px;
+	height:45px;
+	margin-bottom:38px;
 }
 .sig-btn{
 	border:solid 1px #AA7139;

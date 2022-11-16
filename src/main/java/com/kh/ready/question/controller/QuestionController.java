@@ -142,6 +142,7 @@ public class QuestionController {
 		return mv;
 	}
 	
+	// 나의 1:1 문의 상세
 	@RequestMapping(value="/que/myQue.kh")
 	public ModelAndView myQnaDetail(
 			ModelAndView mv
@@ -290,6 +291,7 @@ public class QuestionController {
 		return mv;
 	} 
 	
+	// 답변등록 페이지
 	@RequestMapping(value = "/que/answerView.kh", method = RequestMethod.GET)
 	public ModelAndView queAnswerView(
 			ModelAndView mv
@@ -318,12 +320,14 @@ public class QuestionController {
 			int result = qService.modifyQna(que);
 			mv.addObject("que", que);
 			mv.setViewName("redirect:/que/manageList.kh?page=" + page);
+			System.out.println(que);
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("main/errorPage");
 		}
 		return mv;
 	}
 	
+	// q&a 제거
 	@RequestMapping(value = "/que/remove.kh", method = RequestMethod.GET)
 	public String queRemove(HttpSession session, Model model, @RequestParam("page") Integer page) {
 		try {
@@ -338,4 +342,46 @@ public class QuestionController {
 			return "main/errorPage";
 		}
 	}
+	// 문의글 검색 - 관리자용
+	@RequestMapping(value = "/que/search.kh", method = RequestMethod.GET)
+	public ModelAndView boardSearchList(
+			ModelAndView mv
+			, @RequestParam("searchCondition") String searchCondition
+			, @RequestParam("searchValue") String searchValue
+			, @RequestParam(value = "page", required = false) Integer page) {
+		try {
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = qService.getTotalUserCount(searchCondition, searchValue);
+			int boardLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+			startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+			endNavi = startNavi + naviLimit - 1;
+			if (maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			List<Question> qList = qService.printAllByValue(searchCondition, searchValue, currentPage, boardLimit);
+			if (!qList.isEmpty()) {
+				mv.addObject("qList", qList);
+			} else {
+				mv.addObject("qList", null);
+			}
+			mv.addObject("urlVal", "search");
+			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("searchValue", searchValue);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("totalCount", totalCount);
+			mv.setViewName("que/manageList");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 }

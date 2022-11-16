@@ -53,6 +53,26 @@ public class CommController {
 			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			, HttpServletRequest request) {
 		try {
+//			String commFilename = uploadFile.getOriginalFilename();
+//			
+//			if(!commFilename.equals("")) {
+//				String root = request.getSession().getServletContext().getRealPath("resources");
+//				String savePath = root + "\\commUploadFiles"; // 저장경로
+//				File file = new File(savePath);
+//				
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//				String commFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
+//						+ commFilename.substring(commFilename.lastIndexOf(".") + 1);
+//				if (!file.exists()) {
+//					file.mkdir();
+//				}
+//				uploadFile.transferTo(new File(savePath + "\\" + commFileRename));
+//				comm.setCommFilename(commFilename);
+//				comm.setCommFileRename(commFileRename);
+//				
+//				String commFilePath = savePath + "\\" + commFileRename;
+//				comm.setCommFilePath(commFilePath);
+//			}
 			int result = cService.registerBoard(comm);
 			mv.setViewName("redirect:/comm/list.kh");
 		} catch (Exception e) {

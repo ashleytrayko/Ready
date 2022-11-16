@@ -115,5 +115,17 @@ public class QuestionServiceImpl implements QuestionService{
 		return result;
 	}
 
+	@Override
+	public List<Question> printAllByValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
+		List<Question> qList = qStore.selectAllByValue(session, searchCondition, searchValue, currentPage, boardLimit);
+		return qList;
+	}
+
+	@Override
+	public int getTotalUserCount(String searchCondition, String searchValue) {
+		int totalUserCount = qStore.selectTotalUserCount(session, searchCondition, searchValue);
+		return totalUserCount;
+	}
+
 
 }

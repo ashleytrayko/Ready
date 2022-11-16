@@ -14,9 +14,6 @@
 	color:white;
 	/* 연함 #AA7139;  진함 #804A15; */
 }
-.fa-thumbs-up:hover {
-	cursor:pointer;
-}
 .table-style {
 	border:none;
 	width:80%;
@@ -40,4 +37,10 @@
 }
 .select-box{
 	object-fit:cover;
+}
+.div-top {
+	margin-top:60px;
+}
+.border-bot-none {
+	border-bottom:none;
 }

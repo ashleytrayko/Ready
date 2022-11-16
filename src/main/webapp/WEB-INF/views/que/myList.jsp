@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 문의글</title>
+<title>문의글목록</title>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
@@ -22,12 +22,12 @@
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바
+		<div class="main-sidebar">
 		</div>
 		<div class="main-section">
 		<div class="faq-div">
 				<c:if test="${principal.user.userRole eq 'ROLE_USER' }">
-					<h2 class="list-title">내 문의글</h2>
+					<h2 class="list-title">문의글 목록</h2>
 				</c:if>
 				<c:if test="${principal.user.userRole ne 'ROLE_USER' }">
 					<h2 class="list-title">FAQ 관리</h2>
@@ -65,14 +65,14 @@
 									<c:if test="${question.qCategory eq 'delivery'}">배송관련</c:if>
 									<c:if test="${question.qCategory eq 'etc'}">기타문의</c:if>
 								</td>
-								<td colspan="4" align="left"><a href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
+								<td colspan="4" class="th-left"><a class="td-title" href="#" onclick="location.href='/que/myQue.kh?queNo=${question.queNo}&page=${currentPage}'">${question.queTitle }</a></td>
 								<td>${question.queWriter }</td>
 								<td>${question.qEnrollDate }</td>
 								<td>
 									<%-- <c:if test="${principal.user.userRole eq 'ROLE_ADMIN' }"><button href="#" onclick="enrollFAQ(${page})">공지등록</button></c:if> --%>
 									<c:if test="${principal.user.userRole ne 'ROLE_ADMIN' }">
-										<c:if test="${question.qStatus eq 'N' }">답변대기</c:if>
-										<c:if test="${question.qStatus eq 'Y' }">답변완료</c:if>
+										<c:if test="${question.qStatus eq 'N' }"><p class="qStatus-n">답변대기</p></c:if>
+										<c:if test="${question.qStatus eq 'Y' }"><p class="qStatus-y">답변완료</p></c:if>
 									</c:if>
 									
 								</td>
@@ -104,14 +104,6 @@
 					</c:if>
 					<tr>
 						<td colspan="8" align="center">
-							<form action="/question/search.kh" method="get">
-								<select name="searchCondition">
-									<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
-									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
-								</select>
-								<input type="text" name="searchValue" value="${searchValue }">
-								<input class="rvs-sig-btn" type="submit" value="검색">
-							</form>
 						</td>
 					</tr>
 					<tr>
@@ -128,8 +120,11 @@
 				</table>
 			</div>
 		</div>
-		<div class="main-sidebar">여기는 사이드바</div>
+		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>

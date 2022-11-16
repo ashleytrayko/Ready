@@ -45,8 +45,8 @@
 						</tr>
 						<tr>
 							<td class="center">내용</td>
-							<td>
-								<textarea class="summernote summerArea" name="commContents" ></textarea>
+							<td class="detail-content-bot">
+								<textarea class="summernote" name="commContents" ></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -60,6 +60,9 @@
 		</div>
 		<div class="main-sidebar"></div>
     </div>
+    <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>

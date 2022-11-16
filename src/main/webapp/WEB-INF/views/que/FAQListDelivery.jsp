@@ -12,13 +12,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시글 목록</title>
+<title>배송관련</title>
 <link rel="icon" type="image/png"  href="/resources/images/favicon.ico"/>
 <!-- 타이틀 밑에 아래 css링크 추가해줄것 -->
 <link rel="stylesheet" href="/resources/css/main/mainHeader.css">
 <link rel="stylesheet" href="/resources/css/que/faqList.css">
 <link rel="stylesheet" href="/resources/css/que/faqTest.css">
 <link rel="stylesheet" href="/resources/css/comm/commForm.css">
+<link rel="stylesheet" href="/resources/css/comm/listView.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -34,7 +35,7 @@
 		<!-- 이 안에서 작업! 여기가 본문-->
 			
 			
-			<h1 align="center">FAQ</h1>
+			<h2 class="list-title list-div">FAQ</h2>
 			<section id="wrapper">
 			<div class="container">
 				<div class="category-box">
@@ -70,6 +71,9 @@
 		</div>
 		<div class="main-sidebar"></div>
     </div>
+        <div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 	<footer>
 		
 	</footer>

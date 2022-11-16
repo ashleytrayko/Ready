@@ -22,11 +22,11 @@
 <body>
 	<jsp:include page="../main/header.jsp"></jsp:include>
     <div class="main-contents">
-		<div class="main-sidebar">여기는 사이드바
+		<div class="main-sidebar">
 		</div>
 		<div class="main-section">
 		<div class="faq-div">
-				<h1 class="none-height">FAQ 관리</h1>
+				<h2 class="none-height" style="cursor:pointer" onclick="location.href='/que/manageList.kh'">FAQ 관리</h2>
 				<table border="1" class="list-table center">
 					<tr class="faq-header">
 						<th width="15%">유형</th>
@@ -80,10 +80,12 @@
 					</c:if>
 					<tr>
 						<td colspan="8" class="faq-div">
-							<form action="/question/search.kh" method="get">
+							<form action="/que/search.kh" method="get">
 								<select name="searchCondition">
+									<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
 									<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
 									<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
+									<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
 								</select>
 								<input type="text" name="searchValue" value="${searchValue }">
 								<input class="rvs-sig-btn" type="submit" value="검색">
@@ -104,5 +106,8 @@
 	<footer>
 		
 	</footer>
+	<div class="main-footer div-top">
+		<jsp:include page="../main/footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>

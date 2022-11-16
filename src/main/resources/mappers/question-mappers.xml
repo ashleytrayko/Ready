@@ -49,13 +49,16 @@
 	<!-- 내 문의글 갯수 -->
 	<select id="selectMyCount" resultType="_int">
 		SELECT COUNT(*) FROM QUESTION_TBL
-<!-- 		SELECT COUNT(A.QUE_NO) FROM QUESTION_TBL A, USER_TBL B -->
 		<where>
 			<if test="searchCondition.toString() == 'title'">
 				QUE_TITLE LIKE '%'||#{searchValue}||'%'
 			</if>
 			<if test="searchCondition.toString() == 'contents'">
 				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				(QUE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR QUE_CONTENTS LIKE '%'||#{searchValue}||'%')
 			</if>
 			AND QUE_ID = #{queWriter} AND Q_STATUS = 'F' OR QUE_ID = #{queWriter} AND Q_STATUS = 'N' OR QUE_ID = #{queWriter} AND Q_STATUS = 'Y'
 		</where>
@@ -101,4 +104,44 @@
 	<delete id="deleteQue">
 		UPDATE QUESTION_TBL SET Q_STATUS = 'D' WHERE QUE_NO = #{queNo}
 	</delete>
+	<select id="selectAllByValue" resultMap="questionResultMap">
+		SELECT * FROM QUESTION_TBL 
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				QUE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				QUE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				(QUE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+				OR QUE_WRITER LIKE '%'||#{searchValue}||'%')
+			</if>
+			AND (Q_STATUS = 'Y' OR Q_STATUS = 'N')
+		</where> 		
+	</select>
+	<select id="selectTotalUserCount" resultType="_int">
+		SELECT COUNT(*) FROM QUESTION_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				QUE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				QUE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				(QUE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR QUE_CONTENTS LIKE '%'||#{searchValue}||'%'
+				OR QUE_WRITER LIKE '%'||#{searchValue}||'%')
+			</if>
+			AND (Q_STATUS = 'Y' OR Q_STATUS = 'N')
+		</where>
+	</select>
 </mapper>
