@@ -115,7 +115,7 @@
 	<update id="updateProduct">
 		UPDATE BOOK_TBL SET BOOK_TITLE = #{bookTitle}, BOOK_WRITER = #{bookWriter},
 			PUB_DATE = #{pubDate}, BOOK_CATEGORY = #{category}, BOOK_CONTENTS = #{bookContents},
-			BOOK_ISBN = #{ISBN}, BOOK_PRICE = #{priceSales}, BOOK_MILEAGE = #{mileage}, BOOK_ PUBLISHER = #{publisher} WHERE BOOK_NO = #{bookNo}
+			BOOK_ISBN = #{ISBN}, BOOK_PRICE = #{priceSales}, BOOK_MILEAGE = #{mileage}, BOOK_PUBLISHER = #{publisher} WHERE BOOK_NO = #{bookNo}
 	</update>
 	
 	<delete id="deleteBookByNo">

@@ -55,10 +55,10 @@
 	</update>
 	
 	<update id="updateBadUser">
-		UPDATE USER_TBL SET USER_ROLE = 'ROLE_BAD' WHERE USER_NICKNAME = #{userId}
+		UPDATE USER_TBL SET USER_ROLE = 'ROLE_BAD' WHERE USER_ID = #{userId}
 	</update>
 	
 	<update id="kickOutUser">
-		UPDATE USER_TBL SET ENABLED = 'N' WHERE USER_NICKNAME = #{userId}
+		UPDATE USER_TBL SET ENABLED = 'N' WHERE USER_ID = #{userId}
 	</update>
 </mapper>
