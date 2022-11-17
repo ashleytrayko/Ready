@@ -357,7 +357,7 @@ window.onload = function(){
 						salePriceSum : salePriceSum
 					},
 					success : function(result){
-						if(result > 2) {
+						if(result > 0) {
 							alert("구매 확정 되었습니다.");
 							window.location.reload(true);
 						}
@@ -388,7 +388,6 @@ window.onload = function(){
 			        impUid : impUid
 			      },
 				success : function(orderId){
-					console.log("ajax : " + orderId);
 					$.ajax({
 						url : "/refund/refundState",
 						type : "POST",

@@ -409,7 +409,7 @@
    		const reciverRoadAddr = $("#reciverRoadAddr").val();
    		const reciverDetailAddr = $("#reciverDetailAddr").val();
    		
-   		if(reciverName == "" && reciverPhone == "" && reciverEmail == "" && reciverZoneCode == "" && reciverRoadAddr == "" && reciverDetailAddr == ""){
+  		if(reciverName == "" || reciverPhone == "" || reciverEmail == "" || reciverZoneCode == "" || reciverRoadAddr == "" || reciverDetailAddr == ""){
    			alert("배송 정보를 확인해주세요");
    			return false;
    		} else {
