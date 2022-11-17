@@ -13,6 +13,7 @@
 **고형진**
 > 회원기능  
 > 관리자 기능  
+> 예외 처리
 
 **김석진**
 > 커뮤니티  
@@ -27,12 +28,14 @@
 
 ## 4. 주요기능 :blue_book:  
 **회원기능**
+> Spring Security 적용
 > 로그인 및 회원가입  
-> 소셜로그인(구글, 네이버, 카카오)  
+> OAuth2 기반 소셜로그인(구글, 네이버, 카카오)  
 > 회원정보 수정 및 탈퇴  
 > 구매한 도서 내역  
 > 내가 작성한 후기  
 > 내가 쓴 게시글  
+> Spring Security 기능을 이용한 회원 권한 별 페이지 접근 권한 
 
 **도서추천**  
 > 성향파악을 위한 설문조사 등록  
@@ -68,6 +71,7 @@
 > 메인페이지의 배너등록 및 삭제  
 > 사용자가 신고한 게시글 관리 및 회원 제재
 > 등록된 도서 수정 및 삭제  
+> @ControllerAdvice 를 통한  예외처리
 
 ## 5. 개발환경 :orange_book:
 <img src="https://img.shields.io/badge/spring-6DB33F?style=flat&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"> <img src="https://img.shields.io/badge/eclipse IDE-2C2255?style=flat&logo=eclipseIDE&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white">
