@@ -1,4 +1,6 @@
 # Are you Read'y?
+<img src="https://user-images.githubusercontent.com/109054102/202386263-92b71e94-61fb-4355-bb4b-67668612beb8.png">  
+
 ## 1. 프로젝트 소개 :closed_book:  
 
 ## 2. CheckMate 조원 :green_book:
