@@ -200,7 +200,7 @@
 ### **나의 주문내역**
 <img src="https://user-images.githubusercontent.com/109054093/202393948-df3f9eba-b23c-4d47-a316-bc066701ad30.png">
 
-### ** 후기**
+### **후기**
 <img src="https://user-images.githubusercontent.com/109054093/202394009-45d290ff-dd18-4708-9489-174ac98ca7f4.png">
 
 
