@@ -81,12 +81,30 @@
 <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"> <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=flat&logo=Apache Maven&logoColor=white">
 
 ## 7. Read'y 화면 :books:  
+
+<details>
+<summary>회원 페이지</summary>
+
 [메인페이지](#메인페이지)  
 [로그인 페이지](#로그인-페이지)  
 [아이디 찾기](#아이디-찾기)  
 [비밀번호 찾기](#비밀번호-찾기)  
 [일반 회원가입](#일반-회원가입)  
 [소셜 회원가입](#소셜-회원가입)  
+[마이페이지](#마이페이지)  
+[설문조사 확인](#설문조사-확인)  
+[설문조사 작성](#설문조사-작성)  
+[회원정보 수정](#회원정보-수정)  
+[회원탈퇴](#회원탈퇴)  
+[내가 쓴 게시글](#내가-쓴-게시글)  
+[나의 주문내역](#나의-주문내역)  
+[나의 후기](#나의-후기) 
+
+</details>
+
+<details>
+<summary>관리자 페이지</summary>
+
 [관리자 페이지 - 메인](#관리자-페이지---메인)  
 [관리자 페이지 - 배너 관리](#관리자-페이지---배너-관리)  
 [관리자 페이지 - 공지사항 관리](#관리자-페이지---공지사항-관리)  
@@ -100,29 +118,46 @@
 [관리자 페이지 - 판결 페이지](#관리자-페이지---판결-페이지)  
 [관리자 페이지 - FAQ 관리](#관리자-페이지---faq-관리)  
 [관리자 페이지 - FAQ 등록](#관리자-페이지---faq-등록)  
+
+</details>
+
+<details>
+<summary>고객센터 페이지</summary>
+
 [고객센터 - FAQ 메인](#고객센터---faq-메인)  
 [고객센터 - 내 문의글 목록](#고객센터---내-문의글-목록)  
 [고객센터 - 1대1 문의](#고객센터---1대1-문의)  
 [고객센터 - 1대1 문의 상세_답변 전](#고객센터---1대1-문의-상세_답변-전)  
 [고객센터 - 1대1 문의 상세_답변 후](#고객센터---1대1-문의-상세_답변-후)  
+
+</details>
+
+<details>
+
+<summary>커뮤니티 페이지</summary>
+
 [커뮤니티 - 메인](#커뮤니티---메인)  
 [커뮤니티 - 게시글 작성](#커뮤니티---게시글-작성)  
 [커뮤니티 - 게시글 수정](#커뮤니티---게시글-수정)  
 [커뮤니티 - 게시글 상세](#커뮤니티---게시글-상세)  
+
+</details>
+
+<details>
+ 
+<summary>메인 페이지</summary>
+
 [메인 - 도서 상세](#메인---도서-상세)  
 [메인 - 도서 검색](#메인---도서-검색)  
 [메인 - 장바구니_담기 전](#메인---장바구니_담기-전)  
 [메인 - 장바구니_담기 후](#메인---장바구니_담기-후)  
 [메인 - 주문서 작성](#메인---주문서-작성)  
 [메인 - 주문 완료](#메인---주문-완료)  
-[마이페이지](#마이페이지)  
-[설문조사 확인](#설문조사-확인)  
-[설문조사 작성](#설문조사-작성)  
-[회원정보 수정](#회원정보-수정)  
-[회원탈퇴](#회원탈퇴)  
-[내가 쓴 게시글](#내가-쓴-게시글)  
-[나의 주문내역](#나의-주문내역)  
-[나의 후기](#나의-후기)  
+
+</details>
+
+
+ 
 
 ### **메인페이지**
 <img src="https://user-images.githubusercontent.com/109054093/202394133-f65520d5-d781-4fa1-bdb5-fdf2a5926c7d.png">
