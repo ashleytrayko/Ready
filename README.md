@@ -80,7 +80,9 @@
 ## 6. 개발 환경 :toolbox: 
 <img src="https://img.shields.io/badge/Eclipse IDE-2C2255?style=flat&logo=Eclipse IDE&logoColor=white"> <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"> <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"> <img src="https://img.shields.io/badge/Apache Maven-C71A36?style=flat&logo=Apache Maven&logoColor=white">
 
-## 6. Read'y 화면 :books:  
+## 7. Read'y 화면 :books:  
+[일반 회원가입](#일반-회원가입)
+
 ### **메인페이지**
 <img src="https://user-images.githubusercontent.com/109054093/202394133-f65520d5-d781-4fa1-bdb5-fdf2a5926c7d.png">
 <img src="https://user-images.githubusercontent.com/109054093/202389470-122f9dbd-69ff-4a79-9861-fb40f1cdd7fb.png">
