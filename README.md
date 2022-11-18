@@ -72,7 +72,7 @@
 > 메인페이지의 배너등록 및 삭제  
 > 사용자가 신고한 게시글 관리 및 회원 제재  
 > 등록된 도서 수정 및 삭제  
-> @ControllerAdvice 를 통한  예외처리
+> @ControllerAdvice 를 이용한 통합 예외처리
 
 ## 5. 기술 스택 :orange_book:
 <img src="https://img.shields.io/badge/Java-F80000?style=flat&logo=Java&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=flat&logo=Spring&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring Security&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"> <img src="https://img.shields.io/badge/Oracle-F80000?style=flat&logo=Oracle&logoColor=white"> <img src="https://img.shields.io/badge/Mybatis-000000?style=flat&logo=MyBatis&logoColor=white"> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=Bootstrap&logoColor=white">
